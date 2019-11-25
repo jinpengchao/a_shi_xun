@@ -3,8 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <!--自定义颜色-->
+    <!--父母自定义颜色-->
     <color name="choseColor">#069EF1</color>
     <color name="notChoseColor">#000000</color>
     <color name="backgroundColor">#C5FBFF</color>
+    <color name="childrenColor">#FF9800</color>
 </resources>
