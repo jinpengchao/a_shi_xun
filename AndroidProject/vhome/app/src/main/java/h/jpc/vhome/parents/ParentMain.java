@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParentMain extends AppCompatActivity {
-
+    private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class ParentMain extends AppCompatActivity {
         //tab1
         TabHost.TabSpec tabSpec1 = fragmentTabHost
                 .newTabSpec("tag1")
-                .setIndicator(getTabSpaceView("tag1","首页"));
+                .setIndicator(getTabSpaceView("tag1",R.mipmap.home,"首页"));
         fragmentTabHost.addTab(tabSpec1,
                 HomeFragment.class,
                 null
@@ -46,7 +46,7 @@ public class ParentMain extends AppCompatActivity {
         //tab2
         TabHost.TabSpec tabSpec2 = fragmentTabHost
                 .newTabSpec("tag2")
-                .setIndicator(getTabSpaceView("tag2","社区"));
+                .setIndicator(getTabSpaceView("tag2",R.mipmap.comment,"社区"));
         fragmentTabHost.addTab(tabSpec2,
                 CommunityFragment.class,
                 null
@@ -54,7 +54,7 @@ public class ParentMain extends AppCompatActivity {
         //tab3
         TabHost.TabSpec tabSpec3 = fragmentTabHost
                 .newTabSpec("tag3")
-                .setIndicator(getTabSpaceView("tag3","子女"));
+                .setIndicator(getTabSpaceView("tag3",R.mipmap.child,"子女"));
         fragmentTabHost.addTab(tabSpec3,
                 ChildrenFragment.class,
                 null
@@ -62,12 +62,13 @@ public class ParentMain extends AppCompatActivity {
         //tab4
         TabHost.TabSpec tabSpec4 = fragmentTabHost
                 .newTabSpec("tag4")
-                .setIndicator(getTabSpaceView("tag4","我"));
+                .setIndicator(getTabSpaceView("tag4",R.mipmap.me,"我"));
         fragmentTabHost.addTab(tabSpec4,
                 MyselfFragment.class,
                 null
         );
         fragmentTabHost.setCurrentTab(0);
+        imageViewMap.get("tag1").setImageResource(R.mipmap.home1);
         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -77,24 +78,40 @@ public class ParentMain extends AppCompatActivity {
             public void onTabChanged(String tabId) {
                 switch (tabId){
                     case "tag1":
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.home1);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag2":
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment1);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag3":
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.child1);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag4":
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me1);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -104,13 +121,16 @@ public class ParentMain extends AppCompatActivity {
             }
         });
     }
-    public View getTabSpaceView(String tag, String title){
+    public View getTabSpaceView(String tag,  int imageResId,String title){
         //加载布局文件
         LayoutInflater layoutInflater1 = getLayoutInflater();
         View view = layoutInflater1.inflate(R.layout.tab_space_parent,null);
+        ImageView imageView = view.findViewById(R.id.icon);//去tab_space去找id
+        imageView.setImageResource(imageResId);
         //Text对象
         TextView textView = view.findViewById(R.id.tv_title);
         textView.setText(title);
+        imageViewMap.put(tag,imageView);
         textViewMap.put(tag,textView);
         return view;
     }

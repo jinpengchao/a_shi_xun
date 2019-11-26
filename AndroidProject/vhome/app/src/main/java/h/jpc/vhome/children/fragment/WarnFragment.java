@@ -1,6 +1,5 @@
 package h.jpc.vhome.children.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,10 +17,9 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.R;
-import h.jpc.vhome.children.fragment.dialog.MyDialog;
+import h.jpc.vhome.children.fragment.dialog.AddNewNormalWarnDialog;
 import h.jpc.vhome.children.fragment.slideadapter.ListViewCompat;
 import h.jpc.vhome.children.fragment.slideadapter.SlideView;
 
@@ -32,62 +29,21 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemClickLis
     private List<MessageItem> mMessageItems = new ArrayList<MessageItem>();
     private SlideView mLastSlideViewWithStatusOn;
     private SlideAdapter adapter;
-    private MyDialog myDialog;
+    private AddNewNormalWarnDialog addNewNormalWarnDialog;
     private Button addNewNormalWarn;
-    private Button sendNewWarn;
-    private Button quaryAllWarn;
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_children_warn, null);
         addNewNormalWarn = view.findViewById(R.id.addNormalWarn);
-        sendNewWarn = view.findViewById(R.id.sendNewWarn);
-        quaryAllWarn = view.findViewById(R.id.quaryAllWarn);
-
         addNewNormalWarn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View view = getLayoutInflater().inflate(R.layout.dialog_add_new_normal_warn, null);
-                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
-                Button cancle = (Button)view.findViewById(R.id.new_normal_warn_cancle);
-                Button ok = (Button)view.findViewById(R.id.new_normal_warn_ok);
-                final EditText editText = (EditText)view.findViewById(R.id.new_normal_warn_text);
-                cancle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myDialog.dismiss();
-                    }
-                });
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //存入数据库放入常用列表
-                        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.setCancelable(true);
-                myDialog.show();
-            }
-        });
-        sendNewWarn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = getLayoutInflater().inflate(R.layout.dialog_send_new_warn, null);
-                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
-                myDialog.setCancelable(true);
-                myDialog.show();
-            }
-        });
-        quaryAllWarn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = getLayoutInflater().inflate(R.layout.dialog_quary_all_warn, null);
-                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
-                myDialog.setCancelable(true);
-                myDialog.show();
+                View view = getLayoutInflater().inflate(R.layout.add_new_normal_dialog, null);
+                addNewNormalWarnDialog = new AddNewNormalWarnDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
+                addNewNormalWarnDialog.setCancelable(true);
+                addNewNormalWarnDialog.show();
             }
         });
         mListView = view.findViewById(R.id.list);
@@ -103,13 +59,16 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemClickLis
                 item.iconRes = R.mipmap.chat;
                 item.title = "微信团队";
                 item.msg = "欢迎你使用微信";
-                item.time = "12月18日"+"--"+i;
+                item.time = "12月18日";
             }
             mMessageItems.add(item);
         }
+
         adapter = new SlideAdapter();
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(this);
+
+
         return view;
     }
 
@@ -146,11 +105,9 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemClickLis
                 View itemView = mInflater.inflate(R.layout.item_listview_delete, null);
 
                 slideView = new SlideView(getActivity());
-
                 slideView.setContentView(itemView);
 
                 holder = new ViewHolder(slideView);
-                slideView.setOnSlideListener(WarnFragment.this);
                 slideView.setTag(holder);
             } else {
                 holder = (ViewHolder) slideView.getTag();
