@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.R;
+import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
 import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
 
@@ -25,7 +26,7 @@ import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
 public class HomeFragment extends Fragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
-    private ImageView alarm;
+    private Button alarm;
     private ImageView news;
     private ImageView weather;
     private Button tools;
@@ -38,17 +39,25 @@ public class HomeFragment extends Fragment {
          * 作者：靳朋朝
          * 完成时间：2019年11月25日19:14:34
          */
-        new Thread(new Runnable() {
+        yang_li_calendar = view.findViewById(R.id.yang_li_calendar);
+        yin_li_calendar = view.findViewById(R.id.yin_li_calendar);
+        Date date = new Date();
+        yang_li_calendar.setText(getDate(date)[0]);
+        yin_li_calendar.setText(getDate(date)[1]);
+        /*
+         *  功能：闹钟跳转
+         *  作者：靳朋朝
+         *  时间：2019年11月26日18:41:11
+         */
+        alarm = view.findViewById(R.id.chizixin);
+        alarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                yang_li_calendar = view.findViewById(R.id.yang_li_calendar);
-                yin_li_calendar = view.findViewById(R.id.yin_li_calendar);
-                Date date = new Date();
-                yang_li_calendar.setText(getDate(date)[0]);
-                yin_li_calendar.setText(getDate(date)[1]);
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), AlarmActivity.class);
+                startActivity(intent);
             }
-        }).start();
-
+        });
         /*
          *  功能：小工具跳转
          *  作者：靳朋朝
