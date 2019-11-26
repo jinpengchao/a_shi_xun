@@ -1,3 +1,4 @@
 <resources>
+    <dimen name="width">50dp</dimen>
     <string name="app_name">微家</string>
 </resources>
