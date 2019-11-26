@@ -2,62 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:background="#C8F1FF">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        >
+        android:background="#C8F1FF"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="2019年11月11日，星期一"
-            android:textColor="@color/notChoseColor"
-            android:textSize="30dp"
             android:id="@+id/yang_li_calendar"
-            ></TextView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@color/notChoseColor"
+            android:textSize="30dp"></TextView>
+
         <TextView
+            android:id="@+id/yin_li_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="【猪年】农历十月十五"
             android:textColor="@color/notChoseColor"
-            android:textSize="30dp"
-            android:id="@+id/yin_li_calendar"
-            ></TextView>
+            android:textSize="30dp"></TextView>
     </LinearLayout>
-    <Button
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"></Button>
-    <Button
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"></Button>
-    <Button
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"></Button>
-    <Button
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"></Button>
-
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <Button
+            android:text="闹钟"
+            android:id="@+id/chizixin"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"></Button>
+        <Button
+            android:text="新闻"
+            android:id="@+id/quxinwen"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"></Button>
+        <Button
+            android:text="天气"
+            android:id="@+id/kantianqi"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"></Button>
+        <Button
+            android:text="小工具"
+            android:id="@+id/xiaogongju"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"></Button>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

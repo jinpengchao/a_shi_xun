@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         //测试程序，便于效果预览，登录写完之后就能删了
         parent = findViewById(R.id.parent);
         children = findViewById(R.id.children);
-
         parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
