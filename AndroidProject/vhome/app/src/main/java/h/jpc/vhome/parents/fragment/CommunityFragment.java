@@ -17,11 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.NewPost;
+import h.jpc.vhome.parents.NewPostActivity;
 import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
 import h.jpc.vhome.parents.fragment.fragment.HealthFragment;
 import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;
-import h.jpc.vhome.parents.fragment.fragment.DFragment;
 
 public class CommunityFragment extends Fragment {
     private Map<String,TextView> textViewMap = new HashMap<>();
@@ -93,7 +92,7 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intenet  = new Intent();
-                intenet.setClass(getActivity(), NewPost.class);
+                intenet.setClass(getActivity(), NewPostActivity.class);
                 startActivity(intenet);
             }
         });

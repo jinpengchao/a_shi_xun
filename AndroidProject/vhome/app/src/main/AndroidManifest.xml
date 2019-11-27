@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".parents.NewPost"></activity>
+        <activity android:name=".parents.NewPostActivity"></activity>
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
         <activity android:name=".children.ChildrenMain" />
