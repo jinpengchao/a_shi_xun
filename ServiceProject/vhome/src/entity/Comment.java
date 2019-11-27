@@ -17,21 +17,22 @@ package entity;
  */
 public class Comment {
 
-	private String id;
-	private String postId;
+	private int id;
+	private int postId;
 	private String personId;
 	private String content;
 	private String time;
-	public String getId() {
+	
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public String getPostId() {
+	public int getPostId() {
 		return postId;
 	}
-	public void setPostId(String postId) {
+	public void setPostId(int postId) {
 		this.postId = postId;
 	}
 	public String getPersonId() {

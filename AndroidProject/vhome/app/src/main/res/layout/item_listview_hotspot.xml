@@ -19,7 +19,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="20dp">
             <TextView
-                android:id="@+id/tv_hot_person"
+                android:id="@+id/tv_hot_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="春天"
@@ -63,6 +63,7 @@
             android:textSize="20sp"
             android:textColor="@android:color/darker_gray"/>
         <ImageView
+            android:id="@+id/iv_hot_comment"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@mipmap/commsg"
@@ -76,13 +77,13 @@
             android:layout_marginLeft="10dp"
             android:textSize="20sp"/>
         <ImageView
-            android:id="@+id/iv_hot_postlike"
+            android:id="@+id/iv_hot_like"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@mipmap/like"
             android:layout_marginLeft="60dp"/>
         <TextView
-            android:id="@+id/tv_hot_goodnum"
+            android:id="@+id/tv_hot_likenum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20"

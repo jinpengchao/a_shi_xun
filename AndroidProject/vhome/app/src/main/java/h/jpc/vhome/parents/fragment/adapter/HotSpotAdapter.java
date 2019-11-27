@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import h.jpc.vhome.R;
 import h.jpc.vhome.parents.entity.Post;
 
 public class HotSpotAdapter extends BaseAdapter {
@@ -44,13 +45,29 @@ public class HotSpotAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(itemLayoutId,null);
             holder = new ViewHolder();
+            holder.ivHotPerson = view.findViewById(R.id.iv_hot_person);
+            holder.tvHotName = view.findViewById(R.id.tv_hot_name);
+            holder.tvHotAchieve = view.findViewById(R.id.tv_hot_achieve);
+            holder.tvHotContent = view.findViewById(R.id.tv_hot_content);
+            holder.tvHotTime = view.findViewById(R.id.tv_hot_time);
+            holder.tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
+            holder.ivHotlike = view.findViewById(R.id.iv_hot_like);
+            holder.tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
+            view.setTag(holder);
+        }else {
+            holder = (ViewHolder) view.getTag();
         }
-        return null;
+//        holder.ivHotPerson.setImageResource();
+        return view;
     }
     static final class ViewHolder{
-        ImageView ivType;
-        TextView tvName;
-        TextView tvDes;
-        TextView tvPrice;
+        ImageView ivHotPerson;
+        TextView tvHotName;
+        TextView tvHotAchieve;
+        TextView tvHotContent;
+        TextView tvHotTime;
+        TextView tvHotComnum;
+        ImageView ivHotlike;
+        TextView tvHotLikenum;
     }
 }

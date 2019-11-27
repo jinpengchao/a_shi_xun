@@ -42,7 +42,7 @@ public class HotspotFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_hot_spot,null);
         getViews();
         registerListener();
-        list.clear();
+        //list.clear();
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
