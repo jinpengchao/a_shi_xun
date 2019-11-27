@@ -9,13 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".parents.fragment.alarm.ReadAlarm" />
 
         <activity android:name=".parents.fragment.alarm.ClockDetail" />
-=======
-        <activity android:name=".parents.NewPostActivity"></activity>
->>>>>>> 7f96e566729cce6e481162af6251a220e74173a4
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
         <activity android:name=".parents.fragment.alarm.AlarmAlert" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".parents.NewPostActivity"
+    tools:context=".parents.NewPost"
     android:background="@color/backgroundColor">
 
 
