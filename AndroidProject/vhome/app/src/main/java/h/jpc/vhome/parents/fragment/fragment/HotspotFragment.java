@@ -50,7 +50,6 @@ public class HotspotFragment extends Fragment {
                 String data = b.getString("data");
                 Gson gson = new Gson();
                 list = gson.fromJson(data,new TypeToken<List<Post>>(){}.getType());
-
             }
         };
         getdata();
