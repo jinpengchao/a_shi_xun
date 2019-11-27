@@ -15,10 +15,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.R;
+<<<<<<< HEAD
 import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
 import h.jpc.vhome.parents.fragment.fragment.BFragment;
 import h.jpc.vhome.parents.fragment.fragment.CFragment;
 import h.jpc.vhome.parents.fragment.fragment.DFragment;
+=======
+import h.jpc.vhome.parents.NewPostActivity;
+import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
+import h.jpc.vhome.parents.fragment.fragment.HealthFragment;
+import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;
+>>>>>>> 7f96e566729cce6e481162af6251a220e74173a4
 
 public class CommunityFragment extends Fragment {
     private Map<String,TextView> textViewMap = new HashMap<>();
@@ -101,6 +108,18 @@ public class CommunityFragment extends Fragment {
                 }
             }
         });
+<<<<<<< HEAD
+=======
+        button = view.findViewById(R.id.addPost);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intenet  = new Intent();
+                intenet.setClass(getActivity(), NewPostActivity.class);
+                startActivity(intenet);
+            }
+        });
+>>>>>>> 7f96e566729cce6e481162af6251a220e74173a4
         return view;
     }
     public View getTabSpaceView(String tag, String title){
