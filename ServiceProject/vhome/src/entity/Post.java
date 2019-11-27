@@ -2,23 +2,18 @@ package entity;
 
 public class Post {
 
-	private String postId;
-	private String postTitle;
+	private int postId;
 	private String postContent;
 	private String postSendPersonId;
 	private String postTime;
-	public String getPostId() {
+	
+	public int getPostId() {
 		return postId;
 	}
-	public void setPostId(String postId) {
+	public void setPostId(int postId) {
 		this.postId = postId;
 	}
-	public String getPostTitle() {
-		return postTitle;
-	}
-	public void setPostTitle(String postTitle) {
-		this.postTitle = postTitle;
-	}
+	
 	public String getPostContent() {
 		return postContent;
 	}

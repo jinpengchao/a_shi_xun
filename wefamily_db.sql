@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-11-25 15:06:36
+Date: 2019-11-27 08:42:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,8 +55,8 @@ CREATE TABLE `tbl_child_userinfo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_comment`;
 CREATE TABLE `tbl_comment` (
-  `id` varchar(30) NOT NULL,
-  `postId` varchar(30) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `postId` int(11) NOT NULL,
   `personId` varchar(30) NOT NULL,
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
@@ -87,8 +87,8 @@ CREATE TABLE `tbl_connect` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodcomment`;
 CREATE TABLE `tbl_goodcomment` (
-  `commantId` varchar(30) NOT NULL,
-  `postId` varchar(30) NOT NULL,
+  `commantId` int(30) NOT NULL,
+  `postId` int(30) NOT NULL,
   `goodPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`commantId`)
@@ -103,7 +103,7 @@ CREATE TABLE `tbl_goodcomment` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodpost`;
 CREATE TABLE `tbl_goodpost` (
-  `postId` varchar(30) NOT NULL,
+  `postId` int(30) NOT NULL,
   `goodPersonId` varchar(30) DEFAULT NULL,
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `tbl_goodpost` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_healthhouse`;
 CREATE TABLE `tbl_healthhouse` (
-  `id` varchar(30) NOT NULL DEFAULT '',
+  `id` int(30) NOT NULL AUTO_INCREMENT,
   `publishTime` datetime DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
   `resource` varchar(30) DEFAULT NULL,
@@ -222,38 +222,30 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
-  `id` varchar(30) NOT NULL,
-  `title` varchar(30) DEFAULT NULL,
+  `id` int(30) NOT NULL AUTO_INCREMENT,
   `content` varchar(500) DEFAULT NULL,
   `personId` varchar(30) NOT NULL,
   `publishTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
-
--- ----------------------------
--- Table structure for `tbl_posts`
--- ----------------------------
-DROP TABLE IF EXISTS `tbl_posts`;
-CREATE TABLE `tbl_posts` (
-  `num` int(11) NOT NULL DEFAULT '0',
-  `id` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tbl_posts
--- ----------------------------
+INSERT INTO `tbl_post` VALUES ('1', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('2', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('3', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('4', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('5', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('6', '1', '1', '2019-08-02 02:30:09');
+INSERT INTO `tbl_post` VALUES ('7', '123', '1', '2019-11-27 00:25:48');
 
 -- ----------------------------
 -- Table structure for `tbl_remind`
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_remind`;
 CREATE TABLE `tbl_remind` (
-  `id` varchar(30) NOT NULL DEFAULT '',
+  `id` int(30) NOT NULL AUTO_INCREMENT,
   `content` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -267,13 +259,13 @@ CREATE TABLE `tbl_remind` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
-  `commentId` varchar(30) NOT NULL DEFAULT '',
-  `postId` varchar(30) DEFAULT NULL,
-  `backPersonId` varchar(30) DEFAULT NULL,
+  `commentid` int(30) NOT NULL AUTO_INCREMENT,
+  `postId` int(30) DEFAULT NULL,
+  `replyPersonId` varchar(30) DEFAULT NULL,
   `commentPersonId` varchar(30) DEFAULT NULL,
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`commentId`)
+  PRIMARY KEY (`commentid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

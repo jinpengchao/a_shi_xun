@@ -1,5 +1,12 @@
+/**
+ * @Title:HealthHouseDao.java
+ * @Packagecommunity.dao
+ * @Description: TODO
+ * @auther wzw
+ * @date 2019年11月26日
+ * @version v1.0
+ */
 package community.dao;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,36 +16,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.Post;
+import entity.HealthHouse;
 
 /**
- * 
- * @ClassName: PostDao
+ * @ClassName: HealthHouseDao
  * @Description: TODO
  * @author wzw
  * @date 2019年11月26日
  *
  */
-public class PostDao {
-	private Connection con;
+public class HealthHouseDao {
+	
 	/**
 	 * 
-	 *  @title:insertPost
-	 * @Description: 插入单条帖子
-	 * @throws上午9:12:53
+	 *  @title:insertHouse
+	 * @Description: 插入一条养生居数据
+	 * @throws上午9:51:59
 	 * returntype:long
 	 */
-	public long insertPost(Post post) {
+	public long insertHouse(HealthHouse house) {
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
-			String sql = "insert into tbl_post values(?,?,?,?)";
+			Connection con = util.getConnection();
+			String sql = "insert into tbl_healthhouse values(?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, 0);
-			ps.setString(2, post.getPostContent());
-			ps.setString(3, post.getPostSendPersonId());
-			ps.setString(4, post.getPostTime());
+			ps.setString(1, house.getId());
+			ps.setString(2, house.getPublishTime());
+			ps.setString(3, house.getTitle());
+			ps.setString(4, house.getResource());
+			ps.setString(5, house.getViewImg());
+			ps.setString(6, house.getAddress());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -54,32 +62,34 @@ public class PostDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 		return n;
 	}
+	
 	/**
 	 * 
-	 *  @title:queryPosts
-	 * @Description: 查询全部的帖子,保存 到list中并返回
-	 * @throws上午9:12:32
-	 * returntype:List<Post>
+	 *  @title:queryHouse
+	 * @Description: 查询全部的养生居数据
+	 * @throws上午10:40:35
+	 * returntype:List<HealthHouse>
 	 */
-	public List<Post> queryPosts(){
-		List<Post> list = new ArrayList<Post>();
+	public List<HealthHouse> queryHouse(){
+		List<HealthHouse> list = new ArrayList<HealthHouse>();
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
-			String sql = "select * from post";
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_healthhouse";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				Post post = new Post();
-				post.setPostId(rs.getInt("id"));
-				post.setPostContent(rs.getString("content"));
-				post.setPostSendPersonId(rs.getString("personId"));
-				post.setPostTime(rs.getString("publishTime"));
-				list.add(post);
+				HealthHouse house = new HealthHouse();
+				house.setId(rs.getString("id"));
+				house.setPublishTime(rs.getString("publishTime"));
+				house.setTitle(rs.getString("title"));
+				house.setResource(rs.getString("resource"));
+				house.setViewImg(rs.getString("viewImg"));
+				house.setAddress(rs.getString("address"));
+				list.add(house);
 			}
 			rs.close();
 			ps.close();
@@ -96,25 +106,24 @@ public class PostDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}	
 		return list;
 	}
-	
 	/**
 	 * 
-	 *  @title:delPost
-	 * @Description: 按照id删除帖子
-	 * @throws上午10:50:22
+	 *  @title:delHouse
+	 * @Description: 按照id删除
+	 * @throws上午10:53:57
 	 * returntype:int
 	 */
-	public int delPost(int id) {
+	public int delHouse(String id) {
 		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
-			String sql = "delete from tbl_post where id = ?";
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_healthhouse where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setString(1, id);
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {

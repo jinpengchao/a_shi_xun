@@ -12,9 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -81,10 +85,10 @@ public class NewPost extends AppCompatActivity {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(date);
-        Post post = new Post();
-        post.setPostContent(postContent);
-        post.setPostSendPersonId(postSendPersonId);
-        post.setPostTime(time);
+        final Post p = new Post();
+        p.setPostContent(postContent);
+        p.setPostSendPersonId(postSendPersonId);
+        p.setPostTime(time);
 
         new Thread(){
             @Override
@@ -94,9 +98,26 @@ public class NewPost extends AppCompatActivity {
                     URL url = new URL("http://"+ip+":8080/vhome/SavePostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
                     OutputStream os = connection.getOutputStream();
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os,"utf-8"));
+                    Gson gson = new Gson();
+                    String jsondata = gson.toJson(p);
+                    bw.write(jsondata);
+                    bw.flush();
+                    bw.close();
+                    os.close();
 
+                    InputStream is = connection.getInputStream();
+                    int n = is.read();
+                    if(n>0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
