@@ -70,7 +70,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			con = util.getConnection();
-			String sql = "select * from post";
+			String sql = "select * from tbl_post";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
