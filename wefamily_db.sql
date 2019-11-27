@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-11-27 08:42:21
+Date: 2019-11-27 21:42:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_alarm`;
 CREATE TABLE `tbl_alarm` (
-  `alarmId` varchar(30) NOT NULL DEFAULT '',
+  `alarmId` int(30) NOT NULL AUTO_INCREMENT,
   `alarmTime` datetime DEFAULT NULL,
   `sendPersonId` varchar(30) DEFAULT NULL,
   `receivePersonId` varchar(30) DEFAULT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `tbl_healthhouse` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_myachievement`;
 CREATE TABLE `tbl_myachievement` (
-  `id` varchar(30) NOT NULL,
+  `id` int(30) NOT NULL AUTO_INCREMENT,
   `achieve` int(11) DEFAULT NULL,
   `achieveName` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -168,7 +168,7 @@ CREATE TABLE `tbl_myattentions` (
 DROP TABLE IF EXISTS `tbl_mycollection`;
 CREATE TABLE `tbl_mycollection` (
   `phone` varchar(20) NOT NULL DEFAULT '',
-  `postId` varchar(30) DEFAULT NULL,
+  `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -227,7 +227,7 @@ CREATE TABLE `tbl_post` (
   `personId` varchar(30) NOT NULL,
   `publishTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -239,6 +239,7 @@ INSERT INTO `tbl_post` VALUES ('4', '1', '1', '2019-08-02 02:30:09');
 INSERT INTO `tbl_post` VALUES ('5', '1', '1', '2019-08-02 02:30:09');
 INSERT INTO `tbl_post` VALUES ('6', '1', '1', '2019-08-02 02:30:09');
 INSERT INTO `tbl_post` VALUES ('7', '123', '1', '2019-11-27 00:25:48');
+INSERT INTO `tbl_post` VALUES ('8', '36', '1', '2019-11-27 01:00:51');
 
 -- ----------------------------
 -- Table structure for `tbl_remind`
