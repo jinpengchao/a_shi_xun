@@ -10,7 +10,7 @@
         android:background="#ffffff"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/new_normal_warn_text"
+            android:id="@+id/send_new_warn_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/headerImg"
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="174dp"
-        android:src="@mipmap/sss"></ImageView>
+        android:layout_height="150dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -17,7 +15,7 @@
             android:text="新建常用提醒"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:background="#FF9800"
+            android:background="@drawable/child_button_shape"
             android:id="@+id/addNormalWarn"
             android:layout_weight="1"
             android:layout_width="wrap_content"
@@ -29,7 +27,7 @@
             android:text="发送新提醒"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:background="#FF9800"
+            android:background="@drawable/child_button_shape"
             android:layout_weight="1"
             android:id="@+id/sendNewWarn"
             android:layout_width="wrap_content"
@@ -39,7 +37,7 @@
             android:text="查看已发提醒"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:background="#FF9800"
+            android:background="@drawable/child_button_shape"
             android:layout_weight="1"
             android:id="@+id/quaryAllWarn"
             android:layout_width="wrap_content"

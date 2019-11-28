@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C8F1FF">
+    android:background="@drawable/background_color"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#C8F1FF"
+        android:background="#00ffffff"
         android:orientation="vertical">
         <TextView
             android:id="@+id/yang_li_calendar"
@@ -35,38 +36,39 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <Button
-            android:text="闹钟"
-            android:id="@+id/chizixin"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"></Button>
-        <Button
-            android:text="新闻"
-            android:id="@+id/quxinwen"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"></Button>
-        <Button
-            android:text="天气"
-            android:id="@+id/kantianqi"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"></Button>
-        <Button
-            android:text="小工具"
-            android:id="@+id/xiaogongju"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"></Button>
+
+            <ImageView
+                android:id="@+id/chizixin"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                ></ImageView>
+            <ImageView
+                android:id="@+id/kantianqi"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                ></ImageView>
+            <ImageView
+                android:id="@+id/quxinwen"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                ></ImageView>
+            <ImageView
+                android:id="@+id/xiaogongju"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                ></ImageView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

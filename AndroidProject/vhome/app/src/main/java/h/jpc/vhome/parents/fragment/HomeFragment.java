@@ -1,6 +1,7 @@
 package h.jpc.vhome.parents.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.R;
+import h.jpc.vhome.parents.ParentMain;
+import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
 import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
 
@@ -26,9 +31,9 @@ public class HomeFragment extends Fragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
     private ImageView alarm;
-    private ImageView news;
     private ImageView weather;
-    private Button tools;
+    private ImageView news;
+    private ImageView tools;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,23 +43,41 @@ public class HomeFragment extends Fragment {
          * 作者：靳朋朝
          * 完成时间：2019年11月25日19:14:34
          */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                yang_li_calendar = view.findViewById(R.id.yang_li_calendar);
-                yin_li_calendar = view.findViewById(R.id.yin_li_calendar);
-                Date date = new Date();
-                yang_li_calendar.setText(getDate(date)[0]);
-                yin_li_calendar.setText(getDate(date)[1]);
-            }
-        }).start();
+        yang_li_calendar = view.findViewById(R.id.yang_li_calendar);
+        yin_li_calendar = view.findViewById(R.id.yin_li_calendar);
+        Date date = new Date();
+        yang_li_calendar.setText(getDate(date)[0]);
+        yin_li_calendar.setText(getDate(date)[1]);
+        /*
+         *  功能：闹钟跳转
+         *  作者：靳朋朝
+         *  时间：2019年11月26日18:41:11
+         */
+        alarm = view.findViewById(R.id.chizixin);
+        Glide.with(this).load(R.mipmap.nz).into(alarm);
 
+        alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), AlarmActivity.class);
+                startActivity(intent);
+            }
+        });
+        //天气
+        weather = view.findViewById(R.id.kantianqi);
+        Glide.with(this).load(R.mipmap.tq).into(weather);
+        //新闻
+        news = view.findViewById(R.id.quxinwen);
+        Glide.with(this).load(R.mipmap.xw).into(news);
         /*
          *  功能：小工具跳转
          *  作者：靳朋朝
          *  时间：2019年11月26日09:05:26
          */
         tools = view.findViewById(R.id.xiaogongju);
+        Glide.with(this).load(R.mipmap.gj).into(tools);
+
         tools.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +86,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
 
         return view;
     }

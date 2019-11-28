@@ -18,6 +18,7 @@ public class SlideView extends LinearLayout {
 
     private static final String TAG = "SlideView";
 
+    public static boolean flag = true;
     private Context mContext;
     private LinearLayout mViewContent;
     private RelativeLayout mHolder;
@@ -91,6 +92,7 @@ public class SlideView extends LinearLayout {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
+                flag = true;
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
                 }
@@ -101,6 +103,7 @@ public class SlideView extends LinearLayout {
                 break;
             }
             case MotionEvent.ACTION_MOVE: {
+
                 int deltaX = x - mLastX;
                 int deltaY = y - mLastY;
                 if (Math.abs(deltaX) < Math.abs(deltaY) * TAN) {
@@ -119,6 +122,7 @@ public class SlideView extends LinearLayout {
                 break;
             }
             case MotionEvent.ACTION_UP: {
+                flag = false;
                 int newScrollX = 0;
                 if (scrollX - mHolderWidth * 0.75 > 0) {
                     newScrollX = mHolderWidth;
@@ -134,7 +138,6 @@ public class SlideView extends LinearLayout {
             default:
                 break;
         }
-
         mLastX = x;
         mLastY = y;
     }
