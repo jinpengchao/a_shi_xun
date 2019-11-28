@@ -13,18 +13,19 @@
     <RelativeLayout
         android:id="@+id/holder"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
-        android:background="@drawable/delete_bg"
-       >
+        android:background="@drawable/delete_holder_bg">
 
-        <ImageView
+        <TextView
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/del"
+            android:drawableLeft="@mipmap/location"
             android:layout_centerInParent="true"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@color/backgroundColor"
+            android:text="删除" />
     </RelativeLayout>
 
 </merge>
