@@ -30,11 +30,17 @@ public class ReadAlarm extends AppCompatActivity {
 
         list.clear();
         Clock clock = new Clock();
-        clock.setHour("10");
-        clock.setMinute("54");
+        clock.setHour("19");
+        clock.setMinute("19");
         clock.setContent("w");
         clock.setClockType(Clock.clock_open);
         list.add(clock);
+        Clock clock1 = new Clock();
+        clock1.setHour("19");
+        clock1.setMinute("10");
+        clock1.setContent("w");
+        clock1.setClockType(Clock.clock_open);
+        list.add(clock1);
 
         Log.e("list",list.toString());
         Intent intent = new Intent(ReadAlarm.this, CallAlarm.class);

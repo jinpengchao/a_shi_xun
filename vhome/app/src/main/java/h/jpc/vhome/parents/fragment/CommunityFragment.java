@@ -1,7 +1,6 @@
 package h.jpc.vhome.parents.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,6 @@ public class CommunityFragment extends Fragment {
                 getChildFragmentManager(),
                 android.R.id.tabcontent
         );
-
         //tab1
         TabHost.TabSpec tabSpec1 = fragmentTabHost
                 .newTabSpec("tag1")
@@ -103,16 +101,6 @@ public class CommunityFragment extends Fragment {
                 }
             }
         });
-        button = view.findViewById(R.id.addPost);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intenet  = new Intent();
-                intenet.setClass(getActivity(), NewPostActivity.class);
-                startActivity(intenet);
-            }
-        });
-        Log.e("wzw","没有显示");
         return view;
     }
     public View getTabSpaceView(String tag, String title){

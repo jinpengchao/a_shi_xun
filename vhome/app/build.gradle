@@ -16,17 +16,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // 添加插件
+    apply plugin: 'com.mob.sdk'
+
+    // 在MobSDK的扩展中注册SMSSDK的相关信息
+    MobSDK {
+        appKey "2d50a4a18faf0"
+        appSecret "df615af35c5b93f73c1b42a5b25a3ea9"
+        SMSSDK {}
+    }
 
 }
 repositories {
     mavenCentral()
-    maven{
+    maven {
         url 'https://maven.google.com'
     }
 }
+
 dependencies {
     implementation 'com.youth.banner:banner:1.4.10'  //轮播图
-    implementation 'com.github.bumptech.glide:glide:4.9.0'  //Glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'  //Glide
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'//高斯模糊图
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.code.gson:gson:2.5'
     implementation 'androidx.appcompat:appcompat:1.0.2'

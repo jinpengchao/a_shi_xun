@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="problem">
+<item >请选择密码提示问题</item>
+<item >我最好朋友的生日？</item>
+<item >我儿时居住地的地址？</item>
+<item >我的座右铭是？</item>
+<item >我最喜爱的电影？</item>
+            </string-array>
+</resources>
