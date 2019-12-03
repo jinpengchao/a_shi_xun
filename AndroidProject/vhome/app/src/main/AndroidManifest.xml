@@ -32,6 +32,16 @@
         <activity android:name=".parents.fragment.community_hotspot.NewPostActivity" />
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
+        <activity android:name=".user.SetNewPwdActivity"></activity>
+        <activity android:name=".user.FindBackPwdActivity" />
+        <activity android:name=".user.LoginByCodeActivity" />
+        <activity android:name=".user.CheckPhoneActivity" />
+        <activity android:name=".user.RegisterActivity" />
+        <activity android:name=".parents.fragment.alarm.ReadAlarm" />
+        <activity android:name=".parents.fragment.alarm.ClockDetail" />
+<!--        <activity android:name=".parents.fragment.alarm.AlarmActivity" />-->
+<!--        <activity android:name=".parents.fragment.tools.AllToolsActivity" />-->
+        <activity android:name=".parents.fragment.alarm.AlarmAlert" />
         <activity android:name=".children.ChildrenMain" />
         <activity android:name=".parents.ParentMain" />
         <activity android:name=".MainActivity">
@@ -42,6 +52,26 @@
             </intent-filter>
         </activity>
         <activity android:name=".children.fragment.WarnFragment" />
+
+        <receiver
+            android:name=".parents.fragment.alarm.CallAlarm"
+            android:process=".remote" />
+
+        <service
+            android:name=".parents.fragment.alarm.AlarmService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

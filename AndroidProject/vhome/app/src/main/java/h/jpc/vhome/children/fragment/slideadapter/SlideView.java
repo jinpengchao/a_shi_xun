@@ -134,7 +134,6 @@ public class SlideView extends LinearLayout {
             default:
                 break;
         }
-
         mLastX = x;
         mLastY = y;
     }

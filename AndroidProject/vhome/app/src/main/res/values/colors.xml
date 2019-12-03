@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#e6e6e6</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#FF0000</color>
+
+    <!--子女自定义颜色-->
+    <color name="red">#FFFF0000</color>
     <!--父母自定义颜色-->
     <color name="choseColor">#069EF1</color>
     <color name="notChoseColor">#000000</color>

@@ -10,7 +10,7 @@
         android:background="#ffffff"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/new_normal_warn_text"
+            android:id="@+id/send_new_warn_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -34,6 +34,7 @@
             android:background="#c0c0c0"
             android:paddingBottom="20dp" />
         <Spinner
+            android:id="@+id/spinner_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -62,7 +63,16 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="250dp"
                 android:layout_toRightOf="@+id/spinner_hour"></Spinner>
+
         </LinearLayout>
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0009"
+            android:text="温馨提示：注意老人的休息时间喔~"
+            android:layout_marginTop="180dp">
+        </TextView>
         <LinearLayout
             android:id="@+id/ll_btn"
             android:layout_width="match_parent"
