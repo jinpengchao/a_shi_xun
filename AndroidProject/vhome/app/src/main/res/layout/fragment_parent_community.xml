@@ -1,0 +1,39 @@
+<androidx.fragment.app.FragmentTabHost
+    android:id="@android:id/tabhost"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundColor"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_weight="5">
+            </TabWidget>
+            <Button
+                android:id="@+id/addPost"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@android:id/tabs"
+                android:layout_weight="1"
+                android:background="@mipmap/add"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_head">
+        </FrameLayout>
+    </RelativeLayout>
+</androidx.fragment.app.FragmentTabHost>
