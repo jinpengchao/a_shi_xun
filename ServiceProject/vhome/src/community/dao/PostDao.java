@@ -70,7 +70,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			con = util.getConnection();
-			String sql = "select * from tbl_post";
+			String sql = "select * from tbl_post order by publishTime desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
