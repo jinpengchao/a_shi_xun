@@ -1,4 +1,4 @@
-package h.jpc.vhome.parents.fragment.community_hotspot;
+package h.jpc.vhome.parents.fragment.community_hotspot.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

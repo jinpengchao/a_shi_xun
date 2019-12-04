@@ -1,4 +1,4 @@
-package h.jpc.vhome.parents.fragment.community_hotspot;
+package h.jpc.vhome.parents.fragment.community_hotspot.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
 import h.jpc.vhome.parents.fragment.adapter.AddPostImgAdapter;
+import h.jpc.vhome.parents.fragment.community_hotspot.util.CompressImg;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.app.Dialog;
@@ -62,7 +63,6 @@ public class NewPostActivity extends AppCompatActivity {
     private final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     private File tempFile;
     private final String IMAGE_DIR = Environment.getExternalStorageDirectory() + "/gridview/";
-    /* 头像名称 */
     private final String PHOTO_FILE_NAME = "temp_photo.jpg";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

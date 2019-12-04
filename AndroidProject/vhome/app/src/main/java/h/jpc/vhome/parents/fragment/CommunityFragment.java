@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.NewPostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
 import h.jpc.vhome.parents.fragment.fragment.HealthFragment;
 import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;

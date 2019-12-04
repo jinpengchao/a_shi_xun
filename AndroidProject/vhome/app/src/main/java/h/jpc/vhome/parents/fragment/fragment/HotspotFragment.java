@@ -27,7 +27,7 @@ import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
-import h.jpc.vhome.parents.fragment.community_hotspot.CommentPostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
 public class HotspotFragment extends Fragment {
@@ -59,7 +59,7 @@ public class HotspotFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
-                        simple.setClass(getContext(), CommentPostActivity.class);
+                        simple.setClass(getContext(), CommentActivity.class);
                         startActivity(simple);
                     }
                 });

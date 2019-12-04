@@ -1,7 +1,10 @@
-package h.jpc.vhome.parents.fragment.community_hotspot;
+package h.jpc.vhome.parents.fragment.community_hotspot.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
+import h.jpc.vhome.util.ConnectionUtil;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,19 +13,46 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-public class CommentPostActivity extends AppCompatActivity {
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+public class CommentActivity extends AppCompatActivity {
 
     private ExpandableListView commentListView;
     private TextView tvLoadMore;
     private EditText edtCommentContent;
     private Button btnCommentCommit;
     private MyClickListener listener;
+    private List<CommentDetailBean> commentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_post);
         getViews();
         registerListener();
+        getCommentData();
+    }
+
+    private void getCommentData() {
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/xxx");
+                    ConnectionUtil connectionUtil = new ConnectionUtil();
+                    String data = connectionUtil.getData(url);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private void getViews() {
