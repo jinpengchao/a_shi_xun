@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
+import entity.ParentUserInfo;
 import entity.User;
 
 public class UserDao {
+	//注册用户
 	public void registerUser(String phone, String password, String registerTime, String id, String wechat, String qq, int type){
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
@@ -39,6 +41,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
+	//添加用户信息
 	public void addUserInfo(String phone, String id, String nikeName, String sex, String area, String headerImg, int type){
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
@@ -70,6 +73,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
+	//密码登录
 	public User pwdLogin(String phone,String password) {
 		DBUtil util = DBUtil.getInstance();
 		User user = null;
@@ -86,6 +90,8 @@ public class UserDao {
 				if (password.equals(pwd)) {// 判断密码是否正确5
 					user = new User();
 					int type = rs.getInt("type");
+					user.setPhone(phone);
+					user.setPassword(password);
 					user.setType(type);
 					System.out.println("登陆成功！");
 				} else {
@@ -104,29 +110,74 @@ public class UserDao {
 		}
 		return user;
 	}
-//	public boolean exist(String userE) {
-//		DBUtil util = DBUtil.getInstance();
-//		boolean a = true;
-//		Connection conn = null;
-//		PreparedStatement psmt = null;
-//		ResultSet rs = null;
-//		try {
-//			conn = util.getConnection();
-//			String sql = "select * from tbl_user where email='"+userE+"'";
-//			psmt = conn.prepareStatement(sql);
-//			rs = psmt.executeQuery();
-//			if(rs.next()) {
-//				a = false;
-//				System.out.println("用户已经存在！");
-//			}
-//			rs.close();
-//			psmt.close();
-//			util.closeConnection();
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return a;
-//	}
+	//判断是否存在用户
+	public boolean exist(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		boolean a = true;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				a = false;
+				System.out.println("用户已经存在！");
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return a;
+	}
+	//查询用户个人信息
+	public ParentUserInfo findUserInfo(String phone,int type) {
+		DBUtil util = DBUtil.getInstance();
+		ParentUserInfo userInfo = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "";
+			if(type==0) {
+				System.out.println("type=0");
+				sql = "select * from tbl_parent_userinfo where phone='"+phone+"'";
+			}else if(type==1) {
+				System.out.println("type=1");
+				sql = "select * from tbl_child_userinfo where phone='"+phone+"'";
+			}
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				userInfo = new ParentUserInfo();
+				userInfo.setPhone(rs.getString("phone"));
+				userInfo.setId(rs.getString("id"));
+				userInfo.setNikeName(rs.getString("nickName"));
+				userInfo.setSex(rs.getString("sex"));
+				userInfo.setArea(rs.getString("area"));
+				userInfo.setAcieve(rs.getString("achieve"));
+				userInfo.setPersonalWord(rs.getString("personalWord"));
+				userInfo.setHeaderImg(rs.getString("headimg"));
+				userInfo.setType(type);
+				System.out.println("用户信息存储完毕");
+			}else {
+				System.out.println("未查到这个人的信息");
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userInfo;
+	}
 }

@@ -11,25 +11,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import entity.User;
-import net.sf.json.JSONObject;
+import entity.ParentUserInfo;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import user.service.UserService;
 
 /**
- * Servlet implementation class LoginByPwdServlet
+ * Servlet implementation class SearchUserInfoServlet
  */
-@WebServlet("/pwdlogin")
-public class LoginByPwdServlet extends HttpServlet {
+@WebServlet("/searchUserInfo")
+public class SearchUserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginByPwdServlet() {
+    public SearchUserInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,26 +53,26 @@ public class LoginByPwdServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-		Gson gson = new Gson();
-		User user = null;
-		user = gson.fromJson(data, User.class);
-		if(null==user) {
-			System.out.println("客户端登录消息未获取");
-		}
-		String phone = user.getPhone();
-		String password = user.getPassword();
-		
-		UserService userService = new UserService();
-		User u = userService.selectUser(phone, password);
-		if(u != null) {
-			int type = u.getType();
-			String p = u.getPhone();
-			String pwd = u.getPassword();
-			JSONObject json = new JSONObject();
-			json.put("p", p);
-			json.put("pwd", pwd);
-			json.put("type", type);
-			out.write(json.toString());
+		if(null==data) {
+			System.out.println("SearchUserInfoServlet--客户端信息未获取");
+		}else {
+			try {
+				JSONObject json = new JSONObject(data);
+				String phone = json.getString("phone");
+				int type = json.getInt("type");
+				System.out.println("SearchUserInfoServlet--:"+type+phone);
+				UserService userService = new UserService();
+				ParentUserInfo ui = userService.selectUserInfo(phone, type);
+				if(ui != null) {
+					Gson gson = new Gson();
+					String userInfos = gson.toJson(ui);
+					System.out.println("SearchUserInfoServlet--userInfos:"+userInfos);
+					out.write(userInfos);
+				}else
+					System.out.println("SearchUserInfoServlet--userInfos:怎么回事小老弟");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		out.flush();
 		out.close();

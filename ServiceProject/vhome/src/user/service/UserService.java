@@ -1,6 +1,7 @@
 package user.service;
 
 import entity.User;
+import entity.ParentUserInfo;
 import user.dao.UserDao;
 
 public class UserService {
@@ -9,14 +10,24 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.registerUser(phone, password, registerTime, id, wechat, qq, type);
 	}
+	//检查用户是否存在
+	public boolean notExists(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.exist(phone);
+	}
+	//用户登录
+		public User selectUser(String phone, String password) {
+			UserDao userDao = new UserDao();
+			return userDao.pwdLogin(phone, password);
+		}
 	//向用户信息表添加个人信息
 	public void insertUserInfo(String phone, String id, String nikeName, String sex, String area, String headerImg, int type) {
 		UserDao userDao = new UserDao();
 		userDao.addUserInfo(phone, id, nikeName, sex, area, headerImg, type);
 	}
-	//用户登录
-	public User selectUser(String phone, String password) {
+	//查询用户信息
+	public ParentUserInfo selectUserInfo(String phone, int type) {
 		UserDao userDao = new UserDao();
-		return userDao.pwdLogin(phone, password);
+		return userDao.findUserInfo(phone, type);
 	}
 }

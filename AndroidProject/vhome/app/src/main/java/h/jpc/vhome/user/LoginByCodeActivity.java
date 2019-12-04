@@ -76,7 +76,7 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_by_code);
         getView();
-        Glide.with(this).load(R.mipmap.mainbk).centerCrop().into(loginByCodeBk);
+        Glide.with(this).load(R.mipmap.mainbk1).centerCrop().into(loginByCodeBk);
         init();
     }
 

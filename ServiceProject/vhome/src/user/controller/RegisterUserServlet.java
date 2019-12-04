@@ -67,12 +67,14 @@ public class RegisterUserServlet extends HttpServlet {
 		String wechat = user.getWechat();
 		String qq = user.getQq();
 		int type = user.getType();
-		
 		UserService userService = new UserService();
-		userService.insertUser(phone, password, registerTime, id, wechat, qq, type);
-		userService.insertUserInfo(phone, id, nikeName, "", "", "", type);
-		System.out.println("注册成功！");
-		out.write("注册成功");
+		if(userService.notExists(phone)) {
+			userService.insertUser(phone, password, registerTime, id, wechat, qq, type);
+			userService.insertUserInfo(phone, id, nikeName, "", "", "", type);
+			System.out.println("注册成功！");
+			out.write("注册成功");
+		}else
+			out.write("该手机已经被注册");
 		out.flush();
 		out.close();
 		br.close();
