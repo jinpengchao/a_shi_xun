@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-11-27 21:42:16
+Date: 2019-12-04 16:04:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,6 +49,7 @@ CREATE TABLE `tbl_child_userinfo` (
 -- ----------------------------
 -- Records of tbl_child_userinfo
 -- ----------------------------
+INSERT INTO `tbl_child_userinfo` VALUES ('15199980888', '792997', 'qwqw', '', '', '');
 
 -- ----------------------------
 -- Table structure for `tbl_comment`
@@ -216,6 +217,7 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
+INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', '男', '石家庄', null, '100', '今晚必须死', 'sss.jpg');
 
 -- ----------------------------
 -- Table structure for `tbl_post`
@@ -227,7 +229,7 @@ CREATE TABLE `tbl_post` (
   `personId` varchar(30) NOT NULL,
   `publishTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -240,6 +242,23 @@ INSERT INTO `tbl_post` VALUES ('5', '1', '1', '2019-08-02 02:30:09');
 INSERT INTO `tbl_post` VALUES ('6', '1', '1', '2019-08-02 02:30:09');
 INSERT INTO `tbl_post` VALUES ('7', '123', '1', '2019-11-27 00:25:48');
 INSERT INTO `tbl_post` VALUES ('8', '36', '1', '2019-11-27 01:00:51');
+INSERT INTO `tbl_post` VALUES ('9', '', '1', '2019-12-03 20:22:42');
+INSERT INTO `tbl_post` VALUES ('10', '安静的拉开', '1', '2019-12-03 20:23:37');
+INSERT INTO `tbl_post` VALUES ('11', '草你妈的zw', '1', '2019-12-03 20:28:37');
+
+-- ----------------------------
+-- Table structure for `tbl_posts`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_posts`;
+CREATE TABLE `tbl_posts` (
+  `num` int(11) NOT NULL DEFAULT '0',
+  `id` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_posts
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tbl_remind`
@@ -307,6 +326,13 @@ CREATE TABLE `tbl_user` (
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
+INSERT INTO `tbl_user` VALUES ('1', '1', '0000-00-00 00:00:00', '1', null, null, '0');
+INSERT INTO `tbl_user` VALUES ('11111111111', '111', '2019-12-03 15:29:25', '111111', null, null, '0');
+INSERT INTO `tbl_user` VALUES ('15199980888', '1', '2019-12-04 10:56:41', '792997', '', '', '1');
+INSERT INTO `tbl_user` VALUES ('15227856991', '123123123123', '2019-12-03 10:26:52', '948878', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('15230867500', 'qqq123', '2019-12-03 10:27:52', '385206', '', '', '1');
+INSERT INTO `tbl_user` VALUES ('15513155225', 'qqq123', '2019-12-03 15:29:25', '658943', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('2', '2', '0000-00-00 00:00:00', '2', null, null, '1');
 
 -- ----------------------------
 -- Table structure for `tbl_walkpath`
