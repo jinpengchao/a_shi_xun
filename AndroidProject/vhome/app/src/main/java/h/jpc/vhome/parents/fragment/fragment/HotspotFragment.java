@@ -27,7 +27,7 @@ import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
-import h.jpc.vhome.parents.fragment.community_hotspot.SimplePostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.CommentPostActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
 public class HotspotFragment extends Fragment {
@@ -52,14 +52,14 @@ public class HotspotFragment extends Fragment {
                 String data = b.getString("data");
                 Gson gson = new Gson();
                 list = gson.fromJson(data,new TypeToken<List<Post>>(){}.getType());
-                HotSpotAdapter adapter = new HotSpotAdapter(getContext(),list,R.layout.item_listview_hotspot);
+                HotSpotAdapter adapter = new HotSpotAdapter(getContext(),list,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
 
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
-                        simple.setClass(getContext(), SimplePostActivity.class);
+                        simple.setClass(getContext(), CommentPostActivity.class);
                         startActivity(simple);
                     }
                 });

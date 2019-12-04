@@ -11,7 +11,7 @@
             android:id="@+id/iv_hot_person"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/child"/>
+            android:src="@mipmap/header"/>
         <TextView
             android:id="@+id/tv_hot_name"
             android:layout_width="wrap_content"
@@ -31,14 +31,18 @@
         android:textSize="28sp"
         android:text="明天大家能够一定好要出去玩"
         android:layout_marginTop="20dp"/>
-    <!--<GridView
-        android:layout_width="match_parent"
+
+    <GridView
+        android:id="@+id/gv_post_new"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:horizontalSpacing="20dp"
-        android:numColumns="2"
-        android:scrollbars="none"
-        android:verticalSpacing="20dp"/>-->
+        android:background="#EFDFDF"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        android:numColumns="3"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -46,7 +50,7 @@
             android:id="@+id/tv_hot_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2019/11/11"
+            android:text="9:30"
             android:textSize="20sp"
             android:layout_alignParentLeft="true"
             android:textColor="@android:color/darker_gray"/>
@@ -80,16 +84,6 @@
             android:layout_alignParentRight="true"
             android:textSize="20sp"/>
     </RelativeLayout>
-    <GridView
-        android:id="@+id/gv_post_new"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:background="#EFDFDF"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:numColumns="3"
-        android:columnWidth="90dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center" />
+
 
 </LinearLayout>

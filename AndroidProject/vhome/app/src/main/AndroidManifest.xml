@@ -28,7 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".parents.fragment.community_hotspot.SimplePostActivity"></activity>
+        <activity android:name=".parents.fragment.community_hotspot.CommentPostActivity"></activity>
         <activity android:name=".parents.fragment.community_hotspot.NewPostActivity" />
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
