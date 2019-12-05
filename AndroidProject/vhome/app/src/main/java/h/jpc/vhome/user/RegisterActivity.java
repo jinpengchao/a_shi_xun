@@ -6,7 +6,6 @@ import cn.smssdk.SMSSDK;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.entity.Post;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 

@@ -1,14 +1,15 @@
 package h.jpc.vhome.parents.fragment.community_hotspot.entity;
 
-public class ReplyDetailBean {
+public class PostBean {
     private int id;
-    private int commentId;
     private String nickName;
     private String headimg;
+    private String postContent;
     private String personId;
-    private int replyTotal;
-    private String content;
     private String time;
+    private String img1;
+    private String img2;
+    private String img3;
 
     public int getId() {
         return id;
@@ -18,12 +19,12 @@ public class ReplyDetailBean {
         this.id = id;
     }
 
-    public int getCommentId() {
-        return commentId;
+    public String getPostContent() {
+        return postContent;
     }
 
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
     }
 
     public String getNickName() {
@@ -50,27 +51,35 @@ public class ReplyDetailBean {
         this.personId = personId;
     }
 
-    public int getReplyTotal() {
-        return replyTotal;
-    }
-
-    public void setReplyTotal(int replyTotal) {
-        this.replyTotal = replyTotal;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getTime() {
         return time;
     }
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getImg1() {
+        return img1;
+    }
+
+    public void setImg1(String img1) {
+        this.img1 = img1;
+    }
+
+    public String getImg2() {
+        return img2;
+    }
+
+    public void setImg2(String img2) {
+        this.img2 = img2;
+    }
+
+    public String getImg3() {
+        return img3;
+    }
+
+    public void setImg3(String img3) {
+        this.img3 = img3;
     }
 }

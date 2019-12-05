@@ -7,7 +7,7 @@ public class CommentDetailBean {
     private int postId;
     private String personId;
     private String nickName;
-    private String userLogo;
+    private String headimg;
     private String content;
     private String time;
     private List<ReplyDetailBean> replyList;
@@ -16,14 +16,15 @@ public class CommentDetailBean {
 
     }
 
-    public CommentDetailBean(int id, int postId, String personId, String nickName, String userLogo, String content, String time) {
+    public CommentDetailBean(int id, int postId, String personId, String nickName, String headimg, String content, String time, List<ReplyDetailBean> replyList) {
         this.id = id;
         this.postId = postId;
         this.personId = personId;
         this.nickName = nickName;
-        this.userLogo = userLogo;
+        this.headimg = headimg;
         this.content = content;
         this.time = time;
+        this.replyList = replyList;
     }
 
     public int getId() {
@@ -58,12 +59,12 @@ public class CommentDetailBean {
         this.nickName = nickName;
     }
 
-    public String getUserLogo() {
-        return userLogo;
+    public String getHeadimg() {
+        return headimg;
     }
 
-    public void setUserLogo(String userLogo) {
-        this.userLogo = userLogo;
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
     }
 
     public String getContent() {

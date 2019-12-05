@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -25,7 +26,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
+import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
 import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.util.ConnectionUtil;
@@ -35,9 +37,11 @@ public class HotspotFragment extends Fragment {
     private MyClickListener listener;
     private View view;
     private Handler handler;
-    private List<Post> list = new ArrayList<Post>();
+    private List<PostBean> list = new ArrayList<>();
     private int USER_STATUS = 1;
     private int POST_STATUS = 2;
+    private Button addPost;
+    private int addPostCode = 100;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,10 +52,11 @@ public class HotspotFragment extends Fragment {
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
+                list.clear();
                 Bundle b = msg.getData();
                 String data = b.getString("data");
                 Gson gson = new Gson();
-                list = gson.fromJson(data,new TypeToken<List<Post>>(){}.getType());
+                list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 HotSpotAdapter adapter = new HotSpotAdapter(getContext(),list,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
 
@@ -63,6 +68,8 @@ public class HotspotFragment extends Fragment {
                         startActivity(simple);
                     }
                 });
+                adapter.notifyDataSetChanged();
+
             }
         };
         getdata();
@@ -90,17 +97,30 @@ public class HotspotFragment extends Fragment {
 
     private void getViews() {
         lvHotSpot = view.findViewById(R.id.lv_hot_spot);
-
+        addPost = view.findViewById(R.id.addPost);
     }
 
     private void registerListener() {
         listener = new MyClickListener();
-
+        addPost.setOnClickListener(listener);
     }
     class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.addPost:
+                    Intent intenet  = new Intent();
+                    intenet.setClass(getActivity(), NewPostActivity.class);
+                    startActivityForResult(intenet,addPostCode);
+                    break;
+            }
+        }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==addPostCode){
+            getdata();
         }
     }
 }

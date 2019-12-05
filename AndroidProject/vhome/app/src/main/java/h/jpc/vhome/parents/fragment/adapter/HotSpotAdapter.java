@@ -14,13 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 
 public class HotSpotAdapter extends BaseAdapter {
-    private List<Post> list;
+    private List<PostBean> list;
     private int itemLayoutId;
     private Context context;
-    public HotSpotAdapter(Context context,List<Post> list,int itemLayoutId) {
+    public HotSpotAdapter(Context context, List<PostBean> list, int itemLayoutId) {
         this.context = context;
         this.list = list;
         this.itemLayoutId = itemLayoutId;
@@ -61,7 +61,7 @@ public class HotSpotAdapter extends BaseAdapter {
         }
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotContent.setText(list.get(i).getPostContent());
-        String time = list.get(i).getPostTime();
+        String time = list.get(i).getTime();
         Date date = null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);

@@ -2,15 +2,20 @@ package h.jpc.vhome.parents.fragment.community_hotspot.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.adapter.AddPostImgAdapter;
 import h.jpc.vhome.parents.fragment.community_hotspot.util.CompressImg;
 import h.jpc.vhome.util.ConnectionUtil;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -87,6 +92,19 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void showdialog() {
+        //动态请求权限
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            1);
+        }
+
         View localView = LayoutInflater.from(this).inflate(
                 R.layout.dialog_add_postimg, null);
         TextView tv_camera = (TextView) localView.findViewById(R.id.tv_camera);
@@ -201,7 +219,6 @@ public class NewPostActivity extends AppCompatActivity {
                     //最后根据索引值获取图片路径
                     String path = cursor.getString(column_index);
                     Log.i("path","相册照片的路径是"+path);
-//                    photoPath(path);
                     compressImage(path);
                 }
 
@@ -250,14 +267,13 @@ public class NewPostActivity extends AppCompatActivity {
                 if (oldf.exists()) {
                     Log.d("images", "源文件存在" + path);
                 } else {
-                    Log.d("images", "源文件不存在" + path);
-                    Log.i("ss","啥样");
+                    Log.e("images", "源文件不存在" + path);
                 }
 
                 File dir = new File(IMAGE_DIR);
                 if (!dir.exists()) {
                     dir.mkdirs();
-                    Log.e("wzw","创建文件成功");
+                    Log.i("wzw","创建文件成功");
                 }
                 final File file = new File(dir + "/temp_photo" + System.currentTimeMillis() + ".jpg");
                 Log.i("wzw","file地址"+file.getAbsolutePath());
@@ -321,34 +337,6 @@ public class NewPostActivity extends AppCompatActivity {
                 case R.id.tv_post_cancel:
                     finish();
                     break;
-                    //打开相机相册
-//                case R.id.ll_open:
-//                    Log.i("community","打开手机相册，ll_open");
-//                    Intent intent = new Intent(Intent.ACTION_PICK, null);
-//                    intent.setDataAndType(
-//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//                    startActivityForResult(intent,
-//                            Constant.REQUEST_CODE_ALBUM);
-////                    ll_take.setVisibility(View.GONE);
-//                    break;
-//                    //拍照
-//                case R.id.ll_take:
-//                    File dir = new File(Constant.MyAvatarDir);
-//                    if (!dir.exists()) {
-//                        dir.mkdirs();
-//                    }
-//                    // 原图
-//                    File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
-//                            .format(new Date()));
-//                    String filePath = file.getAbsolutePath();// 获取相片的保存路径
-//                    Uri imageUri = Uri.fromFile(file);
-//
-//                    Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    intent2.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                    startActivityForResult(intent2,
-//                            Constant.REQUEST_CODE_CAMERA);
-////                    ll_open.setVisibility(View.GONE);
-//                    break;
             }
         }
     }
@@ -358,17 +346,38 @@ public class NewPostActivity extends AppCompatActivity {
      */
     private void saveMyPost() {
         //准备数据
+        //获取用户信息
+        String infoPath = (new MyApp()).getPathInfo();
+        SharedPreferences sp = getSharedPreferences(infoPath,MODE_PRIVATE);
+        //获取输入的帖子的内容
         String postContent = edtPostPublish.getText().toString().trim();
-        String postSendPersonId = "1";
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(date);
-        final Post p = new Post();
+
+        final PostBean p = new PostBean();
+        p.setNickName(sp.getString("nickName",""));
+        p.setHeadimg(sp.getString("headImg",""));
+        p.setPersonId(sp.getString("id",""));
         p.setPostContent(postContent);
-        p.setPostSendPersonId(postSendPersonId);
-        p.setPostTime(time);
+        p.setTime(time);
+
+        if(1==datas.size()){
+            String fileName1 = new File(datas.get(0).get("path").toString()).getName();
+            Log.e("fileName","文件名"+fileName1);
+            p.setImg1(fileName1);
+        }else if (2==datas.size()){
+            p.setImg1(new File(datas.get(0).get("path").toString()).getName());
+            p.setImg2(new File(datas.get(1).get("path").toString()).getName());
+        }else if(3==datas.size()){
+            p.setImg1(new File(datas.get(0).get("path").toString()).getName());
+            p.setImg2(new File(datas.get(1).get("path").toString()).getName());
+            p.setImg3(new File(datas.get(2).get("path").toString()).getName());
+        }
         Gson gson = new Gson();
         final String data = gson.toJson(p);
+        //上传图片
+        upLoadImg();
         new Thread(){
             @Override
             public void run() {
@@ -398,5 +407,11 @@ public class NewPostActivity extends AppCompatActivity {
             }
         }.start();
         finish();
+    }
+
+    private void upLoadImg() {
+        new Thread(){
+
+        }.start();
     }
 }

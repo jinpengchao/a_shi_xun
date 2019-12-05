@@ -24,7 +24,6 @@ import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;
 
 public class CommunityFragment extends Fragment {
     private Map<String,TextView> textViewMap = new HashMap<>();
-    private Button button;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,15 +85,6 @@ public class CommunityFragment extends Fragment {
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
                         break;
                 }
-            }
-        });
-        button = view.findViewById(R.id.addPost);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intenet  = new Intent();
-                intenet.setClass(getActivity(), NewPostActivity.class);
-                startActivity(intenet);
             }
         });
         return view;
