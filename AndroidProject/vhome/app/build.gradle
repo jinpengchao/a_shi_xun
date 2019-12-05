@@ -49,5 +49,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation files('libs/okhttp-4.2.2.jar')
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'org.xutils:xutils:3.4.0'
 }

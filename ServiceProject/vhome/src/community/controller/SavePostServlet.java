@@ -1,8 +1,10 @@
-package community.servlet;
+package community.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,16 +18,16 @@ import community.service.PostService;
 import entity.Post;
 
 /**
- * Servlet implementation class GetPostServlet
+ * Servlet implementation class SavePostServlet
  */
-@WebServlet("/GetPostServlet")
-public class GetPostServlet extends HttpServlet {
+@WebServlet("/SavePostServlet")
+public class SavePostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPostServlet() {
+    public SavePostServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,16 +38,25 @@ public class GetPostServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
+		int n = 0;
+		Post post = null;
+		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
-		String data = null;
-		List<Post> list = null;
-		list = (new PostService()).findPost();
-		System.out.println("getPostServlet中获得"+list.size()+"条数据");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
+		String data = br.readLine();
 		Gson gson = new Gson();
-		data = gson.toJson(list);
-		out.write(data);
+		post = gson.fromJson(data, Post.class);
+	
+		PostService ps = new PostService();
+		n =(int) ps.savePost(post);
+		System.out.println("savePostServlet的返回值"+n);
+		out.write(n+"");
 		out.flush();
 		out.close();
+		br.close();
+		is.close();
+		
+		
 	}
 
 	/**

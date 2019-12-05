@@ -2,10 +2,18 @@ package h.jpc.vhome;
 
 import android.app.Application;
 
+import org.xutils.x;
+
 public class MyApp extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        x.Ext.init(this);
+    }
+
     //10.7.89.13
     //10.7.89.128
-    private String ip = "10.7.89.128";
+    private String ip = "192.168.199.158";
     //本地用户信息的地址
     private String pathInfo = "parentUserInfo";
 

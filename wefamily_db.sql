@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-04 16:04:50
+Date: 2019-12-04 19:40:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,6 +59,8 @@ CREATE TABLE `tbl_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `postId` int(11) NOT NULL,
   `personId` varchar(30) NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -217,6 +219,7 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
+INSERT INTO `tbl_parent_userinfo` VALUES ('1', '1', '1', '男', '1', null, '2', '可以', 'sss.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', '男', '石家庄', null, '100', '今晚必须死', 'sss.jpg');
 
 -- ----------------------------
@@ -225,26 +228,22 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', 
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
   `content` varchar(500) DEFAULT NULL,
   `personId` varchar(30) NOT NULL,
-  `publishTime` datetime DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
-INSERT INTO `tbl_post` VALUES ('1', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('2', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('3', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('4', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('5', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('6', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('7', '123', '1', '2019-11-27 00:25:48');
-INSERT INTO `tbl_post` VALUES ('8', '36', '1', '2019-11-27 01:00:51');
-INSERT INTO `tbl_post` VALUES ('9', '', '1', '2019-12-03 20:22:42');
-INSERT INTO `tbl_post` VALUES ('10', '安静的拉开', '1', '2019-12-03 20:23:37');
-INSERT INTO `tbl_post` VALUES ('11', '草你妈的zw', '1', '2019-12-03 20:28:37');
+INSERT INTO `tbl_post` VALUES ('8', null, null, '36', '1', '2019-11-27 01:00:51');
+INSERT INTO `tbl_post` VALUES ('10', null, null, '安静的拉开', '1', '2019-12-03 20:23:37');
+INSERT INTO `tbl_post` VALUES ('15', null, null, '有一个', '1', '2019-12-04 10:37:16');
+INSERT INTO `tbl_post` VALUES ('16', null, null, '乐意', '1', '2019-12-04 10:43:09');
+INSERT INTO `tbl_post` VALUES ('17', null, null, '我可意', '1', '2019-12-04 10:48:28');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`
@@ -279,13 +278,15 @@ CREATE TABLE `tbl_remind` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
-  `commentid` int(30) NOT NULL AUTO_INCREMENT,
-  `postId` int(30) DEFAULT NULL,
-  `replyPersonId` varchar(30) DEFAULT NULL,
-  `commentPersonId` varchar(30) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `commentid` int(30) NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `PersonId` varchar(30) DEFAULT NULL,
+  `replyTotal` int(11) DEFAULT NULL,
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`commentid`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

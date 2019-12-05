@@ -51,16 +51,15 @@ public class UserDao {
 			String sql = "";
 			if(type == 0) {
 				sql = "insert into tbl_parent_userinfo values(?,?,?,?,?,?)";
-			}else {
+			}else
 				sql = "insert into tbl_child_userinfo values(?,?,?,?,?,?)";
-				psmt = conn.prepareStatement(sql);
-				psmt.setString(1, phone);
-				psmt.setString(2, id);
-				psmt.setString(3, nikeName);
-				psmt.setString(4, sex);
-				psmt.setString(5, area);
-				psmt.setString(6, headerImg);
-			}
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, phone);
+			psmt.setString(2, id);
+			psmt.setString(3, nikeName);
+			psmt.setString(4, sex);
+			psmt.setString(5, area);
+			psmt.setString(6,headerImg);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
 				System.out.println("添加用户信息成功");

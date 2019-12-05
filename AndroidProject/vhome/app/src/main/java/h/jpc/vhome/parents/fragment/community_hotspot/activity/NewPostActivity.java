@@ -10,6 +10,13 @@ import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.adapter.AddPostImgAdapter;
 import h.jpc.vhome.parents.fragment.community_hotspot.util.CompressImg;
 import h.jpc.vhome.util.ConnectionUtil;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -41,6 +48,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.File;
 import java.io.IOException;
@@ -333,6 +344,7 @@ public class NewPostActivity extends AppCompatActivity {
                 case R.id.btn_post_publish:
                     //保存自己发表的帖子到数据库，并显示
                     saveMyPost();
+                    upLoadImg();
                     break;
                 case R.id.tv_post_cancel:
                     finish();
@@ -361,23 +373,35 @@ public class NewPostActivity extends AppCompatActivity {
         p.setPersonId(sp.getString("id",""));
         p.setPostContent(postContent);
         p.setTime(time);
-
-        if(1==datas.size()){
-            String fileName1 = new File(datas.get(0).get("path").toString()).getName();
-            Log.e("fileName","文件名"+fileName1);
-            p.setImg1(fileName1);
-        }else if (2==datas.size()){
-            p.setImg1(new File(datas.get(0).get("path").toString()).getName());
-            p.setImg2(new File(datas.get(1).get("path").toString()).getName());
-        }else if(3==datas.size()){
-            p.setImg1(new File(datas.get(0).get("path").toString()).getName());
-            p.setImg2(new File(datas.get(1).get("path").toString()).getName());
-            p.setImg3(new File(datas.get(2).get("path").toString()).getName());
-        }
+//        if(1==datas.size()){
+//            File file0 = new File(datas.get(0).get("path").toString());
+//            p.setImg1(file0.getName());
+//            //上传图片
+//            upLoadImg(file0);
+//            p.setImg2(null);
+//            p.setImg3(null);
+//        }else if (2==datas.size()){
+//            File file0 = new File(datas.get(0).get("path").toString());
+//            File file1 = new File(datas.get(1).get("path").toString());
+//            p.setImg1(file0.getName());
+//            upLoadImg(file0);
+//            p.setImg2(file1.getName());
+//            upLoadImg(file1);
+//            p.setImg3(null);
+//        }else if(3==datas.size()){
+//            File file0 = new File(datas.get(0).get("path").toString());
+//            File file1 = new File(datas.get(1).get("path").toString());
+//            File file2 = new File(datas.get(2).get("path").toString());
+//            p.setImg1(file0.getName());
+//            upLoadImg(file0);
+//            p.setImg2(file1.getName());
+//            upLoadImg(file1);
+//            p.setImg3(file2.getName());
+//            upLoadImg(file2);
+//        }
         Gson gson = new Gson();
         final String data = gson.toJson(p);
-        //上传图片
-        upLoadImg();
+
         new Thread(){
             @Override
             public void run() {
@@ -389,6 +413,7 @@ public class NewPostActivity extends AppCompatActivity {
                     HttpURLConnection connection = util.sendData(url,data);
                     //获取数据
                     String data = util.getData(connection);
+                    //上传图片
 
                     if(null!=data){
                         runOnUiThread(new Runnable() {
@@ -410,8 +435,38 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void upLoadImg() {
-        new Thread(){
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
+        RequestParams params = new RequestParams(url);
+        params.addBodyParameter("msg","上传图片");
+        for (int i=0;i<datas.size();i++){
+            params.addBodyParameter("imgs",new File(datas.get(i).get("path").toString()));
+        }
+        params.setMultipart(true);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("upLoadImg","图片上传成功！");
+            }
 
-        }.start();
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("upLoadImg","图片上传失败！");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
     }
 }
