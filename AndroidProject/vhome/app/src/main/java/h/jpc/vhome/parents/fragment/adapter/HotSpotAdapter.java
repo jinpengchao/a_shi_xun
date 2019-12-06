@@ -77,7 +77,8 @@ public class HotSpotAdapter extends BaseAdapter {
 
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
-        String imgs = list.get(i).getImgs();
+        String imgs = null;
+        imgs = list.get(i).getImgs();
         Gson gson = new Gson();
         if (null!=imgs&&!"".equals(imgs)){
             List<String> imgsList = gson.fromJson(imgs,new TypeToken<List<String>>(){}.getType());

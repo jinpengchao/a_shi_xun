@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-06 10:52:23
+Date: 2019-12-06 17:03:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -235,7 +235,7 @@ CREATE TABLE `tbl_post` (
   `time` datetime DEFAULT NULL,
   `imgs` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -243,6 +243,8 @@ CREATE TABLE `tbl_post` (
 INSERT INTO `tbl_post` VALUES ('8', null, null, '36', '1', '2019-11-27 01:00:51', null);
 INSERT INTO `tbl_post` VALUES ('31', '1', 'sss.jpg', 'you', '1', '2019-12-06 02:34:23', '[\"temp_photo1575599661331.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('32', '1', 'sss.jpg', 'hhh', '1', '2019-12-06 02:48:05', '[\"temp_photo1575600473042.jpg\",\"temp_photo1575600483635.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('33', '1', 'sss.jpg', '我有一头小毛驴', '1', '2019-12-06 03:06:44', '[\"temp_photo1575601601583.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('34', '1', 'sss.jpg', '美', '1', '2019-12-06 03:14:39', '[\"temp_photo1575602077061.jpg\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`

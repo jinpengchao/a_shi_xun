@@ -410,7 +410,6 @@ public class NewPostActivity extends AppCompatActivity {
                 }
             }
         }.start();
-        finish();
     }
 
     private void upLoadImg() {
@@ -448,5 +447,6 @@ public class NewPostActivity extends AppCompatActivity {
                 return false;
             }
         });
+        finish();
     }
 }
