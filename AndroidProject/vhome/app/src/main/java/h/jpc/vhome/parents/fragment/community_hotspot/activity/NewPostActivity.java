@@ -81,6 +81,7 @@ public class NewPostActivity extends AppCompatActivity {
     private File tempFile;
     private final String IMAGE_DIR = Environment.getExternalStorageDirectory() + "/gridview/";
     private final String PHOTO_FILE_NAME = "temp_photo.jpg";
+    private int addPostResult = 200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -347,8 +348,15 @@ public class NewPostActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.btn_post_publish:
                     //保存自己发表的帖子到数据库，并显示
-                    saveMyPost();
-                    upLoadImg();
+                    if (datas.size()<1){
+                        int i = saveMyPost();
+                        if (i==1){
+                            finish();
+                        }
+                    }else {
+                        saveMyPost();
+                        upLoadImg();
+                    }
                     break;
                 case R.id.tv_post_cancel:
                     finish();
@@ -360,93 +368,114 @@ public class NewPostActivity extends AppCompatActivity {
     /**
      * 保存帖子
      */
-    private void saveMyPost() {
+    private int saveMyPost() {
         //准备数据
         //获取用户信息
         String infoPath = (new MyApp()).getPathInfo();
         SharedPreferences sp = getSharedPreferences(infoPath,MODE_PRIVATE);
         //获取输入的帖子的内容
         String postContent = edtPostPublish.getText().toString().trim();
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = sdf.format(date);
+        if (null==postContent||"".equals(postContent)){
+            Toast.makeText(this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
+            return 0;
+        }else {
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time = sdf.format(date);
 
-        final PostBean p = new PostBean();
-        p.setNickName(sp.getString("nickName",""));
-        p.setHeadimg(sp.getString("headImg",""));
-        p.setPersonId(sp.getString("id",""));
-        p.setPostContent(postContent);
-        p.setTime(time);
-        Gson gson = new Gson();
-        String imgs = gson.toJson(imgsName);
-        p.setImgs(imgs);
-        final String data = gson.toJson(p);
+            PostBean p = new PostBean();
+            p.setNickName(sp.getString("nickName",""));
+            p.setHeadimg(sp.getString("headImg",""));
+            p.setPersonId(sp.getString("id",""));
+            p.setPostContent(postContent);
+            p.setTime(time);
+            Gson gson = new Gson();
+            String imgs = gson.toJson(imgsName);
+            p.setImgs(imgs);
+            final String data = gson.toJson(p);
 
-        new Thread(){
-            @Override
-            public void run() {
-                String ip = (new MyApp()).getIp();
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/SavePostServlet");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    String data = util.getData(connection);
+            new Thread(){
+                @Override
+                public void run() {
+                    String ip = (new MyApp()).getIp();
+                    try {
+                        URL url = new URL("http://"+ip+":8080/vhome/SavePostServlet");
+                        ConnectionUtil util = new ConnectionUtil();
+                        //发送数据
+                        HttpURLConnection connection = util.sendData(url,data);
+                        //获取数据
+                        String data = util.getData(connection);
 
-                    if(null!=data){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        if(null!=data){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            }
-        }.start();
+            }.start();
+        }
+        return 1;
     }
 
     private void upLoadImg() {
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
+        String postContent = edtPostPublish.getText().toString().trim();
+        if (null==postContent||"".equals(postContent)){
+            Toast.makeText(NewPostActivity.this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
+        }else {
+            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
 //        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/SavePostServlet";
-        RequestParams params = new RequestParams(url);
-        params.addBodyParameter("msg","上传图片");
-        for (int i=0;i<datas.size();i++){
-            params.addBodyParameter("imgs",new File(datas.get(i).get("path").toString()));
+            RequestParams params = new RequestParams(url);
+            params.addBodyParameter("msg","上传图片");
+            for (int i=0;i<datas.size();i++){
+                params.addBodyParameter("imgs",new File(datas.get(i).get("path").toString()));
+            }
+            params.setMultipart(true);
+            x.http().post(params, new Callback.CacheCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.i("upLoadImg","图片上传成功！");
+                    for (int i=0;i<datas.size();i++){
+                        File file = new File(datas.get(i).get("path").toString());
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.e("upLoadImg","图片上传失败！");
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                    setResult(addPostResult);
+                    finish();
+                }
+
+                @Override
+                public boolean onCache(String result) {
+                    return false;
+                }
+            });
         }
-        params.setMultipart(true);
-        x.http().post(params, new Callback.CacheCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.i("upLoadImg","图片上传成功！");
-            }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("upLoadImg","图片上传失败！");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-
-            @Override
-            public boolean onCache(String result) {
-                return false;
-            }
-        });
-        finish();
+//        setResult(addPostResult);
+//        finish();
     }
 }

@@ -54,7 +54,7 @@ public class ShowPostImgAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgsList.get(i);
-        Log.i("showimgadapter","图片地址"+url);
+        Log.i("showimgadapter",i+"号图片地址"+url);
         Glide.with(context)
                 .load(url)
                 .priority(Priority.HIGH)

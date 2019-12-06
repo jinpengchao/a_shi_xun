@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class HotspotFragment extends Fragment {
     private int POST_STATUS = 2;
     private Button addPost;
     private int addPostCode = 100;
+    private int addPostResult = 200;
+    private HotSpotAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +60,8 @@ public class HotspotFragment extends Fragment {
                 String data = b.getString("data");
                 Gson gson = new Gson();
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
-                HotSpotAdapter adapter = new HotSpotAdapter(getContext(),list,R.layout.item_hotspot);
+                Log.i("hotspotFragment","list数据个数"+list.size());
+                adapter = new HotSpotAdapter(getContext(),list,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
 
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,8 +123,10 @@ public class HotspotFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("hotspot","调用了result方法");
         if(requestCode==addPostCode){
             getdata();
+            Log.i("hotspot","调用getdata方法");
         }
     }
 }
