@@ -8,6 +8,8 @@ public class PostBean {
     private String personId;
     private String time;
     private String imgs;
+    private int commentNum;
+    private int likeNum;
 
     public int getId() {
         return id;
@@ -63,5 +65,21 @@ public class PostBean {
 
     public void setImgs(String imgs) {
         this.imgs = imgs;
+    }
+
+    public int getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
     }
 }

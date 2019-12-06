@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import community.service.CommentService;
+import community.service.GoodPostService;
 import community.service.PostService;
 import entity.PostBean;
 
@@ -41,6 +43,12 @@ public class GetPostServlet extends HttpServlet {
 		List<PostBean> list = null;
 		list = (new PostService()).findPost();
 		System.out.println("getPostServlet中获得"+list.size()+"条数据");
+		for(int i=0;i<list.size();i++) {
+			int likeNum = (new GoodPostService()).findGoodPostCount(list.get(i).getId());
+			list.get(i).setLikeNum(likeNum);
+			int commentNum = (new CommentService()).findCommentCount(list.get(i).getId());
+			list.get(i).setCommentNum(commentNum);
+		}
 		Gson gson = new Gson();
 		data = gson.toJson(list);
 		out.write(data);

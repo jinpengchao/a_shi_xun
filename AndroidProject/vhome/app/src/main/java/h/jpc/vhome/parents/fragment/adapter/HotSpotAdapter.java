@@ -82,17 +82,13 @@ public class HotSpotAdapter extends BaseAdapter {
         //加载说说图片
         String imgs = null;
         imgs = list.get(i).getImgs();
-        Log.i("hotspotadaper","i值:"+i);
         Gson gson = new Gson();
-        if (null!=imgs&&!"".equals(imgs)){
-            List<String> imgsList = gson.fromJson(imgs,new TypeToken<List<String>>(){}.getType());
-            Log.i("hotspotadaper","图片列表数据个数："+imgsList.size());
-            ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList,context);
-            holder.gvPostShow.setAdapter(showPostImgAdapter);
-        }else {
-            Log.i("hotspotadapter","这里没有图片");
-        }
-
+        List<String> imgsList = gson.fromJson(imgs,new TypeToken<List<String>>(){}.getType());
+        Log.i("hotspotadaper","图片列表数据个数："+imgsList.size());
+        ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList,context);
+        holder.gvPostShow.setAdapter(showPostImgAdapter);
+        holder.tvHotLikenum.setText(list.get(i).getLikeNum()+"");
+        holder.tvHotComnum.setText(list.get(i).getCommentNum()+"");
         return view;
     }
     static final class ViewHolder{

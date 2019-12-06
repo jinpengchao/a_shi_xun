@@ -41,7 +41,7 @@ public class PostDao {
 			ps.setString(4, post.getPostContent());
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
-			ps.setString(7, post.getImgs());
+			ps.setString(7, post.getImgs());			
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -75,6 +75,51 @@ public class PostDao {
 			con = util.getConnection();
 			String sql = "select * from tbl_post order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				PostBean post = new PostBean();
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+				list.add(post);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	/**
+	 * 
+	 *  @title:queryPosts
+	 * @Description: 根据用户id重载查询方法
+	 * @throws下午8:03:14
+	 * returntype:List<PostBean>
+	 */
+	public List<PostBean> queryPosts(String personId){
+		List<PostBean> list = new ArrayList<PostBean>();
+		DBUtil util = new DBUtil();
+		try {
+			con = util.getConnection();
+			String sql = "select * from tbl_post where personId = ? order by time desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				PostBean post = new PostBean();

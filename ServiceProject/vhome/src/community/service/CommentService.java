@@ -40,8 +40,18 @@ public class CommentService {
 	 * @throws下午9:13:11
 	 * returntype:List<Comment>
 	 */
-	public List<Comment> findCommet(){
-		return (new CommentDao()).queryComment();
+	public List<Comment> findComment(int postId){
+		return (new CommentDao()).queryComment(postId);
+	}
+	/**
+	 * 根据postId查询
+	 *  @title:findCommentCount
+	 * @Description: todo
+	 * @throws下午9:49:37
+	 * returntype:int
+	 */
+	public int findCommentCount(int postId) {
+		return (new CommentDao()).queryCommentCount(postId);
 	}
 	/**
 	 * 

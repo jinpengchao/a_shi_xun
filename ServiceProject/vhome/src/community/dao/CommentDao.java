@@ -68,17 +68,18 @@ public class CommentDao {
 	/**
 	 * 
 	 *  @title:queryComment
-	 * @Description: 查询全部的评论
+	 * @Description: 查询指定帖子全部的评论
 	 * @throws下午9:04:03
 	 * returntype:List<Comment>
 	 */
-	public List<Comment> queryComment(){
+	public List<Comment> queryComment(int postId){
 		List<Comment> list = new ArrayList<Comment>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_comment";
+			String sql = "select * from tbl_comment where postId = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, postId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Comment comment = new Comment();
@@ -106,6 +107,44 @@ public class CommentDao {
 			}
 		}
 		return list;
+		
+	}
+	/**
+	 * 
+	 *  @title:queryCommentCount
+	 * @Description: 查询一个帖子的评论总数
+	 * @throws下午9:47:33
+	 * returntype:int
+	 */
+	public int queryCommentCount(int postId){
+		int num = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select count(*) from tbl_comment where postId=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, postId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				num = rs.getInt(1);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return num;
 		
 	}
 	/**
