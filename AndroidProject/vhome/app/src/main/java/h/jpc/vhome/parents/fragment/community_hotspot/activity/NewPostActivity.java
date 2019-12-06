@@ -74,6 +74,7 @@ public class NewPostActivity extends AppCompatActivity {
     private GridView gvNewPost;
     private AddPostImgAdapter adapter;
     private List<Map<String,Object>> datas;
+    private List<String> imgsName;
     private Dialog dialog;
     private final int PHOTO_REQUEST_CAREMA = 1;// 拍照
     private final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
@@ -100,6 +101,7 @@ public class NewPostActivity extends AppCompatActivity {
                 showdialog();
             }
         });
+        imgsName = new ArrayList<>();
     }
 
     private void showdialog() {
@@ -294,8 +296,10 @@ public class NewPostActivity extends AppCompatActivity {
 //                        .fromFilePath(path).toFilePath(file.getAbsolutePath().toString()).compress();
                 if (file.exists()) {
                     Log.d("images", "压缩后的文件存在" + file.getAbsolutePath());
+                    //添加文件的名字到list数组
+                    imgsName.add(file.getName());
                 } else {
-                    Log.d("images", "压缩后的不存在" + file.getAbsolutePath());
+                    Log.e("images", "压缩后的不存在" + file.getAbsolutePath());
                 }
                 Message message = new Message();
                 message.what = 0xAAAAAAAA;
@@ -373,33 +377,9 @@ public class NewPostActivity extends AppCompatActivity {
         p.setPersonId(sp.getString("id",""));
         p.setPostContent(postContent);
         p.setTime(time);
-//        if(1==datas.size()){
-//            File file0 = new File(datas.get(0).get("path").toString());
-//            p.setImg1(file0.getName());
-//            //上传图片
-//            upLoadImg(file0);
-//            p.setImg2(null);
-//            p.setImg3(null);
-//        }else if (2==datas.size()){
-//            File file0 = new File(datas.get(0).get("path").toString());
-//            File file1 = new File(datas.get(1).get("path").toString());
-//            p.setImg1(file0.getName());
-//            upLoadImg(file0);
-//            p.setImg2(file1.getName());
-//            upLoadImg(file1);
-//            p.setImg3(null);
-//        }else if(3==datas.size()){
-//            File file0 = new File(datas.get(0).get("path").toString());
-//            File file1 = new File(datas.get(1).get("path").toString());
-//            File file2 = new File(datas.get(2).get("path").toString());
-//            p.setImg1(file0.getName());
-//            upLoadImg(file0);
-//            p.setImg2(file1.getName());
-//            upLoadImg(file1);
-//            p.setImg3(file2.getName());
-//            upLoadImg(file2);
-//        }
         Gson gson = new Gson();
+        String imgs = gson.toJson(imgsName);
+        p.setImgs(imgs);
         final String data = gson.toJson(p);
 
         new Thread(){
@@ -413,7 +393,6 @@ public class NewPostActivity extends AppCompatActivity {
                     HttpURLConnection connection = util.sendData(url,data);
                     //获取数据
                     String data = util.getData(connection);
-                    //上传图片
 
                     if(null!=data){
                         runOnUiThread(new Runnable() {
@@ -436,6 +415,7 @@ public class NewPostActivity extends AppCompatActivity {
 
     private void upLoadImg() {
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
+//        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/SavePostServlet";
         RequestParams params = new RequestParams(url);
         params.addBodyParameter("msg","上传图片");
         for (int i=0;i<datas.size();i++){

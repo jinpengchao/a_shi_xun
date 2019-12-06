@@ -33,16 +33,15 @@
         android:layout_marginTop="20dp"/>
 
     <GridView
-        android:id="@+id/gv_post_new"
+        android:id="@+id/gv_post_show"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#EFDFDF"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         android:numColumns="3"
-        android:columnWidth="90dp"
+        android:columnWidth="100dp"
         android:stretchMode="columnWidth"
-        android:gravity="center" />
+        android:gravity="center"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

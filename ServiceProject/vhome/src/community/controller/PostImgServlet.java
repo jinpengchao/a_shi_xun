@@ -2,6 +2,8 @@ package community.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +35,7 @@ public class PostImgServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		List<String> imgs = new ArrayList<String>();
 		SmartUpload smartUpload = new SmartUpload();
 		try {
 			smartUpload.initialize(this.getServletConfig(), request, response);
@@ -44,10 +47,11 @@ public class PostImgServlet extends HttpServlet {
 			for (int i = 0; i < files.getCount(); i++) {
 				com.jspsmart.upload.File file = files.getFile(i);
 				if (!file.isMissing()) {
-					SimpleDateFormat sdf = new SimpleDateFormat(
-							"yyyyMMddHHmmssSSS");
-					String name = sdf.format(new java.util.Date());
-					name = name + "." + file.getFileExt();// 得到文件的扩展名
+//					SimpleDateFormat sdf = new SimpleDateFormat(
+//							"yyyyMMddHHmmssSSS");
+//					String name = sdf.format(new java.util.Date());
+					String name = file.getFileName();
+//					name = name + "." + file.getFileExt();// 得到文件的扩展名
 					String filename = this.getServletContext().getRealPath("/")
 							+ "images\\" + name;
 					System.out.println("文件地址"+filename);

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import community.service.PostService;
-import entity.Post;
+import entity.PostBean;
 import entity.User;
 import user.service.UserService;
 

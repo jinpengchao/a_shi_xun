@@ -1,12 +1,17 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +60,7 @@ public class HotSpotAdapter extends BaseAdapter {
             holder.tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
             holder.ivHotlike = view.findViewById(R.id.iv_hot_like);
             holder.tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
+            holder.gvPostShow = view.findViewById(R.id.gv_post_show);
             view.setTag(holder);
         }else {
             holder = (ViewHolder) view.getTag();
@@ -71,6 +77,15 @@ public class HotSpotAdapter extends BaseAdapter {
 
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
+        String imgs = list.get(i).getImgs();
+        Gson gson = new Gson();
+        if (null!=imgs&&!"".equals(imgs)){
+            List<String> imgsList = gson.fromJson(imgs,new TypeToken<List<String>>(){}.getType());
+            Log.i("hotspotadaper","图片列表"+imgsList.size());
+            ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList,context);
+            holder.gvPostShow.setAdapter(showPostImgAdapter);
+        }
+
         return view;
     }
     static final class ViewHolder{
@@ -81,5 +96,6 @@ public class HotSpotAdapter extends BaseAdapter {
         TextView tvHotComnum;
         ImageView ivHotlike;
         TextView tvHotLikenum;
+        GridView gvPostShow;
     }
 }

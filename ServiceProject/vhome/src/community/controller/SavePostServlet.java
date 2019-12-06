@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.jspsmart.upload.SmartUpload;
+import com.jspsmart.upload.SmartUploadException;
 
 import community.service.PostService;
-import entity.Post;
+import entity.PostBean;
 
 /**
  * Servlet implementation class SavePostServlet
@@ -39,13 +42,13 @@ public class SavePostServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		int n = 0;
-		Post post = null;
+		PostBean post = null;
 		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
 		Gson gson = new Gson();
-		post = gson.fromJson(data, Post.class);
+		post = gson.fromJson(data, PostBean.class);
 	
 		PostService ps = new PostService();
 		n =(int) ps.savePost(post);

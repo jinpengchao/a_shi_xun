@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import community.service.PostService;
-import entity.Post;
+import entity.PostBean;
 
 /**
  * Servlet implementation class GetPostServlet
@@ -38,7 +38,7 @@ public class GetPostServlet extends HttpServlet {
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		String data = null;
-		List<Post> list = null;
+		List<PostBean> list = null;
 		list = (new PostService()).findPost();
 		System.out.println("getPostServlet中获得"+list.size()+"条数据");
 		Gson gson = new Gson();
