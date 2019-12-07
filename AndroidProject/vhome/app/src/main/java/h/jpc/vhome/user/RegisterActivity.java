@@ -1,15 +1,17 @@
 package h.jpc.vhome.user;
 
 import androidx.appcompat.app.AppCompatActivity;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,14 +19,11 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -213,21 +212,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         else
             return mobileNums.matches(telRegex);
     }
-
-    /**
-     * progressbar
-     */
-    private void createProgressBar() {
-        FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        ProgressBar mProBar = new ProgressBar(this);
-        mProBar.setLayoutParams(layoutParams);
-        mProBar.setVisibility(View.VISIBLE);
-        layout.addView(mProBar);
-    }
-
     @Override
     protected void onDestroy() {
         SMSSDK.unregisterAllEventHandler();
@@ -303,6 +287,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }.start();
+
+        JMessageClient.register(phoneNums, passWords, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if (i == 0) {
+                    SharePreferenceManager.setRegisterName(phoneNums);
+                    SharePreferenceManager.setRegistePass(passWords);
+                }
+            }
+        });
         finish();
     }
 }

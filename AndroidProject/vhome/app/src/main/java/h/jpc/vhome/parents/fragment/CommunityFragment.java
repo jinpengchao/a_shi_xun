@@ -17,13 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.NewPostActivity;
 import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
 import h.jpc.vhome.parents.fragment.fragment.HealthFragment;
 import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;
 
 public class CommunityFragment extends Fragment {
     private Map<String,TextView> textViewMap = new HashMap<>();
+    private Button button;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,6 +86,15 @@ public class CommunityFragment extends Fragment {
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
                         break;
                 }
+            }
+        });
+        button = view.findViewById(R.id.addPost);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intenet  = new Intent();
+                intenet.setClass(getActivity(), NewPostActivity.class);
+                startActivity(intenet);
             }
         });
         return view;

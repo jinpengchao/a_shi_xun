@@ -1,26 +1,26 @@
 package h.jpc.vhome.children.fragment.historyAdapter;
 
 public class AlarmBean {
-    private String alarmId;
+    private int alarmId;
     private String alarmTime;
-    private String sendPerson;
-    private String receivePerson;
+    private String sendPersonId;
+    private String receivePersonId;
     private String content;
 
     public AlarmBean() { }
-    public AlarmBean(String alarmId, String alarmTime, String sendPerson, String receivePerson, String content) {
+    public AlarmBean(int alarmId, String alarmTime, String sendPersonId, String receivePersonId, String content) {
         this.alarmId = alarmId;
         this.alarmTime = alarmTime;
-        this.sendPerson = sendPerson;
-        this.receivePerson = receivePerson;
+        this.sendPersonId = sendPersonId;
+        this.receivePersonId = receivePersonId;
         this.content = content;
     }
 
-    public String getAlarmId() {
+    public int getAlarmId() {
         return alarmId;
     }
 
-    public void setAlarmId(String alarmId) {
+    public void setAlarmId(int alarmId) {
         this.alarmId = alarmId;
     }
 
@@ -32,20 +32,20 @@ public class AlarmBean {
         this.alarmTime = alarmTime;
     }
 
-    public String getSendPerson() {
-        return sendPerson;
+    public String getSendPersonId() {
+        return sendPersonId;
     }
 
-    public void setSendPerson(String sendPerson) {
-        this.sendPerson = sendPerson;
+    public void setSendPersonId(String sendPersonId) {
+        this.sendPersonId = sendPersonId;
     }
 
-    public String getReceivePerson() {
-        return receivePerson;
+    public String getReceivePersonId() {
+        return receivePersonId;
     }
 
-    public void setReceivePerson(String receivePerson) {
-        this.receivePerson = receivePerson;
+    public void setReceivePersonId(String receivePersonId) {
+        this.receivePersonId = receivePersonId;
     }
 
     public String getContent() {
@@ -56,14 +56,5 @@ public class AlarmBean {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return "AlarmBean{" +
-                "alarmId='" + alarmId + '\'' +
-                ", alarmTime='" + alarmTime + '\'' +
-                ", sendPerson='" + sendPerson + '\'' +
-                ", receivePerson='" + receivePerson + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
+
 }
