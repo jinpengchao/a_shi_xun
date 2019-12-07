@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -27,10 +25,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.SimplePostActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
 public class HotspotFragment extends Fragment {
@@ -38,42 +35,34 @@ public class HotspotFragment extends Fragment {
     private MyClickListener listener;
     private View view;
     private Handler handler;
-    private List<PostBean> list = new ArrayList<>();
+    private List<Post> list = new ArrayList<Post>();
     private int USER_STATUS = 1;
     private int POST_STATUS = 2;
-    private Button addPost;
-    private int addPostCode = 100;
-    private int addPostResult = 200;
-    private HotSpotAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_hot_spot,null);
         getViews();
         registerListener();
-        list.clear();
+//        list.clear();
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                list.clear();
                 Bundle b = msg.getData();
                 String data = b.getString("data");
                 Gson gson = new Gson();
-                list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
-                Log.i("hotspotFragment","list数据个数"+list.size());
-                adapter = new HotSpotAdapter(getContext(),list,R.layout.item_hotspot);
+                list = gson.fromJson(data,new TypeToken<List<Post>>(){}.getType());
+                HotSpotAdapter adapter = new HotSpotAdapter(getContext(),list,R.layout.item_listview_hotspot);
                 lvHotSpot.setAdapter(adapter);
 
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
-                        simple.setClass(getContext(), CommentActivity.class);
+                        simple.setClass(getContext(), SimplePostActivity.class);
                         startActivity(simple);
                     }
                 });
-                adapter.notifyDataSetChanged();
-
             }
         };
         getdata();
@@ -101,32 +90,17 @@ public class HotspotFragment extends Fragment {
 
     private void getViews() {
         lvHotSpot = view.findViewById(R.id.lv_hot_spot);
-        addPost = view.findViewById(R.id.addPost);
+
     }
 
     private void registerListener() {
         listener = new MyClickListener();
-        addPost.setOnClickListener(listener);
+
     }
     class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.addPost:
-                    Intent intenet  = new Intent();
-                    intenet.setClass(getActivity(), NewPostActivity.class);
-                    startActivityForResult(intenet,addPostCode);
-                    break;
-            }
-        }
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("hotspot","调用了result方法");
-        if(requestCode==addPostCode){
-            getdata();
-            Log.i("hotspot","调用getdata方法");
         }
     }
 }
