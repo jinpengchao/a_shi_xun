@@ -1,7 +1,6 @@
 package h.jpc.vhome.children.fragment;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,18 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +28,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.children.fragment.dialog.MyDialog;
 import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
@@ -45,10 +35,6 @@ import h.jpc.vhome.children.fragment.historyAdapter.HistoryWarnAdapter;
 import h.jpc.vhome.children.fragment.imageloader.GlideImageLoader;
 import h.jpc.vhome.children.fragment.slideadapter.ListViewCompat;
 import h.jpc.vhome.children.fragment.slideadapter.SlideView;
-import h.jpc.vhome.user.entity.User;
-import h.jpc.vhome.util.ConnectionUtil;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class WarnFragment extends Fragment implements AdapterView.OnItemLongClickListener, View.OnClickListener, SlideView.OnSlideListener {
@@ -69,7 +55,6 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
     private  List<String> hourList;
     private  List<String> minuteList;
     private  List<AlarmBean> alarmBeanList;
-    private SharedPreferences sp;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -119,16 +104,13 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 final Spinner sPeople = (Spinner)view.findViewById(R.id.spinner_people);
                 final Spinner sHour = (Spinner)view.findViewById(R.id.spinner_hour);
                 final Spinner sMinute = (Spinner)view.findViewById(R.id.spinner_minute);
-                final String[] receiver = {""};
-                final String[] hour = {""};
-                final String[] minute = {""};
                 peopleData();
                 hourData();
                 minuteData();
                 sPeople.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        receiver[0] = sPeople.getSelectedItem()+"";
+                        Log.e("sPeople",sPeople.getSelectedItem()+"");
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -137,7 +119,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 sHour.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        hour[0] = sHour.getSelectedItem()+"";
+                        Log.e("sHour",sHour.getSelectedItem()+"");
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -146,7 +128,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 sMinute.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        minute[0] = sMinute.getSelectedItem()+"";
+                        Log.e("sMinute",sMinute.getSelectedItem()+"");
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -160,11 +142,6 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 sMinute.setAdapter(adapterMinute);
 
                 final EditText editText = (EditText)view.findViewById(R.id.send_new_warn_text);
-
-                //这呢 别找了
-                sp = getActivity().getSharedPreferences("childUserInfo",MODE_PRIVATE);
-                final String senderId = sp.getString("id","");
-
                 cancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,8 +152,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                     @Override
                     public void onClick(View v) {
                         //存入数据库放入常用列表
-                        String content = editText.getText().toString();
-                        sendNewAlarm(receiver,hour,minute,"792997",content);
+                        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
                         myDialog.dismiss();
                     }
                 });
@@ -207,53 +183,8 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
         mListView.setOnItemLongClickListener(this);
         return view;
     }
-
-    public void sendNewAlarm(String[] receiver,String[] hour,String[] minute,String senderId,String content){
-        //准备数据
-        AlarmBean alarmBean = new AlarmBean();
-        String time = hour[0]+":"+minute[0];
-        alarmBean.setReceivePersonId(receiver[0]);
-        alarmBean.setSendPersonId(senderId);
-        alarmBean.setAlarmTime(time);
-        alarmBean.setContent(content);
-        Gson gson = new Gson();
-        final String data = gson.toJson(alarmBean);
-        new Thread(){
-            @Override
-            public void run() {
-                String ip = (new MyApp()).getIp();
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/sendnew");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    final String data = util.getData(connection);
-                    if(null!=data){
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(),data,Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(),"发送失败error500",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
     public void historyWarnData(){
-       /* alarmBeanList = new ArrayList<>();
+        alarmBeanList = new ArrayList<>();
         AlarmBean alarmBean = new AlarmBean();
         alarmBean.setContent("鸡哥哥，记得按时吃屎！！！");
         alarmBean.setAlarmTime("07:08");
@@ -271,7 +202,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
         alarmBean13.setAlarmTime("07:08");
         alarmBean13.setSendPerson("靳爹爹");
         alarmBean13.setReceivePerson("鸡哥哥");
-        alarmBeanList.add(alarmBean13);*/
+        alarmBeanList.add(alarmBean13);
     }
     public void normalWarnData(){
         for (int i = 0; i < 20; i++) {
@@ -306,8 +237,10 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
     public void peopleData(){
         //sPeople查询该账号关联的人，植入数据
         peopleList = new ArrayList<>();
-        peopleList.add("195412");
-        peopleList.add("222222");
+        peopleList.add("父亲");
+        peopleList.add("母亲");
+        peopleList.add("舅舅");
+        peopleList.add("大伯");
     }
     public void setBinder(){
         //设置banner样式

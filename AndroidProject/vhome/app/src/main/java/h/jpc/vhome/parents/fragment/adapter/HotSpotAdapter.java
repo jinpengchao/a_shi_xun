@@ -1,12 +1,17 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,13 +19,13 @@ import java.util.Date;
 import java.util.List;
 
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.Post;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 
 public class HotSpotAdapter extends BaseAdapter {
-    private List<Post> list;
+    private List<PostBean> list;
     private int itemLayoutId;
     private Context context;
-    public HotSpotAdapter(Context context,List<Post> list,int itemLayoutId) {
+    public HotSpotAdapter(Context context, List<PostBean> list, int itemLayoutId) {
         this.context = context;
         this.list = list;
         this.itemLayoutId = itemLayoutId;
@@ -55,13 +60,16 @@ public class HotSpotAdapter extends BaseAdapter {
             holder.tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
             holder.ivHotlike = view.findViewById(R.id.iv_hot_like);
             holder.tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
+            holder.gvPostShow = view.findViewById(R.id.gv_post_show);
             view.setTag(holder);
         }else {
             holder = (ViewHolder) view.getTag();
         }
 //        holder.ivHotPerson.setImageResource();
+        holder.tvHotName.setText(list.get(i).getNickName());
         holder.tvHotContent.setText(list.get(i).getPostContent());
-        String time = list.get(i).getPostTime();
+        //修改时间格式
+        String time = list.get(i).getTime();
         Date date = null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
@@ -71,6 +79,16 @@ public class HotSpotAdapter extends BaseAdapter {
 
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
+        //加载说说图片
+        String imgs = null;
+        imgs = list.get(i).getImgs();
+        Gson gson = new Gson();
+        List<String> imgsList = gson.fromJson(imgs,new TypeToken<List<String>>(){}.getType());
+        Log.i("hotspotadaper","图片列表数据个数："+imgsList.size());
+        ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList,context);
+        holder.gvPostShow.setAdapter(showPostImgAdapter);
+        holder.tvHotLikenum.setText(list.get(i).getLikeNum()+"");
+        holder.tvHotComnum.setText(list.get(i).getCommentNum()+"");
         return view;
     }
     static final class ViewHolder{
@@ -81,5 +99,6 @@ public class HotSpotAdapter extends BaseAdapter {
         TextView tvHotComnum;
         ImageView ivHotlike;
         TextView tvHotLikenum;
+        GridView gvPostShow;
     }
 }

@@ -193,6 +193,7 @@
             android:src="@mipmap/wx"></ImageView>
 
         <ImageView
+            android:id="@+id/qqLogo"
             android:layout_toRightOf="@+id/vxLogo"
             android:layout_width="20dp"
             android:layout_height="20dp"
