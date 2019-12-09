@@ -1,10 +1,11 @@
 package h.jpc.vhome.parents;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.ChildrenFragment;
+import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
 import h.jpc.vhome.parents.fragment.CommunityFragment;
 import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.parents.fragment.MyselfFragment;
@@ -36,7 +37,6 @@ public class ParentMain extends AppCompatActivity {
         intent.setClass(ParentMain.this, AlarmService.class);
         startService(intent);
         setTabHost();
-
     }
 //    //后台运行
 //    @Override
@@ -76,7 +76,7 @@ public class ParentMain extends AppCompatActivity {
                 .newTabSpec("tag3")
                 .setIndicator(getTabSpaceView("tag3",R.mipmap.child,"子女"));
         fragmentTabHost.addTab(tabSpec3,
-                ChildrenFragment.class,
+                ConversationListFragment.class,
                 null
         );
         //tab4

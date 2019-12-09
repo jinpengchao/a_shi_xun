@@ -261,6 +261,7 @@
             </ImageView>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/my_relation"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -276,6 +277,7 @@
                 android:layout_marginBottom="10dp">
             </ImageView>
             <TextView
+
                 android:layout_toRightOf="@id/wdgl1"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"

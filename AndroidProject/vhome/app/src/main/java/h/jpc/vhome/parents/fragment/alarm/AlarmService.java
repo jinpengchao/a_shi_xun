@@ -39,7 +39,7 @@ public class AlarmService extends Service {
                         final int second = calendar.get(Calendar.SECOND);
                         //以下数据皆来自数据库
                         int[] h = new int[5];h[0]=16;h[1]=15;h[2]=15;h[3]=15;h[4]=16;
-                        int[] min = new int[5];min[0]=21;min[1]=18;min[2]=48;min[3]=49;min[4]=18;
+                        int[] min = new int[5];min[0]=21;min[1]=18;min[2]=28;min[3]=49;min[4]=18;
                         for (is = 0; is < 5; is++) {
                             if (hour == h[is] && minute == min[is]) {
                                 Intent i = new Intent();

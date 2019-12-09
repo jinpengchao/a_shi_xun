@@ -1,5 +1,6 @@
 package h.jpc.vhome.parents.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.chat.activity.ContactsActivity;
+import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -40,6 +44,8 @@ public class MyselfFragment extends Fragment {
     private TextView ids;
     private TextView areas;
     private ImageView sexs;
+    private SharedPreferences sp2;
+    private RelativeLayout myRelation;
 
     @Nullable
     @Override
@@ -51,9 +57,21 @@ public class MyselfFragment extends Fragment {
         ids = (TextView) view.findViewById(R.id.parent_id);
         areas = (TextView) view.findViewById(R.id.parent_area);
         sexs = (ImageView) view.findViewById(R.id.parent_sex);
-
+        myRelation = view.findViewById(R.id.my_relation);
+        myRelation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), ContactsActivity.class));
+            }
+        });
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
+            }
+        });
+        initMyselfInfo();
         initData();
-        initUserInfo();
         return view;
     }
     private void initData(){
@@ -64,71 +82,18 @@ public class MyselfFragment extends Fragment {
                 .bitmapTransform(new CropCircleTransformation(getActivity()))
                 .into(header);
     }
-    private void initUserInfo(){
-        //准备数据
-        SharedPreferences sp = getActivity().getSharedPreferences("user", MODE_PRIVATE);
-        final String phoneNums = sp.getString("phone","");
-        final int type = sp.getInt("type",0);
-        JSONObject json = new JSONObject();
-        try {
-            json.put("phone",phoneNums);
-            json.put("type",type);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        final String data = json.toString();
-        new Thread(){
-            @Override
-            public void run() {
-                String ip = (new MyApp()).getIp();
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/searchUserInfo");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    final String data = util.getData(connection);
-                    if(null!=data){
-                       getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.e("你出来了没有","???");
-                                Gson gson = new Gson();
-                                ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
-                                String phone = userInfo.getPhone();
-                                String id = userInfo.getId();
-                                String nickName = userInfo.getNikeName();
-                                String sex = userInfo.getSex();
-                                String area = userInfo.getArea();
-                                String achieve = userInfo.getAcieve();
-                                String personalWord = userInfo.getPersonalWord();
-                                String headImg = userInfo.getHeaderImg();
-                                saveUserInfo(phone,id,nickName,sex,area,achieve,personalWord,headImg);
-                                nikeName.setText(nickName);
-                                ids.setText(id);
-                                areas.setText(area);
-                            }
-                        });
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String achieve,String personalWord,String headimg){
-        SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("phone",phone);
-        editor.putString("id",id);
-        editor.putString("nickName",nickName);
-        editor.putString("sex",sex);
-        editor.putString("area",area);
-        editor.putString("achieve",achieve);
-        editor.putString("personalWord",personalWord);
-        editor.putString("headImg",headimg);
-        editor.commit();
+    public void initMyselfInfo(){
+            Log.e("缓存的个人信息","old");
+            sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+            String id = sp2.getString("id","");
+            String nickName = sp2.getString("nickName","");
+            String sex = sp2.getString("sex","");
+            String area = sp2.getString("area","");
+            String achieve = sp2.getString("achieve","");
+            String personalWord = sp2.getString("personalWord","");
+            String headImg = sp2.getString("headImg","");
+            nikeName.setText(nickName);
+            ids.setText(id);
+            areas.setText(area);
     }
 }
