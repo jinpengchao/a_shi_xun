@@ -96,4 +96,8 @@ dependencies {
     implementation project(path: ':reclib-qq')
     implementation project(path: ':reclib-testemoticons')
     implementation project(path: ':emoji')
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'org.xutils:xutils:3.4.0'
 }

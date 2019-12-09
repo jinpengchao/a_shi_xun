@@ -322,7 +322,7 @@ public class NewPostActivity extends AppCompatActivity {
     private void getViews() {
         edtPostPublish = findViewById(R.id.edt_post_publish);
         btnPostPublish = findViewById(R.id.btn_post_publish);
-//        tvPostCancel = findViewById(R.id.tv_post_cancel);
+        tvPostCancel = findViewById(R.id.tv_post_cancel);
         gvNewPost = findViewById(R.id.gv_post_new);
     }
 
