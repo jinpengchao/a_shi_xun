@@ -1,6 +1,8 @@
 package h.jpc.vhome.children;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +15,9 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.R;
-import h.jpc.vhome.children.fragment.ChatFragment;
+import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
+import h.jpc.vhome.chat.view.ScrollControlViewPager;
+//import h.jpc.vhome.children.fragment.ChatFragment;
 import h.jpc.vhome.children.fragment.LocationFragment;
 import h.jpc.vhome.children.fragment.MyselfFragment;
 import h.jpc.vhome.children.fragment.WarnFragment;
@@ -21,6 +25,7 @@ import h.jpc.vhome.children.fragment.WarnFragment;
 public class ChildrenMain extends AppCompatActivity {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +53,7 @@ public class ChildrenMain extends AppCompatActivity {
                 .newTabSpec("tag2")
                 .setIndicator(getTabSpaceView("tag2",R.mipmap.notchat,"聊天"));
         fragmentTabHost.addTab(tabSpec2,
-                ChatFragment.class,
+                ConversationListFragment.class,
                 null
         );
         //tab3

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<h.jpc.vhome.chat.view.MeView android:id="@+id/me_view"
+                          xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48.5dp"
+        android:background="#2DD0CF">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:text="vhome"
+            android:textColor="#FFF"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFE8EDF3"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/set_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/my_relation"
+                style="@style/SettingItemStyle">
+
+                <TextView
+                    style="@style/info_left_style"
+                    android:text="我的关联"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="13.93dp"
+                    android:background="@drawable/arrow"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="#FFE8EDF3"/>
+        </LinearLayout>
+    </LinearLayout>
+</h.jpc.vhome.chat.view.MeView>

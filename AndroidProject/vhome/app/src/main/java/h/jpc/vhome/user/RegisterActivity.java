@@ -1,15 +1,23 @@
 package h.jpc.vhome.user;
 
 import androidx.appcompat.app.AppCompatActivity;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.entity.Post;
+import h.jpc.vhome.chat.activity.BaseActivity;
+import h.jpc.vhome.chat.application.JGApplication;
+import h.jpc.vhome.chat.database.UserEntry;
+import h.jpc.vhome.chat.utils.SharePreferenceManager;
+import h.jpc.vhome.chat.utils.ThreadUtil;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,14 +26,11 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,6 +38,7 @@ import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -40,8 +46,9 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private ImageView back;
+    private ProgressDialog mDialog;
     private EditText userName;
     private EditText inputPhoneEt;
     private EditText etPwd;
@@ -68,8 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        Toast.makeText(getApplicationContext(), "提交验证码成功",
-                                Toast.LENGTH_SHORT).show();
+
                         finish();
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码",
@@ -103,15 +109,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
     public void getView(){
-        togglePwd = findViewById(R.id.togglePwd);
-        etPwd = findViewById(R.id.etPwd);
-        back = findViewById(R.id.backToLogin);
-        userName = findViewById(R.id.userName);
-        inputPhoneEt = findViewById(R.id.input_phone_et);
-        inputCodeEt = findViewById(R.id.input_code_et);
-        requestCodeBtn = findViewById(R.id.request_code_btn);
-        registerBtn = findViewById(R.id.registerOK);
-        radioGroup = findViewById(R.id.rgType);
+        togglePwd = (ToggleButton) findViewById(R.id.togglePwd);
+        etPwd = (EditText) findViewById(R.id.etPwd);
+        back = (ImageView) findViewById(R.id.backToLogin);
+        userName = (EditText) findViewById(R.id.userName);
+        inputPhoneEt = (EditText) findViewById(R.id.input_phone_et);
+        inputCodeEt = (EditText) findViewById(R.id.input_code_et);
+        requestCodeBtn = (Button) findViewById(R.id.request_code_btn);
+        registerBtn = (Button) findViewById(R.id.registerOK);
+        radioGroup = (RadioGroup) findViewById(R.id.rgType);
     }
     private void init() {
         requestCodeBtn.setOnClickListener(this);
@@ -171,6 +177,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
                 registerUser();
+                registerOver();
                 break;
         }
     }
@@ -215,23 +222,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         else
             return mobileNums.matches(telRegex);
     }
-
-    /**
-     * progressbar
-     */
-    private void createProgressBar() {
-        FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        ProgressBar mProBar = new ProgressBar(this);
-        mProBar.setLayoutParams(layoutParams);
-        mProBar.setVisibility(View.VISIBLE);
-        layout.addView(mProBar);
-    }
-
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         SMSSDK.unregisterAllEventHandler();
         super.onDestroy();
     }
@@ -298,7 +290,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             }
                         });
                     }
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -306,5 +297,69 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         }.start();
+
+        JMessageClient.register(phoneNums, passWords, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                SharePreferenceManager.setRegisterName(phoneNums);
+                SharePreferenceManager.setRegistePass(passWords);
+                Log.e("MainActivity","极光注册-->over");
+            }
+        });
+    }
+    public void registerOver(){
+        final String userId = SharePreferenceManager.getRegistrName();
+        final String password = SharePreferenceManager.getRegistrPass();
+        SharePreferenceManager.setRegisterUsername(userId);
+        JMessageClient.login(userId, password, new BasicCallback() {
+            @Override
+            public void gotResult(int responseCode, String responseMessage) {
+                if (responseCode == 0) {
+                    JGApplication.registerOrLogin = 1;
+                    String username = JMessageClient.getMyInfo().getUserName();
+                    String appKey = JMessageClient.getMyInfo().getAppKey();
+                    UserEntry user = UserEntry.getUser(username, appKey);
+                    if (null == user) {
+                        user = new UserEntry(username, appKey);
+                        user.save();
+                    }
+                    UserInfo myUserInfo = JMessageClient.getMyInfo();
+                    if (myUserInfo == null) {
+                        Log.e("finishRegister","userInfo==null");
+                    }
+                    //注册时候更新昵称
+                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, myUserInfo, new BasicCallback() {
+                        @Override
+                        public void gotResult(final int status, String desc) {
+                            //更新跳转标志
+                            SharePreferenceManager.setCachedFixProfileFlag(false);
+                            mDialog.dismiss();
+                            if (status == 0) {
+                                goToActivity(RegisterActivity.this, MainActivity.class);
+                            }
+                        }
+                    });
+                    //注册时更新头像
+                    final String avatarPath = SharePreferenceManager.getRegisterAvatarPath();
+                    if (avatarPath != null) {
+                        ThreadUtil.runInThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                JMessageClient.updateUserAvatar(new File(avatarPath), new BasicCallback() {
+                                    @Override
+                                    public void gotResult(int responseCode, String responseMessage) {
+                                        if (responseCode == 0) {
+                                            SharePreferenceManager.setCachedAvatarPath(avatarPath);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        SharePreferenceManager.setCachedAvatarPath(null);
+                    }
+                }
+            }
+        });
     }
 }

@@ -290,7 +290,7 @@ public class NewPostActivity extends AppCompatActivity {
     private void getViews() {
         edtPostPublish = findViewById(R.id.edt_post_publish);
         btnPostPublish = findViewById(R.id.btn_post_publish);
-        tvPostCancel = findViewById(R.id.tv_post_cancel);
+//        tvPostCancel = findViewById(R.id.tv_post_cancel);
         gvNewPost = findViewById(R.id.gv_post_new);
     }
 
@@ -318,9 +318,9 @@ public class NewPostActivity extends AppCompatActivity {
                     //保存自己发表的帖子到数据库，并显示
                     saveMyPost();
                     break;
-                case R.id.tv_post_cancel:
-                    finish();
-                    break;
+//                case R.id.tv_post_cancel:
+//                    finish();
+//                    break;
                     //打开相机相册
 //                case R.id.ll_open:
 //                    Log.i("community","打开手机相册，ll_open");
