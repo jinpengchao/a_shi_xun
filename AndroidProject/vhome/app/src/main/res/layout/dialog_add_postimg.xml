@@ -19,7 +19,6 @@
             android:layout_height="144px"
             android:gravity="center"
             android:text="拍照"
-            android:textColor="#666666"
             android:textSize="48px" />
 
         <ImageView
@@ -33,7 +32,6 @@
             android:layout_height="144px"
             android:gravity="center"
             android:text="从手机相册选择"
-            android:textColor="#666666"
             android:textSize="48px" />
     </LinearLayout>
 
@@ -47,7 +45,6 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="取消"
-        android:textColor="#666666"
         android:textSize="48px" />
 
 </LinearLayout>

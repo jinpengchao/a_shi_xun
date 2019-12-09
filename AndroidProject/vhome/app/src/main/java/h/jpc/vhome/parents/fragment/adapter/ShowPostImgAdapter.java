@@ -62,7 +62,7 @@ public class ShowPostImgAdapter extends BaseAdapter {
 
         return convertView;
     }
-    public class ViewHolder {
+    public static class ViewHolder {
         public final ImageView ivimage;
         public final View root;
 

@@ -21,6 +21,7 @@
             android:textSize="15dp"
             android:layout_height="wrap_content"/>
         <EditText
+            android:id="@+id/new_pwd1"
             android:layout_gravity="center"
             android:layout_marginLeft="60dp"
             android:hint="输入新密码"
@@ -54,6 +55,7 @@
                 android:textSize="15dp"
                 android:layout_height="wrap_content"/>
             <EditText
+                android:id="@+id/new_pwd2"
                 android:layout_gravity="center"
                 android:layout_marginLeft="30dp"
                 android:maxLength="11"

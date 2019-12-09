@@ -111,6 +111,49 @@ public class GoodPostDao {
 	}
 	/**
 	 * 
+	 *  @title:queryGoodPosts
+	 * @Description:通过点赞人的id查询某一个人点赞的所有的帖子
+	 * @throws下午4:25:12
+	 * returntype:List<GoodPostBean>
+	 */
+	public List<GoodPostBean> queryGoodPosts(String goodPersonId){
+		List<GoodPostBean> list = new ArrayList<>();
+		DBUtil util = new DBUtil();
+		try {
+			con = util.getConnection();
+			String sql = "select * from tbl_goodpost where goodPersonID = ? order by time desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,goodPersonId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				GoodPostBean goodPost = new GoodPostBean();
+				goodPost.setId(rs.getInt("id"));
+				goodPost.setPostId(rs.getInt("postId"));
+				goodPost.setGoodPersonId(rs.getString("goodPersonId"));
+				goodPost.setPublishPersonId(rs.getString("publishPersonId"));
+				goodPost.setTime(rs.getString("time"));
+				list.add(goodPost);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	/**
+	 * 
 	 *  @title:queryGoodPostCount
 	 * @Description: 通过postId查询点赞数量
 	 * @throws下午8:43:31

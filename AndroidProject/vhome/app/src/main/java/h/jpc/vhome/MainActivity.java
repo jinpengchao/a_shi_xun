@@ -1,12 +1,7 @@
 package h.jpc.vhome;
 
 import androidx.appcompat.app.AppCompatActivity;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.api.BasicCallback;
-import h.jpc.vhome.chat.database.UserEntry;
-import h.jpc.vhome.chat.utils.DialogCreator;
-import h.jpc.vhome.chat.utils.SharePreferenceManager;
+import cn.smssdk.SMSSDK;
 import h.jpc.vhome.children.ChildrenMain;
 import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.user.FindBackPwdActivity;
@@ -16,10 +11,11 @@ import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.app.ActionBar;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,7 +33,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -49,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView use_code;
     private ToggleButton togglePwd;
     private Button pwdLogin;
-    public EditText etPhone;
-    public EditText etPwd;
+    private EditText etPhone;
+    private EditText etPwd;
     private TextView findBackPwd;
     private ImageView mainBackground;
     private ActionBar actionBar;
@@ -64,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBar = this.getActionBar();
         getView();
         initListener();
-        Log.e("MainActivity","oncreate");
         sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.getString("phone","")!=null) {
             String p = sp.getString("phone", "");
@@ -104,12 +98,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pwdLogin.setOnClickListener(this);
         use_code.setOnClickListener(this);
         findBackPwd.setOnClickListener(this);
+        register.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pwdLogin:
-                Log.e("MainActivity","Onclick");
                 loginByPsw();
                 break;
             case R.id.register:
@@ -193,16 +187,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }
     }
-    public String getUserId() {
-        return etPhone.getText().toString().trim();
-    }
-
-    public String getPassword() {
-        return etPwd.getText().toString().trim();
-    }
-    public void loginByPsw() {
+    private void loginByPsw() {
         //准备数据
-        Log.e("MainActivity","logBypsw");
         final String phoneNums = etPhone.getText().toString();
         final String passWords = etPwd.getText().toString();
         final User user = new User();
@@ -214,8 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new Thread(){
             @Override
             public void run() {
-//                String ip = (new MyApp()).getIp();
-                String ip = "192.168.2.108";
+                String ip = (new MyApp()).getIp();
                 try {
                     URL url = new URL("http://"+ip+":8080/vhome/pwdlogin");
                     ConnectionUtil util = new ConnectionUtil();
@@ -255,36 +240,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }.start();
-
-        final Dialog dialog = DialogCreator.createLoadingDialog(this,
-                getString(R.string.login_hint));
-        dialog.show();
-        Log.e("LoginController", "666");
-        JMessageClient.login(phoneNums, passWords, new BasicCallback() {
-            @Override
-            public void gotResult(int responseCode, String responseMessage) {
-                dialog.dismiss();
-                Log.e("MainActivity","JMessage---------->");
-                if (responseCode == 0) {
-                    SharePreferenceManager.setCachedUsername(phoneNums);
-                    SharePreferenceManager.setCachedPsw(passWords);
-                    UserInfo myInfo = JMessageClient.getMyInfo();
-                    File avatarFile = myInfo.getAvatarFile();
-                    if (avatarFile != null) {
-                        SharePreferenceManager.setCachedAvatarPath(avatarFile.getAbsolutePath());
-                    } else {
-                        SharePreferenceManager.setCachedAvatarPath(null);
-                    }
-                    String username = myInfo.getUserName();
-                    String appKey = myInfo.getAppKey();
-                    UserEntry user = UserEntry.getUser(username, appKey);
-                    if (null == user) {
-                        user = new UserEntry(username, appKey);
-                        user.save();
-                    }
-                    finish();
-                }
-            }
-        });
     }
 }

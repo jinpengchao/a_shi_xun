@@ -113,6 +113,7 @@
         android:layout_height="2dp"></View>
     <Button
         android:layout_below="@id/text5"
+        android:id="@+id/next_btn"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"

@@ -25,6 +25,7 @@
             android:textSize="20dp" />
 
         <View
+            android:id="@+id/line0"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_above="@+id/ll_btn"

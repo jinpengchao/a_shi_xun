@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/children_name"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:id="@+id/ii">
             <TextView
                 android:id="@+id/i"
                 android:gravity="center"
@@ -58,6 +59,7 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/children_sex"
             android:layout_toRightOf="@+id/children_name"
             android:layout_below="@+id/children_head"
             android:layout_width="40dp"
@@ -90,7 +92,6 @@
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
-                    android:id="@+id/my_relation"
                     android:textColor="@color/notChoseColor"
                     android:layout_toRightOf="@id/wdgl1"
                     android:layout_centerVertical="true"
