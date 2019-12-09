@@ -53,7 +53,6 @@ public class HotspotFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_hot_spot,null);
         getViews();
         registerListener();
-//        list.clear();
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -77,7 +76,7 @@ public class HotspotFragment extends Fragment {
 
             }
         };
-//        getdata();
+        getdata();
         return view;
     }
 

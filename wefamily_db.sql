@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-08 22:55:42
+Date: 2019-12-09 15:47:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -112,11 +112,14 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_goodpost
 -- ----------------------------
+INSERT INTO `tbl_goodpost` VALUES ('1', '60', '948878', '948878', '2019-12-09 07:12:20');
+INSERT INTO `tbl_goodpost` VALUES ('4', '58', '948878', '1', '2019-12-09 07:19:19');
+INSERT INTO `tbl_goodpost` VALUES ('7', '60', '1', '948878', '2019-12-09 07:41:45');
 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
@@ -176,13 +179,13 @@ CREATE TABLE `tbl_mycollection` (
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_mycollection
 -- ----------------------------
-INSERT INTO `tbl_mycollection` VALUES ('85', '1', '58', '2019-12-08 09:32:55');
-INSERT INTO `tbl_mycollection` VALUES ('86', '1', '51', '2019-12-08 09:32:59');
+INSERT INTO `tbl_mycollection` VALUES ('89', '1', '60', '2019-12-09 07:31:20');
+INSERT INTO `tbl_mycollection` VALUES ('90', '1', '59', '2019-12-09 07:31:38');
 
 -- ----------------------------
 -- Table structure for `tbl_news`
@@ -240,7 +243,7 @@ CREATE TABLE `tbl_post` (
   `time` datetime DEFAULT NULL,
   `imgs` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -250,6 +253,8 @@ INSERT INTO `tbl_post` VALUES ('50', '一曲离殇', 'head.jpg', '没图', '9488
 INSERT INTO `tbl_post` VALUES ('51', '一曲离殇', 'head.jpg', '拍照', '948878', '2019-12-08 04:31:41', '[\"temp_photo1575779496004.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('54', '1', 'sss.jpg', '回电话给', '1', '2019-12-08 07:01:26', '[]');
 INSERT INTO `tbl_post` VALUES ('58', '1', 'sss.jpg', '有的', '1', '2019-12-08 08:56:51', '[\"temp_photo1575795403804.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('59', '1', 'sss.jpg', '嘿嘿', '1', '2019-12-08 15:07:42', '[\"temp_photo1575817659857.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('60', '一曲离殇', 'head.jpg', '更新', '948878', '2019-12-09 07:06:24', '[]');
 
 -- ----------------------------
 -- Table structure for `tbl_remind`

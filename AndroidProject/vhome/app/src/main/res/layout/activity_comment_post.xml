@@ -11,13 +11,14 @@
             android:orientation="vertical">
 
             <include layout="@layout/item_hotspot"/>
-            <view
+
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-                android:background="#e6e6e6"/>
+                android:background="#696666"/>
 
             <ExpandableListView
                 android:id="@+id/elview_comment"

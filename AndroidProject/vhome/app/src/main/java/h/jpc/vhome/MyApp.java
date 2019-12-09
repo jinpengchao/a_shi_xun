@@ -13,7 +13,7 @@ public class MyApp extends Application {
 
     //10.7.89.13
     //10.7.89.128  192.168.199.158
-    private String ip = "192.168.199.158";
+    private String ip = "10.7.89.128";
     //本地用户信息的地址
     private String pathInfo = "parentUserInfo";
 

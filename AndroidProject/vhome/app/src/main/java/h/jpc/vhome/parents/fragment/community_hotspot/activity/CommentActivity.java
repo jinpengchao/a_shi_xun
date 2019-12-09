@@ -33,7 +33,8 @@ public class CommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comment_post);
         getViews();
         registerListener();
-        getCommentData();
+
+//        getCommentData();
     }
 
     private void getCommentData() {
