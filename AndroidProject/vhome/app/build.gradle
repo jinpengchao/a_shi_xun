@@ -96,5 +96,4 @@ dependencies {
     implementation project(path: ':reclib-qq')
     implementation project(path: ':reclib-testemoticons')
     implementation project(path: ':emoji')
-
 }

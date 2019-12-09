@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="SavePostServlet"></jsp:forward>
+<jsp:forward page="pwdlogin"></jsp:forward>
 </body>
 </html>

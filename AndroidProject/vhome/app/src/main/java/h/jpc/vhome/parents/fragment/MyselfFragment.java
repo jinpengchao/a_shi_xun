@@ -72,6 +72,7 @@ public class MyselfFragment extends Fragment {
         });
         initMyselfInfo();
         initData();
+        initUserInfo();
         return view;
     }
     private void initData(){
@@ -96,5 +97,4 @@ public class MyselfFragment extends Fragment {
             ids.setText(id);
             areas.setText(area);
     }
-
 }

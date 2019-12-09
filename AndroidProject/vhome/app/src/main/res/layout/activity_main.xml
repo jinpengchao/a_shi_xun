@@ -70,6 +70,7 @@ tools:context=".user.LoginByCodeActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:id="@+id/m"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="33dp"
                 android:layout_centerVertical="true"

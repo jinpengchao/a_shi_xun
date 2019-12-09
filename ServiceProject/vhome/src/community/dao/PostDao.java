@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.Post;
+import entity.PostBean;
 
 /**
  * 
@@ -28,17 +28,20 @@ public class PostDao {
 	 * @throws上午9:12:53
 	 * returntype:long
 	 */
-	public long insertPost(Post post) {
+	public long insertPost(PostBean post) {
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
 			con = util.getConnection();
-			String sql = "insert into tbl_post values(?,?,?,?)";
+			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
-			ps.setString(2, post.getPostContent());
-			ps.setString(3, post.getPostSendPersonId());
-			ps.setString(4, post.getPostTime());
+			ps.setString(2, post.getNickName());
+			ps.setString(3, post.getHeadimg());
+			ps.setString(4, post.getPostContent());
+			ps.setString(5, post.getPersonId());
+			ps.setString(6, post.getTime());
+			ps.setString(7, post.getImgs());			
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -65,20 +68,68 @@ public class PostDao {
 	 * @throws上午9:12:32
 	 * returntype:List<Post>
 	 */
-	public List<Post> queryPosts(){
-		List<Post> list = new ArrayList<Post>();
+	public List<PostBean> queryPosts(){
+		List<PostBean> list = new ArrayList<PostBean>();
 		DBUtil util = new DBUtil();
 		try {
 			con = util.getConnection();
-			String sql = "select * from tbl_post order by publishTime desc";
+			String sql = "select * from tbl_post order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				Post post = new Post();
-				post.setPostId(rs.getInt("id"));
+				PostBean post = new PostBean();
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
 				post.setPostContent(rs.getString("content"));
-				post.setPostSendPersonId(rs.getString("personId"));
-				post.setPostTime(rs.getString("publishTime"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+				list.add(post);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	/**
+	 * 
+	 *  @title:queryPosts
+	 * @Description: 根据用户id重载查询方法
+	 * @throws下午8:03:14
+	 * returntype:List<PostBean>
+	 */
+	public List<PostBean> queryPosts(String personId){
+		List<PostBean> list = new ArrayList<PostBean>();
+		DBUtil util = new DBUtil();
+		try {
+			con = util.getConnection();
+			String sql = "select * from tbl_post where personId = ? order by time desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				PostBean post = new PostBean();
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
 				list.add(post);
 			}
 			rs.close();

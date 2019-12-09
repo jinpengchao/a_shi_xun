@@ -313,8 +313,9 @@
             android:authorities="${applicationId}"
             android:exported="false"/>
         <activity android:name=".parents.fragment.myself.SettingActivity"></activity>
-        <activity android:name=".parents.fragment.community_hotspot.SimplePostActivity" />
-        <activity android:name=".parents.fragment.community_hotspot.NewPostActivity" />
+        <activity android:name=".parents.fragment.community_hotspot.activity.CommentActivity"></activity>
+        <activity android:name=".parents.fragment.community_hotspot.activity.NewPostActivity" />
+
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
         <activity android:name=".user.SetNewPwdActivity" />

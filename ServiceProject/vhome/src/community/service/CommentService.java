@@ -11,7 +11,7 @@ package community.service;
 import java.util.List;
 
 import community.dao.CommentDao;
-import entity.Comment;
+import entity.CommentBean;
 
 /**
  * @ClassName: CommentService
@@ -29,7 +29,7 @@ public class CommentService {
 	 * @throws下午9:12:15
 	 * returntype:int
 	 */
-	public int saveComment(Comment comment) {
+	public int saveComment(CommentBean comment) {
 		return (new CommentDao()).insertComment(comment);
 	}
 	
@@ -40,8 +40,18 @@ public class CommentService {
 	 * @throws下午9:13:11
 	 * returntype:List<Comment>
 	 */
-	public List<Comment> findCommet(){
-		return (new CommentDao()).queryComment();
+	public List<CommentBean> findComment(int postId){
+		return (new CommentDao()).queryComment(postId);
+	}
+	/**
+	 * 根据postId查询
+	 *  @title:findCommentCount
+	 * @Description: todo
+	 * @throws下午9:49:37
+	 * returntype:int
+	 */
+	public int findCommentCount(int postId) {
+		return (new CommentDao()).queryCommentCount(postId);
 	}
 	/**
 	 * 

@@ -15,18 +15,10 @@
             android:orientation="horizontal">
             <TabWidget
                 android:id="@android:id/tabs"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_weight="5">
+                android:layout_alignParentTop="true">
             </TabWidget>
-            <Button
-                android:id="@+id/addPost"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_toRightOf="@android:id/tabs"
-                android:layout_weight="1"
-                android:background="@mipmap/add"/>
         </LinearLayout>
 
         <FrameLayout

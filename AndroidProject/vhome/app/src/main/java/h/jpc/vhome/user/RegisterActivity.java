@@ -297,7 +297,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         }.start();
-
         JMessageClient.register(phoneNums, passWords, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {

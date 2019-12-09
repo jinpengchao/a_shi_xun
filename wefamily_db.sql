@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-11-27 21:42:16
+Date: 2019-12-08 22:55:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,6 +49,7 @@ CREATE TABLE `tbl_child_userinfo` (
 -- ----------------------------
 -- Records of tbl_child_userinfo
 -- ----------------------------
+INSERT INTO `tbl_child_userinfo` VALUES ('15199980888', '792997', 'qwqw', '', '', '');
 
 -- ----------------------------
 -- Table structure for `tbl_comment`
@@ -58,6 +59,8 @@ CREATE TABLE `tbl_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `postId` int(11) NOT NULL,
   `personId` varchar(30) NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -103,11 +106,12 @@ CREATE TABLE `tbl_goodcomment` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodpost`;
 CREATE TABLE `tbl_goodpost` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
   `postId` int(30) NOT NULL,
   `goodPersonId` varchar(30) DEFAULT NULL,
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`postId`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -167,15 +171,18 @@ CREATE TABLE `tbl_myattentions` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_mycollection`;
 CREATE TABLE `tbl_mycollection` (
-  `phone` varchar(20) NOT NULL DEFAULT '',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `personId` varchar(20) NOT NULL DEFAULT '',
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_mycollection
 -- ----------------------------
+INSERT INTO `tbl_mycollection` VALUES ('85', '1', '58', '2019-12-08 09:32:55');
+INSERT INTO `tbl_mycollection` VALUES ('86', '1', '51', '2019-12-08 09:32:59');
 
 -- ----------------------------
 -- Table structure for `tbl_news`
@@ -216,6 +223,9 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
+INSERT INTO `tbl_parent_userinfo` VALUES ('1', '1', '1', '男', '1', null, '2', '可以', 'sss.jpg');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '948878', '一曲离殇', '男', '石家庄', null, '100', '撒也不会', 'head.jpg');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', '男', '石家庄', null, '100', '今晚必须死', 'sss.jpg');
 
 -- ----------------------------
 -- Table structure for `tbl_post`
@@ -223,23 +233,23 @@ CREATE TABLE `tbl_parent_userinfo` (
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
   `content` varchar(500) DEFAULT NULL,
   `personId` varchar(30) NOT NULL,
-  `publishTime` datetime DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  `imgs` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
-INSERT INTO `tbl_post` VALUES ('1', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('2', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('3', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('4', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('5', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('6', '1', '1', '2019-08-02 02:30:09');
-INSERT INTO `tbl_post` VALUES ('7', '123', '1', '2019-11-27 00:25:48');
-INSERT INTO `tbl_post` VALUES ('8', '36', '1', '2019-11-27 01:00:51');
+INSERT INTO `tbl_post` VALUES ('49', '一曲离殇', 'head.jpg', '初雪清凉', '948878', '2019-12-08 04:31:00', '[\"temp_photo1575779457996.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('50', '一曲离殇', 'head.jpg', '没图', '948878', '2019-12-08 04:31:12', '[]');
+INSERT INTO `tbl_post` VALUES ('51', '一曲离殇', 'head.jpg', '拍照', '948878', '2019-12-08 04:31:41', '[\"temp_photo1575779496004.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('54', '1', 'sss.jpg', '回电话给', '1', '2019-12-08 07:01:26', '[]');
+INSERT INTO `tbl_post` VALUES ('58', '1', 'sss.jpg', '有的', '1', '2019-12-08 08:56:51', '[\"temp_photo1575795403804.jpg\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_remind`
@@ -260,13 +270,15 @@ CREATE TABLE `tbl_remind` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
-  `commentid` int(30) NOT NULL AUTO_INCREMENT,
-  `postId` int(30) DEFAULT NULL,
-  `replyPersonId` varchar(30) DEFAULT NULL,
-  `commentPersonId` varchar(30) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `commentid` int(30) NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `PersonId` varchar(30) DEFAULT NULL,
+  `replyTotal` int(11) DEFAULT NULL,
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`commentid`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -307,6 +319,13 @@ CREATE TABLE `tbl_user` (
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
+INSERT INTO `tbl_user` VALUES ('1', '1', '0000-00-00 00:00:00', '1', null, null, '0');
+INSERT INTO `tbl_user` VALUES ('11111111111', '111', '2019-12-03 15:29:25', '111111', null, null, '0');
+INSERT INTO `tbl_user` VALUES ('15199980888', '1', '2019-12-04 10:56:41', '792997', '', '', '1');
+INSERT INTO `tbl_user` VALUES ('15227856991', '123', '2019-12-03 10:26:52', '948878', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('15230867500', 'qqq123', '2019-12-03 10:27:52', '385206', '', '', '1');
+INSERT INTO `tbl_user` VALUES ('15513155225', 'qqq123', '2019-12-03 15:29:25', '658943', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('2', '2', '0000-00-00 00:00:00', '2', null, null, '1');
 
 -- ----------------------------
 -- Table structure for `tbl_walkpath`

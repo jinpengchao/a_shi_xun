@@ -11,7 +11,7 @@ package community.service;
 import java.util.List;
 
 import community.dao.PostDao;
-import entity.Post;
+import entity.PostBean;
 
 /**
  * @ClassName: PostService
@@ -28,7 +28,7 @@ public class PostService {
 	 * @throws上午10:57:22
 	 * returntype:long
 	 */
-	public long savePost(Post post) {
+	public long savePost(PostBean post) {
 		return (new PostDao()).insertPost(post);
 	}
 	/**
@@ -38,7 +38,7 @@ public class PostService {
 	 * @throws上午11:01:40
 	 * returntype:List<Post>
 	 */
-	public List<Post> findPost(){
+	public List<PostBean> findPost(){
 		return (new PostDao()).queryPosts();
 	}
 	/**

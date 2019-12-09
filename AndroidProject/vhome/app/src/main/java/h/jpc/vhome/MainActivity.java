@@ -84,7 +84,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (isChecked) {
                     //如果选中，显示密码
                     etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
