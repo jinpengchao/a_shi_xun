@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.CommentBean;
+import entity.Comment;
 
 /**
  * @ClassName: CommentDao
@@ -34,7 +34,7 @@ public class CommentDao {
 	 * @throws下午8:48:30
 	 * returntype:int
 	 */
-	public int insertComment(CommentBean comment) {
+	public int insertComment(Comment comment) {
 		DBUtil util = new DBUtil();
 		int n = 0;
 		try {
@@ -72,8 +72,8 @@ public class CommentDao {
 	 * @throws下午9:04:03
 	 * returntype:List<Comment>
 	 */
-	public List<CommentBean> queryComment(int postId){
-		List<CommentBean> list = new ArrayList<CommentBean>();
+	public List<Comment> queryComment(int postId){
+		List<Comment> list = new ArrayList<Comment>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
@@ -82,7 +82,7 @@ public class CommentDao {
 			ps.setInt(1, postId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				CommentBean comment = new CommentBean();
+				Comment comment = new Comment();
 				comment.setId(rs.getInt("id"));
 				comment.setPostId(rs.getInt("postId"));
 				comment.setPersonId(rs.getString("personId"));

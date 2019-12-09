@@ -1,6 +1,7 @@
 package h.jpc.vhome.parents;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.R;
@@ -36,7 +37,6 @@ public class ParentMain extends AppCompatActivity {
         intent.setClass(ParentMain.this, AlarmService.class);
         startService(intent);
         setTabHost();
-
     }
 //    //后台运行
 //    @Override

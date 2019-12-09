@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".parents.fragment.community_hotspot.activity.NewPostActivity"
+    tools:context=".parents.NewPost"
     android:background="@color/backgroundColor">
-
-    <include layout="@layout/header_add_post"/>
 
     <EditText
         android:id="@+id/edt_post_publish"
@@ -27,18 +25,32 @@
     <GridView
         android:id="@+id/gv_post_new"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:background="#EFDFDF"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         android:numColumns="3"
-        android:columnWidth="100dp"
+        android:columnWidth="90dp"
         android:stretchMode="columnWidth"
         android:gravity="center" >
     </GridView>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="(友情提示:最多只能添加3张图片)"
-        android:gravity="center" />
+        android:text="(友情提示:只能添加9张图片,长按图片可以删除已添加图片)"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginTop="30dp" />
+    <Button
+        android:id="@+id/btn_post_publish"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/choseColor"
+        android:text="发表"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:layout_marginTop="30dp"/>
 
 </LinearLayout>

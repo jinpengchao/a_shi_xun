@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="130dp"
-    android:layout_height="130dp">
+    android:orientation="vertical" android:layout_width="66dp"
+    android:layout_height="66dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

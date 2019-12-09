@@ -43,11 +43,6 @@ public class GoodPostService {
 		return (new GoodPostDao()).queryGoodPosts(postId);
 	
 	}
-	//通过点赞人id查询
-	public List<GoodPostBean> findGoodPost(String personId){
-		return (new GoodPostDao()).queryGoodPosts(personId);
-	
-	}
 	/**
 	 * 通过postId查询数量
 	 *  @title:findGoodPostCount

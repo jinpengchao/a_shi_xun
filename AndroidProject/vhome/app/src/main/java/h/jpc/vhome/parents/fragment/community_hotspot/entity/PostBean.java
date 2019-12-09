@@ -10,8 +10,6 @@ public class PostBean {
     private String imgs;
     private int commentNum;
     private int likeNum;
-    private int save_status = 0;//标志位判断当前用户是否收藏过本帖
-    private int like_status = 0;//标志位判断当前用户是否点赞过本帖
 
     public int getId() {
         return id;
@@ -83,21 +81,5 @@ public class PostBean {
 
     public void setLikeNum(int likeNum) {
         this.likeNum = likeNum;
-    }
-
-    public int getSave_status() {
-        return save_status;
-    }
-
-    public void setSave_status(int save_status) {
-        this.save_status = save_status;
-    }
-
-    public int getLike_status() {
-        return like_status;
-    }
-
-    public void setLike_status(int like_status) {
-        this.like_status = like_status;
     }
 }

@@ -70,7 +70,6 @@ tools:context=".user.LoginByCodeActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:id="@+id/m"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="33dp"
                 android:layout_centerVertical="true"
@@ -195,7 +194,6 @@ tools:context=".user.LoginByCodeActivity">
             android:src="@mipmap/wx"></ImageView>
 
         <ImageView
-            android:id="@+id/qqLogo"
             android:layout_toRightOf="@+id/vxLogo"
             android:layout_width="20dp"
             android:layout_height="20dp"
