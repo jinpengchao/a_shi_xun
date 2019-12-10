@@ -332,7 +332,8 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".children.fragment.WarnFragment" />
-
+        <activity android:name=".parents.fragment.news.NewsActivity"/>
+        <activity android:name=".parents.fragment.weather.WeatherActivity"/>
         <receiver
             android:name=".parents.fragment.alarm.CallAlarm"
             android:process=".remote" />

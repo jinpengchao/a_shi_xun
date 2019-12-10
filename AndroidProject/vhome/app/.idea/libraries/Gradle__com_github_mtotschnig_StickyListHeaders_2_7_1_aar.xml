@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.mtotschnig:StickyListHeaders:2.7.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/725c04bba125d5af2625f25933c35d5b/StickyListHeaders-2.7.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/725c04bba125d5af2625f25933c35d5b/StickyListHeaders-2.7.1/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.mtotschnig/StickyListHeaders/2.7.1/60243cd95df5c32448a3c07454bd156e4e1e6e8c/StickyListHeaders-2.7.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.mtotschnig/StickyListHeaders/2.7.1/5e4cf6e616d8ead0523735cd9e00b630ddb7a894/StickyListHeaders-2.7.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
