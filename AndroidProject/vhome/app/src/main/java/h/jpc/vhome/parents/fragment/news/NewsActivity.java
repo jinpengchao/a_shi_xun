@@ -30,45 +30,15 @@ import h.jpc.vhome.R;
 import h.jpc.vhome.parents.HttpLogin;
 
 public class NewsActivity extends AppCompatActivity {
-    private final static int LOGIN_JUDGE=1;
     private List<NewsBean> news=new ArrayList<>();
     private ListView lvStus;
     private SmartRefreshLayout srl;
     private NewsAdapter newsAdapter;
-    private ImageView imageView;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg){
             super.handleMessage(msg);
             switch (msg.what){
-                case LOGIN_JUDGE:
-
-                    Bundle bundle=new Bundle();
-                    bundle=msg.getData();
-                    String result=bundle.getString("result1");
-                    //显示jason数据
-//                    Toast.makeText(getApplication(),result,Toast.LENGTH_LONG).show();
-                    try{
-                        JSONObject jsonObject=new JSONObject(result);
-                        JSONArray jsonArray=jsonObject.getJSONArray("News");
-                        for(int i=0;i<jsonArray.length();i++){
-                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                            NewsBean newsBean=new NewsBean();
-                            newsBean.setUniquekey(jsonObject1.getString("uniquekey"));
-                            newsBean.setTitle(jsonObject1.getString("title"));
-                            newsBean.setDate(jsonObject1.getString("date"));
-                            newsBean.setAuthor_name(jsonObject1.getString("author_name"));
-                            newsBean.setCategory(jsonObject1.getString("category"));
-                            newsBean.setUrl(jsonObject1.getString("url"));
-                            newsBean.setThumbnail_pic_s(jsonObject1.getString("thumbnail_pic_s"));
-                            news.add(newsBean);
-                        }
-                        newsAdapter.notifyDataSetChanged();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                    break;
                 case 3:
                     Bundle bundle1=new Bundle();
                     bundle1=msg.getData();
@@ -165,12 +135,12 @@ public class NewsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpLogin httpLogin=new HttpLogin();
-                String result=httpLogin.JasonAccpt();
+                String result=httpLogin.JasonAccpt1();
                 Bundle bundle=new Bundle();
                 bundle.putString("result1",result);
                 Message message=new Message();
                 message.setData(bundle);
-                message.what=LOGIN_JUDGE;
+                message.what=3;
                 handler.sendMessage(message);
             }
         }).start();
@@ -198,6 +168,7 @@ public class NewsActivity extends AppCompatActivity {
     }
     public void loadMoreData(){
         news.clear();
+        load();
         newsAdapter.notifyDataSetChanged();
     }
 

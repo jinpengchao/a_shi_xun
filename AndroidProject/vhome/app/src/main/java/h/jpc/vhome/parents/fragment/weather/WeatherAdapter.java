@@ -24,6 +24,8 @@ class ViewHolder1{
 
     TextView date;
 
+    TextView date1;
+
 }
 
 public class WeatherAdapter extends BaseAdapter {
@@ -93,6 +95,7 @@ public class WeatherAdapter extends BaseAdapter {
 
             viewHolder.date=(TextView)convertView.findViewById(R.id.date);
 
+            viewHolder.date1=(TextView)convertView.findViewById(R.id.weather_date);
 
             convertView.setTag(viewHolder);
 
@@ -116,6 +119,8 @@ public class WeatherAdapter extends BaseAdapter {
         viewHolder.weather.setText(weatherBean.getWeather());
 
         viewHolder.temperature.setText(weatherBean.getTemperature());
+
+        viewHolder.date1.setText(weatherBean.getDate());
 
         return convertView;
 

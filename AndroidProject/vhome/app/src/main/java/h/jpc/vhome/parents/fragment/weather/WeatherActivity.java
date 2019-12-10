@@ -84,6 +84,15 @@ public class WeatherActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        //设置默认数据
+            WeatherBean weatherBean=new WeatherBean();
+            weatherBean.setCity("石家庄");
+            weatherBean.setDressing_index("建议穿大衣，棉袄加毛衣，卫衣等服装");
+            weatherBean.setTemperature("20-30度");
+            weatherBean.setWeather("晴");
+            weatherBean.setWeek("星期二");
+            weatherBean.setDate("2019-12-10");
+            weather_information.add(weatherBean);
 
         editText=(EditText)findViewById(R.id.city_name);
         textView1= (TextView) findViewById(R.id.city);

@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="15"
-6-->E:\a_shi_xun\AndroidProject\vhome\emoji\src\main\AndroidManifest.xml
+6-->C:\a_shi_xun\AndroidProject\vhome\emoji\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="28" />
-7-->E:\a_shi_xun\AndroidProject\vhome\emoji\src\main\AndroidManifest.xml
+7-->C:\a_shi_xun\AndroidProject\vhome\emoji\src\main\AndroidManifest.xml
 8
 9</manifest>
