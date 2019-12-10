@@ -9,11 +9,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_comment_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_attention"
+                    style="@style/TextTheme"
+                    android:padding="7dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/attention_add_shape"
+                    android:text="+关注"/>
 
                 <include layout="@layout/item_hotspot"/>
 
@@ -23,8 +34,9 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_alignParentBottom="true"
                     android:background="#696666"/>
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <LinearLayout

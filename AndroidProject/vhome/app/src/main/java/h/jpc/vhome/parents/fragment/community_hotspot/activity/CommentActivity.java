@@ -71,13 +71,13 @@ public class CommentActivity extends AppCompatActivity {
     private TextView tvHotLikenum;
     private GridView gvPostShow;
     private RelativeLayout rlPostSave;
-    private RelativeLayout rlPostComment;
     private RelativeLayout rlPostLike;
     private ShowPostImgAdapter showPostImgAdapter;
     private List<String> imgs = new ArrayList<>();
     private Gson gson = new Gson();
     private ExpandListAdapter adapter;
     private BottomSheetDialog dialog;
+    private TextView tvAttention;
 
     Handler handler = new Handler(){
         @Override
@@ -107,7 +107,7 @@ public class CommentActivity extends AppCompatActivity {
         post = (PostBean) postIntent.getSerializableExtra("post");
         getViews();
         registerListener();
-        //判断是否收藏点赞过，修改图标
+        //判断是否收藏点赞关注过，修改图标
         setCLImg();
         getCommentData();
 
@@ -316,8 +316,8 @@ public class CommentActivity extends AppCompatActivity {
         tvHotLikenum = findViewById(R.id.tv_hot_likenum);
         gvPostShow = findViewById(R.id.gv_post_show);
         rlPostSave = findViewById(R.id.rl_post_save);
-        rlPostComment = findViewById(R.id.rl_post_comment);
         rlPostLike = findViewById(R.id.rl_post_like);
+        tvAttention = findViewById(R.id.tv_attention);
     }
 
     private void registerListener() {
@@ -328,6 +328,7 @@ public class CommentActivity extends AppCompatActivity {
         rlPostLike.setOnClickListener(listener);
         ivHotPerson.setOnClickListener(listener);
         tvHotName.setOnClickListener(listener);
+        tvAttention.setOnClickListener(listener);
     }
     class MyClickListener implements View.OnClickListener{
         @Override
@@ -367,8 +368,16 @@ public class CommentActivity extends AppCompatActivity {
                     break;
                 case R.id.tv_hot_name:
                     break;
+                case R.id.tv_attention:
+                    //添加关注
+                    addAttention();
+                    break;
             }
         }
+    }
+
+    private void addAttention() {
+
     }
 
     /**
