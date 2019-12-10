@@ -1,6 +1,8 @@
 package h.jpc.vhome.parents.fragment.community_hotspot.entity;
 
-public class PostBean {
+import java.io.Serializable;
+
+public class PostBean implements Serializable {
     private int id;
     private String nickName;
     private String headimg;

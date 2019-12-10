@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability = "blocksDescendants"
     android:padding="20dp">
 
     <RelativeLayout
@@ -46,7 +47,7 @@
         android:text="明天大家能够一定好要出去玩"
         android:layout_marginTop="20dp"/>
 
-    <GridView
+    <h.jpc.vhome.parents.fragment.community_hotspot.MyGridView
         android:id="@+id/gv_post_show"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -116,7 +117,7 @@
                android:id="@+id/iv_hot_like"
                android:layout_width="30dp"
                android:layout_height="30dp"
-               android:src="@mipmap/post_like" />
+               android:src="@mipmap/post_img_good" />
 
 
             <TextView

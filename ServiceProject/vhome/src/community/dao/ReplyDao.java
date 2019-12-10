@@ -1,9 +1,9 @@
 /**
- * @Title:CommentDao.java
+ * @Title:ReplyDao.java
  * @Packagecommunity.dao
  * @Description: TODO
  * @auther wzw
- * @date 2019年11月27日
+ * @date 2019年12月10日
  * @version v1.0
  */
 package community.dao;
@@ -16,38 +16,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.CommentDetailBean;
+import entity.ReplyDetailBean;
 
 /**
- * @ClassName: CommentDao
+ * @ClassName: ReplyDao
  * @Description: TODO
  * @author wzw
- * @date 2019年11月27日
+ * @date 2019年12月10日
  *
- */ 
-public class CommentDao {
+ */
+public class ReplyDao {
 
 	/**
 	 * 
-	 *  @title:insertComment
-	 * @Description: 保存评论到数据库
-	 * @throws下午8:48:30
+	 *  @title:insertReply
+	 * @Description: 保存回复数据
+	 * @throws上午8:35:27
 	 * returntype:int
 	 */
-	public int insertComment(CommentDetailBean comment) {
+	public int insertReply(ReplyDetailBean reply) {
 		DBUtil util = new DBUtil();
 		int n = 0;
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_comment values(?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_reply_comment values(?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
-			ps.setInt(2, comment.getPostId());
-			ps.setString(3, comment.getPersonId());
-			ps.setString(4, comment.getNickName());
-			ps.setString(5, comment.getHeadimg());
-			ps.setString(6, comment.getContent());
-			ps.setString(7, comment.getTime());
+			ps.setInt(2, reply.getCommentId());
+			ps.setString(3, reply.getNickName());
+			ps.setString(4, reply.getHeadimg());
+			ps.setString(5, reply.getPersonId());
+			ps.setInt(6, reply.getReplyTotal());
+			ps.setString(7, reply.getContent());
+			ps.setString(8, reply.getTime());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -66,33 +67,33 @@ public class CommentDao {
 		}
 		return n;
 	}
-	
 	/**
 	 * 
-	 *  @title:queryComment
-	 * @Description: 查询指定帖子全部的评论
-	 * @throws下午9:04:03
-	 * returntype:List<Comment>
+	 *  @title:queryReply
+	 * @Description: todo
+	 * @throws上午8:49:38
+	 * returntype:List<ReplyDetailBean>
 	 */
-	public List<CommentDetailBean> queryComment(int postId){
-		List<CommentDetailBean> list = new ArrayList<CommentDetailBean>();
+	public List<ReplyDetailBean> queryReply(int commentId){
+		List<ReplyDetailBean> list = new ArrayList<ReplyDetailBean>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_comment where postId = ?";
+			String sql = "select * from tbl_reply_comment where commentId = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, postId);
+			ps.setInt(1, commentId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				CommentDetailBean comment = new CommentDetailBean();
-				comment.setId(rs.getInt("id"));
-				comment.setPostId(rs.getInt("postId"));
-				comment.setPersonId(rs.getString("personId"));
-				comment.setContent(rs.getString("content"));
-				comment.setTime(rs.getString("time"));
-				comment.setNickName(rs.getString("nickName"));
-				comment.setHeadimg(rs.getString("headimg"));
-				list.add(comment);
+				ReplyDetailBean reply = new ReplyDetailBean();
+				reply.setId(rs.getInt("id"));
+				reply.setCommentId(commentId);
+				reply.setNickName(rs.getString("nickName"));
+				reply.setHeadimg(rs.getString("headimg"));
+				reply.setPersonId(rs.getString("personId"));
+				reply.setContent(rs.getString("content"));
+				reply.setReplyTotal(rs.getInt("replyTotal"));
+				reply.setTime(rs.getString("time"));
+				list.add(reply);
 			}
 			rs.close();
 			ps.close();
@@ -113,21 +114,22 @@ public class CommentDao {
 		return list;
 		
 	}
+	
 	/**
 	 * 
-	 *  @title:queryCommentCount
-	 * @Description: 查询一个帖子的评论总数
-	 * @throws下午9:47:33
+	 *  @title:queryReplyCount
+	 * @Description: 查询总数
+	 * @throws上午8:52:40
 	 * returntype:int
 	 */
-	public int queryCommentCount(int postId){
+	public int queryReplyCount(int commentId){
 		int num = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select count(*) from tbl_comment where postId=?";
+			String sql = "select count(*) from tbl_reply_comment where commentId=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, postId);
+			ps.setInt(1, commentId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				num = rs.getInt(1);
@@ -153,17 +155,17 @@ public class CommentDao {
 	}
 	/**
 	 * 
-	 *  @title:delComment
-	 * @Description: 删除指定id的评论
-	 * @throws下午9:08:04
+	 *  @title:delReply
+	 * @Description: 删除指定id 的回复
+	 * @throws上午8:58:36
 	 * returntype:int
 	 */
-	public int delComment(int id) {
+	public int delReply(int id) {
 		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "delete from tbl_comment where id=?";
+			String sql = "delete from tbl_reply_comment where id=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			n = ps.executeUpdate();

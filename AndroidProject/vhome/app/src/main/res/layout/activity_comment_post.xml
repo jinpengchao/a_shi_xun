@@ -5,39 +5,57 @@
 
     <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/item_hotspot"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:background="#696666"/>
-
-            <ExpandableListView
-                android:id="@+id/elview_comment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                android:layout_marginBottom="64dp"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none"/>
-            <TextView
-                android:id="@+id/tv_post_loadmore"
-                style="@style/TextTheme"
+            <LinearLayout
+                android:id="@+id/ll_comment_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="12dip"
-                android:text="加载更多评论"
-                android:textColor="@android:color/darker_gray" />
-        </LinearLayout>
+                android:orientation="vertical">
+
+                <include layout="@layout/item_hotspot"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="#696666"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_comment_comment"
+                android:layout_below="@id/ll_comment_post"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <h.jpc.vhome.parents.fragment.community_hotspot.CommentExpandableListView
+                    android:id="@+id/elview_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:layout_marginBottom="64dp"
+                    android:listSelector="@android:color/transparent"
+                    android:scrollbars="none"/>
+
+                <TextView
+                    android:id="@+id/tv_post_loadmore"
+                    style="@style/TextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dip"
+                    android:text="加载更多评论"
+                    android:textColor="@android:color/darker_gray" />
+            </LinearLayout>
+
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
@@ -63,7 +81,6 @@
             android:minHeight="40dp"
             android:paddingLeft="4dip">
 
-            <requestFocus />
         </EditText>
 
         <Button

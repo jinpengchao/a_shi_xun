@@ -1,7 +1,6 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
@@ -60,8 +58,7 @@ public class HotSpotAdapter extends BaseAdapter {
     public long getItemId(int i) {
         return i;
     }
-
-
+    
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
@@ -85,7 +82,10 @@ public class HotSpotAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
+        //设置gridview点击时间不响应
+        holder.gvPostShow.setClickable(false);
+        holder.gvPostShow.setPressed(false);
+        holder.gvPostShow.setEnabled(false);
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
 //        holder.ivHotPerson.setImageResource();
@@ -148,7 +148,7 @@ public class HotSpotAdapter extends BaseAdapter {
                 } else {
                     Log.e("点赞", "修改点赞图标第个：" + i);
                     list.get(i).setLike_status(1);
-                    finalHolder.ivHotlike.setImageResource(R.mipmap.post_like1);
+                    finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
                     //点赞个数加一
                     int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())+1;
                     list.get(i).setLikeNum(cnum);
@@ -158,14 +158,14 @@ public class HotSpotAdapter extends BaseAdapter {
             }
         });
 //        点击评论表的时候，跳转到评论页面
-        holder.rlPostComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent commentIntent = new Intent();
-                commentIntent.setClass(context, CommentActivity.class);
-                context.startActivity(commentIntent);
-            }
-        });
+//        holder.rlPostComment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent commentIntent = new Intent();
+//                commentIntent.setClass(context, CommentActivity.class);
+//                context.startActivity(commentIntent);
+//            }
+//        });
         return view;
 
     }
@@ -214,10 +214,10 @@ public class HotSpotAdapter extends BaseAdapter {
             holder.ivHotSave.setImageResource(R.mipmap.post_save);
         }
         if (list.get(i).getLike_status()==1){
-            holder.ivHotlike.setImageResource(R.mipmap.post_like1);
+            holder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
             Log.e("点赞", "点赞过的第个：" + i);
         }else {
-            holder.ivHotlike.setImageResource(R.mipmap.post_like);
+            holder.ivHotlike.setImageResource(R.mipmap.post_img_good);
         }
     }
 
@@ -226,7 +226,7 @@ public class HotSpotAdapter extends BaseAdapter {
         PostBean post = list.get(i);
         SharedPreferences sp = context.getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
         String personId = sp.getString("id", "");
-        Log.e("id===", personId);
+        Log.i("热点：收藏人id===", personId);
         collection.setPersonId(personId);
         collection.setPostId(post.getId());
         //首先准备收藏的数据
