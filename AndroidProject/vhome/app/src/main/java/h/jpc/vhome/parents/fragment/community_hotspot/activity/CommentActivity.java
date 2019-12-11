@@ -276,15 +276,25 @@ public class CommentActivity extends AppCompatActivity {
             ivHotlike.setImageResource(R.mipmap.post_img_good1);
         }else {
             ivHotlike.setImageResource(R.mipmap.post_img_good);
-        }if(post.getAttention_status()==1){
-            tvAttention.setText("已关注");
-            GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
-            myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
-        }else {
-            tvAttention.setText("+关注");
-            GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
-            myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
         }
+        //发帖人是自己的时候不显示关注
+        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+        String myId = sp.getString("id","");
+        Log.e(TAG,"postpersonId:"+post.getPersonId()+"..个人id"+myId);
+        if(post.getPersonId().equals(myId)){
+            tvAttention.setVisibility(View.GONE );
+        }else {
+            if(post.getAttention_status()==1){
+                tvAttention.setText("已关注");
+                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+            }else {
+                tvAttention.setText("+关注");
+                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
+            }
+        }
+
     }
 
     /**
@@ -375,7 +385,11 @@ public class CommentActivity extends AppCompatActivity {
                     break;
                 case R.id.tv_attention:
                     //添加关注
-                    addAttention();
+                    if (post.getAttention_status()==1){
+                        Toast.makeText(CommentActivity.this,"已经关注过了！",Toast.LENGTH_SHORT).show();
+                    }else {
+                        addAttention();
+                    }
                     break;
             }
         }
@@ -391,6 +405,7 @@ public class CommentActivity extends AppCompatActivity {
         tvAttention.setText("已关注");
         GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
         myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+        post.setSave_status(1);
         new Thread(){
             @Override
             public void run() {

@@ -81,7 +81,7 @@ public class GetPostsServlet extends HttpServlet {
 			}
 			for(int m=0;m<attentions.size();m++) {
 				AttentionBean att = attentions.get(m);
-				if(att.getPersonId().equals(post.getPersonId())) {
+				if(att.getAttentionPersonId().equals(post.getPersonId())) {
 					post.setAttention_status(1);
 					break;
 				}

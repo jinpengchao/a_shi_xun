@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -57,6 +58,7 @@ public class HotspotFragment extends Fragment {
     private SmartRefreshLayout srl;
     private List<PostBean> loadList = new ArrayList<>();
     private int loadNum = 0;
+    private TextView tvEmpty;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public class HotspotFragment extends Fragment {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 Log.i("hotspotFragment","list数据个数"+list.size());
                 //设置加载的数据list,默认首先加载5条数据
+
                 if(list.size()>5){
                     for (int k=0;k<5;k++){
                         loadList.add(list.get(k));
@@ -106,7 +109,7 @@ public class HotspotFragment extends Fragment {
 
                 adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
-
+                lvHotSpot.setEmptyView(tvEmpty);
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -172,6 +175,7 @@ public class HotspotFragment extends Fragment {
         lvHotSpot = view.findViewById(R.id.lv_hot_spot);
         addPost = view.findViewById(R.id.addPost);
         srl = view.findViewById(R.id.srl);
+        tvEmpty = view.findViewById(R.id.tv_empty);
     }
 
     private void registerListener() {
