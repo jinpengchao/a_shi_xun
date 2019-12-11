@@ -176,4 +176,32 @@ public class AttentionDao {
 		}
 		return n;
 	}
+	
+	public int delAttention(String personId,String attentionPersonId) {
+		int n = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_myattentions where personId=? and attentionPersonId=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
+			ps.setString(2, attentionPersonId);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
 }

@@ -30,6 +30,10 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.findUserInfo(phone, type);
 	}
+	//按照id查找个人信息
+	public ParentUserInfo selectUserInfo(String id) {
+		return (new UserDao()).findUserInfo(id);
+	}
 	//修改密码
 	public void updatePwd(String phone,String newPwd) {
 		UserDao userDao = new UserDao();

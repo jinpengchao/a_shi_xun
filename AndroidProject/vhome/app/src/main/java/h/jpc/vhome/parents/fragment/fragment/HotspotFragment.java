@@ -97,7 +97,6 @@ public class HotspotFragment extends Fragment {
                         loadList.add(list.get(k));
                         loadNum++;
                     }
-                    Log.e("加载数","loadNum"+loadNum);
                 }else{
                     for (int k=0;k<list.size();k++){
                         loadList.add(list.get(k));

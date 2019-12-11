@@ -51,6 +51,7 @@ import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
 import h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView;
+import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.parents.fragment.myself.SettingActivity;
 import h.jpc.vhome.user.entity.EventBean;
 import h.jpc.vhome.user.entity.ParentUserInfo;
@@ -74,6 +75,8 @@ public class MyselfFragment extends Fragment {
     private RelativeLayout myResetPwd;
     private Button myLogout;
     private EventBus eventBus;
+    private TextView tvAttention;
+    private String TAG = "MyselfFragment";
 
     @Nullable
     @Override
@@ -91,6 +94,17 @@ public class MyselfFragment extends Fragment {
 //        mySetting = view.findViewById(R.id.my_setting);
         myLogout = view.findViewById(R.id.my_logout);
         myResetPwd = view.findViewById(R.id.my_resetpwd);
+        tvAttention = view.findViewById(R.id.tv_myself_attention);
+        getCount();//获取关注和粉丝数
+        //点击关注的人的时候
+        tvAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyAttentionsActivity.class);
+                startActivity(intent);
+            }
+        });
         //获取EventBus对象
         eventBus = EventBus.getDefault();
         myRelation.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +141,31 @@ public class MyselfFragment extends Fragment {
         initData();
         return view;
     }
+
+    private void getCount() {
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+                String personId = sp.getString("id","");
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/GetCountServlet?personId="+personId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (null!=receive&&!"".equals(receive)){
+                        Log.i(TAG, "run: 获得数量成功！");
+                    }else {
+                        Log.e(TAG, "run: 获取关注和粉丝数量失败" );
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     private void initData(){
 
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);

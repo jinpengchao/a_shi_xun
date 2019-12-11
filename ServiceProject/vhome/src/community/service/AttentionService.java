@@ -37,4 +37,8 @@ public class AttentionService {
 	public int delAttention(int id) {
 		return (new AttentionDao()).delAttention(id);
 	}
+	
+	public int delAttention(String personId,String attentionPersonId) {
+		return (new AttentionDao()).delAttention(personId,attentionPersonId);
+	}
 }

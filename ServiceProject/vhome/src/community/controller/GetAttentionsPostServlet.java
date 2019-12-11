@@ -26,14 +26,14 @@ import entity.PostBean;
 /**
  * Servlet implementation class GetAttentionServlet
  */
-@WebServlet("/GetAttentionsServlet")
-public class GetAttentionsServlet extends HttpServlet {
+@WebServlet("/GetAttentionsPostServlet")
+public class GetAttentionsPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetAttentionsServlet() {
+    public GetAttentionsPostServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -62,7 +62,7 @@ public class GetAttentionsServlet extends HttpServlet {
 			list.addAll(itemList);
 		}
 		
-		System.out.println("getAttentionsServlet中获得"+list.size()+"条数据");
+		System.out.println("getAttentionsPostServlet中获得"+list.size()+"条数据");
 		for(int i=0;i<list.size();i++) {
 			PostBean post = list.get(i);
 			int likeNum = (new GoodPostService()).findGoodPostCount(post.getId());

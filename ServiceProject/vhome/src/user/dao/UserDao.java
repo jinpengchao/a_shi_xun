@@ -191,6 +191,51 @@ public class UserDao {
 		}
 		return userInfo;
 	}
+	/**
+	 * 按照id查找个人信息
+	 *  @title:findUserInfo
+	 * @Description: todo
+	 * @throws下午8:27:13
+	 * returntype:ParentUserInfo
+	 */
+	public ParentUserInfo findUserInfo(String id) {
+		DBUtil util = DBUtil.getInstance();
+		ParentUserInfo userInfo = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "";
+			sql = "select * from tbl_parent_userinfo where id=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				userInfo = new ParentUserInfo();
+				userInfo.setPhone(rs.getString("phone"));
+				userInfo.setId(rs.getString("id"));
+				userInfo.setNikeName(rs.getString("nickName"));
+				userInfo.setSex(rs.getString("sex"));
+				userInfo.setArea(rs.getString("area"));
+				userInfo.setAcieve(rs.getString("achieve"));
+				userInfo.setPersonalWord(rs.getString("personalWord"));
+				userInfo.setHeaderImg(rs.getString("headimg"));
+				userInfo.setType(rs.getType());
+				System.out.println("用户信息存储完毕");
+			}else {
+				System.out.println("未查到这个人的信息");
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userInfo;
+	}
 	//修改密码
 	public void changePwd(String phone,String newPwd) {
 		DBUtil util = DBUtil.getInstance();
