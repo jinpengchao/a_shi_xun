@@ -49,11 +49,9 @@ public class HotspotFragment extends Fragment {
     private View view;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
-    private int CHANGE_STATUS = 2;
     private int POST_STATUS = 1;
     private Button addPost;
     private int addPostCode = 100;
-    private int addPostResult = 200;
     private HotSpotAdapter adapter;
     private SmartRefreshLayout srl;
     private List<PostBean> loadList = new ArrayList<>();
@@ -182,7 +180,7 @@ public class HotspotFragment extends Fragment {
         listener = new MyClickListener();
         addPost.setOnClickListener(listener);
     }
-    class MyClickListener implements View.OnClickListener{
+   private class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             switch (view.getId()){
