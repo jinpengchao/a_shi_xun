@@ -1,27 +1,25 @@
 package h.jpc.vhome.parents;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTabHost;
-import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
 import h.jpc.vhome.parents.fragment.CommunityFragment;
 import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.parents.fragment.MyselfFragment;
 import h.jpc.vhome.parents.fragment.alarm.AlarmService;
+import h.jpc.vhome.user.entity.EventBean;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,5 +151,15 @@ public class ParentMain extends AppCompatActivity {
         imageViewMap.put(tag,imageView);
         textViewMap.put(tag,textView);
         return view;
+    }
+    /**
+     * 订阅事件(EventBean)
+     * @param eventBean 发布的事件对象
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEventBeanStikyEvent(EventBean eventBean){
+        MyselfFragment myselfFragment = new MyselfFragment();
+        myselfFragment.nikeName.setText(eventBean.getNickName());
+        myselfFragment.areas.setText(eventBean.getArea());
     }
 }

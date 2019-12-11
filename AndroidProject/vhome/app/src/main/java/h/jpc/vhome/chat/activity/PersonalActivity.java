@@ -3,12 +3,16 @@ package h.jpc.vhome.chat.activity;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +20,14 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -23,6 +35,7 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
@@ -32,6 +45,8 @@ import h.jpc.vhome.chat.utils.citychoose.view.SelectAddressDialog;
 import h.jpc.vhome.chat.utils.citychoose.view.myinterface.SelectAddressInterface;
 import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
 import h.jpc.vhome.chat.utils.photochoose.PhotoUtils;
+import h.jpc.vhome.user.entity.EventBean;
+import h.jpc.vhome.util.ConnectionUtil;
 
 /**
  * Created by ${chenyn} on 2017/2/23.
@@ -68,6 +83,8 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
     private UserInfo mMyInfo;
     private TextView mTv_userName;
     private RelativeLayout mRl_zxing;
+    private Button commit_btn;
+
 
 
     @Override
@@ -78,6 +95,9 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
         initView();
         initListener();
         initData();
+        SharedPreferences sp = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        String area = sp.getString("area","");
+        mTv_city.setText(area);
     }
 
     private void initData() {
@@ -131,10 +151,12 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
         mRl_nickName.setOnClickListener(this);
         mIv_photo.setOnClickListener(this);
         mRl_zxing.setOnClickListener(this);
+        commit_btn.setOnClickListener(this);
     }
 
     private void initView() {
-        initTitle(true, true, "个人信息", "", false, "");
+//        initTitle(true, true, "个人信息", "", false, "");
+        commit_btn = (Button)findViewById(R.id.jmui_commit_btn);
         mRl_cityChoose = (RelativeLayout) findViewById(R.id.rl_cityChoose);
         mTv_city = (TextView) findViewById(R.id.tv_city);
         mRl_gender = (RelativeLayout) findViewById(R.id.rl_gender);
@@ -150,10 +172,9 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
         mRl_zxing = (RelativeLayout) findViewById(R.id.rl_zxing);
 
         mChoosePhoto = new ChoosePhoto();
-        mChoosePhoto.setPortraitChangeListener(PersonalActivity.this, mIv_photo, 2);
+        mChoosePhoto.setPortraitChangeListener(PersonalActivity.this, mIv_photo);
 
     }
-
     @Override
     public void setAreaString(String area) {
         mTv_city.setText(area);
@@ -232,8 +253,6 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                         .isCenterLabel(false)
                         .build();
                 timePickerView.show();
-//                dialog = new SelectAddressDialog(PersonalActivity.this);
-//                dialog.showDateDialog(PersonalActivity.this, mMyInfo);
                 break;
             case R.id.rl_cityChoose:
                 //点击选择省市
@@ -251,6 +270,21 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                 }
                 startActivity(intent);
                 break;
+            case R.id.jmui_commit_btn:
+                SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
+                int type = sp.getInt("type",0);
+                if(type==0){
+                    String nickName = mTv_nickName.getText().toString();
+                    String sex = mTv_gender.getText().toString();
+                    String area = mTv_city.getText().toString();
+                    EventBean stiEvent = new EventBean(nickName,sex,area);
+                    //发布粘性事件
+                    EventBus.getDefault().postSticky(stiEvent);
+                    finish();
+                }
+                if(type == 1){
+
+                }
             default:
                 break;
         }
@@ -283,6 +317,19 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                     break;
                 case NICK_NAME:
                     final String nick = bundle.getString(NICK_NAME_KEY);
+                    SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
+                    String phone = sp.getString("phone","");
+                    int type = sp.getInt("type",0);
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("phone",phone);
+                        jsonObject.put("type",type);
+                        jsonObject.put("data",nick);
+                        jsonObject.put("flag","nickName");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    final String nickName = jsonObject.toString();
                     ThreadUtil.runInThread(new Runnable() {
                         @Override
                         public void run() {
@@ -300,6 +347,36 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                             });
                         }
                     });
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            String ip = (new MyApp()).getIp();
+                            try {
+                                URL url = new URL("http://"+ip+":8080/vhome/changeInfo");
+                                ConnectionUtil util = new ConnectionUtil();
+                                //发送数据
+                                HttpURLConnection connection = util.sendData(url,nickName);
+                                //获取数据
+                                final String data = util.getData(connection);
+                                if(null!=data){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Log.e("名称修改成功","!!!");
+                                            SharedPreferences sp = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.putString("nickName",nick);
+                                            editor.commit();
+                                        }
+                                    });
+                                }
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                     break;
                 default:
                     break;
@@ -313,7 +390,6 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                 break;
         }
     }
-
     public String getDataTime(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);

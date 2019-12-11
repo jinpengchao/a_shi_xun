@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="66dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp">
@@ -14,9 +14,9 @@
         <ImageView
             android:scaleType="fitXY"
             android:id="@+id/iv_memberAvatar"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:src="@drawable/jmui_head_icon"/>
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/group"/>
 
         <TextView
             android:id="@+id/tv_memberName"
@@ -25,7 +25,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:text="昵称"
-            android:textSize="15dp"/>
+            android:textSize="20dp"/>
 
         <ImageView
             android:id="@+id/iv_silence"

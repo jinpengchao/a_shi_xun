@@ -50,7 +50,7 @@ public class AlarmService extends Service {
                             }
                         }
                         //设置免打扰时间
-                        if(hour >= 22  && minute >= 00){
+                        if(hour >= 23  && minute >= 00){
                             Log.e("alarm：sleep","您要休息了。我在这给您道句晚安！");
                             break;
                         }
@@ -66,7 +66,7 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("lww", "Service的onStartCommand方法");
+        Log.i("alarm", "Service的onStartCommand方法");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -74,19 +74,19 @@ public class AlarmService extends Service {
     public void onDestroy() {
         super.onDestroy();
         flag = true;
-        Log.i("lww", "Service的onDestroy方法");
+        Log.i("alarm", "Service的onDestroy方法");
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.i("lww", "Service的onUnbind方法");
+        Log.i("alarm", "Service的onUnbind方法");
         return super.onUnbind(intent);
     }
 
     @Override
     public void onRebind(Intent intent) {
         super.onRebind(intent);
-        Log.i("lww", "Service的onRebind方法");
+        Log.i("alarm", "Service的onRebind方法");
     }
     class MyBinder extends Binder{
         public int getCount(){

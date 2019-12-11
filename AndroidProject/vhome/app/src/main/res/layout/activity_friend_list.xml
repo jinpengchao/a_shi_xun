@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <TextView
             android:id="@+id/tv_cancel"
@@ -19,7 +19,7 @@
             android:paddingLeft="14dp"
             android:text="取消"
             android:textColor="@android:color/white"
-            android:textSize="14sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_marginLeft="14dp"
             android:text="发送名片"
             android:textColor="@android:color/white"
-            android:textSize="17sp"/>
+            android:textSize="20dp"/>
 
     </RelativeLayout>
 

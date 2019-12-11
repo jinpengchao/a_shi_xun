@@ -29,6 +29,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
             android:text="@string/jmui_loading"
+            android:textSize="15dp"
             android:textColor="#808080"/>
     </LinearLayout>
 

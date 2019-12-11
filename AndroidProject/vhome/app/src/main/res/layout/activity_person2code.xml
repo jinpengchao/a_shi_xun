@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48.5dp"
-        android:background="#2DD0CF">
+        android:background="#069EF1">
 
         <LinearLayout
             android:id="@+id/ll_back"
@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/ll_back"
             android:text="我的二维码"
             android:textColor="#fff"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
 
         <ImageView
             android:id="@+id/iv_save"
@@ -63,7 +63,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:src="@drawable/jmui_head_icon"/>
+            android:src="@drawable/rc_default_portrait"/>
 
         <TextView
             android:id="@+id/tv_userName"
@@ -72,7 +72,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="7.67dp"
             android:textColor="#999999"
-            android:textSize="15sp"/>
+            android:textSize="15dp"/>
 
         <ImageView
             android:id="@+id/iv_erWeiMa"
@@ -89,7 +89,7 @@
             android:layout_marginTop="3.33dp"
             android:text="扫一扫上面二维码,加我好友吧!"
             android:textColor="#999999"
-            android:textSize="12sp"/>
+            android:textSize="15dp"/>
     </LinearLayout>
 
 </LinearLayout>

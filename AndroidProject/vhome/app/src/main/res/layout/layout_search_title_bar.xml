@@ -48,5 +48,5 @@
         android:inputType="textNoSuggestions"
         android:maxLines="1"
         android:textColor="#99999999"
-        android:textSize="16sp"/>
+        android:textSize="20dp"/>
 </LinearLayout>

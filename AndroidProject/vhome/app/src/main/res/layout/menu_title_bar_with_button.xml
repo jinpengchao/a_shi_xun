@@ -3,12 +3,13 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/title_bar_height"
-                android:background="@color/jmui_jpush_blue">
+                android:background="@color/choseColor">
 
     <ImageButton
         android:id="@+id/return_btn"
-        android:layout_width="@dimen/title_bar_height"
-        android:layout_height="match_parent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:background="@drawable/jmui_back_btn_bg"
         android:src="@drawable/back"
@@ -21,7 +22,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/return_btn"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="20dp"
         android:visibility="gone"/>
 
     <TextView
@@ -31,7 +32,7 @@
         android:layout_centerInParent="true"
         android:text="@string/app_name"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"/>
+        android:textSize="20dp"/>
 
     <Button
         android:id="@+id/jmui_commit_btn"

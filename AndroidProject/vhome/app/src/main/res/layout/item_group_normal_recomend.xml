@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/iv_groupAvatar"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:scaleType="fitXY"
         android:src="@drawable/group"/>
 
@@ -24,9 +25,9 @@
             android:id="@+id/tv_applyUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="被邀请热"
+            android:text="被邀请人"
             android:textColor="#2C2C2C"
-            android:textSize="15sp"/>
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/tv_groupName"
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="申请加入***群"
             android:textColor="#999999"
-            android:textSize="12sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/tv_invite"
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="邀请人"
             android:textColor="#999999"
-            android:textSize="12sp"/>
+            android:textSize="16dp"/>
 
     </LinearLayout>
 

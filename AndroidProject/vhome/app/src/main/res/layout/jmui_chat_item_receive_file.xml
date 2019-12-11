@@ -24,7 +24,7 @@
 
             <LinearLayout
                 android:id="@+id/jmui_send_file_ll"
-                android:layout_width="210dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/receive_msg_normal"
                 android:orientation="vertical">
@@ -44,12 +44,13 @@
                         android:ems="7"
                         android:maxLines="2"
                         android:paddingBottom="10dp"
+                        android:textSize="20dp"
                         android:textColor="@color/send_file_title_color"/>
 
                     <ImageView
                         android:id="@+id/iv_document"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_marginRight="11dp"
                         android:layout_marginTop="13.33dp"
                         android:src="@drawable/jmui_document"/>

@@ -23,8 +23,8 @@
         <!-- 联系人信息 -->
         <ImageView
             android:id="@+id/icon_iv"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/check_box_cb"
@@ -41,7 +41,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="#2C2C2C"
-            android:textSize="16sp"/>
+            android:textSize="20dp"/>
     </RelativeLayout>
 
     <View

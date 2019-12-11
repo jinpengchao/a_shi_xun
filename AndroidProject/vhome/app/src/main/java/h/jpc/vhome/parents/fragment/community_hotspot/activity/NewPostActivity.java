@@ -460,7 +460,6 @@ public class NewPostActivity extends AppCompatActivity {
                 public void onCancelled(CancelledException cex) {
 
                 }
-
                 @Override
                 public void onFinished() {
 

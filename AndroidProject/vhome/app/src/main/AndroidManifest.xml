@@ -307,7 +307,11 @@
             android:name=".chat.activity.GroupAvatarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTh"/>
-
+        <activity
+            android:name=".chat.activity.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseThemes">
+        </activity>
         <provider
             android:name="com.activeandroid.content.ContentProvider"
             android:authorities="${applicationId}"
@@ -318,7 +322,6 @@
 
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
         <activity android:name=".parents.fragment.tools.AllToolsActivity" />
-        <activity android:name=".user.SetNewPwdActivity" />
         <activity android:name=".user.FindBackPwdActivity" />
         <activity android:name=".user.LoginByCodeActivity" />
         <activity android:name=".user.CheckPhoneActivity" />

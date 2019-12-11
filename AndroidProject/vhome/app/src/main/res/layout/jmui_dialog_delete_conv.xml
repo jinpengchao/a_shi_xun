@@ -23,7 +23,7 @@
             android:layout_marginTop="12.9dp"
             android:text="会话置顶"
             android:textColor="#2C2C2C"
-            android:textSize="@dimen/text_medium_size"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -41,7 +41,7 @@
             android:layout_marginTop="12.9dp"
             android:text="@string/jmui_delete_conv"
             android:textColor="#2C2C2C"
-            android:textSize="@dimen/text_medium_size"/>
+            android:textSize="20dp"/>
 
     </LinearLayout>
 </LinearLayout>

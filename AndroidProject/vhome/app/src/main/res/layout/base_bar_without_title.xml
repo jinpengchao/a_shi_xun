@@ -10,6 +10,7 @@
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/back"
             android:background="@drawable/jmui_back_btn_bg" />
 
@@ -34,5 +35,5 @@
             android:background="@drawable/send_picture_btn_bg"
             android:text="@string/jmui_send"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_normal_size"/>
+            android:textSize="20dp"/>
 </RelativeLayout>

@@ -3,12 +3,13 @@
     android:id="@+id/menu_title_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
-    android:background="@color/jmui_jpush_blue"
+    android:background="@color/choseColor"
     android:orientation="vertical" >
     
         <ImageButton
             android:id="@+id/return_btn"
             android:layout_width="@dimen/title_bar_height"
+            android:layout_centerVertical="true"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:src="@drawable/back"
@@ -23,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/return_btn"
             android:singleLine="true"
-            android:textSize="20sp"/>
+            android:textSize="20dp"/>
         
         <ImageButton
                 android:id="@+id/right_btn"

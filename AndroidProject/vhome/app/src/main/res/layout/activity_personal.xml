@@ -7,13 +7,59 @@
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
-    <include layout="@layout/menu_title_bar_with_button"/>
+    <RelativeLayout android:id="@+id/menu_title_bar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/choseColor">
+
+        <ImageButton
+            android:id="@+id/return_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/jmui_back_btn_bg"
+            android:src="@drawable/back"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/jmui_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/return_btn"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/jmui_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"/>
+
+        <Button
+            android:text="确定"
+            android:id="@+id/jmui_commit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/jmui_back_btn_bg"
+            android:padding="10dp"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"/>
+    </RelativeLayout>
 
 
     <ImageView
         android:id="@+id/iv_photo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="26.67dp"
         android:clickable="true"
@@ -30,7 +76,7 @@
         android:layout_marginTop="5.67dp"
         android:gravity="center"
         android:textColor="#FF999999"
-        android:textSize="14sp"/>
+        android:textSize="20dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -40,12 +86,12 @@
     <RelativeLayout
         android:id="@+id/rl_nickName"
         style="@style/SettingItemStyle"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/nick_logo"/>
@@ -58,18 +104,19 @@
             android:id="@+id/tv_nickName"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv1"
+            android:layout_marginBottom="10dp"
             android:ellipsize="end"
             android:gravity="end"
             android:maxLines="1"
-            android:paddingRight="27.33dp"
             android:textColor="#FF999999"
-            android:textSize="14sp"/>
+            android:textSize="20dp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"
@@ -86,12 +133,12 @@
     <RelativeLayout
         android:id="@+id/rl_zxing"
         style="@style/SettingItemStyle"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/erweima"/>
@@ -102,8 +149,8 @@
 
         <ImageView
             android:id="@+id/iv_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"
@@ -114,7 +161,7 @@
             android:layout_height="wrap_content"
             android:text="我的二维码"
             android:textColor="#FF999999"
-            android:textSize="14sp"
+            android:textSize="20dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_arrow"/>
     </RelativeLayout>
@@ -129,11 +176,12 @@
     <RelativeLayout
         android:id="@+id/rl_gender"
         style="@style/SettingItemStyle"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/gender_logo"/>
@@ -146,18 +194,19 @@
             android:id="@+id/tv_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv2"
             android:ellipsize="end"
             android:gravity="end"
+            android:text="asdasdasdasdasd"
             android:maxLines="1"
-            android:paddingRight="27.33dp"
             android:textColor="#FF999999"
-            android:textSize="14sp"/>
+            android:textSize="20dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"
@@ -174,11 +223,12 @@
     <RelativeLayout
         android:id="@+id/rl_birthday"
         style="@style/SettingItemStyle"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/birthday_logo"/>
@@ -191,15 +241,16 @@
             android:id="@+id/tv_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingRight="27.33dp"
+            android:layout_toLeftOf="@id/iv3"
             android:textColor="#FF999999"
-            android:textSize="14sp"/>
+            android:text="asdasdaasd"
+            android:textSize="20dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"
@@ -216,11 +267,12 @@
     <RelativeLayout
         android:id="@+id/rl_cityChoose"
         style="@style/SettingItemStyle"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/address_logo"/>
@@ -231,20 +283,20 @@
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/iv4"
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:gravity="end"
             android:maxLines="1"
-            android:paddingRight="27.33dp"
             android:textColor="#FF999999"
-            android:textSize="14sp"/>
+            android:textSize="20dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"
@@ -260,13 +312,13 @@
 
     <RelativeLayout
         android:id="@+id/sign"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
+        style="@style/SettingItemStyle"
+        android:layout_marginTop="2dp"
         android:background="#fff">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:src="@drawable/sign_logo"/>
@@ -279,18 +331,18 @@
             android:id="@+id/tv_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/iv5"
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingLeft="122.67dp"
-            android:paddingRight="27.33dp"
             android:textColor="#FF999999"
-            android:textSize="14sp"/>
+            android:textSize="20dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.93dp"

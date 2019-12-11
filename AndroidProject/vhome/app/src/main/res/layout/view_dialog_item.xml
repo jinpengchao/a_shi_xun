@@ -11,5 +11,5 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:textColor="#0073FF"
-        android:textSize="18sp" />
+        android:textSize="20dp" />
 </RelativeLayout>

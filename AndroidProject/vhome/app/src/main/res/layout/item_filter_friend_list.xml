@@ -36,7 +36,7 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="#353535"
-            android:textSize="16sp"
+            android:textSize="20dp"
             />
     </LinearLayout>
 

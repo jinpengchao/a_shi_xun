@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public EditText etPwd;
     private TextView findBackPwd;
     private ImageView mainBackground;
-    private ActionBar actionBar;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
@@ -68,11 +67,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        actionBar = this.getActionBar();
-
         getView();
         initListener();
         Log.e("MainActivity","oncreate");
+        Bundle bundle = this.getIntent().getExtras();
+        if (null!=bundle) {
+            String registerPhone = bundle.getString("phone");
+            String registerPwd = bundle.getString("pwd");
+            etPhone.setText(registerPhone);
+            etPwd.setText(registerPwd);
+        }
         sp = getSharedPreferences("user", MODE_PRIVATE);
         if (sp.getString("phone","")!=null) {
             String p = sp.getString("phone", "");

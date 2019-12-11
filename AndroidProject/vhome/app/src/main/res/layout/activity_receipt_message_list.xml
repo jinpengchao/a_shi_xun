@@ -7,13 +7,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48.5dp"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <ImageButton
             android:id="@+id/return_btn"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/jmui_back_btn_bg"
             android:src="@drawable/back"/>
 
@@ -24,7 +25,7 @@
             android:layout_toRightOf="@id/return_btn"
             android:text="消息查看列表"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
 
     </RelativeLayout>
 
@@ -45,7 +46,7 @@
                 android:layout_height="39dp"
                 android:gravity="center"
                 android:text="未读"
-                android:textSize="16sp">
+                android:textSize="20dp">
             </TextView>
 
             <View
@@ -73,7 +74,7 @@
                 android:layout_height="39dp"
                 android:gravity="center"
                 android:text="已读"
-                android:textSize="16sp">
+                android:textSize="20dp">
             </TextView>
 
             <View

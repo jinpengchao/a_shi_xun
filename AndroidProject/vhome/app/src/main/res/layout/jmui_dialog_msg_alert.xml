@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textColor="#2C2C2C"
         android:paddingLeft="25dp"
-        android:textSize="16sp"
+        android:textSize="20dp"
         android:gravity="left|center_vertical"
         android:background="@drawable/jmui_dialog_top_btn_bg"
         android:text="@string/jmui_copy"/>
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textColor="#2C2C2C"
         android:paddingLeft="25dp"
-        android:textSize="16sp"
+        android:textSize="20dp"
         android:gravity="left|center_vertical"
         android:background="@drawable/jmui_dialog_bottom_btn_bg"
         android:text="@string/jmui_delete"/>

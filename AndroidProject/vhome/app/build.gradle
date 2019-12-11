@@ -74,7 +74,7 @@ dependencies {
     //Glide
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
     //高斯模糊图
-
+    implementation 'org.greenrobot:eventbus:3.1.1'//eventBus
     //------------------------------------------------------//
     testImplementation 'junit:junit:4.12'
     implementation 'com.jakewharton:butterknife:7.0.1'

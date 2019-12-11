@@ -7,18 +7,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="66dp">
 
         <!-- 联系人信息 -->
         <ImageView
             android:id="@+id/head_icon_iv"
-            android:layout_width="47.33dp"
-            android:layout_height="47.33dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/jmui_head_icon"/>
+            android:src="@drawable/rc_default_portrait"/>
 
         <TextView
             android:id="@+id/name"
@@ -31,7 +31,7 @@
             android:text="用户名"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#2C2C2C"
-            android:textSize="16sp"/>
+            android:textSize="20dp"/>
 
 
     </RelativeLayout>

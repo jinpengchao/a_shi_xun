@@ -10,13 +10,13 @@
     <Button
         android:id="@+id/localPhotosBtn"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
         android:text="从相册选择"
         android:textColor="#FF2C2C2C"
-        android:textSize="16sp" />
+        android:textSize="20dp" />
 
     <View
         android:layout_width="match_parent"
@@ -26,13 +26,13 @@
     <Button
         android:id="@+id/photographBtn"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
         android:text="拍照"
         android:textColor="#FF2C2C2C"
-        android:textSize="16sp" />
+        android:textSize="20dp" />
 
     <View
         android:layout_width="match_parent"
@@ -42,11 +42,11 @@
     <Button
         android:id="@+id/cancelBtn"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:text="取消"
         android:textColor="#FF2C2C2C"
-        android:textSize="16sp" />
+        android:textSize="20dp" />
 
 </LinearLayout>
