@@ -22,7 +22,7 @@
                 android:id="@+id/jmui_menu_title_bar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/title_bar_height"
-                android:background="@color/jmui_jpush_blue">
+                android:background="@color/choseColor">
 
                 <ImageButton
                     android:id="@+id/jmui_return_btn"

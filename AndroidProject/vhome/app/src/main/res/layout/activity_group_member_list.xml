@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <TextView
             android:id="@+id/tv_back"
@@ -19,7 +19,7 @@
             android:drawableStart="@drawable/back"
             android:text="群成员"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
     </RelativeLayout>
 
     <FrameLayout

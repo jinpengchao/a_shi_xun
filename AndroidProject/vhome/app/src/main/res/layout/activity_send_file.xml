@@ -10,13 +10,14 @@
         android:id="@+id/menu_title_bar"
         android:layout_width="match_parent"
         android:layout_height="48.5dp"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <ImageButton
             android:id="@+id/return_btn"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/jmui_back_btn_bg"
             android:src="@drawable/back"/>
 
@@ -27,7 +28,7 @@
             android:layout_toRightOf="@id/return_btn"
             android:text="文件"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -50,6 +51,7 @@
                 android:layout_height="38dp"
                 android:background="#fff"
                 android:text="@string/document"
+                android:textSize="20dp"
                 android:textColor="@color/send_file_action_bar"/>
 
             <ImageView
@@ -76,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:background="#fff"
+                android:textSize="20dp"
                 android:text="@string/jmui_video"
                 android:textColor="@color/send_file_action_bar"/>
 
@@ -103,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:background="#fff"
+                android:textSize="20dp"
                 android:text="@string/album"
                 android:textColor="@color/send_file_action_bar"/>
 
@@ -132,7 +136,7 @@
                 android:background="#fff"
                 android:text="@string/audio"
                 android:textColor="@color/send_file_action_bar"
-                android:textSize="@dimen/send_file_title_size"/>
+                android:textSize="20dp"/>
 
             <ImageView
                 android:id="@+id/slipping_4"
@@ -160,7 +164,7 @@
                 android:background="#fff"
                 android:text="@string/other"
                 android:textColor="@color/send_file_action_bar"
-                android:textSize="@dimen/send_file_title_size"/>
+                android:textSize="20dp"/>
 
             <ImageView
                 android:id="@+id/slipping_5"
@@ -201,19 +205,19 @@
             android:ems="10"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:textSize="16sp"/>
+            android:textSize="20dp"/>
 
         <Button
             android:id="@+id/send_file_btn"
             android:layout_width="72dp"
-            android:layout_height="29.33dp"
+            android:layout_height="32.33dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="13.67dp"
             android:background="@drawable/blue_btn_selector"
             android:text="@string/jmui_send"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
+            android:textSize="20dp"/>
 
     </RelativeLayout>
 

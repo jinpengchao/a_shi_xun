@@ -68,7 +68,7 @@
                     android:layout_marginBottom="12.33dp"
                     android:layout_marginLeft="11dp"
                     android:layout_marginTop="13.33dp"
-                    android:background="@drawable/jmui_head_icon"
+                    android:background="@drawable/rc_default_portrait"
                     android:scaleType="fitXY"/>
 
                 <LinearLayout
@@ -85,7 +85,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="#2C2C2C"
-                        android:textSize="15sp"/>
+                        android:textSize="20dp"/>
 
                     <TextView
                         android:id="@+id/tv_userName"
@@ -96,7 +96,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="#999999"
-                        android:textSize="12sp"/>
+                        android:textSize="16dp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -115,7 +115,7 @@
                 android:layout_marginTop="3dp"
                 android:text="个人名片"
                 android:textColor="#989898"
-                android:textSize="10sp"/>
+                android:textSize="20dp"/>
 
         </LinearLayout>
 

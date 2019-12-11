@@ -568,12 +568,12 @@ public class ChattingListAdapter extends BaseAdapter {
                         if (status == 0) {
                             holder.headIcon.setImageBitmap(bitmap);
                         } else {
-                            holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
+                            holder.headIcon.setImageResource(R.drawable.rc_default_portrait);
                         }
                     }
                 });
             } else {
-                holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
+                holder.headIcon.setImageResource(R.drawable.rc_default_portrait);
             }
 
             // 点击头像跳转到个人信息界面

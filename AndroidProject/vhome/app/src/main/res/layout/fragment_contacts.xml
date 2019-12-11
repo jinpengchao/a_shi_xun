@@ -9,16 +9,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <TextView
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
-            android:text="vhome"
+            android:text="我的关联"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
 
         <ImageButton
             android:id="@+id/ib_goToAddFriend"

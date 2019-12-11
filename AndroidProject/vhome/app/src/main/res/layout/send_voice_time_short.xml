@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="9dp"
             android:text="说话时间太短"
-            android:textSize="12sp"
+            android:textSize="20dp"
             android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

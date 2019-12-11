@@ -3,7 +3,9 @@ package h.jpc.vhome.chat.utils.citychoose.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,7 +16,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,6 +39,7 @@ import javax.xml.parsers.SAXParserFactory;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.chat.application.JGApplication;
@@ -43,6 +53,9 @@ import h.jpc.vhome.chat.utils.citychoose.view.adapter.ArrayWheelAdapter;
 import h.jpc.vhome.chat.utils.citychoose.view.myinterface.OnWheelChangedListener;
 import h.jpc.vhome.chat.utils.citychoose.view.myinterface.SelectAddressInterface;
 import h.jpc.vhome.chat.utils.timechoose.NumericWheelAdapter;
+import h.jpc.vhome.util.ConnectionUtil;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class SelectAddressDialog implements OnClickListener,
@@ -283,8 +296,12 @@ public class SelectAddressDialog implements OnClickListener,
                                         }
                                     }
                                 });
+                                UserInfo.Gender s1 =  myInfo.getGender();
+                                String sex1 = s1.toString();
+                                updateSex(context,sex1,myInfo);
                             }
                         });
+
                         break;
                     case R.id.woman_rl:
                         selectAdd.setGender("女");
@@ -303,8 +320,12 @@ public class SelectAddressDialog implements OnClickListener,
                                         }
                                     }
                                 });
+                                UserInfo.Gender s2 =  myInfo.getGender();
+                                String sex2 = s2.toString();
+                                updateSex(context,sex2,myInfo);
                             }
                         });
+
                         break;
                     case R.id.rl_secrecy:
                         selectAdd.setGender("保密");
@@ -323,8 +344,12 @@ public class SelectAddressDialog implements OnClickListener,
                                         }
                                     }
                                 });
+                                UserInfo.Gender s2 =  myInfo.getGender();
+                                String sex2 = s2.toString();
+                                updateSex(context,sex2,myInfo);
                             }
                         });
+
                         break;
                     default:
                         break;
@@ -335,7 +360,47 @@ public class SelectAddressDialog implements OnClickListener,
         woman.setOnClickListener(listener);
         secrecy.setOnClickListener(listener);
     }
+    public void updateSex(final PersonalActivity context,String sex,final UserInfo myInfo){
+        SharedPreferences sp = context.getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        int type = sp.getInt("type",0);
 
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone",phone);
+            jsonObject.put("type",type);
+            jsonObject.put("data",sex);
+            jsonObject.put("flag","sex");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mySex = jsonObject.toString();
+        String ip = (new MyApp()).getIp();
+        try {
+            URL url = new URL("http://"+ip+":8080/vhome/changeInfo");
+            ConnectionUtil util = new ConnectionUtil();
+            //发送数据
+            HttpURLConnection connection = util.sendData(url,mySex);
+            //获取数据
+            final String data = util.getData(connection);
+            if(null!=data){
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("性别修改成功","!!!");
+                        SharedPreferences sp = context.getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("sex",sex);
+                        editor.commit();
+                    }
+                });
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 初始化年
      */
@@ -485,17 +550,8 @@ public class SelectAddressDialog implements OnClickListener,
                 ThreadUtil.runInThread(new Runnable() {
                     @Override
                     public void run() {
-                        mInfo.setAddress(mCurrentProviceName + "-" + mCurrentCityName + "-" + mCurrentDistrictName);
-                        JMessageClient.updateMyInfo(UserInfo.Field.region, mInfo, new BasicCallback() {
-                            @Override
-                            public void gotResult(int responseCode, String responseMessage) {
-                                if (responseCode == 0) {
-                                    ToastUtil.shortToast(context, "更新成功");
-                                } else {
-                                    ToastUtil.shortToast(context, "更新失败" + responseMessage);
-                                }
-                            }
-                        });
+                        updateArea(mCurrentProviceName + "-" + mCurrentCityName + "-" + mCurrentDistrictName);
+
                     }
                 });
                 overdialog.cancel();
@@ -508,7 +564,47 @@ public class SelectAddressDialog implements OnClickListener,
                 break;
         }
     }
-
+    public void updateArea(String area){
+        SharedPreferences sp = context.getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        int type = sp.getInt("type",0);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone",phone);
+            jsonObject.put("type",type);
+            jsonObject.put("data",area);
+            jsonObject.put("flag","area");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mySex = jsonObject.toString();
+        String ip = (new MyApp()).getIp();
+        try {
+            URL url = new URL("http://"+ip+":8080/vhome/changeInfo");
+            ConnectionUtil util = new ConnectionUtil();
+            //发送数据
+            HttpURLConnection connection = util.sendData(url,mySex);
+            //获取数据
+            final String data = util.getData(connection);
+            if(null!=data){
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("地区修改成功","!!!");
+                        SharedPreferences sp = context.getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("area",area);
+                        editor.commit();
+                        ToastUtil.shortToast(context, "更新成功");
+                    }
+                });
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void setUpData() {
         initProvinceDatas();
         mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(context,

@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_parent_home,null);
         initUserInfo();
+
         /*
          * 功能：设置时间
          * 作者：靳朋朝
@@ -129,7 +130,6 @@ public class HomeFragment extends Fragment {
         return d;
     }
     public void initUserInfo(){
-
         //准备数据
         SharedPreferences sp = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         if(sp.getString("test",null)==null || !sp.getString("test","").equals("ok")){

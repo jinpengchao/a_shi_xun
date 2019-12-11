@@ -3,6 +3,7 @@ package h.jpc.vhome.chat.utils.photochoose;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.util.List;
 
 import h.jpc.vhome.chat.utils.CommonUtils;
+
 
 
 /**
@@ -36,8 +38,7 @@ public class PhotoUtils {
      * 拍照成功后返回
      **/
     public static final int INTENT_SELECT = 4;
-
-    public static final String CROP_FILE_NAME = "crop_file.jpg";
+    public static final String CROP_FILE_NAME = "header"+System.currentTimeMillis()+".jpg";
 
     /**
      * PhotoUtils对象

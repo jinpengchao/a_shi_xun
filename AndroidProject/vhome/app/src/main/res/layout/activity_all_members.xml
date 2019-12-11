@@ -9,12 +9,13 @@
         android:id="@+id/title_bar_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <ImageButton
             android:id="@+id/return_btn"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:background="@drawable/jmui_back_btn_bg"
             android:src="@drawable/back"/>
@@ -27,7 +28,7 @@
             android:layout_toRightOf="@id/return_btn"
             android:text="删除成员"
             android:textColor="#ffffff"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
 
         <TextView
             android:layout_marginRight="14.33dp"
@@ -49,7 +50,7 @@
             android:paddingLeft="10dp"
             android:text="@string/add"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_medium_size"/>
+            android:textSize="20dp"/>
 
 
     </RelativeLayout>
@@ -109,7 +110,7 @@
             android:paddingLeft="8dp"
             android:textColor="#555555"
             android:textColorHint="#C2C0C0"
-            android:textSize="14sp"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <View

@@ -6,16 +6,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:paddingBottom="8dp"
         android:paddingLeft="14dp"
         android:paddingTop="8dp">
 
         <ImageView
+            android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:id="@+id/iv_userAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"/>
+            android:layout_width="55dp"
+            android:layout_height="55dp"/>
 
         <TextView
             android:id="@+id/tv_userName"
@@ -26,7 +27,7 @@
             android:layout_toRightOf="@id/iv_userAvatar"
             android:text="用户名"
             android:textColor="#2C2C2C"
-            android:textSize="16sp"/>
+            android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/tv_delSilence"
@@ -42,7 +43,7 @@
             android:paddingTop="3dp"
             android:text="解除"
             android:textColor="#999999"
-            android:textSize="14sp"/>
+            android:textSize="20dp"/>
 
 
     </RelativeLayout>

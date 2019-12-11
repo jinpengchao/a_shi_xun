@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/jmui_jpush_blue">
+        android:background="@color/choseColor">
 
         <TextView
             android:id="@+id/main_title_bar_title"
@@ -17,9 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
-            android:text="vhome"
+            android:layout_centerHorizontal="true"
+            android:text="我的消息"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="20dp"/>
 
         <ImageButton
             android:id="@+id/create_group_btn"

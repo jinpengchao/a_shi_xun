@@ -11,7 +11,7 @@
     <h.jpc.vhome.chat.view.SwipeLayout
         android:id="@+id/swp_layout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="66dp"
         app:drag_edge="right">
 
         <LinearLayout
@@ -47,8 +47,9 @@
 
                 <h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView
                     android:id="@+id/item_head_icon"
-                    android:layout_width="47.33dp"
-                    android:layout_height="47.33dp"/>
+                    android:layout_width="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="50dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -74,7 +75,7 @@
                         android:maxLines="1"
                         android:text="申请人"
                         android:textColor="#2C2C2C"
-                        android:textSize="16sp"/>
+                        android:textSize="20dp"/>
 
                 </LinearLayout>
 
@@ -83,24 +84,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_layout"
-                    android:layout_marginTop="1.33dp"
+                    android:layout_marginTop="2.5dp"
                     android:ems="10"
                     android:maxLines="1"
                     android:text="验证信息"
                     android:textColor="#999999"
-                    android:textSize="14sp"/>
+                    android:textSize="16dp"/>
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/item_add_btn"
-                android:layout_width="53.33dp"
-                android:layout_height="26.67dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="14.33dp"
                 android:background="@drawable/blue_btn_selector"
                 android:gravity="center"
                 android:text="@string/accept"
                 android:textColor="@drawable/blue_text_selector"
-                android:textSize="14sp"/>
+                android:textSize="20dp"/>
 
             <TextView
                 android:layout_marginRight="14.33dp"

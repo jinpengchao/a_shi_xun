@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#FF2DD0CF"
+            android:background="#069EF1"
             android:titleTextColor="#fff"
             app:titleTextAppearance="@style/Toolbar.TitleText">
 
@@ -65,7 +65,7 @@
             android:paddingRight="8dip"
             android:text="@string/picker_image_preview"
             android:textColor="@color/color_picker_preview_selector"
-            android:textSize="14.0sp"
+            android:textSize="20dp"
             android:visibility="visible"/>
 
         <TextView
@@ -83,7 +83,7 @@
             android:paddingRight="8dip"
             android:text="@string/btn_send"
             android:textColor="@drawable/blue_text_selector"
-            android:textSize="14.0sp"
+            android:textSize="20dp"
             android:visibility="visible"/>
     </RelativeLayout>
 

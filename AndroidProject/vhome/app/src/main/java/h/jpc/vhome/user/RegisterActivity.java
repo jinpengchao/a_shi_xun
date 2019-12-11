@@ -177,7 +177,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
                 registerUser();
-                registerOver();
+//                registerOver();
                 break;
         }
     }
@@ -305,60 +305,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 Log.e("MainActivity","极光注册-->over");
             }
         });
-    }
-    public void registerOver(){
-        final String userId = SharePreferenceManager.getRegistrName();
-        final String password = SharePreferenceManager.getRegistrPass();
-        SharePreferenceManager.setRegisterUsername(userId);
-        JMessageClient.login(userId, password, new BasicCallback() {
-            @Override
-            public void gotResult(int responseCode, String responseMessage) {
-                if (responseCode == 0) {
-                    JGApplication.registerOrLogin = 1;
-                    String username = JMessageClient.getMyInfo().getUserName();
-                    String appKey = JMessageClient.getMyInfo().getAppKey();
-                    UserEntry user = UserEntry.getUser(username, appKey);
-                    if (null == user) {
-                        user = new UserEntry(username, appKey);
-                        user.save();
-                    }
-                    UserInfo myUserInfo = JMessageClient.getMyInfo();
-                    if (myUserInfo == null) {
-                        Log.e("finishRegister","userInfo==null");
-                    }
-                    //注册时候更新昵称
-                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, myUserInfo, new BasicCallback() {
-                        @Override
-                        public void gotResult(final int status, String desc) {
-                            //更新跳转标志
-                            SharePreferenceManager.setCachedFixProfileFlag(false);
-                            mDialog.dismiss();
-                            if (status == 0) {
-                                goToActivity(RegisterActivity.this, MainActivity.class);
-                            }
-                        }
-                    });
-                    //注册时更新头像
-                    final String avatarPath = SharePreferenceManager.getRegisterAvatarPath();
-                    if (avatarPath != null) {
-                        ThreadUtil.runInThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                JMessageClient.updateUserAvatar(new File(avatarPath), new BasicCallback() {
-                                    @Override
-                                    public void gotResult(int responseCode, String responseMessage) {
-                                        if (responseCode == 0) {
-                                            SharePreferenceManager.setCachedAvatarPath(avatarPath);
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        SharePreferenceManager.setCachedAvatarPath(null);
-                    }
-                }
-            }
-        });
+        Intent i = new Intent();
+        i.setClass(this,MainActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("phone",phoneNums);
+        bundle.putString("pwd",passWords);
+        i.putExtras(bundle);
+        startActivity(i);
+        finish();
     }
 }
