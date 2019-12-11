@@ -1,4 +1,7 @@
 <resources>
+    <string-array name="indicator_title">
+        <item>推荐</item>
+    </string-array>
     <string name="app_name">微家</string>
     <string name="userName">用户名</string>
     <!-- fixProfile界面中使用到的字符串 -->
