@@ -156,7 +156,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 if(commentList.get(groupPosition).getId()==0){
-                    Toast.makeText(CommentActivity.this,"您刚评论完哦！",Toast.LENGTH_SHORT);
+                    Toast.makeText(CommentActivity.this,"您刚评论完哦！",Toast.LENGTH_SHORT).show();
                 }else {
                     Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
                     showReplyDialog(groupPosition);
@@ -270,9 +270,9 @@ public class CommentActivity extends AppCompatActivity {
             ivHotSave.setImageResource(R.mipmap.post_save);
         }
         if(post.getLike_status()==1){
-            ivHotlike.setImageResource(R.mipmap.post_like1);
+            ivHotlike.setImageResource(R.mipmap.post_img_good1);
         }else {
-            ivHotlike.setImageResource(R.mipmap.post_like);
+            ivHotlike.setImageResource(R.mipmap.post_img_good);
         }
     }
 
@@ -346,7 +346,7 @@ public class CommentActivity extends AppCompatActivity {
                     } else {
                         Log.i("commentActivity", "修改点赞图标" );
                         post.setLike_status(1);
-                        ivHotlike.setImageResource(R.mipmap.post_like1);
+                        ivHotlike.setImageResource(R.mipmap.post_img_good1);
                         //点赞个数加一
                         int cnum = Integer.parseInt(tvHotLikenum.getText().toString().trim())+1;
                         post.setLikeNum(cnum);

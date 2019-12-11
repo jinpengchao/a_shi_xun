@@ -39,7 +39,7 @@
             </RelativeLayout>
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_comment_comment"
                 android:layout_below="@id/ll_comment_post"
                 android:layout_marginTop="20dp"
@@ -63,9 +63,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="12dip"
+                    android:layout_below="@id/elview_comment"
                     android:text="快来评论吧！"
                     android:textColor="@android:color/darker_gray" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
