@@ -2,11 +2,15 @@ package alarm.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dbutil.DBUtil;
+import entity.AlarmBean;
 public class AlarmDao {
-	//添加用户信息
+	//发送新闹钟
 	public void sendNewAlarm(int alarmId, String alarmTime, String sendPerson, String receivePerson, String content){
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
@@ -32,5 +36,41 @@ public class AlarmDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	//读取闹钟列表
+	public List<AlarmBean> allAlarm(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<AlarmBean> list = new ArrayList<>();
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_alarm";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				AlarmBean alarmBean = new AlarmBean();
+				int alarmId = rs.getInt("alarmId");
+				String alarmTime = rs.getString("alarmTime");
+				String sendPersonId = rs.getString("sendPersonId");
+				String receivePersonId = rs.getString("receivePersonId");
+				String content = rs.getString("content");
+				alarmBean.setAlarmId(alarmId);
+				alarmBean.setAlarmTime(alarmTime);
+				alarmBean.setSendPersonId(sendPersonId);
+				alarmBean.setReceivePersonId(receivePersonId);
+				alarmBean.setContent(content);
+				list.add(alarmBean);
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

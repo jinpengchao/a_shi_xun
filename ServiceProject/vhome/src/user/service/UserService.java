@@ -30,4 +30,19 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.findUserInfo(phone, type);
 	}
+	//修改密码
+	public void updatePwd(String phone,String newPwd) {
+		UserDao userDao = new UserDao();
+		userDao.changePwd(phone, newPwd);
+	}
+	//修改个人信息
+	public void updateUserInfo(String phone,int type,String flag , String data) {
+		UserDao userDao = new UserDao();
+		userDao.changeUserInfo(phone, type,flag, data);
+	}
+	//添加用户头像图片
+	public void updateUserHeaderImg(String phone,int type,String headimg) {
+		UserDao userDao = new UserDao();
+		userDao.saveHeaderImg(phone, type, headimg);
+	}
 }

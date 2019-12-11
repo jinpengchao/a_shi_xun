@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,20 +17,18 @@ import com.google.gson.Gson;
 
 import alarm.service.AlarmService;
 import entity.AlarmBean;
-import entity.User;
-import user.service.UserService;
 
 /**
- * Servlet implementation class SendNewAlarmServlet
+ * Servlet implementation class ShowAllAlarmServlet
  */
-@WebServlet("/sendnew")
-public class SendNewAlarmServlet extends HttpServlet {
+@WebServlet("/showAllAlarm")
+public class ShowAllAlarmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendNewAlarmServlet() {
+    public ShowAllAlarmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,13 +37,14 @@ public class SendNewAlarmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
@@ -52,26 +52,21 @@ public class SendNewAlarmServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-		Gson gson = new Gson();
-		AlarmBean alarmBean = null;
-		alarmBean = gson.fromJson(data, AlarmBean.class);
-		if(null==alarmBean) {
-			System.out.println("闹钟消息未获取");
-		}
-		int alarmId = alarmBean.getAlarmId();
-		String alarmTime = alarmBean.getAlarmTime();
-		String sendPersonId = alarmBean.getSendPersonId();
-		String receivePersonId = alarmBean.getReceivePersonId();
-		String content = alarmBean.getContent();
+		String phone = data;
 		
+		Gson gson = new Gson();
 		AlarmService alarmService = new AlarmService();
-		alarmService.insertNewSendAlarm(alarmId, alarmTime, sendPersonId, receivePersonId, content);
-		System.out.println("SendNewAlarmServlet--发送新闹钟成功！");
-		out.write("发送新闹钟成功!");
+		List<AlarmBean> list = alarmService.selectAllAlarm(phone);
+		
+		String alarmInfo = gson.toJson(list);
+		System.out.println(alarmInfo);
+		out.write(alarmInfo);
+		
 		out.flush();
 		out.close();
 		br.close();
 		is.close();
+		
 	}
 
 }
