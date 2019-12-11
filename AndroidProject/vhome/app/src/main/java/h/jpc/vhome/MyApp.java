@@ -1,9 +1,13 @@
 package h.jpc.vhome;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.activeandroid.ActiveAndroid;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 
 import org.xutils.x;
 
@@ -25,6 +29,7 @@ import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.imagepicker.GlideImageLoader;
 import h.jpc.vhome.chat.utils.imagepicker.ImagePicker;
 import h.jpc.vhome.chat.utils.imagepicker.view.CropImageView;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.LogUtil;
 
 public class MyApp extends com.activeandroid.app.Application {
     public static final String CONV_TITLE = "conv_title";
@@ -123,9 +128,32 @@ public class MyApp extends com.activeandroid.app.Application {
     //10.7.89.128  192.168.199.158
     private String ip = "10.7.89.128";
     private String pathInfo = "parentUserInfo";
+
+    private static Handler sHandler=null;
+    private static Context SContext=null;
     @Override
     public void onCreate() {
         super.onCreate();
+        //连接喜马拉雅
+        CommonRequest mXimalaya = CommonRequest.getInstanse();
+        if(DTransferConstants.isRelease) {
+            String mAppSecret = "8646d66d6abe2efd14f2891f9fd1c8af";
+            mXimalaya.setAppkey("9f9ef8f10bebeaa83e71e62f935bede8");
+            mXimalaya.setPackid("com.app.test.android");
+            mXimalaya.init(this ,mAppSecret);
+        } else {
+            String mAppSecret = "0a09d7093bff3d4947a5c4da0125972e";
+            mXimalaya.setAppkey("f4d8f65918d9878e1702d49a8cdf0183");
+            mXimalaya.setPackid("com.ximalaya.qunfeng");
+            mXimalaya.init(this ,mAppSecret);
+        }
+        XmPlayerManager.getInstance(this).init();
+        //初始化LogUtil
+        LogUtil.init(this.getPackageName(),false);
+        sHandler=new Handler();
+        SContext=getBaseContext();
+
+
         x.Ext.init(this);
         context = getApplicationContext();
         THUMP_PICTURE_DIR = context.getFilesDir().getAbsolutePath() + "/JChatDemo";
@@ -144,7 +172,13 @@ public class MyApp extends com.activeandroid.app.Application {
         new NotificationClickEventReceiver(getApplicationContext());
         initImagePicker();
     }
+    public  static Context getAppContext(){
+        return context;
+    }
 
+    public  static Handler getsHandler(){
+        return sHandler;
+    }
 
     public String getIp() {
         return ip;
