@@ -1,11 +1,13 @@
 package h.jpc.vhome.parents.fragment.community_hotspot.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.adapter.ExpandListAdapter;
 import h.jpc.vhome.parents.fragment.adapter.ShowPostImgAdapter;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
@@ -17,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
@@ -273,6 +276,14 @@ public class CommentActivity extends AppCompatActivity {
             ivHotlike.setImageResource(R.mipmap.post_img_good1);
         }else {
             ivHotlike.setImageResource(R.mipmap.post_img_good);
+        }if(post.getAttention_status()==1){
+            tvAttention.setText("已关注");
+            GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+            myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+        }else {
+            tvAttention.setText("+关注");
+            GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+            myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
         }
     }
 
@@ -371,7 +382,37 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void addAttention() {
-
+        //准备数据
+        AttentionBean attention = new AttentionBean();
+        attention.setAttentionPersonId(post.getPersonId());
+        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+        attention.setPersonId(sp.getString("id",""));
+//        修改UI
+        tvAttention.setText("已关注");
+        GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+        myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+        new Thread(){
+            @Override
+            public void run() {
+                Gson gson = new Gson();
+                String attentionData = gson.toJson(attention);
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveAttentionServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    HttpURLConnection connection = util.sendData(url,attentionData);
+                    String receive = util.getData(connection);
+                    if (null!=receive&&!"".equals(receive)){
+                        Log.i(TAG,"添加关注成功"+attentionData);
+                    }else {
+                        Log.e(TAG,"添加关注出错");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     /**

@@ -10,7 +10,10 @@
     <color name="notChoseColor">#000000</color>
     <color name="backgroundColor">#C5FBFF</color>
     <color name="childrenColor">#FF9800</color>
-
+   <!-- 已关注自定义颜色-->
+    <color name="attentionedColor">#C2BFBF</color>
+    <!--关注自定义-->
+    <color name="attentionColor">#00B0FF</color>
 
     <color name="titlebar_text_color">#fff</color>
     <color name="item_click_bg_color">#E9EDED</color>
