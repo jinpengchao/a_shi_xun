@@ -88,12 +88,12 @@ public class CommentActivity extends AppCompatActivity {
                 String data = bundle.getString("data");
                 commentList = gson.fromJson(data,new TypeToken<List<CommentDetailBean>>(){}.getType());
                 if(commentList.size()>0){
-                    Log.e(TAG,"查询到数据id"+commentList.get(1).getId());
-                    //给控件填充
-                    fillPost();
+                    Log.e(TAG,"查询到数据id"+commentList.get(0).getId());
                 }else {
                     Log.e(TAG,"查询到数据为空");
                 }
+                //给控件填充
+                fillPost();
 
             }
         }
@@ -155,15 +155,12 @@ public class CommentActivity extends AppCompatActivity {
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
-
-//                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
-//                if(isExpanded){
-//                    expandableListView.collapseGroup(groupPosition);
-//                }else {
-//                    expandableListView.expandGroup(groupPosition, true);
-//                }
-                showReplyDialog(groupPosition);
+                if(commentList.get(groupPosition).getId()==0){
+                    Toast.makeText(CommentActivity.this,"您刚评论完哦！",Toast.LENGTH_SHORT);
+                }else {
+                    Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
+                    showReplyDialog(groupPosition);
+                }
                 return true;
             }
         });
@@ -322,7 +319,6 @@ public class CommentActivity extends AppCompatActivity {
 
     private void registerListener() {
         listener = new MyClickListener();
-        tvLoadMore.setOnClickListener(listener);
         btnCommentCommit.setOnClickListener(listener);
         rlPostSave.setOnClickListener(listener);
         rlPostLike.setOnClickListener(listener);
@@ -334,8 +330,6 @@ public class CommentActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.tv_post_loadmore:
-                    break;
                 case R.id.rl_post_save:
                     if (1 == post.getSave_status()) {
                         Toast.makeText(view.getContext(), "已经收藏过了！", Toast.LENGTH_SHORT).show();

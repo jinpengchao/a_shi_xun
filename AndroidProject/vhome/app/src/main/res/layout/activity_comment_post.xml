@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="12dip"
-                    android:text="加载更多评论"
+                    android:text="快来评论吧！"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
