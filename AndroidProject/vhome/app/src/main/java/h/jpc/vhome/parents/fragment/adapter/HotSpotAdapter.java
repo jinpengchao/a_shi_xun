@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,6 +25,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import h.jpc.vhome.MyApp;
@@ -82,12 +85,18 @@ public class HotSpotAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        //设置gridview点击时间不响应
+        //设置gridview点击事件不响应
         holder.gvPostShow.setClickable(false);
         holder.gvPostShow.setPressed(false);
         holder.gvPostShow.setEnabled(false);
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
+        //设置发帖人logo
+        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg();
+        Glide.with(context)
+                .load(user_logo)
+                .priority(Priority.HIGH)
+                .into(holder.ivHotPerson);
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
         holder.tvHotContent.setText(list.get(i).getPostContent());
@@ -100,7 +109,7 @@ public class HotSpotAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
+        String now = new SimpleDateFormat("MM-dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
         //加载说说图片
         String imgs = null;
