@@ -139,6 +139,7 @@ public class MyselfFragment extends Fragment {
                 .into(blurImageView);
         Glide.with(getActivity()).load(url)
                 .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                .placeholder(R.drawable.rc_default_portrait)
                 .bitmapTransform(new CropCircleTransformation(getActivity()))
                 .into(header);
     }

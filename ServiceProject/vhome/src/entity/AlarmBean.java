@@ -6,6 +6,8 @@ public class AlarmBean {
 	private String sendPersonId;
 	private String receivePersonId;
 	private String content;
+	
+	
 	public int getAlarmId() {
 		return alarmId;
 	}

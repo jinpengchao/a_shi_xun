@@ -50,16 +50,27 @@ public class UserDao {
 			conn = util.getConnection();
 			String sql = "";
 			if(type == 0) {
-				sql = "insert into tbl_parent_userinfo values(?,?,?,?,?,?)";
-			}else
+				sql = "insert into tbl_parent_userinfo values(?,?,?,?,?,?,?,?,?)";
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, phone);
+				psmt.setString(2, id);
+				psmt.setString(3, nikeName);
+				psmt.setString(4, sex);
+				psmt.setString(5, area);
+				psmt.setInt(6, 0);
+				psmt.setInt(7, 0);
+				psmt.setString(8,"");
+				psmt.setString(9,headerImg);
+			}else {
 				sql = "insert into tbl_child_userinfo values(?,?,?,?,?,?)";
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, phone);
-			psmt.setString(2, id);
-			psmt.setString(3, nikeName);
-			psmt.setString(4, sex);
-			psmt.setString(5, area);
-			psmt.setString(6,headerImg);
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, phone);
+				psmt.setString(2, id);
+				psmt.setString(3, nikeName);
+				psmt.setString(4, sex);
+				psmt.setString(5, area);
+				psmt.setString(6,headerImg);
+			}
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
 				System.out.println("添加用户信息成功");
@@ -179,5 +190,88 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return userInfo;
+	}
+	//修改密码
+	public void changePwd(String phone,String newPwd) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql  = "update tbl_user set password='"+newPwd+"' where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("密码修改成功");
+			}else {
+				System.out.println("密码修改失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	//修改用户信息
+	public void changeUserInfo(String phone,int type,String flag,String data) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "";
+			if(type==0) {
+				System.out.println("type=0");
+				sql = "update tbl_parent_userinfo set "+flag+"='"+data+"' where phone='"+phone+"'";
+			}else if(type==1) {
+				System.out.println("type=1");
+				sql = "update tbl_child_userinfo set "+flag+"='"+data+"' where phone='"+phone+"'";
+			}
+			psmt = conn.prepareStatement(sql);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println(data+"修改成功");
+			}else {
+				System.out.println(data+"修改失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	//存储用户头像图片名称
+	public void saveHeaderImg(String phone,int type,String headimg) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "";
+			if(type==0) {
+				System.out.println("type=0");
+				sql = "update tbl_parent_userinfo set headimg='"+headimg+"' where phone='"+phone+"'";
+			}else if(type==1) {
+				System.out.println("type=1");
+				sql = "update tbl_child_userinfo set headerImg='"+headimg+"' where phone='"+phone+"'";
+			}
+			psmt = conn.prepareStatement(sql);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("头像修改成功");
+			}else {
+				System.out.println("头像修改失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

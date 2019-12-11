@@ -1,4 +1,4 @@
-package alarm.controller;
+package user.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,24 +12,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import alarm.service.AlarmService;
-import entity.AlarmBean;
-import entity.User;
 import user.service.UserService;
 
 /**
- * Servlet implementation class SendNewAlarmServlet
+ * Servlet implementation class ChangeUserInfoServlet
  */
-@WebServlet("/sendnew")
-public class SendNewAlarmServlet extends HttpServlet {
+@WebServlet("/changeInfo")
+public class ChangeUserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendNewAlarmServlet() {
+    public ChangeUserInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,23 +49,30 @@ public class SendNewAlarmServlet extends HttpServlet {
 		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
-		String data = br.readLine();
-		Gson gson = new Gson();
-		AlarmBean alarmBean = null;
-		alarmBean = gson.fromJson(data, AlarmBean.class);
-		if(null==alarmBean) {
-			System.out.println("闹钟消息未获取");
+		String d = br.readLine();
+		UserService userService = new UserService();
+		try {
+			JSONObject json = new JSONObject(d);
+			String phone = json.getString("phone");
+			int type = json.getInt("type");
+			String flag = json.getString("flag");
+			if(flag.equals("nickName")) {
+				String nickName = json.getString("data");
+				userService.updateUserInfo(phone, type, flag , nickName);
+			}
+			if(flag.equals("sex")) {
+				String sex = json.getString("data");
+				userService.updateUserInfo(phone, type, flag , sex);
+			}
+			if(flag.equals("area")) {
+				String area = json.getString("data");
+				userService.updateUserInfo(phone, type, flag , area);
+			}
+			out.write("ok");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		int alarmId = alarmBean.getAlarmId();
-		String alarmTime = alarmBean.getAlarmTime();
-		String sendPersonId = alarmBean.getSendPersonId();
-		String receivePersonId = alarmBean.getReceivePersonId();
-		String content = alarmBean.getContent();
-		
-		AlarmService alarmService = new AlarmService();
-		alarmService.insertNewSendAlarm(alarmId, alarmTime, sendPersonId, receivePersonId, content);
-		System.out.println("SendNewAlarmServlet--发送新闹钟成功！");
-		out.write("发送新闹钟成功!");
 		out.flush();
 		out.close();
 		br.close();

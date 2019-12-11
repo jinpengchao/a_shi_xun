@@ -36,7 +36,8 @@ import static h.jpc.vhome.parents.fragment.alarm.AlarmActivity.timeAdapter;
 
 public class ReadAlarm extends AppCompatActivity {
     private Calendar calendar;
-
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,24 @@ public class ReadAlarm extends AppCompatActivity {
         calendar = Calendar.getInstance();
         //数据库
         list.clear();
-        getAllAlarm();
+        Intent intent = new Intent(ReadAlarm.this, CallAlarm.class);
+        PendingIntent sender = PendingIntent.getBroadcast(
+                ReadAlarm.this, 0, intent, 0);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (System.currentTimeMillis()>calendar.getTimeInMillis()+60000){
+                //加24小时
+                am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+86400000, sender);
+            }else {
+                am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+            }
+        }
+        timeAdapter.notifyDataSetChanged();
+        finish();
 
     }
     public void getAllAlarm(){
@@ -68,6 +86,8 @@ public class ReadAlarm extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Gson gson = new Gson();
+                                sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
+                                editor = sharedPreferences.edit();
                                 String json = data;
                                 //得到集合对应的具体类型
                                 Type type = new TypeToken<List<AlarmBean>>(){}.getType();
@@ -78,28 +98,12 @@ public class ReadAlarm extends AppCompatActivity {
                                     String sendperson = alarm.get(i).getSendPersonId();
                                     String[] timer = time.split(":");
                                     Clock clock = new Clock();
-                                    clock.setHour(timer[0]);
-                                    clock.setMinute(timer[1]);
-                                    clock.setContent(content);
-                                    clock.setSendPersonId(sendperson);
-                                    clock.setClockType(Clock.clock_open);
-                                    list.add(clock);
-                                    Intent intent = new Intent(ReadAlarm.this, CallAlarm.class);
-                                    PendingIntent sender = PendingIntent.getBroadcast(
-                                            ReadAlarm.this, 0, intent, 0);
-                                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
-                                    calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                        if (System.currentTimeMillis()>calendar.getTimeInMillis()+60000){
-                                            //加24小时
-                                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+86400000, sender);
-                                        }else {
-                                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-                                        }
-                                    }
-                                    timeAdapter.notifyDataSetChanged();
-                                    finish();
+                                    clock.setHour(timer[0]);editor.putString("hour"+i,timer[0]);
+                                    clock.setMinute(timer[1]);editor.putString("minute"+i,timer[1]);
+                                    clock.setContent(content);editor.putString("content"+i,content);
+                                    clock.setSendPersonId(sendperson);editor.putString("sendperson"+i,sendperson);
+                                    clock.setClockType(Clock.clock_open);editor.putString("clocktype"+i,Clock.clock_open+"");
+                                    list.add(clock);editor.commit();
                                 }
                             }
                         });
