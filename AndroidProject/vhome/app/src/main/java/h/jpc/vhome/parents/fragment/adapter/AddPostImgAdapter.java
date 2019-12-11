@@ -55,7 +55,7 @@ public class AddPostImgAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        int count = datas == null ? 1 : datas.size() + 1;
+        int count = datas == null ? 0 : datas.size() + 1;
         if (count > maxImages) {
             return datas.size();
         } else {

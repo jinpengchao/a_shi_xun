@@ -1,10 +1,8 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +23,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.util.ConnectionUtil;
 
@@ -39,53 +38,12 @@ public class HotSpotAdapter extends BaseAdapter {
     private List<PostBean> list;
     private int itemLayoutId;
     private Context context;
-//    private ViewHolder holder = null;
 
     public HotSpotAdapter(Context context, List<PostBean> list, int itemLayoutId) {
         this.context = context;
         this.list = list;
         this.itemLayoutId = itemLayoutId;
-//        getCollections();
     }
-
-//    Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what) {
-//                case 1:
-//                    Bundle bundle = msg.getData();
-//                    String collectiondata = bundle.getString("data");
-//                    Gson gson = new Gson();
-//                    collectionBeans = gson.fromJson(collectiondata, new TypeToken<List<CollectionBean>>() {
-//                    }.getType());
-//                    Log.i("hotadapter", "收到的收藏的数据集合" + collectionBeans.size());
-//                    flag = 1;
-//                    break;
-//            }
-//        }
-//    };
-
-//    public void getCollections() {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ConnectionUtil util = new ConnectionUtil();
-//                    SharedPreferences sp = context.getSharedPreferences("parentUserInfo", Context.MODE_PRIVATE);
-//                    String personId = sp.getString("id", "");
-//                    URL url = new URL("http://" + (new MyApp()).getIp() + ":8080/vhome/GetCollectionsServlet?personId=" + personId);
-//                    Log.e("id===", "发送信息" + personId);
-//                    String collectdata = util.getData(url);
-//                    util.sendMsg(collectdata, 1, handler);
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
-//    }
 
 
     @Override
@@ -158,11 +116,11 @@ public class HotSpotAdapter extends BaseAdapter {
         } else {
             holder.gvPostShow.setVisibility(View.GONE);
         }
-
+        //设置评论人数和点赞人数
         holder.tvHotLikenum.setText(list.get(i).getLikeNum() + "");
         holder.tvHotComnum.setText(list.get(i).getCommentNum() + "");
-        //点击收藏的时候,收藏成功改变图标颜色
 
+        //点击收藏的时候,收藏成功改变图标颜色
         final ViewHolder finalHolder = holder;
         holder.rlPostSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +138,7 @@ public class HotSpotAdapter extends BaseAdapter {
                 }
             }
         });
+
 //        当点击喜欢的时候，添加到点赞表并改变图标。
         holder.rlPostLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,8 +149,21 @@ public class HotSpotAdapter extends BaseAdapter {
                     Log.e("点赞", "修改点赞图标第个：" + i);
                     list.get(i).setLike_status(1);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_like1);
+                    //点赞个数加一
+                    int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())+1;
+                    list.get(i).setLikeNum(cnum);
+                    finalHolder.tvHotLikenum.setText(cnum+"");
                     addPostLike(i);
                 }
+            }
+        });
+//        点击评论表的时候，跳转到评论页面
+        holder.rlPostComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent commentIntent = new Intent();
+                commentIntent.setClass(context, CommentActivity.class);
+                context.startActivity(commentIntent);
             }
         });
         return view;
@@ -199,24 +171,60 @@ public class HotSpotAdapter extends BaseAdapter {
     }
 
     private void addPostLike(int i) {
+        SharedPreferences sp = context.getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
+        GoodPostBean goodPost = new GoodPostBean();
+        goodPost.setPostId(list.get(i).getId());
+        String goodPersonId = sp.getString("id", "");
+        goodPost.setGoodPersonId(goodPersonId);
+        goodPost.setPublishPersonId(list.get(i).getPersonId());
+        Date likeDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(likeDate);
+        goodPost.setTime(time);
+        Gson gson = new Gson();
+        final String likeData = gson.toJson(goodPost);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveGoodPostServlet");
+                    ConnectionUtil connectionUtil = new ConnectionUtil();
+                    HttpURLConnection connection = connectionUtil.sendData(url,likeData);
+                    String receive = connectionUtil.getData(connection);
+                    if (null != receive && !"".equals(receive)) {
+                        Log.i("hotSpotAdapter", "点赞成功" + likeData);
+                    } else {
+                        Log.e("hotSpotAdapter", "点赞失败！" + likeData);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+            }
+        }.start();
     }
 
     private void setImg(int i,ViewHolder holder) {
         if (list.get(i).getSave_status() == 1) {
             holder.ivHotSave.setImageResource(R.mipmap.post_save1);
             Log.e("收藏", "收藏过的第个：" + i);
+        }else {
+            holder.ivHotSave.setImageResource(R.mipmap.post_save);
         }
         if (list.get(i).getLike_status()==1){
             holder.ivHotlike.setImageResource(R.mipmap.post_like1);
             Log.e("点赞", "点赞过的第个：" + i);
+        }else {
+            holder.ivHotlike.setImageResource(R.mipmap.post_like);
         }
     }
 
     private void addPostCollection(int i) {
         CollectionBean collection = new CollectionBean();
         PostBean post = list.get(i);
-        SharedPreferences sp = context.getSharedPreferences("parentUserInfo", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
         String personId = sp.getString("id", "");
         Log.e("id===", personId);
         collection.setPersonId(personId);

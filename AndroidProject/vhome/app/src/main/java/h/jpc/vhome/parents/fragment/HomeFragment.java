@@ -2,15 +2,12 @@ package h.jpc.vhome.parents.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,10 +29,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
+import h.jpc.vhome.parents.fragment.news.NewsActivity;
 import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
+import h.jpc.vhome.parents.fragment.weather.WeatherActivity;
 import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
 
@@ -84,10 +82,36 @@ public class HomeFragment extends Fragment {
             }
         });
         //天气
+        /*
+         *  功能：获取实时天气信息
+         *  作者：章鹏
+         *  时间：2019年12月10号
+         */
         weather = view.findViewById(R.id.kantianqi);
+        weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(getActivity(), WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
         Glide.with(getActivity()).load(R.mipmap.tq).into(weather);
         //新闻
         news = view.findViewById(R.id.quxinwen);
+        /*
+         *  功能：获取实时新闻信息
+         *  作者：章鹏
+         *  时间：2019年12月10号
+         */
+        news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), NewsActivity.class);
+                startActivity(intent);
+            }
+        });
         Glide.with(getActivity()).load(R.mipmap.xw).into(news);
         /*
          *  功能：小工具跳转

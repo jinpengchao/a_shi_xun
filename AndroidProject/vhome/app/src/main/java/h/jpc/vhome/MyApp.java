@@ -119,6 +119,10 @@ public class MyApp extends com.activeandroid.app.Application {
     public static List<String> forAddIntoGroup = new ArrayList<>();
     public static Conversation delConversation;
     public static ArrayList<String> selectedUser;
+    //10.7.89.13
+    //10.7.89.128  192.168.199.158
+    private String ip = "10.7.89.128";
+    private String pathInfo = "parentUserInfo";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -130,6 +134,7 @@ public class MyApp extends com.activeandroid.app.Application {
 //        SDKInitializer.initialize(getApplicationContext());
 //        locationService = new LocationService(getApplicationContext());
 
+
         JMessageClient.init(getApplicationContext(), true);
         JMessageClient.setDebugMode(true);
         SharePreferenceManager.init(getApplicationContext(), JCHAT_CONFIGS);
@@ -139,10 +144,7 @@ public class MyApp extends com.activeandroid.app.Application {
         new NotificationClickEventReceiver(getApplicationContext());
         initImagePicker();
     }
-	
-    private String ip = "10.7.89.237";
-    //本地用户信息的地址
-    private String pathInfo = "parentUserInfo";
+
 
     public String getIp() {
         return ip;
