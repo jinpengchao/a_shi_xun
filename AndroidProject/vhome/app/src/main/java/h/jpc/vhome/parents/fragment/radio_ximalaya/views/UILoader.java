@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import h.jpc.vhome.MyApp;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.base.BaseApplication;
 
 
 public abstract class UILoader extends FrameLayout {

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import h.jpc.vhome.MyApp;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.base.BaseApplication;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IPlayPresenter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IPlayerCallBack;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.LogUtil;

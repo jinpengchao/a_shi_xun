@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="14dp"
             android:drawablePadding="5dp"
-            android:drawableStart="@drawable/back"
+            android:drawableStart="@drawable/back1"
             android:text="群成员"
             android:textColor="@android:color/white"
             android:textSize="20dp"/>

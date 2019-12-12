@@ -130,7 +130,7 @@ public class MyApp extends com.activeandroid.app.Application {
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
-    private static Context SContext=null;
+    private static Context sContext=null;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -151,7 +151,7 @@ public class MyApp extends com.activeandroid.app.Application {
         //初始化LogUtil
         LogUtil.init(this.getPackageName(),false);
         sHandler=new Handler();
-        SContext=getBaseContext();
+        sContext=getBaseContext();
 
 
         x.Ext.init(this);
@@ -173,7 +173,7 @@ public class MyApp extends com.activeandroid.app.Application {
         initImagePicker();
     }
     public  static Context getAppContext(){
-        return context;
+        return sContext;
     }
 
     public  static Handler getsHandler(){

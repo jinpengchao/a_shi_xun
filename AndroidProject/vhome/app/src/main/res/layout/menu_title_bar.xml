@@ -12,7 +12,7 @@
             android:layout_centerVertical="true"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/back"
+            android:src="@drawable/back1"
             android:background="@drawable/jmui_back_btn_bg"/>
         
         <TextView 
