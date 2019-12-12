@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +54,7 @@ import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
 import h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
 import h.jpc.vhome.parents.fragment.myself.SettingActivity;
 import h.jpc.vhome.user.entity.EventBean;
 import h.jpc.vhome.user.entity.ParentUserInfo;
@@ -76,6 +79,7 @@ public class MyselfFragment extends Fragment {
     private Button myLogout;
     private EventBus eventBus;
     private TextView tvAttention;
+    private TextView tvFuns;
     private String TAG = "MyselfFragment";
 
     @Nullable
@@ -95,13 +99,23 @@ public class MyselfFragment extends Fragment {
         myLogout = view.findViewById(R.id.my_logout);
         myResetPwd = view.findViewById(R.id.my_resetpwd);
         tvAttention = view.findViewById(R.id.tv_myself_attention);
+        tvFuns = view.findViewById(R.id.tv_myself_funs);
         getCount();//获取关注和粉丝数
-        //点击关注的人的时候
+        //点击关注的人的时候,显示关注人的列表
         tvAttention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MyAttentionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        //点击粉丝的时候，显示粉丝列表
+        tvFuns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyFunsActivity.class);
                 startActivity(intent);
             }
         });
@@ -141,6 +155,27 @@ public class MyselfFragment extends Fragment {
         initData();
         return view;
     }
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==1){//获取关注和粉丝数量
+                Bundle bundle = msg.getData();
+                String receive = bundle.getString("data");
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(receive);
+                    int attentionNum = jsonObject.getInt("attentionNum");
+                    int funsNum = jsonObject.getInt("funsNum");
+                    tvAttention.setText(attentionNum+"");
+                    tvFuns.setText(funsNum+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    };
 
     private void getCount() {
         new Thread(){
@@ -154,6 +189,7 @@ public class MyselfFragment extends Fragment {
                     String receive = util.getData(url);
                     if (null!=receive&&!"".equals(receive)){
                         Log.i(TAG, "run: 获得数量成功！");
+                        util.sendMsg(receive,1,handler);
                     }else {
                         Log.e(TAG, "run: 获取关注和粉丝数量失败" );
                     }

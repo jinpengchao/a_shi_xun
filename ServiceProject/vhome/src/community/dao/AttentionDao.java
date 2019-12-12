@@ -106,6 +106,48 @@ public class AttentionDao {
 		
 	}
 	/**
+	 * 
+	 *  @title:queryFuns
+	 * @Description: 查询所有的粉丝
+	 * @throws上午10:41:00
+	 * returntype:List<AttentionBean>
+	 */
+	public List<AttentionBean> queryFuns(String personId){
+		List<AttentionBean> list = new ArrayList<AttentionBean>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_myattentions where attentionPersonId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				AttentionBean attention = new AttentionBean();
+				attention.setId(rs.getInt("id"));
+				attention.setAttentionPersonId(rs.getString("attentionPersonId"));
+				attention.setPersonId(rs.getString("personId"));
+				list.add(attention);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+		
+	}
+	/**
 	 * 查询个人的关注人的数目
 	 *  @title:queryAttentionCount
 	 * @Description: todo
@@ -120,6 +162,45 @@ public class AttentionDao {
 			String sql = "select count(*) from tbl_myattentions where personId=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, personId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				num = rs.getInt(1);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return num;
+		
+	}
+	
+	/**
+	 * 
+	 *  @title:queryFunsCount
+	 * @Description: 查询粉丝数量
+	 * @throws上午8:24:11
+	 * returntype:int
+	 */
+	public int queryFunsCount(String attentionPersonId){
+		int num = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select count(*) from tbl_myattentions where attentionPersonId=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, attentionPersonId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				num = rs.getInt(1);
@@ -177,6 +258,13 @@ public class AttentionDao {
 		return n;
 	}
 	
+	/**
+	 * 
+	 *  @title:delAttention
+	 * @Description: 通过个人id和关注人id取消关注
+	 * @throws上午8:22:31
+	 * returntype:int
+	 */
 	public int delAttention(String personId,String attentionPersonId) {
 		int n = 0;
 		DBUtil util = new DBUtil();

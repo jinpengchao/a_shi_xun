@@ -1,8 +1,9 @@
 package community.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,22 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import community.service.AttentionService;
-import net.sf.json.JSONObject;
+import entity.AttentionBean;
+import entity.ParentUserInfo;
+import user.service.UserService;
 
 /**
- * Servlet implementation class GetCountServlet
+ * Servlet implementation class GetMyFunsServlet
  */
-@WebServlet("/GetCountServlet")
-public class GetCountServlet extends HttpServlet {
+@WebServlet("/GetMyFunsServlet")
+public class GetMyFunsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetCountServlet() {
+    public GetMyFunsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,18 +40,19 @@ public class GetCountServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String personId = null;
-		String dataOut = null;
-		personId = request.getParameter("personId");
-		JSONObject jo = new JSONObject();
-		//查询关注人数量
-		int attentionNum = (new AttentionService()).findAttentionCount(personId);
-		//查询粉丝的数量
-		int funsNum = (new AttentionService()).findFunsCount(personId);
-		jo.put("attentionNum", attentionNum);
-		jo.put("funsNum", funsNum);
-		dataOut = jo.toString();
-		out.write(dataOut);
+		Gson gson = new Gson();
+		String data = null;
+		String personId = request.getParameter("personId");
+		List<ParentUserInfo> userList = new ArrayList<ParentUserInfo>();
+		List<AttentionBean> attentions = (new AttentionService()).findFuns(personId);
+		System.out.println("getMyFunsServlet中获得"+attentions.size()+"条数据");
+		for(int i=0;i<attentions.size();i++) {
+			ParentUserInfo info = new ParentUserInfo();
+			info = (new UserService()).selectUserInfo(attentions.get(i).getPersonId());
+			userList.add(info);
+		}
+		data = gson.toJson(userList);
+		out.write(data);
 		out.flush();
 		out.close();
 	}

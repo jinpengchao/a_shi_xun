@@ -4,14 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,8 +32,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAttentionsActivity extends AppCompatActivity {
-    private static final String TAG = "MyAttentionActivity";
+public class MyFunsActivity extends AppCompatActivity {
+
+    private static final String TAG = "MyFunsActivity";
     private ListView lvHotSpot;
     private Handler handler;
     private SmartRefreshLayout srl;
@@ -45,13 +42,14 @@ public class MyAttentionsActivity extends AppCompatActivity {
     private TextView tvEmpty;
     private List<ParentUserInfo> list = new ArrayList<>();
     private List<ParentUserInfo> loadList = new ArrayList<>();
-    private  MyAttentionAdapter adapter;
+    private  MyFunsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_attentions);
 
         getViews();
+        tvEmpty.setText("还没有粉丝~");
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -87,7 +85,7 @@ public class MyAttentionsActivity extends AppCompatActivity {
                         loadList.add(list.get(k));
                         loadNum++;
                     }
-                    Log.i(TAG,"加载的关注人数量loadNum"+loadNum);
+                    Log.i(TAG,"加载的粉丝人数量loadNum"+loadNum);
                 }else{
                     for (int k=0;k<list.size();k++){
                         loadList.add(list.get(k));
@@ -95,9 +93,10 @@ public class MyAttentionsActivity extends AppCompatActivity {
                     }
                 }
 
-                adapter = new MyAttentionAdapter(MyAttentionsActivity.this,loadList,R.layout.item_myself_attention);
+                adapter = new MyFunsAdapter(MyFunsActivity.this,loadList,R.layout.item_myself_funs);
                 lvHotSpot.setAdapter(adapter);
                 lvHotSpot.setEmptyView(tvEmpty);
+
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -105,7 +104,7 @@ public class MyAttentionsActivity extends AppCompatActivity {
 //                        simple.putExtra("post",list.get(i));
 //                        simple.setClass(getContext(), CommentActivity.class);
 //                        startActivity(simple);
-                        Toast.makeText(MyAttentionsActivity.this, "目前没有跳转", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyFunsActivity.this, "目前没有跳转", Toast.LENGTH_SHORT).show();
                     }
                 });
                 adapter.notifyDataSetChanged();
@@ -146,7 +145,7 @@ public class MyAttentionsActivity extends AppCompatActivity {
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetMyAttentionsServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetMyFunsServlet?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
                     util.sendMsg(data,1,handler);
@@ -172,5 +171,4 @@ public class MyAttentionsActivity extends AppCompatActivity {
         Log.e(TAG,"调用了onresume方法");
         getdata();
     }
-    
 }

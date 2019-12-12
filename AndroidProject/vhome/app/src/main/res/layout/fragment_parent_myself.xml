@@ -141,6 +141,7 @@
                 android:text="粉丝：">
             </TextView>
             <TextView
+                android:id="@+id/tv_myself_funs"
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
