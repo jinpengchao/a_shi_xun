@@ -1,18 +1,11 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya;
 
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.ximalaya.ting.android.opensdk.model.track.Track;
-import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
-
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
@@ -21,6 +14,12 @@ import h.jpc.vhome.parents.fragment.radio_ximalaya.adapter.PlayerTrackPagerAdapt
 import h.jpc.vhome.parents.fragment.radio_ximalaya.base.BaseActivity;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IPlayerCallBack;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.presenters.PlayPresenter;
+
+import com.ximalaya.ting.android.opensdk.model.track.Track;
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class PlayerActivity extends BaseActivity implements IPlayerCallBack {
 

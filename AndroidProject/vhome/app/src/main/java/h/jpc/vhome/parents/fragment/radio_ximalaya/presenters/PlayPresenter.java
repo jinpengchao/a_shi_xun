@@ -1,7 +1,6 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya.presenters;
 
 
-
 import com.ximalaya.ting.android.opensdk.model.PlayableModel;
 import com.ximalaya.ting.android.opensdk.model.advertis.Advertis;
 import com.ximalaya.ting.android.opensdk.model.advertis.AdvertisList;

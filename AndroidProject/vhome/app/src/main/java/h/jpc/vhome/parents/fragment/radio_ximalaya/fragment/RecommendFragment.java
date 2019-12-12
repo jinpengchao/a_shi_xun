@@ -1,17 +1,10 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya.fragment;
 
-
 import android.content.Intent;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.ximalaya.ting.android.opensdk.model.album.Album;
-
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
-
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +16,12 @@ import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IRecommendViewCall
 import h.jpc.vhome.parents.fragment.radio_ximalaya.presenters.AlbumDetailPresenter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.presenters.RecommendPresenter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.views.UILoader;
+
+import com.ximalaya.ting.android.opensdk.model.album.Album;
+
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+
+import java.util.List;
 
 public class RecommendFragment extends BaseFragment implements IRecommendViewCallBack, RecommendListAdapter.OnRecommendClickListener {
     private static final String TAG="RecommendFragment";
@@ -44,14 +43,14 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
 
         //拿数据
 
-       mRecommendPresenter=RecommendPresenter.getsInstance();
-       mRecommendPresenter.registerViewCallback(this);
-       mRecommendPresenter.getRecommendList();
+        mRecommendPresenter=RecommendPresenter.getsInstance();
+        mRecommendPresenter.registerViewCallback(this);
+        mRecommendPresenter.getRecommendList();
 
-       if(uiLoader.getParent()instanceof ViewGroup){
-          ((ViewGroup) uiLoader.getParent()).removeView(uiLoader);
-       }
-       return uiLoader;
+        if(uiLoader.getParent()instanceof ViewGroup){
+            ((ViewGroup) uiLoader.getParent()).removeView(uiLoader);
+        }
+        return uiLoader;
     }
 
     private View createSuccessView(LayoutInflater layoutInflater, ViewGroup container) {
