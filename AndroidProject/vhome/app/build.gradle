@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "h.jpc.vhome"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 61
         versionName "2.3.0"
@@ -100,4 +101,16 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.4.0'
+<<<<<<< HEAD
 }
+=======
+
+    implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
+    implementation files('libs\\XmDownload_1.7.jar')
+    implementation files('libs\\XmlyOAuth2SDK_V1.11.jar')
+    implementation files('libs\\picasso-2.5.2.jar')
+
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+}
+>>>>>>> f3e4fb42bb595dc47f4007a0fa72b416520b120d

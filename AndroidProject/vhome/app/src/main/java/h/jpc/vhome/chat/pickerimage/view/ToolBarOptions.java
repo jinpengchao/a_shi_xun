@@ -16,7 +16,7 @@ public class ToolBarOptions {
     /**
      * toolbar的返回按钮资源id，默认开启的资源
      */
-    public int navigateId = R.drawable.back;
+    public int navigateId = R.drawable.back1;
     /**
      * toolbar的返回按钮，默认开启
      */

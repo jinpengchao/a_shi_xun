@@ -16,7 +16,7 @@
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:background="@drawable/jmui_back_btn_bg"
-            android:src="@drawable/back"/>
+            android:src="@drawable/back1"/>
 
         <TextView
             android:layout_width="wrap_content"

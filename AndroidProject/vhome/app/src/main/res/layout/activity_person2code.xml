@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="14dp"
-                android:background="@drawable/back"/>
+                android:background="@drawable/back1"/>
         </LinearLayout>
 
         <TextView

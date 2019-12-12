@@ -47,7 +47,7 @@ public class CommunityFragment extends Fragment {
         //tab2
         TabHost.TabSpec tabSpec2 = fragmentTabHost
                 .newTabSpec("tag2")
-                .setIndicator(getTabSpaceView("tag2","养生居"));
+                .setIndicator(getTabSpaceView("tag2","收音机"));
         fragmentTabHost.addTab(tabSpec2,
                 HealthFragment.class,
                 null
