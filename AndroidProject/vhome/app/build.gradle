@@ -97,20 +97,13 @@ dependencies {
     implementation project(path: ':reclib-qq')
     implementation project(path: ':reclib-testemoticons')
     implementation project(path: ':emoji')
-
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.4.0'
-<<<<<<< HEAD
-}
-=======
 
     implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
     implementation files('libs\\XmDownload_1.7.jar')
     implementation files('libs\\XmlyOAuth2SDK_V1.11.jar')
     implementation files('libs\\picasso-2.5.2.jar')
-
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
-
 }
->>>>>>> f3e4fb42bb595dc47f4007a0fa72b416520b120d

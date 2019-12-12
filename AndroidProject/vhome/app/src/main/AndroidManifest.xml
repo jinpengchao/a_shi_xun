@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="h.jpc.vhome">
-<<<<<<< HEAD
     <!-- Required -->
-=======
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature"/> <!-- Required -->
@@ -28,21 +26,19 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- target >=28 需要设置此权限 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
->>>>>>> f3e4fb42bb595dc47f4007a0fa72b416520b120d
     <application
         android:name=".MyApp"
         android:allowBackup="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-<<<<<<< HEAD
+        tools:replace="android:allowBackup,android:icon"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:allowBackup,android:icon">
+        >
+
         <activity android:name=".parents.fragment.myself.MyFunsActivity"></activity>
         <activity android:name=".parents.fragment.myself.MyAttentionsActivity" />
-=======
-        tools:replace="android:allowBackup,android:icon"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <meta-data
             android:name="AA_DB_NAME"
             android:value="jchat.db"/>
