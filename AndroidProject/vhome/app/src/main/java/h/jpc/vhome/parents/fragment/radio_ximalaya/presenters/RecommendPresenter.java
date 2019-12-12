@@ -1,5 +1,10 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya.presenters;
 
+import androidx.annotation.Nullable;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IRecommendPresenter;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IRecommendViewCallBack;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.Constants;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.LogUtil;
 
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
@@ -12,14 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IRecommendPresenter;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IRecommendViewCallBack;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.Constants;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.LogUtil;
-
 public class RecommendPresenter implements IRecommendPresenter {
-   private  static final String TAG="RecommendPresenter";
+    private  static final String TAG="RecommendPresenter";
     private List<IRecommendViewCallBack> mCallBacks=new ArrayList<>();
     private RecommendPresenter(){}
     private static  RecommendPresenter sInstance=null;

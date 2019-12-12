@@ -1,20 +1,11 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya;
 
-
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.track.Track;
-
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
-
-import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +15,14 @@ import h.jpc.vhome.parents.fragment.radio_ximalaya.base.BaseActivity;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IAlbumDetailViewCallBack;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.presenters.AlbumDetailPresenter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.presenters.PlayPresenter;
+
+import com.squareup.picasso.Picasso;
+import com.ximalaya.ting.android.opensdk.model.album.Album;
+import com.ximalaya.ting.android.opensdk.model.track.Track;
+
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+
+import java.util.List;
 
 public class DetailActivity extends BaseActivity implements IAlbumDetailViewCallBack, DetailListAdapter.IteClickListener {
     private ImageView mLargeCover;

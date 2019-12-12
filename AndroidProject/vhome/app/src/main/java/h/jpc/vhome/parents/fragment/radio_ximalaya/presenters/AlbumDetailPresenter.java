@@ -1,5 +1,9 @@
 package h.jpc.vhome.parents.fragment.radio_ximalaya.presenters;
 
+import androidx.annotation.Nullable;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IAlbumDetailPresenter;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IAlbumDetailViewCallBack;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.Constants;
 
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
@@ -13,11 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IAlbumDetailPresenter;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.interfaces.IAlbumDetailViewCallBack;
-import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.Constants;
-
 public class AlbumDetailPresenter implements IAlbumDetailPresenter {
     private List<IAlbumDetailViewCallBack> mCallBacks=new ArrayList<>();
 
@@ -25,19 +24,19 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
 
     private AlbumDetailPresenter(){
 
-   }
-   private static AlbumDetailPresenter sInstance=null;
+    }
+    private static AlbumDetailPresenter sInstance=null;
 
-   public  static AlbumDetailPresenter getInstance(){
-       if(sInstance==null){
-           synchronized (AlbumDetailPresenter.class){
-               if(sInstance==null){
-                   sInstance=new AlbumDetailPresenter();
-               }
-           }
-       }
-       return sInstance;
-   }
+    public  static AlbumDetailPresenter getInstance(){
+        if(sInstance==null){
+            synchronized (AlbumDetailPresenter.class){
+                if(sInstance==null){
+                    sInstance=new AlbumDetailPresenter();
+                }
+            }
+        }
+        return sInstance;
+    }
     @Override
     public void pull2RefreshMore() {
 
@@ -83,7 +82,7 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
 
 
     public  void setTargetAlbum(Album targetAlbum){
-       this.mTargetAlbum=targetAlbum;
+        this.mTargetAlbum=targetAlbum;
     }
 
     @Override

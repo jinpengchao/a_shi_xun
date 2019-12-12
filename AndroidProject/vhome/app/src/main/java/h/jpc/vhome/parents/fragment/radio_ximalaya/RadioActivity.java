@@ -15,6 +15,7 @@ import h.jpc.vhome.parents.fragment.radio_ximalaya.adapter.IndicatorAdapter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.adapter.MainContentAdapter;
 import h.jpc.vhome.parents.fragment.radio_ximalaya.utils.LogUtil;
 
+
 public class RadioActivity extends FragmentActivity {
     private static final String TAG="RadioActivity";
     private MagicIndicator magicIndicator;
