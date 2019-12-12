@@ -70,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:src="@drawable/houtui"/>
+                android:src="@drawable/back"/>
             <ImageView
                 android:id="@+id/play_stop_btn"
                 android:layout_width="0dp"
