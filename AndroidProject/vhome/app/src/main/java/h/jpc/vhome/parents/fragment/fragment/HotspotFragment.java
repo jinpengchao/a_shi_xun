@@ -111,6 +111,7 @@ public class HotspotFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
+                        simple.putExtra("post",list.get(i));
                         simple.setClass(getContext(), CommentActivity.class);
                         startActivity(simple);
                     }

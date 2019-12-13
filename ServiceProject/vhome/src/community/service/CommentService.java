@@ -11,7 +11,7 @@ package community.service;
 import java.util.List;
 
 import community.dao.CommentDao;
-import entity.CommentBean;
+import entity.CommentDetailBean;
 
 /**
  * @ClassName: CommentService
@@ -29,7 +29,7 @@ public class CommentService {
 	 * @throws下午9:12:15
 	 * returntype:int
 	 */
-	public int saveComment(CommentBean comment) {
+	public int saveComment(CommentDetailBean comment) {
 		return (new CommentDao()).insertComment(comment);
 	}
 	
@@ -40,7 +40,7 @@ public class CommentService {
 	 * @throws下午9:13:11
 	 * returntype:List<Comment>
 	 */
-	public List<CommentBean> findComment(int postId){
+	public List<CommentDetailBean> findComment(int postId){
 		return (new CommentDao()).queryComment(postId);
 	}
 	/**
