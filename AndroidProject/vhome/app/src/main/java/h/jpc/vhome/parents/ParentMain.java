@@ -7,7 +7,6 @@ import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
 import h.jpc.vhome.parents.Receiver.TrackReceiver;
-import h.jpc.vhome.parents.Services.TrackService;
 import h.jpc.vhome.parents.TrackUtil.BitmapUtil;
 import h.jpc.vhome.parents.TrackUtil.CommonUtil;
 import h.jpc.vhome.parents.TrackUtil.Constants;
