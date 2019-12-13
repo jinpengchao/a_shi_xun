@@ -1,4 +1,7 @@
 <resources>
+    <string-array name="indicator_title">
+        <item>推荐</item>
+    </string-array>
     <string name="app_name">微家</string>
     <string name="userName">用户名</string>
     <!-- fixProfile界面中使用到的字符串 -->
@@ -423,4 +426,51 @@
     <string name="room_keeper">管理员</string>
     <string name="room_exit">退出聊天室</string>
 
+    <!--鹰眼轨迹相关-->
+    <string name="app_title">百度鹰眼Android SDK</string>
+    <string name="trans_url">http://192.168.43.75:8080/</string>
+
+    <!-- 追踪控制子选项 -->
+    <string name="start_trace">开启服务</string>
+    <string name="stop_trace">停止服务</string>
+    <string name="start_gather">开启采集</string>
+    <string name="stop_gather">停止采集</string>
+    <string name="name">轨迹上传采集</string>
+    <string name="loc_failed">定位失败</string>
+    <string name="font_type">微软雅黑</string>
+    <string name="no_track_data">未查询到轨迹</string>
+    <string name="tracing_title">轨迹追踪</string>
+    <string name="tracing_options_title">追踪设置</string>
+    <string name="track_query_title">轨迹查询</string>
+    <string name="track_query_options_title">查询设置</string>
+    <!-- 起止时间子选项 -->
+    <string name="start_time">开始：</string>
+    <string name="end">结束：</string>
+    <string name="all_cancel">取消</string>
+    <string name="all_sure">确定</string>
+
+    <!-- 公共字符串 里程补偿选项 -->
+    <string name="no_supplement">不补充</string>
+    <string name="straight">直线距离</string>
+    <string name="driving">最短驾车路线</string>
+    <string name="riding">最短骑行路线</string>
+    <string name="walking">最短步行路线</string>
+
+    <!-- 公共字符串 坐标类型 -->
+    <string name="bd09ll">百度经纬度坐标</string>
+    <string name="gcj02">国测局加密坐标</string>
+    <string name="all_supplement_model">里程补偿方式:</string>
+    <string name="all_coord_type">坐标类型:</string>
+
+    <!-- TrackQueryOptionsActivity主选项 -->
+    <string name="track_query_option_time">起止时间:</string>
+    <string name="track_query_option_process">纠偏与数据分析:</string>
+    <string name="track_query_option_radius_threshold">精度过滤(单位:米):</string>
+    <string name="track_query_option_transport_mode">交通方式:</string>
+    <string name="track_query_option_sort_type">排序规则:</string>
+
+    <!-- 交通方式子选项 -->
+    <string name="driving_mode">驾车</string>
+    <string name="riding_mode">骑行</string>
+    <string name="walking_mode">步行</string>
 </resources>

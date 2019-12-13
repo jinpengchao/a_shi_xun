@@ -13,6 +13,7 @@ public class PostBean {
     private int likeNum;
     private int save_status = 0;//标志位判断当前用户是否收藏过本帖
     private int like_status = 0;//标志位判断当前用户是否点赞过本帖
+    private int attention_status = 0;//标志位判断当前用户是否关注发帖人
 	
 	public String getPostContent() {
 		return postContent;
@@ -79,6 +80,12 @@ public class PostBean {
 	}
 	public void setLike_status(int like_status) {
 		this.like_status = like_status;
+	}
+	public int getAttention_status() {
+		return attention_status;
+	}
+	public void setAttention_status(int attention_status) {
+		this.attention_status = attention_status;
 	}
 	
 	

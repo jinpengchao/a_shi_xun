@@ -1,10 +1,20 @@
 apply plugin: 'com.android.application'
 
+
 android {
+
+    signingConfigs {
+        config {
+            storeFile file('D:\\Andriod\\android-studio\\keyStore\\MapKey2.jks')
+            storePassword '123456'
+            keyAlias = 'baidukey'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "h.jpc.vhome"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 61
         versionName "2.3.0"
@@ -17,9 +27,8 @@ android {
         ]
 
         ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'x86', 'x86_64', 'mips', 'mips64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
@@ -96,8 +105,20 @@ dependencies {
     implementation project(path: ':reclib-qq')
     implementation project(path: ':reclib-testemoticons')
     implementation project(path: ':emoji')
-
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.4.0'
+
+    implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
+    implementation files('libs\\XmDownload_1.7.jar')
+    implementation files('libs\\XmlyOAuth2SDK_V1.11.jar')
+    implementation files('libs\\picasso-2.5.2.jar')
+
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+    implementation files('libs\\BaiduLBS_Android.jar')
+    implementation files('libs\\BaiduTraceSDK_v3_1_3.jar')
+    implementation files('libs\\bos-android-sdk-1.0.3.jar')
+    implementation files('libs\\okhttp-3.8.1.jar')
+    implementation files('libs\\okio-1.13.0.jar')
 }

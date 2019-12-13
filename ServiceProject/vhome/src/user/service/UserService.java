@@ -58,5 +58,4 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.findMyRelation(receivePhone, receiveType);
 	}
-	
 }

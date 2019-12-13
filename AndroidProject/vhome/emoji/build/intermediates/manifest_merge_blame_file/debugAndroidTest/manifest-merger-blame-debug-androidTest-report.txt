@@ -31,6 +31,7 @@
 19        <uses-library android:name="android.test.runner" />
 19-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:8:9-60
 19-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:8:23-57
+
 20    </application>
 21
 22</manifest>

@@ -42,6 +42,16 @@ public class PostService {
 		return (new PostDao()).queryPosts();
 	}
 	/**
+	 * 根据发帖人查询帖子
+	 *  @title:findPost
+	 * @Description: todo
+	 * @throws下午4:48:38
+	 * returntype:List<PostBean>
+	 */
+	public List<PostBean> findPost(String personId){
+		return (new PostDao()).queryPosts(personId);
+	}
+	/**
 	 * 
 	 *  @title:delPost
 	 * @Description: 根据id删除帖子的service

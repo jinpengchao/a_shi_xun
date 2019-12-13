@@ -48,6 +48,7 @@ public class AlarmDao {
 		try {
 			conn = util.getConnection();
 			String sql = "select * from tbl_alarm where receivePersonId='"+phone+"'";
+
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
@@ -58,12 +59,14 @@ public class AlarmDao {
 				String receivePersonId = rs.getString("receivePersonId");
 				String content = rs.getString("content");
 				String clocktype = rs.getString("clocktype");
+
 				alarmBean.setAlarmId(alarmId);
 				alarmBean.setAlarmTime(alarmTime);
 				alarmBean.setSendPersonId(sendPersonId);
 				alarmBean.setReceivePersonId(receivePersonId);
 				alarmBean.setContent(content);
 				alarmBean.setClocktype(clocktype);
+
 				list.add(alarmBean);
 			}
 			rs.close();
@@ -105,5 +108,4 @@ public class AlarmDao {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -10,8 +10,46 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:replace="android:allowBackup,android:icon">
+        tools:replace="android:allowBackup,android:icon"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="jchat.db"/>
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="h.jpc.vhome.chat.database.UserEntry, h.jpc.vhome.chat.database.FriendEntry,
+                         h.jpc.vhome.chat.database.FriendRecommendEntry, h.jpc.vhome.chat.database.GroupApplyEntry
+                                   , h.jpc.vhome.chat.database.RefuseGroupEntry"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="4"/> <!-- Since JCore2.0.0 Required SDK核心功能 -->
+        <service android:name=".chat.MyService"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <!--定位-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+        <!-- 如果需要使用到位置服务，需要更换百度地图apikey为自己的apikey -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="UAkQeBK84ioVGzYgA1rSWYfuD4xYtpmV"/>
+        <!--鹰眼轨迹-->
+        <service
+        android:name="com.baidu.trace.LBSTraceService"
+        android:enabled="true"
+        android:process=":remote" />
+        <!--轨迹采集上传服务-->
+        <service
+            android:name=".parents.Services.TrackService" />
+        <activity android:name=".parents.fragment.radio_ximalaya.DetailActivity"/>
+        <activity android:name=".parents.fragment.radio_ximalaya.PlayerActivity"/>
+        <activity android:name=".parents.fragment.radio_ximalaya.RadioActivity"/>
         <activity
             android:name=".chat.activity.WelcomeActivity"
             android:screenOrientation="portrait"
