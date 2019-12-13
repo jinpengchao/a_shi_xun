@@ -2,7 +2,6 @@ package h.jpc.vhome.parents;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
-import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
@@ -17,7 +16,6 @@ import h.jpc.vhome.parents.fragment.CommunityFragment;
 import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.parents.fragment.MyselfFragment;
 import h.jpc.vhome.parents.fragment.alarm.AlarmService;
-import h.jpc.vhome.parents.fragment.alarm.ReadAlarm;
 import h.jpc.vhome.parents.model.CurrentLocation;
 import h.jpc.vhome.user.entity.EventBean;
 
@@ -27,7 +25,6 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -89,8 +86,6 @@ import static h.jpc.vhome.parents.HttpLinked.connection;
 public class ParentMain extends AppCompatActivity implements SensorEventListener {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
-
-    private TextView coming;
 
     private SDKReceiver mReceiver;
 
@@ -202,9 +197,19 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         registerReceiver(mReceiver, iFilter);
         initListener();
         init();
+        AutoStart();
+        AutoEnd();
 
     }
-
+//    //后台运行
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            moveTaskToBack(false);
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
     public void setTabHost(){
         //获取FragmentTabHost对象
         FragmentTabHost fragmentTabHost = findViewById(android.R.id.tabhost);
@@ -328,6 +333,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
         mapUtil.init((MapView) findViewById(R.id.tracing_mapView));
+        trackPoints = new ArrayList<LatLng>();
         mapUtil.setCenter(mCurrentDirection);//设置地图中心点
         powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);// 获取传感器管理服务
