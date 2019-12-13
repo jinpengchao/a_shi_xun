@@ -21,14 +21,4 @@ public class AlarmService {
 		AlarmDao alarmDao = new AlarmDao();
 		alarmDao.chandeAlarm(alarmId, time, content,clocktype);
 	}
-	//读取所有闹钟
-	public List<AlarmBean> selectAllAlarm(String phone){
-		AlarmDao alarmDao = new AlarmDao();
-		return alarmDao.allAlarm(phone);
-	}
-	//读取所有闹钟
-	public List<AlarmBean> selectAllAlarm(String phone){
-		AlarmDao alarmDao = new AlarmDao();
-		return alarmDao.allAlarm(phone);
-	}
 }
