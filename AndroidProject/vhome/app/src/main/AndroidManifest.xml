@@ -36,17 +36,18 @@
             android:process=":remote">
         </service>
         <!-- 如果需要使用到位置服务，需要更换百度地图apikey为自己的apikey -->
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="UAkQeBK84ioVGzYgA1rSWYfuD4xYtpmV"/>
+            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
+
         <!--鹰眼轨迹-->
         <service
         android:name="com.baidu.trace.LBSTraceService"
         android:enabled="true"
         android:process=":remote" />
         <!--轨迹采集上传服务-->
-        <service
-            android:name=".parents.Services.TrackService" />
+
         <activity android:name=".parents.fragment.radio_ximalaya.DetailActivity"/>
         <activity android:name=".parents.fragment.radio_ximalaya.PlayerActivity"/>
         <activity android:name=".parents.fragment.radio_ximalaya.RadioActivity"/>
@@ -334,9 +335,7 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="4" />
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="UAkQeBK84ioVGzYgA1rSWYfuD4xYtpmV" />
+
 
         <provider
             android:name="com.activeandroid.content.ContentProvider"

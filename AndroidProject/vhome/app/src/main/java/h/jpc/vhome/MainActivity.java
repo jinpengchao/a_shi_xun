@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         getView();
         initListener();
+        Glide.with(this).load(R.mipmap.mainbk1).centerCrop().into(mainBackground);
         Log.e("MainActivity","oncreate");
         Bundle bundle = this.getIntent().getExtras();
         if (null!=bundle) {
@@ -84,19 +85,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int type = sp.getInt("type", 0);
             isLogin(p, pwd, type);
         }
-        Glide.with(this).load(R.mipmap.mainbk1).centerCrop().into(mainBackground);
-        togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        togglePwd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //如果选中，显示密码
-                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    //否则隐藏密码
-                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(MainActivity.this,ParentMain.class);
+                startActivity(i);
             }
         });
+//        togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    //如果选中，显示密码
+//                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                } else {
+//                    //否则隐藏密码
+//                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                }
+//            }
+//        });
     }
     public void getView(){
         register = (TextView) findViewById(R.id.register);
