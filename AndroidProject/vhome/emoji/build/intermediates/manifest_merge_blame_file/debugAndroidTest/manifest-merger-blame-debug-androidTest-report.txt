@@ -3,34 +3,34 @@
 3    package="com.sj.emoji.test" >
 4
 5    <uses-sdk
-5-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:5:5-74
+5-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:5:5-74
 6        android:minSdkVersion="15"
-6-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:5:15-41
+6-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:5:15-41
 7        android:targetSdkVersion="28" />
-7-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:5:42-71
+7-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:5:42-71
 8
 9    <instrumentation
-9-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:11:5-15:67
+9-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:11:5-15:67
 10        android:name="android.test.InstrumentationTestRunner"
-10-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:11:22-75
+10-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:11:22-75
 11        android:functionalTest="false"
-11-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:14:22-52
+11-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:14:22-52
 12        android:handleProfiling="false"
-12-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:13:22-53
+12-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:13:22-53
 13        android:label="Tests for com.sj.emoji.test"
-13-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:15:22-65
+13-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:15:22-65
 14        android:targetPackage="com.sj.emoji.test" />
-14-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:12:22-63
+14-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:12:22-63
 15
 16    <application
-16-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:7:5-9:19
+16-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:7:5-9:19
 17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-17-->[androidx.core:core:1.0.0] C:\Users\10937\.gradle\caches\transforms-2\files-2.1\1c68bb5c63bc98b8eb60a5b3aaecc1c7\core-1.0.0\AndroidManifest.xml:22:18-86
+17-->[androidx.core:core:1.0.0] C:\Users\hp\.gradle\caches\transforms-2\files-2.1\7090f99afe7f53ffeda97f688c50ba66\core-1.0.0\AndroidManifest.xml:22:18-86
 18        android:debuggable="true" >
-18-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:7:18-43
+18-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:7:18-43
 19        <uses-library android:name="android.test.runner" />
-19-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:8:9-60
-19-->C:\Users\10937\Desktop\PanDownload\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger855529835470598096.xml:8:23-57
+19-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:8:9-60
+19-->C:\a_shi_xun\AndroidProject\vhome\emoji\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079876264399721521.xml:8:23-57
 20    </application>
 21
 22</manifest>

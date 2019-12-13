@@ -119,6 +119,4 @@ dependencies {
     implementation files('libs\\BaiduLBS_Android.jar')
     implementation files('libs\\BaiduTraceSDK_v3_1_3.jar')
     implementation files('libs\\bos-android-sdk-1.0.3.jar')
-    implementation files('libs\\okhttp-3.8.1.jar')
-    implementation files('libs\\okio-1.13.0.jar')
 }
