@@ -85,26 +85,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int type = sp.getInt("type", 0);
             isLogin(p, pwd, type);
         }
-        togglePwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(MainActivity.this,ParentMain.class);
-                startActivity(i);
-            }
-        });
-//        togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        togglePwd.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    //如果选中，显示密码
-//                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                } else {
-//                    //否则隐藏密码
-//                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//                }
+//            public void onClick(View v) {
+//                Intent i = new Intent();
+//                i.setClass(MainActivity.this,ParentMain.class);
+//                startActivity(i);
 //            }
 //        });
+        togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //如果选中，显示密码
+                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //否则隐藏密码
+                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
     }
     public void getView(){
         register = (TextView) findViewById(R.id.register);
@@ -127,10 +127,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.pwdLogin:
                 Log.e("MainActivity","Onclick");
-//                loginByPsw();
-                Intent intent5=new Intent();
-                intent5.setClass(MainActivity.this,ParentMain.class);
-                startActivity(intent5);
+                loginByPsw();
+//                Intent intent5=new Intent();
+//                intent5.setClass(MainActivity.this,ParentMain.class);
+//                startActivity(intent5);
                 break;
             case R.id.register:
                 Intent intent = new Intent();

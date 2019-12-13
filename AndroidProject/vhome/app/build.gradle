@@ -119,7 +119,7 @@ dependencies {
     implementation files('libs\\BaiduTraceSDK_v3_1_3.jar')
     implementation files('libs\\bos-android-sdk-1.0.3.jar')
 
-    implementation files('libs\\gson-2.2.1.jar')
     implementation files('libs\\json-lib-2.4-jdk15.jar')
     implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
+    implementation files('libs\\gson-2.8.5.jar')
 }
