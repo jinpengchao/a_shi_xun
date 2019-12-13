@@ -89,6 +89,7 @@ import static h.jpc.vhome.parents.HttpLinked.connection;
 public class ParentMain extends AppCompatActivity implements SensorEventListener {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
+
     private TextView coming;
 
     private SDKReceiver mReceiver;

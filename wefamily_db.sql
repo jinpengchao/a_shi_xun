@@ -308,6 +308,7 @@ CREATE TABLE `tbl_post` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
+
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
@@ -433,6 +434,11 @@ INSERT INTO `tbl_user` VALUES ('996521', '11111', '2019-12-12 20:24:59', '414292
 INSERT INTO `tbl_user` VALUES ('996633438', '11111', '2019-12-11 20:13:52', '546272', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('99663438', '111111', '2019-12-09 20:25:20', '909874', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('996663438', '11111', '2019-12-12 21:00:02', '254653', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('31415926', '654321', '2019-12-11 07:43:15', '954572', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('31415936', '654321', '2019-12-11 07:46:20', '489147', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('6543210002', '111111', '0000-00-00 00:00:00', '3', null, null, '0');
+INSERT INTO `tbl_user` VALUES ('911911', '654321', '2019-12-11 06:35:47', '383098', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('998877', '654321', '2019-12-11 07:39:49', '503117', '', '', '0');
 
 -- ----------------------------
 -- Table structure for `tbl_walkpath`
