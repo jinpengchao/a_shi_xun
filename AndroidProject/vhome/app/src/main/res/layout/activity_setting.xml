@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".parents.fragment.myself.SettingActivity">
+    tools:context=".parents.fragment.opengroup.SettingActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

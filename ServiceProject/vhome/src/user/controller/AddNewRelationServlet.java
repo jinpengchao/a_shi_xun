@@ -1,4 +1,4 @@
-package community.controller;
+package user.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,22 +12,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 
-import community.service.CommentService;
-import entity.CommentDetailBean;
+import entity.User;
+import user.service.UserService;
 
 /**
- * Servlet implementation class SaveCommentServlet
+ * Servlet implementation class AddNewRelationServlet
  */
-@WebServlet("/SaveCommentServlet")
-public class SaveCommentServlet extends HttpServlet {
+@WebServlet("/addNewRelation")
+public class AddNewRelationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SaveCommentServlet() {
+    public AddNewRelationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,30 +47,34 @@ public class SaveCommentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+		response.setContentType("text/text;charset=utf-8");
 		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
-		CommentDetailBean comment = null;
-		Gson gson = new Gson();
-		String dataIn = null;
-		String dataOut = null;
-		int i = 0;//保存返回数据
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
-		dataIn = br.readLine();
+		String data = br.readLine();
+		
+		JSONObject json;
+		try {
+			json = new JSONObject(data);
+			String receivePhone = json.getString("receivePhone");
+			String sendPhone = json.getString("sendPhone");
+			int receiveType = json.getInt("receiveType");
+			UserService userService = new UserService();
+			userService.insertRelation(receivePhone, sendPhone,receiveType);
+			
+			System.out.println(sendPhone+"-->"+receivePhone);
+			out.write("ojbk");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		out.flush();
+		out.close();
 		br.close();
 		is.close();
-		
-		comment = gson.fromJson(dataIn, CommentDetailBean.class);
-		i = (new CommentService()).saveComment(comment);
-		if(i>0) {
-			System.out.println("saveCommentServlet保存数据成功！");
-			out.write(i+"");
-			out.flush();
-			out.close();
-		}else {
-			System.out.println("saveCommentServlet保存数据失败！");
-		}
 	}
 
 }

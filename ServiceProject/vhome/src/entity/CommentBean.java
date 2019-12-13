@@ -8,8 +8,6 @@
  */
 package entity;
 
-import java.util.List;
-
 /**
  * @ClassName: Comment
  * @Description: TODO
@@ -17,16 +15,14 @@ import java.util.List;
  * @date 2019年11月26日
  *
  */
-public class CommentDetailBean {
+public class CommentBean {
 
 	private int id;
-    private int postId;
-    private String personId;
-    private String nickName;
-    private String headimg;
-    private String content;
-    private String time;
-    private List<ReplyDetailBean> replyList;
+	private int postId;
+	private String personId;
+	private String content;
+	private String time;
+	
 	public int getId() {
 		return id;
 	}
@@ -45,18 +41,6 @@ public class CommentDetailBean {
 	public void setPersonId(String personId) {
 		this.personId = personId;
 	}
-	public String getNickName() {
-		return nickName;
-	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-	public String getHeadimg() {
-		return headimg;
-	}
-	public void setHeadimg(String headimg) {
-		this.headimg = headimg;
-	}
 	public String getContent() {
 		return content;
 	}
@@ -69,13 +53,5 @@ public class CommentDetailBean {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public List<ReplyDetailBean> getReplyList() {
-		return replyList;
-	}
-	public void setReplyList(List<ReplyDetailBean> replyList) {
-		this.replyList = replyList;
-	}
-	
-	
 	
 }

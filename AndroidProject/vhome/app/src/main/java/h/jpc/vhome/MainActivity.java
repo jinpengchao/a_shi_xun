@@ -129,8 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 //应用页面跳转动画
                 overridePendingTransition(
-                        R.anim.in,//进入动画
-                        R.anim.out//出去动画
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
                 );
                 break;
             case R.id.use_code:
@@ -178,11 +178,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ParentMain.class);
                 startActivity(intent);
+                overridePendingTransition(
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
+                );
                 finish();
             }else if(sp.getInt("type",0)==1){
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ChildrenMain.class);
                 startActivity(intent);
+                overridePendingTransition(
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
+                );
                 finish();
             }
         }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.DisplayMetrics;
@@ -16,11 +17,16 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import h.jpc.vhome.MainActivity;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.FileHelper;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.children.ChildrenMain;
+import h.jpc.vhome.parents.ParentMain;
+import h.jpc.vhome.parents.fragment.MyselfFragment;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ${chenyn} on 2017/2/20.
@@ -82,8 +88,16 @@ public class BaseFragment extends Fragment {
                                     @Override
                                     public void gotResult(int responseCode, String responseMessage) {
                                         if (responseCode == 0) {
-                                            Intent intent = new Intent(mContext, ChildrenMain.class);
-                                            startActivity(intent);
+                                            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
+                                            int type = sharedPreferences.getInt("type",0);
+                                            if(type == 0){
+                                                Intent intent = new Intent(mContext, ParentMain.class);
+                                                startActivity(intent);
+                                            }
+                                            if (type == 1){
+                                                Intent intent = new Intent(mContext, ChildrenMain.class);
+                                                startActivity(intent);
+                                            }
                                         }
                                     }
                                 });
@@ -114,5 +128,43 @@ public class BaseFragment extends Fragment {
     public void onAttach(Activity context) {
         super.onAttach(context);
         mActivity = context;
+    }
+    public void Logout() {
+        final Intent intent = new Intent();
+        UserInfo info = JMessageClient.getMyInfo();
+        if (null != info) {
+            SharePreferenceManager.setCachedUsername(info.getUserName());
+            if (info.getAvatarFile() != null) {
+                SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
+            }
+            JMessageClient.logout();
+
+            SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+            SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            SharedPreferences.Editor editor1 = sp1.edit();
+            editor.clear();
+            editor1.clear();
+            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
+            deleteCache(files);
+            editor.commit();
+            intent.setClass(getActivity(), MainActivity.class);
+            startActivity(intent);
+            //应用页面跳转动画
+            getActivity().finish();
+            getActivity().overridePendingTransition(
+                    R.anim.in,//进入动画
+                    R.anim.out//出去动画
+            );
+        }
+    }
+    public void deleteCache(File[] files){
+        boolean flag;
+        for(File itemFile : files){
+            flag = itemFile.delete();
+            if (flag == false) {
+                deleteCache(itemFile.listFiles());
+            }
+        }
     }
 }

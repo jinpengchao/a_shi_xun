@@ -1,5 +1,6 @@
 package h.jpc.vhome.children.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -27,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -81,7 +84,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
         newNormalWarnMsg = view.findViewById(R.id.new_normal_warn_text);
         banner = view.findViewById(R.id.banner);
         setBinder();
-
+        findMyRelation();
         //点击事件
         addNewNormalWarn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,25 +256,25 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
         }.start();
     }
     public void historyWarnData(){
-       /* alarmBeanList = new ArrayList<>();
-        AlarmBean alarmBean = new AlarmBean();
-        alarmBean.setContent("鸡哥哥，记得按时吃屎！！！");
-        alarmBean.setAlarmTime("07:08");
-        alarmBean.setSendPerson("靳爹爹");
-        alarmBean.setReceivePerson("鸡哥哥");
-        alarmBeanList.add(alarmBean);
-        AlarmBean alarmBean1 = new AlarmBean();
-        alarmBean1.setContent("鸡哥哥，记得按时吃屎！！！");
-        alarmBean1.setAlarmTime("07:08");
-        alarmBean1.setSendPerson("靳爹爹");
-        alarmBean1.setReceivePerson("鸡哥哥");
-        alarmBeanList.add(alarmBean1);
-        AlarmBean alarmBean13 = new AlarmBean();
-        alarmBean13.setContent("鸡哥哥，记得按时吃屎！！！");
-        alarmBean13.setAlarmTime("07:08");
-        alarmBean13.setSendPerson("靳爹爹");
-        alarmBean13.setReceivePerson("鸡哥哥");
-        alarmBeanList.add(alarmBean13);*/
+//        alarmBeanList = new ArrayList<>();
+//        AlarmBean alarmBean = new AlarmBean();
+//        alarmBean.setContent("鸡哥哥，记得按时吃屎！！！");
+//        alarmBean.setAlarmTime("07:08");
+//        alarmBean.setSendPerson("靳爹爹");
+//        alarmBean.setReceivePerson("鸡哥哥");
+//        alarmBeanList.add(alarmBean);
+//        AlarmBean alarmBean1 = new AlarmBean();
+//        alarmBean1.setContent("鸡哥哥，记得按时吃屎！！！");
+//        alarmBean1.setAlarmTime("07:08");
+//        alarmBean1.setSendPerson("靳爹爹");
+//        alarmBean1.setReceivePerson("鸡哥哥");
+//        alarmBeanList.add(alarmBean1);
+//        AlarmBean alarmBean13 = new AlarmBean();
+//        alarmBean13.setContent("鸡哥哥，记得按时吃屎！！！");
+//        alarmBean13.setAlarmTime("07:08");
+//        alarmBean13.setSendPerson("靳爹爹");
+//        alarmBean13.setReceivePerson("鸡哥哥");
+//        alarmBeanList.add(alarmBean13);
     }
     public void normalWarnData(){
         for (int i = 0; i < 20; i++) {
@@ -498,5 +501,46 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
             default:
                 break;
         }
+    }
+    public void findMyRelation() {
+        //获得接收人电话
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        String myPhone = sharedPreferences.getString("phone","");
+        int type = sharedPreferences.getInt("type",0);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("receivePhone",myPhone);
+            jsonObject.put("receiveType",type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://" + ip + ":8080/vhome/FindMyRelation");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url, data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if (null != data) {
+                        Gson gson = new Gson();
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("relation",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        String json = data;
+                        //得到集合对应的具体类型
+                        Type type = new TypeToken<List<AlarmBean>>(){}.getType();
+                        List<String> parentPhones = gson.fromJson(json,type);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

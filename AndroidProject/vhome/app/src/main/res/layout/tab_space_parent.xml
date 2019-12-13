@@ -4,21 +4,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
-
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:id="@+id/icon"
-        android:layout_centerHorizontal="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:id="@+id/icon"
+            android:layout_width="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_below="@id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 </RelativeLayout>

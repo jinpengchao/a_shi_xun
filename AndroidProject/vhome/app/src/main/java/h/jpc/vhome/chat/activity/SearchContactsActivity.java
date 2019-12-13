@@ -518,7 +518,7 @@ public class SearchContactsActivity extends BaseActivity {
                             viewHolder.portraitImageView.setImageBitmap(avatarBitmap);
                         } else {
                             //没有头像给个默认的
-                            viewHolder.portraitImageView.setImageResource(R.drawable.jmui_head_icon);
+                            viewHolder.portraitImageView.setImageResource(R.drawable.rc_default_portrait);
                         }
                     }
                 });

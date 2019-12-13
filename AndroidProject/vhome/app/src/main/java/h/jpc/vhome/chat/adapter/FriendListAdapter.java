@@ -114,7 +114,7 @@ public class FriendListAdapter extends BaseAdapter implements StickyListHeadersA
                             }
                         });
                     }else {
-                        holder.headAvatar.setImageResource(R.drawable.jmui_head_icon);
+                        holder.headAvatar.setImageResource(R.drawable.rc_default_portrait);
                     }
                 }
             });

@@ -6,9 +6,9 @@
 
         android:startColor="#03A9F4"
 
-        android:centerColor="#6A00BCD4"
+        android:centerColor="#03A9F4"
 
-        android:endColor="#1B03A9F4"
+        android:endColor="#03A9F4"
 
         android:angle="45"
 

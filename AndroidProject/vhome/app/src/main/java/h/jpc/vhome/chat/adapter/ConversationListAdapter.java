@@ -124,7 +124,7 @@ public class ConversationListAdapter extends BaseAdapter {
                 }
             }
         }
-        if (mDatas.size() == 0) {
+        if (null==mDatas) {
             mDatas.add(conv);
         } else {
             //如果是新的会话,直接去掉置顶的消息数之后就插入到list中
@@ -421,12 +421,12 @@ public class ConversationListAdapter extends BaseAdapter {
                         if (status == 0) {
                             headIcon.setImageBitmap(bitmap);
                         } else {
-                            headIcon.setImageResource(R.drawable.jmui_head_icon);
+                            headIcon.setImageResource(R.drawable.rc_default_portrait);
                         }
                     }
                 });
             } else {
-                headIcon.setImageResource(R.drawable.jmui_head_icon);
+                headIcon.setImageResource(R.drawable.rc_default_portrait);
             }
         } else if (convItem.getType().equals(ConversationType.group)) {
             mGroupInfo = (GroupInfo) convItem.getTargetInfo();

@@ -8,15 +8,18 @@ import h.jpc.vhome.parents.fragment.CommunityFragment;
 import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.parents.fragment.MyselfFragment;
 import h.jpc.vhome.parents.fragment.alarm.AlarmService;
+import h.jpc.vhome.parents.fragment.alarm.ReadAlarm;
 import h.jpc.vhome.user.entity.EventBean;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,6 +30,7 @@ import java.util.Map;
 public class ParentMain extends AppCompatActivity {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
+    private TextView coming;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +39,9 @@ public class ParentMain extends AppCompatActivity {
         intent.setClass(ParentMain.this, AlarmService.class);
         startService(intent);
         setTabHost();
+
     }
-//    //后台运行
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            moveTaskToBack(false);
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+
     public void setTabHost(){
         //获取FragmentTabHost对象
         FragmentTabHost fragmentTabHost = findViewById(android.R.id.tabhost);

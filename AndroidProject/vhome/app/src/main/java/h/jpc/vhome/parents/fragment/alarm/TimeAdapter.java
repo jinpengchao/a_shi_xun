@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,14 +25,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import h.jpc.vhome.R;
 
 import static android.content.Context.ALARM_SERVICE;
+import static h.jpc.vhome.parents.fragment.alarm.Clock.clock_close;
+import static h.jpc.vhome.parents.fragment.alarm.Clock.clock_open;
 
 public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
+
     List<Clock> list;
     LayoutInflater layoutInflater;
     Context context;
     Calendar calendar = Calendar.getInstance();
     public static int pos;
-
+    public static int po;
+    private ClockDetail clockDetail;
     public TimeAdapter(List<Clock> list, Context context) {
         this.list = list;
         this.context = context;
@@ -52,7 +57,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
         pos = i;
 
         Log.e("i=======",i+"  "+clock.getClockType());
-        if (clock.getClockType() == Clock.clock_open){
+        if (clock.getClockType() == clock_open){
             viewHolder.aSwitch.setChecked(true);
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -60,7 +65,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             viewHolder.sendPersonId.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
-        }else if (clock.getClockType() == Clock.clock_close){
+        }else if (clock.getClockType() == clock_close){
             viewHolder.aSwitch.setChecked(false);
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.colorPrimary));
@@ -77,7 +82,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
         viewHolder.todetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TODETAIL",clock.getClockType()+"");
+                Log.e("toDetail",clock.getClockType()+"");
                 Intent intent = new Intent(context, ClockDetail.class);
                 intent.putExtra("position", i);
                 context.startActivity(intent);
@@ -89,8 +94,9 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    clock.setClockType(Clock.clock_open);
-                    //clock.updateAll();
+                    clock.setClockType(clock_open);
+                    clockDetail = new ClockDetail();
+                    clockDetail.changeAlarm(context,"","","",clock_open);
                     Toast.makeText(context, "开启闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.minute.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -98,36 +104,10 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                     viewHolder.sendPersonId.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
-                    Intent intent = new Intent(context, CallAlarm.class);
-                    PendingIntent sender = PendingIntent.getBroadcast(
-                            context, 0, intent, 0);
-                    AlarmManager am;
-                    am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-                    calendar.setTimeInMillis(System.currentTimeMillis());
-                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
-                    calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
-                    calendar.set(Calendar.SECOND, 0);
-                    calendar.set(Calendar.MILLISECOND, 0);
-                    Log.e("TAG",calendar.getTimeInMillis()+"");
-                    Log.e("TAG",System.currentTimeMillis()+"");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        if (System.currentTimeMillis()>calendar.getTimeInMillis()+60000){
-                            //加24小时
-                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+86400000, sender);
-                        }else {
-                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-                        }
-                    }
                 } else if (!isChecked){
-                    clock.setClockType(Clock.clock_close);
-                    Log.e("status------",clock.getHour()+clock.getMinute()+clock.getMinute()+clock.getClockType()+"");
-                    Log.e("关闭闹钟",clock.getClockType()+"");
-                    Intent intent = new Intent(context, CallAlarm.class);
-                    PendingIntent sender=PendingIntent.getBroadcast(
-                            context,0, intent, 0);
-                    AlarmManager am;
-                    am =(AlarmManager)context.getSystemService(ALARM_SERVICE);
-                    am.cancel(sender);
+                    clock.setClockType(clock_close);
+                    clockDetail = new ClockDetail();
+                    clockDetail.changeAlarm(context,"","","",clock_close);
                     Toast.makeText(context, "关闭闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                     viewHolder.minute.setTextColor(context.getResources().getColor(R.color.colorPrimary));

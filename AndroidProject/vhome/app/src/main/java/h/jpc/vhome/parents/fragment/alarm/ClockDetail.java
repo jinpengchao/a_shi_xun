@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +19,25 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
+import h.jpc.vhome.util.ConnectionUtil;
 
 import static h.jpc.vhome.parents.fragment.alarm.AlarmActivity.list;
 import static h.jpc.vhome.parents.fragment.alarm.AlarmActivity.timeAdapter;
@@ -97,29 +113,14 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
             case R.id.save:
                 clock.setHour(hourformat);
                 clock.setMinute(minuteformat);
-                clock.setContent("" + content.getText().toString());
+                clock.setContent(content.getText().toString());
                 clock.setClockType(Clock.clock_open);
-                Intent intent = new Intent(ClockDetail.this, CallAlarm.class);
-                // intent.putExtra("content",clock.getContent());
-                //sendBroadcast(intent);
-                PendingIntent sender = PendingIntent.getBroadcast(
-                        ClockDetail.this, 0, intent, 0);
-                AlarmManager am;
-                am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                Log.e("gethour",clock.getHour());
-                Log.e("gethour",clock.getMinute());
+
                 calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
                 calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
-                Log.e("TAG",calendar.getTimeInMillis()+"");
-                Log.e("TAG",System.currentTimeMillis()+"");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    if (System.currentTimeMillis()>calendar.getTimeInMillis()+60000){
-                        //加24小时
-                        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+86400000, sender);
-                    }else {
-                        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-                    }
-                }
+                SharedPreferences sp = getSharedPreferences("alarm",MODE_PRIVATE);
+                int clocktype = sp.getInt("clocktype"+position,0);
+                changeAlarm(context,hourformat,minuteformat,content.getText().toString(),clocktype);
                 timeAdapter.notifyDataSetChanged();
                 finish();
                 break;
@@ -127,15 +128,58 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
                 //删库
                 list.remove(position);
                 timeAdapter.notifyDataSetChanged();
-                Intent intent1 = new Intent(context, CallAlarm.class);
-                PendingIntent sender1=PendingIntent.getBroadcast(
-                        context,0, intent1, 0);
-                am =(AlarmManager)context.getSystemService(ALARM_SERVICE);
-                am.cancel(sender1);
                 finish();
                 break;
 
         }
+    }
+    public void changeAlarm(Context context,String hour,String minute,String content,int clocktype){
+        SharedPreferences sp = context.getSharedPreferences("alarm",MODE_PRIVATE);
+        int alarmId = sp.getInt("alarmId"+position,0);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("alarmId",alarmId);
+            jsonObject.put("hour",hour);
+            jsonObject.put("minute",minute);
+            jsonObject.put("content",content);
+            jsonObject.put("clocktype",clocktype);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/changeAlarm");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SharedPreferences.Editor editor = sp.edit();
+                                if(null!=hour && !"".equals(hour)) {
+                                    editor.putString("hour" + position, hour);
+                                    editor.putString("minute" + position, minute);
+                                    editor.putString("content" + position, content);
+                                    editor.commit();
+                                }
+                                Log.e("闹钟修改完毕", "!");
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private String format(int x) {
@@ -153,4 +197,6 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
         }
         return s;
     }
+
+
 }
