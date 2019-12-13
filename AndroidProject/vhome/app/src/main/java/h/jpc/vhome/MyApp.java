@@ -284,7 +284,7 @@ public class MyApp extends com.activeandroid.app.Application {
         clearTraceStatus();
     }
     public  static Context getAppContext(){
-        return context;
+        return SContext;
     }
 
     public  static Handler getsHandler(){
