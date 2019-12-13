@@ -461,7 +461,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
                         Toast.makeText(ParentMain.this, "获取位置失败", Toast.LENGTH_SHORT).show();
                     }else{
                         mapUtil.updateStatus(currentLatLng,true);
-                        if(CurrentLocation.latitude!=0&&CurrentLocation.longitude!=0) {
+                        if(CurrentLocation.latitude!=0&&CurrentLocation.longitude!=0&&trackPoints.size()==1) {
                             download(handler, CurrentLocation.latitude, CurrentLocation.longitude //经纬度
                                     , "A7:2F:D7:BC:E8:0C:79:00:26:4C:80:0C:A5:77:91:F1:42:78:F9:90;com.example.vhomemapofparents");//安全码
                         }
@@ -496,7 +496,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
                 if (null == currentLatLng) {
                     return;
                 }
-                if(CurrentLocation.latitude!=0&&CurrentLocation.longitude!=0) {
+                if(CurrentLocation.latitude!=0&&CurrentLocation.longitude!=0&&trackPoints.size()==1) {
                     download(handler, CurrentLocation.latitude, CurrentLocation.longitude //经纬度
                             , "A7:2F:D7:BC:E8:0C:79:00:26:4C:80:0C:A5:77:91:F1:42:78:F9:90;com.example.vhomemapofparents");//安全码
                 }
