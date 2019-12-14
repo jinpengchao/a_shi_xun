@@ -79,7 +79,7 @@ public class SearchAddOpenGroupActivity extends BaseActivity {
                             if (groupInfo.getAvatarFile() != null) {
                                 mSearch_group_avatar.setImageBitmap(BitmapFactory.decodeFile(groupInfo.getAvatarFile().getAbsolutePath()));
                             } else {
-                                mSearch_group_avatar.setImageResource(R.drawable.jmui_head_icon);
+                                mSearch_group_avatar.setImageResource(R.drawable.rc_default_portrait);
                             }
                             mTv_groupName.setText(groupInfo.getGroupName());
                             mTv_groupID.setText(groupInfo.getGroupID() + "");

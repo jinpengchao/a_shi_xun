@@ -3,9 +3,11 @@ package h.jpc.vhome.chat.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,16 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
+import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +34,7 @@ import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.FriendInfoActivity;
 import h.jpc.vhome.chat.activity.GroupNotFriendActivity;
@@ -41,6 +52,8 @@ import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ViewHolder;
 import h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView;
 import h.jpc.vhome.chat.view.SwipeLayout;
+import h.jpc.vhome.user.entity.User;
+import h.jpc.vhome.util.ConnectionUtil;
 
 /**
  * Created by ${chenyn} on 2017/3/20.
@@ -103,7 +116,7 @@ public class FriendRecommendAdapter extends BaseAdapter {
         if (bitmap == null) {
             String path = item.avatar;
             if (path == null || TextUtils.isEmpty(path)) {
-                headIcon.setImageResource(R.drawable.jmui_head_icon);
+                headIcon.setImageResource(R.drawable.rc_default_portrait);
             } else {
                 bitmap = BitmapLoader.getBitmapFromFile(path, (int) (50 * mDensity), (int) (50 * mDensity));
                 NativeImageLoader.getInstance().updateBitmapFromCache(item.username, bitmap);
@@ -147,6 +160,7 @@ public class FriendRecommendAdapter extends BaseAdapter {
                             if (responseCode == 0) {
                                 item.state = FriendInvitation.ACCEPTED.getValue();
                                 item.save();
+                                Log.e("申请人的电话",item.username);
                                 addBtn.setVisibility(View.GONE);
                                 state.setVisibility(View.VISIBLE);
                                 state.setTextColor(mContext.getResources().getColor(R.color.contacts_pinner_txt));
@@ -163,6 +177,8 @@ public class FriendRecommendAdapter extends BaseAdapter {
                                             .setConversation(conversation)
                                             .build());
                                 }
+                                //此处添加
+                                addNewRelation(item.username);
                             }
                         }
                     });
@@ -191,8 +207,6 @@ public class FriendRecommendAdapter extends BaseAdapter {
             state.setTextColor(mContext.getResources().getColor(R.color.contacts_pinner_txt));
             state.setText(mContext.getString(R.string.refused));
         }
-
-
         itemLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,7 +280,6 @@ public class FriendRecommendAdapter extends BaseAdapter {
                     }
                 });
             }
-
             @Override
             public void onStartClose(SwipeLayout layout) {
 
@@ -318,5 +331,40 @@ public class FriendRecommendAdapter extends BaseAdapter {
         });
         return convertView;
     }
-
+    public void addNewRelation(String sendPhone) {
+        //获得接收人电话
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("user",Context.MODE_PRIVATE);
+        String receivePhone = sharedPreferences.getString("phone","");
+        int receiveType = sharedPreferences.getInt("type",0);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("receivePhone",receivePhone);
+            jsonObject.put("sendPhone",sendPhone);
+            jsonObject.put("receiveType",receiveType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://" + ip + ":8080/vhome/addNewRelation");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url, data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if (null != data) {
+                        Log.e("ojbk","nb");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 }

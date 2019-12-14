@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
+import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
@@ -35,81 +36,22 @@ import static h.jpc.vhome.parents.fragment.alarm.AlarmActivity.timeAdapter;
 
 
 public class ReadAlarm extends AppCompatActivity {
-    private Calendar calendar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_alarm);
-//        content = findViewById(R.id.content);
-        calendar = Calendar.getInstance();
-        //数据库
+        SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
         list.clear();
-        getAllAlarm();
-
-    }
-    public void getAllAlarm(){
-        SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
-        String phone = sp.getString("phone","");
-        final String data = phone;
-        new Thread(){
-            @Override
-            public void run() {
-                String ip = (new MyApp()).getIp();
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/showAllAlarm");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    final String data = util.getData(connection);
-                    if(null!=data){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Gson gson = new Gson();
-                                String json = data;
-                                //得到集合对应的具体类型
-                                Type type = new TypeToken<List<AlarmBean>>(){}.getType();
-                                List<AlarmBean> alarm = gson.fromJson(json,type);
-                                for (int i=0;i<alarm.size();i++){
-                                    String time = alarm.get(i).getAlarmTime();
-                                    String content = alarm.get(i).getContent();
-                                    String sendperson = alarm.get(i).getSendPersonId();
-                                    String[] timer = time.split(":");
-                                    Clock clock = new Clock();
-                                    clock.setHour(timer[0]);
-                                    clock.setMinute(timer[1]);
-                                    clock.setContent(content);
-                                    clock.setSendPersonId(sendperson);
-                                    clock.setClockType(Clock.clock_open);
-                                    list.add(clock);
-                                    Intent intent = new Intent(ReadAlarm.this, CallAlarm.class);
-                                    PendingIntent sender = PendingIntent.getBroadcast(
-                                            ReadAlarm.this, 0, intent, 0);
-                                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
-                                    calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                        if (System.currentTimeMillis()>calendar.getTimeInMillis()+60000){
-                                            //加24小时
-                                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()+86400000, sender);
-                                        }else {
-                                            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
-                                        }
-                                    }
-                                    timeAdapter.notifyDataSetChanged();
-                                    finish();
-                                }
-                            }
-                        });
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        for(int i=0;i< HomeFragment.size;i++){
+            Clock clock = new Clock();
+            clock.setHour(sharedPreferences.getString("hour"+i,""));
+            clock.setMinute(sharedPreferences.getString("minute"+i,""));
+            clock.setContent(sharedPreferences.getString("content"+i,""));
+            clock.setSendPersonId(sharedPreferences.getString("sendperson"+i,""));
+            clock.setClockType(sharedPreferences.getInt("clocktype"+i,0));
+            list.add(clock);
+        }
+        timeAdapter.notifyDataSetChanged();
+        finish();
     }
 }

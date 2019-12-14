@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/todetail"
+    android:background="#3EFFC107"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <RelativeLayout
 
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
             <TextView
-                android:id="@+id/history_content"
+                android:id="@+id/tss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
+                android:textColor="@color/notChoseColor"
+                android:text="内容："
+                android:textSize="15dp" />
+            <TextView
+                android:layout_toRightOf="@id/tss"
+                android:id="@+id/history_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/notChoseColor"
                 android:text="了拉下车是解决诶我急死比较大平女"
-                android:textSize="38sp" />
+                android:textSize="15dp" />
         </RelativeLayout>
 
         <TextView
@@ -36,9 +45,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/time"
             android:layout_marginLeft="10dp"
-            android:text="设置时间"
+            android:layout_marginTop="10dp"
+            android:text="设置时间："
             android:textColor="@color/notChoseColor"
-            android:textSize="28sp" />
+            android:textSize="15dp" />
         <TextView
             android:layout_centerVertical="true"
             android:id="@+id/history_time"
@@ -47,10 +57,10 @@
             android:layout_below="@+id/time"
             android:layout_toRightOf="@id/t"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="20:18"
             android:textColor="@color/notChoseColor"
-            android:textSize="28sp" />
+            android:textSize="15dp" />
         <TextView
             android:id="@+id/r"
             android:layout_width="wrap_content"
@@ -59,7 +69,7 @@
             android:layout_below="@+id/history_time"
             android:text="接收人："
             android:textColor="@color/notChoseColor"
-            android:textSize="18sp" />
+            android:textSize="15dp" />
         <TextView
             android:id="@+id/history_receiver"
             android:layout_width="wrap_content"
@@ -69,7 +79,7 @@
             android:layout_toRightOf="@id/r"
             android:text="悄悄地从"
             android:textColor="@color/notChoseColor"
-            android:textSize="18sp" />
+            android:textSize="15dp" />
         <TextView
             android:id="@+id/s"
             android:layout_width="wrap_content"
@@ -78,7 +88,7 @@
             android:layout_below="@+id/history_receiver"
             android:text="发送人："
             android:textColor="@color/notChoseColor"
-            android:textSize="18sp" />
+            android:textSize="15dp" />
         <TextView
             android:id="@+id/history_sender"
             android:layout_width="wrap_content"
@@ -87,16 +97,8 @@
             android:layout_toRightOf="@+id/s"
             android:layout_below="@id/history_receiver"
             android:text="阿萨斯"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/notChoseColor"
-            android:textSize="18sp" />
+            android:textSize="15dp" />
     </RelativeLayout>
-
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:background="#B6B5B5" />
-
-</LinearLayout>
+</RelativeLayout>

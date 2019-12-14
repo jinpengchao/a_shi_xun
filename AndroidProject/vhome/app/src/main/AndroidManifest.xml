@@ -6,19 +6,61 @@
     <application
         android:name=".MyApp"
         android:allowBackup="false"
+        android:hardwareAccelerated="false"
+        android:listSelector="@android:color/transparent"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:allowBackup,android:icon">
+
         <activity android:name=".parents.fragment.myself.MyCollectionsActivity"></activity>
         <activity android:name=".parents.fragment.myself.MyPostActivity" />
         <activity android:name=".parents.fragment.myself.MyFunsActivity" />
         <activity android:name=".parents.fragment.myself.MyAttentionsActivity" />
-        <activity android:name=".parents.fragment.radio_ximalaya.DetailActivity" />
-        <activity android:name=".parents.fragment.radio_ximalaya.PlayerActivity" />
-        <activity android:name=".parents.fragment.radio_ximalaya.RadioActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="jchat.db"/>
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="h.jpc.vhome.chat.database.UserEntry, h.jpc.vhome.chat.database.FriendEntry,
+                         h.jpc.vhome.chat.database.FriendRecommendEntry, h.jpc.vhome.chat.database.GroupApplyEntry
+                                   , h.jpc.vhome.chat.database.RefuseGroupEntry"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="4"/> <!-- Since JCore2.0.0 Required SDK核心功能 -->
+        <service android:name=".chat.MyService"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <!--定位-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+        <!-- 如果需要使用到位置服务，需要更换百度地图apikey为自己的apikey -->
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="UAkQeBK84ioVGzYgA1rSWYfuD4xYtpmV" />
+
+        <!--鹰眼轨迹-->
+        <service
+        android:name="com.baidu.trace.LBSTraceService"
+        android:enabled="true"
+        android:process=":remote" />
+        <!--轨迹采集上传服务-->
+
+        <activity android:name=".parents.fragment.radio_ximalaya.DetailActivity"/>
+        <activity android:name=".parents.fragment.radio_ximalaya.PlayerActivity"/>
+        <activity android:name=".parents.fragment.radio_ximalaya.RadioActivity"/>
+        <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
+            android:process=":player"/>
         <activity
             android:name=".chat.activity.WelcomeActivity"
             android:screenOrientation="portrait"
@@ -35,7 +77,7 @@
         <activity
             android:name=".chat.activity.PersonalActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseThemes" />
+            android:theme="@style/BaseThemes" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <activity
             android:name=".chat.activity.NickSignActivity"
             android:screenOrientation="portrait"
@@ -43,7 +85,7 @@
         <activity
             android:name=".chat.activity.SearchForAddFriendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseThemes" />
+            android:theme="@style/BaseThemes" /> <!-- 如果需要使用到位置服务，需要更换百度地图apikey为自己的apikey -->
         <activity
             android:name=".chat.activity.SearchFriendInfoActivity"
             android:screenOrientation="portrait"
@@ -113,10 +155,6 @@
         <activity
             android:name=".chat.activity.PlayVideoActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".chat.location.activity.MapPickerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".chat.activity.FriendInfoActivity"
             android:screenOrientation="portrait"
@@ -279,7 +317,6 @@
             android:name=".chat.activity.ResetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseThemes" />
-        <activity android:name=".parents.fragment.myself.SettingActivity" />
         <activity android:name=".parents.fragment.community_hotspot.activity.CommentActivity" />
         <activity android:name=".parents.fragment.community_hotspot.activity.NewPostActivity" />
         <activity android:name=".parents.fragment.alarm.AlarmActivity" />
@@ -300,7 +337,8 @@
 
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="jchat.db" />
+            android:value="jchat.db" /> <!-- <activity android:name=".parents.fragment.alarm.AlarmActivity" /> -->
+        <!-- <activity android:name=".parents.fragment.tools.AllToolsActivity" /> -->
         <meta-data
             android:name="AA_MODELS"
             android:value="h.jpc.vhome.chat.database.UserEntry, h.jpc.vhome.chat.database.FriendEntry,                          h.jpc.vhome.chat.database.FriendRecommendEntry, h.jpc.vhome.chat.database.GroupApplyEntry                                    , h.jpc.vhome.chat.database.RefuseGroupEntry" />
@@ -355,17 +393,10 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
-        <service
             android:name=".parents.fragment.alarm.AlarmService"
             android:enabled="true"
             android:exported="true" />
     </application>
-    <permission
-        android:name="${applicationId}.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
@@ -377,33 +408,17 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- 连接网络 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 用于管理监听网络状态的变化 -->
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- 用于管理监听网络状态的变化 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 用于管理监听网络状态的变化 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 获取电话的状态,在打电话的时候暂停播放 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- target >=28 需要设置此权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许应用打开网络套接口 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 允许应用打开网络套接口 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -416,4 +431,5 @@
 
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 </manifest>

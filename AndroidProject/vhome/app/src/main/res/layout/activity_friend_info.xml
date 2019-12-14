@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_height="match_parent"
             android:background="@drawable/jmui_back_btn_bg"
-            android:src="@drawable/back1"/>
+            android:src="@drawable/back"/>
 
         <TextView
             android:layout_width="wrap_content"

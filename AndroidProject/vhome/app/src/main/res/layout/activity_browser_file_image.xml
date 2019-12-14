@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:background="#000"
-            android:src="@drawable/back1"/>
+            android:src="@drawable/back"/>
 
         <TextView
             android:layout_width="wrap_content"

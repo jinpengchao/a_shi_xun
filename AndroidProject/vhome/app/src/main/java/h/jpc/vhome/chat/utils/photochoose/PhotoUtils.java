@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.List;
 
 import h.jpc.vhome.chat.utils.CommonUtils;
-
+import h.jpc.vhome.parents.fragment.MyselfFragment;
 
 
 /**
@@ -38,7 +38,7 @@ public class PhotoUtils {
      * 拍照成功后返回
      **/
     public static final int INTENT_SELECT = 4;
-    public static final String CROP_FILE_NAME = "header"+System.currentTimeMillis()+".jpg";
+    public static final String CROP_FILE_NAME = "header"+ MyselfFragment.header_phone +".jpg";
 
     /**
      * PhotoUtils对象

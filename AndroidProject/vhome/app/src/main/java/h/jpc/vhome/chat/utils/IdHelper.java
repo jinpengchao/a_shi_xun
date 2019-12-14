@@ -39,7 +39,7 @@ public class IdHelper {
     public static int[] getResourceDeclareStyleableIntArray(Context context, String name) {
         try {
             //反射拿到包名.因为本应用manifest中包名和gradle中不一样,这里手动填上了
-            Field[] fields2 = Class.forName("h.jpc.vhome.chat" + ".R$styleable").getFields();
+            Field[] fields2 = Class.forName("h.jpc.vhome" + ".R$styleable").getFields();
 
             //browse all fields
             for (Field f : fields2) {

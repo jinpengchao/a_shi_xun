@@ -6,14 +6,24 @@ public class AlarmBean {
     private String sendPersonId;
     private String receivePersonId;
     private String content;
+    private int clocktype;
 
     public AlarmBean() { }
-    public AlarmBean(int alarmId, String alarmTime, String sendPersonId, String receivePersonId, String content) {
+    public AlarmBean(int alarmId, String alarmTime, String sendPersonId, String receivePersonId, String content,int clocktype) {
         this.alarmId = alarmId;
         this.alarmTime = alarmTime;
         this.sendPersonId = sendPersonId;
         this.receivePersonId = receivePersonId;
         this.content = content;
+        this.clocktype = clocktype;
+    }
+
+    public int getClocktype() {
+        return clocktype;
+    }
+
+    public void setClocktype(int clocktype) {
+        this.clocktype = clocktype;
     }
 
     public int getAlarmId() {

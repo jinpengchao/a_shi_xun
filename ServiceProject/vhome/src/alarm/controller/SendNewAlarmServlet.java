@@ -65,7 +65,7 @@ public class SendNewAlarmServlet extends HttpServlet {
 		String content = alarmBean.getContent();
 		
 		AlarmService alarmService = new AlarmService();
-		alarmService.insertNewSendAlarm(alarmId, alarmTime, sendPersonId, receivePersonId, content);
+		alarmService.insertNewSendAlarm(alarmId, alarmTime, sendPersonId, receivePersonId, content , 1);
 		System.out.println("SendNewAlarmServlet--发送新闹钟成功！");
 		out.write("发送新闹钟成功!");
 		out.flush();

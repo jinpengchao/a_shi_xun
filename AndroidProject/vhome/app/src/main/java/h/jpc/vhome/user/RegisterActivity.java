@@ -144,6 +144,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.backToLogin:
                finish();
+               overridePendingTransition(
+                        R.anim.in,//进入动画
+                        R.anim.out//出去动画
+               );
                break;
             case R.id.request_code_btn:
                 // 1. 通过规则判断手机号
@@ -313,5 +317,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         i.putExtras(bundle);
         startActivity(i);
         finish();
+        overridePendingTransition(
+                R.anim.in,//进入动画
+                R.anim.out//出去动画
+        );
     }
 }

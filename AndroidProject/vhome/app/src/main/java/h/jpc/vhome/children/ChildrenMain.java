@@ -1,5 +1,6 @@
 package h.jpc.vhome.children;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -9,11 +10,22 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTabHost;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
 import h.jpc.vhome.chat.view.ScrollControlViewPager;
@@ -21,16 +33,24 @@ import h.jpc.vhome.chat.view.ScrollControlViewPager;
 import h.jpc.vhome.children.fragment.LocationFragment;
 import h.jpc.vhome.children.fragment.MyselfFragment;
 import h.jpc.vhome.children.fragment.WarnFragment;
+import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
+import h.jpc.vhome.util.ConnectionUtil;
+
 
 public class ChildrenMain extends AppCompatActivity {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
 
+    public static int mySendSize;
+    private static String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children_main);
         setTabHost();
+        String service = "showMysended";
+        getMySendedAlarm(service);
+
     }
     public void setTabHost(){
         //获取FragmentTabHost对象
@@ -139,5 +159,59 @@ public class ChildrenMain extends AppCompatActivity {
         imageViewMap.put(tag,imageView);
         textViewMap.put(tag,textView);
         return view;
+    }
+    public void getMySendedAlarm(String service){
+        SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        final String data = phone;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/"+service);
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                String json = data;
+                                //得到集合对应的具体类型
+                                Type type = new TypeToken<List<AlarmBean>>(){}.getType();
+                                List<AlarmBean> alarm = gson.fromJson(json,type);
+                                mySendSize = alarm.size();
+                                for (int i=0;i<mySendSize;i++){
+                                    int alarmId = alarm.get(i).getAlarmId();
+                                    String time = alarm.get(i).getAlarmTime();
+                                    String content = alarm.get(i).getContent();
+                                    String receivePerson = alarm.get(i).getReceivePersonId();
+                                    String[] timer = time.split(":");
+                                    int clocktype = alarm.get(i).getClocktype();
+                                    editor.putInt("alarmId"+i,alarmId);
+                                    editor.putString("hour"+i,timer[0]);
+                                    editor.putString("minute"+i,timer[1]);
+                                    editor.putString("content"+i,content);
+                                    editor.putString("receiveperson"+i,receivePerson);
+                                    editor.putString("sendperson"+i,phone);
+                                    editor.putInt("clocktype"+i, clocktype);
+                                    editor.commit();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

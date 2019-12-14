@@ -1,6 +1,9 @@
 package user.service;
 
 import entity.User;
+
+import java.util.List;
+
 import entity.ParentUserInfo;
 import user.dao.UserDao;
 
@@ -48,5 +51,15 @@ public class UserService {
 	public void updateUserHeaderImg(String phone,int type,String headimg) {
 		UserDao userDao = new UserDao();
 		userDao.saveHeaderImg(phone, type, headimg);
+	}
+	//添加子女父母关联
+	public void insertRelation(String receivePhone,String sendPhone,int receiveType) {
+		UserDao userDao = new UserDao();
+		userDao.addNewRelation(receivePhone, sendPhone,receiveType);
+	}
+	//查找关联的父母
+	public List<String> selectParentPhone(String receivePhone,int receiveType) {
+		UserDao userDao = new UserDao();
+		return userDao.findMyRelation(receivePhone, receiveType);
 	}
 }

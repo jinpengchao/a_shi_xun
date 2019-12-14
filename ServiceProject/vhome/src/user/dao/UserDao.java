@@ -319,4 +319,68 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
+	//添加父母子女关联-->只能子女发送请求，父母接收
+	public void addNewRelation(String receivePhone,String sendPhone,int receiveType) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "insert into tbl_connect values(?,?,?,?)";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, 0);
+			psmt.setString(2, receivePhone);
+			psmt.setString(3, sendPhone);
+			psmt.setInt(4, receiveType);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("添加关联成功");
+			}else {
+				System.out.println("添加关联失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	//查询我的关联
+	public List<String> findMyRelation(String receivePhone,int receiveType) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<String> parentPhoneList = new ArrayList<>();
+		try {
+			conn = util.getConnection();
+			if(receiveType == 0) {
+				String sql = "select * from tbl_connect where sendPhone='"+receivePhone+"'";
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				while(rs.next()) {
+					String phone = rs.getString("sendPhone");
+					parentPhoneList.add(phone);
+				}
+			}
+			if(receiveType == 1) {
+				String sql = "select * from tbl_connect where receivePhone='"+receivePhone+"'";
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				while(rs.next()) {
+					String phone = rs.getString("receivePhone");
+					parentPhoneList.add(phone);
+				}
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return parentPhoneList;
+	}
 }

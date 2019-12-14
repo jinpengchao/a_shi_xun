@@ -88,13 +88,13 @@ public class GroupGridViewAdapter extends BaseAdapter {
                             if (status == 0) {
                                 viewTag.icon.setImageBitmap(bitmap);
                             } else {
-                                viewTag.icon.setImageResource(R.drawable.jmui_head_icon);
+                                viewTag.icon.setImageResource(R.drawable.rc_default_portrait);
                             }
                         }
                     });
                 }
             } else {
-                viewTag.icon.setImageResource(R.drawable.jmui_head_icon);
+                viewTag.icon.setImageResource(R.drawable.rc_default_portrait);
             }
 
             String displayName = userInfo.getDisplayName();

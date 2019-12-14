@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.youth.banner.Banner
@@ -7,6 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp" />
     <LinearLayout
+        android:layout_below="@id/banner"
+        android:id="@+id/buttonLl"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -40,16 +42,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Button>
     </LinearLayout>
-
+    <TextView
+        android:layout_above="@id/list"
+        android:layout_below="@id/buttonLl"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/info"
+        ></TextView>
     <h.jpc.vhome.children.fragment.slideadapter.ListViewCompat
         android:id="@+id/list"
+        android:layout_below="@id/buttonLl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff4f7f9"
         android:cacheColorHint="#00000000"
         android:divider="#dddbdb"
         android:dividerHeight="1.0px"
         android:drawSelectorOnTop="false"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
-</LinearLayout>
+</RelativeLayout>

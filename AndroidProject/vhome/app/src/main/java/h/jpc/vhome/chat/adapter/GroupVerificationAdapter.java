@@ -93,7 +93,7 @@ public class GroupVerificationAdapter extends BaseAdapter {
                                     if (i == 0) {
                                         holder.iv_groupAvatar.setImageBitmap(bitmap);
                                     } else {
-                                        holder.iv_groupAvatar.setImageResource(R.drawable.jmui_head_icon);
+                                        holder.iv_groupAvatar.setImageResource(R.drawable.group);
                                     }
                                 }
                             });
@@ -102,7 +102,7 @@ public class GroupVerificationAdapter extends BaseAdapter {
                 });
             }
         } else {
-            holder.iv_groupAvatar.setImageResource(R.drawable.jmui_head_icon);
+            holder.iv_groupAvatar.setImageResource(R.drawable.group);
 
         }
 

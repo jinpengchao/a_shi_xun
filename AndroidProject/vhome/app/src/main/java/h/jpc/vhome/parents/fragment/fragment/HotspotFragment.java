@@ -382,7 +382,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
     public void onResume() {
 
         super.onResume();
-        Log.e("hotspot","调用了onresume方法");
+        Log.e("hotspot", "调用了onresume方法");
         getdata();
 //        firstPosition=sp.getInt("firstPosition", 0);
 //        top=sp.getInt("top", 0);

@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 
 
 android {
+
+//    signingConfigs {
+//        config {
+//            storeFile file('D:\\Andriod\\android-studio\\keyStore\\MapKey2.jks')
+//            storePassword '123456'
+//            keyAlias = 'baidukey'
+//            keyPassword '123456'
+//        }
+//    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "h.jpc.vhome"
@@ -105,4 +114,12 @@ dependencies {
     implementation files('libs\\XmlyOAuth2SDK_V1.11.jar')
     implementation files('libs\\picasso-2.5.2.jar')
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+    implementation files('libs\\BaiduLBS_Android.jar')
+    implementation files('libs\\BaiduTraceSDK_v3_1_3.jar')
+    implementation files('libs\\bos-android-sdk-1.0.3.jar')
+
+    implementation files('libs\\json-lib-2.4-jdk15.jar')
+    implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
+    implementation files('libs\\gson-2.8.5.jar')
 }

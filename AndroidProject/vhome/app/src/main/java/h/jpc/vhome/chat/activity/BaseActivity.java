@@ -3,6 +3,7 @@ package h.jpc.vhome.chat.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -25,6 +26,9 @@ import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.FileHelper;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.swipeback.app.SwipeBackActivity;
+import h.jpc.vhome.children.ChildrenMain;
+import h.jpc.vhome.parents.ParentMain;
+import h.jpc.vhome.parents.fragment.MyselfFragment;
 
 public class BaseActivity extends SwipeBackActivity {
 
@@ -133,8 +137,16 @@ public class BaseActivity extends SwipeBackActivity {
                                     @Override
                                     public void gotResult(int responseCode, String responseMessage) {
                                         if (responseCode == 0) {
-                                            Intent intent = new Intent(BaseActivity.this, MainActivity.class);
-                                            startActivity(intent);
+                                            SharedPreferences sharedPreferences = getSharedPreferences("user",Context.MODE_PRIVATE);
+                                            int type = sharedPreferences.getInt("type",0);
+                                            if(type == 0){
+                                                Intent intent = new Intent(BaseActivity.this, ParentMain.class);
+                                                startActivity(intent);
+                                            }
+                                            if (type == 1){
+                                                Intent intent = new Intent(BaseActivity.this, ChildrenMain.class);
+                                                startActivity(intent);
+                                            }
                                         }
                                     }
                                 });

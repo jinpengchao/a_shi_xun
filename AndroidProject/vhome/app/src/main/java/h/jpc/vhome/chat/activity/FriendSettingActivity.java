@@ -1,7 +1,9 @@
 package h.jpc.vhome.chat.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,6 +33,7 @@ import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.chat.utils.dialog.LoadDialog;
 import h.jpc.vhome.chat.view.SlipButton;
 import h.jpc.vhome.children.ChildrenMain;
+import h.jpc.vhome.parents.ParentMain;
 
 /**
  * Created by ${chenyn} on 2017/5/7.
@@ -146,8 +149,16 @@ public class FriendSettingActivity extends BaseActivity implements SlipButton.On
                 .build());
         JMessageClient.deleteSingleConversation(mFriendInfo.getUserName(), mFriendInfo.getAppKey());
         //选择-----------------------------------------》
-        Intent intent = new Intent(this, ChildrenMain.class);
-        startActivity(intent);
+        SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        int type = sharedPreferences.getInt("type",0);
+        if(type == 0){
+            Intent intent = new Intent(FriendSettingActivity.this, ParentMain.class);
+            startActivity(intent);
+        }
+        if (type == 1){
+            Intent intent = new Intent(FriendSettingActivity.this, ChildrenMain.class);
+            startActivity(intent);
+        }
         finish();
     }
 

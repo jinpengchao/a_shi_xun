@@ -7,29 +7,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.chat.activity.fragment.BaseFragment;
+import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
+import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
+import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
 import h.jpc.vhome.parents.fragment.news.NewsActivity;
 import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
@@ -40,13 +47,14 @@ import h.jpc.vhome.util.ConnectionUtil;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
     private ImageView alarm;
     private ImageView weather;
     private ImageView news;
     private ImageView tools;
+    public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
     @Nullable
@@ -54,7 +62,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_parent_home,null);
         initUserInfo();
-
+        String service = "showAllAlarm";
+        getAlarm(service);
         /*
          * 功能：设置时间
          * 作者：靳朋朝
@@ -76,11 +85,14 @@ public class HomeFragment extends Fragment {
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String service = "showAllAlarm";
+                getAlarm(service);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), AlarmActivity.class);
                 startActivity(intent);
             }
         });
+
         //天气
         /*
          *  功能：获取实时天气信息
@@ -221,5 +233,58 @@ public class HomeFragment extends Fragment {
         editor2.putString("personalWord",personalWord);
         editor2.putString("headImg",headimg);
         editor2.commit();
+    }
+    public void getAlarm(String service){
+        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        final String data = phone;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/"+service);
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                String json = data;
+                                //得到集合对应的具体类型
+                                Type type = new TypeToken<List<AlarmBean>>(){}.getType();
+                                List<AlarmBean> alarm = gson.fromJson(json,type);
+                                size = alarm.size();
+                                for (int i=0;i<size;i++){
+                                    int alarmId = alarm.get(i).getAlarmId();
+                                    String time = alarm.get(i).getAlarmTime();
+                                    String content = alarm.get(i).getContent();
+                                    String sendperson = alarm.get(i).getSendPersonId();
+                                    String[] timer = time.split(":");
+                                    int clocktype = alarm.get(i).getClocktype();
+                                    editor.putInt("alarmId"+i,alarmId);
+                                    editor.putString("hour"+i,timer[0]);
+                                    editor.putString("minute"+i,timer[1]);
+                                    editor.putString("content"+i,content);
+                                    editor.putString("sendperson"+i,sendperson);
+                                    editor.putInt("clocktype"+i, clocktype);
+                                    editor.commit();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

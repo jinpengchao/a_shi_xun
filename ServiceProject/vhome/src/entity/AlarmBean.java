@@ -6,6 +6,15 @@ public class AlarmBean {
 	private String sendPersonId;
 	private String receivePersonId;
 	private String content;
+	private String clocktype;
+	
+	
+	public String getClocktype() {
+		return clocktype;
+	}
+	public void setClocktype(String clocktype) {
+		this.clocktype = clocktype;
+	}
 	public int getAlarmId() {
 		return alarmId;
 	}
@@ -35,10 +44,5 @@ public class AlarmBean {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	@Override
-	public String toString() {
-		return "Alarm [alarmId=" + alarmId + ", alarmTime=" + alarmTime + ", sendPersonId=" + sendPersonId
-				+ ", receivePersonId=" + receivePersonId + ", content=" + content + "]";
 	}
 }
