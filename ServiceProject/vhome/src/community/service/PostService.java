@@ -41,6 +41,10 @@ public class PostService {
 	public List<PostBean> findPost(){
 		return (new PostDao()).queryPosts();
 	}
+	//通过id查询单个帖子
+	public PostBean findPost(int id) {
+		return (new PostDao()).queryPosts(id);
+	}
 	/**
 	 * 根据发帖人查询帖子
 	 *  @title:findPost

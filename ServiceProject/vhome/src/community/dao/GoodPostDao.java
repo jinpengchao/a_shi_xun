@@ -26,8 +26,6 @@ import entity.GoodPostBean;
  *
  */
 public class GoodPostDao {
-
-	private Connection con;
 	/**
 	 * 
 	 *  @title:insertGoodPost
@@ -39,7 +37,7 @@ public class GoodPostDao {
 		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "insert into tbl_goodpost values(?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
@@ -77,7 +75,7 @@ public class GoodPostDao {
 		List<GoodPostBean> list = new ArrayList<>();
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "select * from tbl_goodpost where postId = ? order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1,postId);
@@ -120,7 +118,7 @@ public class GoodPostDao {
 		List<GoodPostBean> list = new ArrayList<>();
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "select * from tbl_goodpost where goodPersonID = ? order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1,goodPersonId);
@@ -152,6 +150,44 @@ public class GoodPostDao {
 		}
 		return list;
 	}
+	//通过点赞人id和帖子id查询一个点赞信息
+	public GoodPostBean queryGoodPosts(String goodPersonId,int postId){
+		GoodPostBean goodPost = new GoodPostBean();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_goodpost where goodPersonID = ? and postId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,goodPersonId);
+			ps.setInt(2, postId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				goodPost.setId(rs.getInt("id"));
+				goodPost.setPostId(rs.getInt("postId"));
+				goodPost.setGoodPersonId(rs.getString("goodPersonId"));
+				goodPost.setPublishPersonId(rs.getString("publishPersonId"));
+				goodPost.setTime(rs.getString("time"));
+			}else {
+				System.out.println("goodpostdao 没查到数据");
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return goodPost;
+	}
 	/**
 	 * 
 	 *  @title:queryGoodPostCount
@@ -163,7 +199,7 @@ public class GoodPostDao {
 		int num = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "select COUNT(*) from tbl_goodpost where postId = ? ";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1,postId);
@@ -188,5 +224,72 @@ public class GoodPostDao {
 			}
 		}
 		return num;
+	}
+	/**
+	 * 删除指定id的点赞信息
+	 *  @title:delGoodPost
+	 * @Description: todo
+	 * @throws下午1:31:15
+	 * returntype:int
+	 */
+	public int delGoodPost(int id) {
+		int i = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_goodpost where id = ? ";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			i = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return i;
+	}
+	/**
+	 * 通过点赞人id和帖子id删除指定的点赞信息
+	 *  @title:delGoodPost
+	 * @Description: todo
+	 * @throws下午1:48:01
+	 * returntype:int
+	 */
+	public int delGoodPost(String goodPersonId,int postId) {
+		int i = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_goodpost where goodPersonId = ? and postId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, goodPersonId);
+			ps.setInt(2, postId);
+			i = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return i;
 	}
 }

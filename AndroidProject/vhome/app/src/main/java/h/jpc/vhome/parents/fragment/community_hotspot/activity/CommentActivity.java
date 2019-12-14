@@ -1,5 +1,6 @@
 package h.jpc.vhome.parents.fragment.community_hotspot.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import h.jpc.vhome.MainActivity;
@@ -13,9 +14,11 @@ import h.jpc.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
+import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -41,6 +44,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -119,7 +124,9 @@ public class CommentActivity extends AppCompatActivity {
      * 给控件添加数据
      */
     private void fillPost() {
-
+        //设置头像
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg();
+        Glide.with(CommentActivity.this).load(url).priority(Priority.HIGH).into(ivHotPerson);
         tvHotName.setText(post.getNickName());//设置发帖人昵称
         tvHotContent.setText(post.getPostContent());//设置帖子内容
         //设置时间
@@ -353,7 +360,9 @@ public class CommentActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.rl_post_save:
                     if (1 == post.getSave_status()) {
-                        Toast.makeText(view.getContext(), "已经收藏过了！", Toast.LENGTH_SHORT).show();
+                        post.setSave_status(0);
+                        ivHotSave.setImageResource(R.mipmap.post_save);
+                        delPostCollection();
                     } else {
                         Log.i("评论区", "修改图标");
                         post.setSave_status(1);
@@ -363,7 +372,13 @@ public class CommentActivity extends AppCompatActivity {
                     break;
                 case R.id.rl_post_like:
                     if (1 == post.getLike_status()) {
-                        Toast.makeText(view.getContext(), "已经点赞过了！", Toast.LENGTH_SHORT).show();
+                        post.setLike_status(0);
+                        ivHotlike.setImageResource(R.mipmap.post_img_good);
+                        //点赞个数减一
+                        int cnum = Integer.parseInt(tvHotLikenum.getText().toString().trim())-1;
+                        post.setLikeNum(cnum);
+                        tvHotLikenum.setText(cnum+"");
+                        delPostLike();
                     } else {
                         Log.i("commentActivity", "修改点赞图标" );
                         post.setLike_status(1);
@@ -386,8 +401,24 @@ public class CommentActivity extends AppCompatActivity {
                 case R.id.tv_attention:
                     //添加关注
                     if (post.getAttention_status()==1){
-                        Toast.makeText(CommentActivity.this,"已经关注过了！",Toast.LENGTH_SHORT).show();
-                    }else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                        builder.setTitle("温馨提示：");
+                        builder.setMessage("确定要取消关注吗？");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                tvAttention.setText("+关注");
+                                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
+                                post.setAttention_status(0);
+                                delAttention();
+                                Log.i(TAG, "onClick: 已经取消关注");
+                            }
+                        });
+                        builder.setNegativeButton("取消",null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }else if (post.getAttention_status()==0){
                         addAttention();
                     }
                     break;
@@ -395,6 +426,96 @@ public class CommentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 删除关注
+     */
+    public void delAttention() {
+        AttentionBean attentionBean = new AttentionBean();
+        attentionBean.setAttentionPersonId(post.getPersonId());
+        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),Context.MODE_PRIVATE);
+        attentionBean.setPersonId(sp.getString("id",""));
+        String data = (new Gson()).toJson(attentionBean);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveAttentionServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    HttpURLConnection connection = util.sendData(url,data);
+                    String receive = util.getData(connection);
+                    if (null!=receive && !"".equals(receive)){
+                        Log.i(TAG, "run: 取消关注成功！");
+                    }else {
+                        Log.e(TAG, "run: 取消关注失败！");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 删除点赞数据
+     */
+    private void delPostLike() {
+        String personId = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        int postId = post.getId();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveGoodPostServlet" +
+                            "?personId="+personId+"&postId="+postId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (receive == null) {
+                        Log.e(TAG, "run: 删除点赞数据出错" );
+                    }else {
+                        Log.i(TAG, "run: 删除点赞数据成功");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 删除收藏数据
+     */
+    private void delPostCollection() {
+        String personId = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        int postId = post.getId();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveCollectServlet" +
+                            "?personId="+personId+"&postId="+postId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (receive == null) {
+                        Log.e(TAG, "run: 删除收藏数据出错" );
+                    }else {
+                        Log.i(TAG, "run: 删除收藏数据成功");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 添加关注
+     */
     private void addAttention() {
         //准备数据
         AttentionBean attention = new AttentionBean();
@@ -405,7 +526,7 @@ public class CommentActivity extends AppCompatActivity {
         tvAttention.setText("已关注");
         GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
         myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
-        post.setSave_status(1);
+        post.setAttention_status(1);
         new Thread(){
             @Override
             public void run() {

@@ -2,6 +2,7 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import community.dao.GoodPostDao;
 import community.service.AttentionService;
 import community.service.CollectionService;
 import community.service.CommentService;
@@ -24,55 +24,53 @@ import entity.GoodPostBean;
 import entity.PostBean;
 
 /**
- * Servlet implementation class GetPostServlet
+ * Servlet implementation class GetCollectionsServlet
  */
-@WebServlet("/GetPostsServlet")
-public class GetPostsServlet extends HttpServlet {
+@WebServlet("/GetCollectionsPostServlet")
+public class GetCollectionsPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GetPostsServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public GetCollectionsPostServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/text;charset=utf-8");
+		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String data = null;
-		List<PostBean> list = null;
 		String personId = null;
-		//获取当前人的id
 		personId = request.getParameter("personId");
-//		获取当前人的所有收藏表
+		System.out.println("GetCollectionServlet8personId " + personId);
+		List<PostBean> postList = new ArrayList<PostBean>();
+		//获取当前收藏信息
 		List<CollectionBean> collections = (new CollectionService()).findCollection(personId);
+		for(int i=0;i<collections.size();i++) {
+			CollectionBean collectionBean = collections.get(i);
+			PostBean post = (new PostService()).findPost(collectionBean.getPostId());
+			postList.add(post);
+		}
 		//获取当前人的所有点赞表
 		List<GoodPostBean> goodPosts = (new GoodPostService()).findGoodPost(personId);
 		//获取当前人的所有关注
 		List<AttentionBean> attentions = (new AttentionService()).findAttention(personId);
-		//获取所有的帖子
-		list = (new PostService()).findPost();
-		System.out.println("getPostServlet中获得"+list.size()+"条数据");
-		for(int i=0;i<list.size();i++) {
-			PostBean post = list.get(i);
+		for(int i=0;i<postList.size();i++) {
+			PostBean post = postList.get(i);
 			int likeNum = (new GoodPostService()).findGoodPostCount(post.getId());
 			post.setLikeNum(likeNum);
 			int commentNum = (new CommentService()).findCommentCount(post.getId());
 			post.setCommentNum(commentNum);
 			
-			for(int j=0;j<collections.size();j++) {
-				CollectionBean collection = collections.get(j);
-				if(collection.getPostId() == post.getId()) {
-					post.setSave_status(1);
-					break;
-				}
-			}
+			post.setSave_status(1);//所有的都是收藏的
+			
 			for(int k=0;k<goodPosts.size();k++) {
 				GoodPostBean goodPost = goodPosts.get(k);
 				if(goodPost.getPostId() == post.getId()) {
@@ -88,17 +86,20 @@ public class GetPostsServlet extends HttpServlet {
 				}
 			}
 		}
+		
 		Gson gson = new Gson();
-		data = gson.toJson(list);
+		String data = gson.toJson(postList);
 		out.write(data);
 		out.flush();
 		out.close();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

@@ -54,7 +54,9 @@ import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
 import h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyPostActivity;
 import h.jpc.vhome.parents.fragment.myself.SettingActivity;
 import h.jpc.vhome.user.entity.EventBean;
 import h.jpc.vhome.user.entity.ParentUserInfo;
@@ -81,26 +83,20 @@ public class MyselfFragment extends Fragment {
     private TextView tvAttention;
     private TextView tvFuns;
     private String TAG = "MyselfFragment";
+    private RelativeLayout tvMyPost;
+    private RelativeLayout tvMyCollect;
+    private RelativeLayout tvMyNews;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
 
+        getViews(view);
 
-        blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
-        header = (ImageView) view.findViewById(R.id.parent_head);
-        nikeName = (TextView) view.findViewById(R.id.parent_name);
-        ids = (TextView) view.findViewById(R.id.parent_id);
-        areas = (TextView) view.findViewById(R.id.parent_area);
-        sexs = (ImageView) view.findViewById(R.id.parent_sex);
-        myRelation = view.findViewById(R.id.my_relation);
-//        mySetting = view.findViewById(R.id.my_setting);
-        myLogout = view.findViewById(R.id.my_logout);
-        myResetPwd = view.findViewById(R.id.my_resetpwd);
-        tvAttention = view.findViewById(R.id.tv_myself_attention);
-        tvFuns = view.findViewById(R.id.tv_myself_funs);
         getCount();//获取关注和粉丝数
+
+
         //点击关注的人的时候,显示关注人的列表
         tvAttention.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,10 +147,48 @@ public class MyselfFragment extends Fragment {
                 getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
             }
         });
+
         initMyselfInfo();
         initData();
+
+        tvMyPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyPostActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMyCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyCollectionsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
+
+    private void getViews(View view) {
+        blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
+        header = (ImageView) view.findViewById(R.id.parent_head);
+        nikeName = (TextView) view.findViewById(R.id.parent_name);
+        ids = (TextView) view.findViewById(R.id.parent_id);
+        areas = (TextView) view.findViewById(R.id.parent_area);
+        sexs = (ImageView) view.findViewById(R.id.parent_sex);
+        myRelation = view.findViewById(R.id.my_relation);
+//        mySetting = view.findViewById(R.id.my_setting);
+        myLogout = view.findViewById(R.id.my_logout);
+        myResetPwd = view.findViewById(R.id.my_resetpwd);
+        tvAttention = view.findViewById(R.id.tv_myself_attention);
+        tvFuns = view.findViewById(R.id.tv_myself_funs);
+        tvMyCollect = view.findViewById(R.id.tv_myself_mycollect);
+        tvMyNews = view.findViewById(R.id.tv_myself_mynews);
+        tvMyPost = view.findViewById(R.id.tv_myself_mypost);
+    }
+
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -177,6 +211,9 @@ public class MyselfFragment extends Fragment {
         }
     };
 
+    /**
+     * 获取关注数和粉丝数
+     */
     private void getCount() {
         new Thread(){
             @Override
@@ -202,6 +239,9 @@ public class MyselfFragment extends Fragment {
         }.start();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData(){
 
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
@@ -270,5 +310,13 @@ public class MyselfFragment extends Fragment {
         } else {
             ToastUtil.shortToast(getActivity(), "退出失败");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCount();
+        initMyselfInfo();
+        initData();
     }
 }

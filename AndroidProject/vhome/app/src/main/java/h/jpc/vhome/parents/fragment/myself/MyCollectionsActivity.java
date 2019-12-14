@@ -1,5 +1,15 @@
-package h.jpc.vhome.parents.fragment.fragment;
+package h.jpc.vhome.parents.fragment.myself;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import h.jpc.vhome.MyApp;
+import h.jpc.vhome.R;
+import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
+import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +18,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,25 +40,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import h.jpc.vhome.MyApp;
-import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
-import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
-import h.jpc.vhome.util.ConnectionUtil;
-
-import static android.content.Context.MODE_PRIVATE;
-
-public class AttentionFragment extends Fragment implements AbsListView.OnScrollListener{
-    private String TAG = "AttentionFragment";
+public class MyCollectionsActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
+    private String TAG = "MyCollectionsActivity";
     private ListView lvHotSpot;
-    private View view;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
     private int POST_STATUS = 1;
@@ -64,10 +55,10 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
     private int top;//滑动以后的第一条item的可见部分距离top的像素值
     private SharedPreferences sp;//偏好设置
     private SharedPreferences.Editor editor;
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_attention,null);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_post);
         getViews();
         lvHotSpot.setOnScrollListener(this);
 
@@ -111,7 +102,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
                     }
                 }
 
-                adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
+                adapter = new HotSpotAdapter(MyCollectionsActivity.this,loadList,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
                 lvHotSpot.setEmptyView(tvEmpty);
 //                当点击收藏点赞的时候
@@ -143,7 +134,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
                         simple.putExtra("post",list.get(i));
-                        simple.setClass(getContext(), CommentActivity.class);
+                        simple.setClass(MyCollectionsActivity.this, CommentActivity.class);
                         startActivity(simple);
                     }
                 });
@@ -156,8 +147,6 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
                 }
             }
         };
-
-        return view;
     }
 
     /**
@@ -167,7 +156,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
     private void addPostCollection(int i) {
         CollectionBean collection = new CollectionBean();
         PostBean post = list.get(i);
-        SharedPreferences sp = getActivity().getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
         String personId = sp.getString("id", "");
         Log.i("热点：收藏人id===", personId);
         collection.setPersonId(personId);
@@ -208,7 +197,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
      * @param position
      */
     private void delPostCollection(int position) {
-        String personId = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        String personId = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
         int postId = list.get(position).getId();
         new Thread(){
             @Override
@@ -236,7 +225,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
      * @param i
      */
     private void addPostLike(int i) {
-        SharedPreferences sp = getActivity().getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
         GoodPostBean goodPost = new GoodPostBean();
         goodPost.setPostId(list.get(i).getId());
         String goodPersonId = sp.getString("id", "");
@@ -276,7 +265,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
      * @param position
      */
     private void delPostLike(int position) {
-        String personId = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        String personId = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
         int postId = list.get(position).getId();
         new Thread(){
             @Override
@@ -325,14 +314,14 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
         loadNum = 0;
         list.clear();
         loadList.clear();
-        SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(), Context.MODE_PRIVATE);
         final String personId = sp.getString("id","");
         new Thread(){
             @Override
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetAttentionsPostServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetCollectionsPostServlet?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
                     util.sendMsg(data,POST_STATUS,handler);
@@ -346,11 +335,11 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
     }
 
     private void getViews() {
-        sp=getActivity().getPreferences(MODE_PRIVATE);
+        sp=getPreferences(MODE_PRIVATE);
         editor=sp.edit();
-        lvHotSpot = view.findViewById(R.id.lv_hot_spot);
-        srl = view.findViewById(R.id.srl);
-        tvEmpty = view.findViewById(R.id.tv_empty);
+        lvHotSpot = findViewById(R.id.lv_hot_spot);
+        srl = findViewById(R.id.srl);
+        tvEmpty = findViewById(R.id.tv_empty);
     }
 
 
@@ -358,7 +347,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
     public void onResume() {
 
         super.onResume();
-        Log.e("hotspot","调用了onresume方法");
+        Log.e("Mypost","调用了onresume方法");
         getdata();
     }
     @Override

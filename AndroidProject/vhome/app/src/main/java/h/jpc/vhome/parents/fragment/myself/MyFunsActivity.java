@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFunsActivity extends AppCompatActivity {
+public class MyFunsActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
 
     private static final String TAG = "MyFunsActivity";
     private ListView lvHotSpot;
@@ -43,12 +44,17 @@ public class MyFunsActivity extends AppCompatActivity {
     private List<ParentUserInfo> list = new ArrayList<>();
     private List<ParentUserInfo> loadList = new ArrayList<>();
     private  MyFunsAdapter adapter;
+    private int firstPosition; //滑动以后的可见的第一条数据
+    private int top;//滑动以后的第一条item的可见部分距离top的像素值
+    private SharedPreferences sp;//偏好设置
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_attentions);
 
         getViews();
+        lvHotSpot.setOnScrollListener(this);
         tvEmpty.setText("还没有粉丝~");
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -109,6 +115,12 @@ public class MyFunsActivity extends AppCompatActivity {
                 });
                 adapter.notifyDataSetChanged();
 
+                //定位回到上一次的浏览位置
+                firstPosition=sp.getInt("firstPosition", 0);
+                top=sp.getInt("top", 0);
+                if(firstPosition!=0&&top!=0){
+                    lvHotSpot.setSelectionFromTop(firstPosition, top);
+                }
             }
         };
     }
@@ -159,6 +171,8 @@ public class MyFunsActivity extends AppCompatActivity {
     }
 
     private void getViews() {
+        sp=getPreferences(MODE_PRIVATE);
+        editor=sp.edit();
         lvHotSpot = findViewById(R.id.lv_hot_spot);
         srl = findViewById(R.id.srl);
         tvEmpty = findViewById(R.id.tv_empty);
@@ -170,5 +184,22 @@ public class MyFunsActivity extends AppCompatActivity {
         super.onResume();
         Log.e(TAG,"调用了onresume方法");
         getdata();
+    }
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+            firstPosition=lvHotSpot.getFirstVisiblePosition();
+        }
+        View v=lvHotSpot.getChildAt(0);
+        top=v.getTop();
+
+        editor.putInt("firstPosition", firstPosition);
+        editor.putInt("top", top);
+        editor.commit();
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
     }
 }

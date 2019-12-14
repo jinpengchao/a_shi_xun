@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
@@ -86,11 +87,12 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) view.getTag();
         }
         //加载logo
-//        Glide.with(context).load(R.drawable.user_other)
-//                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-//                .error(R.mipmap.ic_launcher)
-//                .centerCrop()
-//                .into(groupHolder.logo);
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images"+commentBeanList.get(i).getHeadimg();
+        Glide.with(context).load(url)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .error(R.mipmap.errorImg1)
+                .centerCrop()
+                .into(groupHolder.commentLogo);
         groupHolder.tv_name.setText(commentBeanList.get(i).getNickName());//设置用户昵称
         //设置时间
         String time = commentBeanList.get(i).getTime();

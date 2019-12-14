@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import community.dao.GoodPostDao;
-import community.service.AttentionService;
 import community.service.CollectionService;
 import community.service.CommentService;
 import community.service.GoodPostService;
@@ -24,16 +22,16 @@ import entity.GoodPostBean;
 import entity.PostBean;
 
 /**
- * Servlet implementation class GetPostServlet
+ * Servlet implementation class GetMyPostServlet
  */
-@WebServlet("/GetPostsServlet")
-public class GetPostsServlet extends HttpServlet {
+@WebServlet("/GetMyPostServlet")
+public class GetMyPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPostsServlet() {
+    public GetMyPostServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,20 +43,16 @@ public class GetPostsServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
+		Gson gson = new Gson();
 		String data = null;
-		List<PostBean> list = null;
-		String personId = null;
-		//获取当前人的id
-		personId = request.getParameter("personId");
+		String personId = request.getParameter("personId");
+		//获取当前人的帖子
+		List<PostBean> list = (new PostService()).findPost(personId);
 //		获取当前人的所有收藏表
 		List<CollectionBean> collections = (new CollectionService()).findCollection(personId);
 		//获取当前人的所有点赞表
 		List<GoodPostBean> goodPosts = (new GoodPostService()).findGoodPost(personId);
-		//获取当前人的所有关注
-		List<AttentionBean> attentions = (new AttentionService()).findAttention(personId);
-		//获取所有的帖子
-		list = (new PostService()).findPost();
-		System.out.println("getPostServlet中获得"+list.size()+"条数据");
+		System.out.println("getMypostservlet中获取个人帖子数"+list.size());
 		for(int i=0;i<list.size();i++) {
 			PostBean post = list.get(i);
 			int likeNum = (new GoodPostService()).findGoodPostCount(post.getId());
@@ -80,15 +74,7 @@ public class GetPostsServlet extends HttpServlet {
 					break;
 				}
 			}
-			for(int m=0;m<attentions.size();m++) {
-				AttentionBean att = attentions.get(m);
-				if(att.getAttentionPersonId().equals(post.getPersonId())) {
-					post.setAttention_status(1);
-					break;
-				}
-			}
 		}
-		Gson gson = new Gson();
 		data = gson.toJson(list);
 		out.write(data);
 		out.flush();

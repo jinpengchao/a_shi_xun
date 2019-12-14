@@ -35,7 +35,14 @@ public class MyAttentionAdapter extends BaseAdapter {
     private Context context;
     private List<ParentUserInfo> list;
     private int itemLayoutId;
+    private onItemListClick onItemListClick;
 
+    public interface onItemListClick {
+        public void myItemClick(int position);
+    }
+    public void setOnItemListClick(onItemListClick onItemListClick){
+        this.onItemListClick = onItemListClick;
+    }
 
     public MyAttentionAdapter(Context context, List<ParentUserInfo> list, int itemLayoutId) {
         this.context = context;
@@ -80,14 +87,8 @@ public class MyAttentionAdapter extends BaseAdapter {
         viewHolder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttentionBean attentionBean = new AttentionBean();
-                attentionBean.setAttentionPersonId(list.get(i).getId());
-                SharedPreferences sp = context.getSharedPreferences((new MyApp()).getPathInfo(),Context.MODE_PRIVATE);
-                attentionBean.setPersonId(sp.getString("id",""));
-                String data = (new Gson()).toJson(attentionBean);
-                list.remove(i);
-                delAttention(data);
-                notifyDataSetChanged();
+                onItemListClick.myItemClick(i);
+
             }
         });
         return view;
@@ -109,27 +110,5 @@ public class MyAttentionAdapter extends BaseAdapter {
         }
     }
 
-    //取消关注
-    public void delAttention(String data) {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveAttentionServlet");
-                    ConnectionUtil util = new ConnectionUtil();
-                    HttpURLConnection connection = util.sendData(url,data);
-                    String receive = util.getData(connection);
-                    if (null!=receive && !"".equals(receive)){
-                        Log.i(TAG, "run: 取消关注成功！");
-                    }else {
-                        Log.e(TAG, "run: 取消关注失败！");
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
+
 }
