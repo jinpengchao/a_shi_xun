@@ -427,8 +427,8 @@
     <string name="room_exit">退出聊天室</string>
 
     <!--鹰眼轨迹相关-->
-    <string name="app_title">百度鹰眼Android SDK</string>
-    <string name="trans_url">http://192.168.43.75:8080/</string>
+<!--    <string name="app_title">百度鹰眼Android SDK</string>-->
+<!--    <string name="trans_url">http://192.168.43.75:8080/</string>-->
 
     <!-- 追踪控制子选项 -->
     <string name="start_trace">开启服务</string>

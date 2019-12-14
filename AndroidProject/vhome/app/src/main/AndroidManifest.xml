@@ -7,6 +7,7 @@
         android:name=".MyApp"
         android:allowBackup="false"
         android:hardwareAccelerated="false"
+        android:listSelector="@android:color/transparent"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -40,7 +41,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
+            android:value="UAkQeBK84ioVGzYgA1rSWYfuD4xYtpmV" />
 
         <!--鹰眼轨迹-->
         <service

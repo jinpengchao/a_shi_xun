@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--计算小类-->
+    <array name="ComputationalSubclass">
+        <item>加重现有体积钻井液所需加重剂重量</item>
+        <item>配置预订体积加重钻井液所需加重剂重量</item>
+        <item>重晶石加重钻井液时体积增加</item>
+        <item>降低钻井液密度所需水量</item>
+    </array>
+</resources>

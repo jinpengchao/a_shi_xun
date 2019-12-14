@@ -86,7 +86,7 @@ import static h.jpc.vhome.parents.HttpLinked.connection;
 public class ParentMain extends AppCompatActivity implements SensorEventListener {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
-
+    private SharedPreferences sp2;
     private SDKReceiver mReceiver;
 
     //定时器
@@ -159,6 +159,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
      */
     private MapUtil mapUtil = null;
 
+    private BitmapUtil bitmapUtil = null;
     private String city;//获取地址信息进行获取天气参数之用
     private Handler handler;
     /**
@@ -201,7 +202,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         AutoEnd();
 
     }
-//    //后台运行
+    //    //后台运行
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -333,6 +334,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
         mapUtil.init((MapView) findViewById(R.id.tracing_mapView));
+        bitmapUtil.init(1);
         trackPoints = new ArrayList<LatLng>();
         mapUtil.setCenter(mCurrentDirection);//设置地图中心点
         powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
@@ -819,14 +821,11 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         }
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         mapUtil.onResume();
-
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
-
         // 在Android 6.0及以上系统，若定制手机使用到doze模式，请求将应用添加到白名单。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String packageName = trackApp.getPackageName();
@@ -854,7 +853,6 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         super.onStop();
         stopRealTimeLoc();
         mSensorManager.unregisterListener(this);
-        unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -865,6 +863,7 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         trackPoints = null;
         mapUtil.clear();
         unregisterPowerReceiver();
+        unregisterReceiver(mReceiver);
 
 
         if (trackApp.trackConf.contains("is_trace_started")
@@ -883,6 +882,6 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         editor.remove("is_gather_started");
         editor.commit();
 
-        BitmapUtil.clear();
+        bitmapUtil.clear();
     }
 }

@@ -167,8 +167,10 @@ public class MyselfFragment extends BaseFragment {
             editor.clear();
             editor1.clear();
             File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
-            deleteCache(files);
-            editor.commit();
+            if(null!=files){
+                deleteCache(files);
+                editor.commit();
+            }
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画

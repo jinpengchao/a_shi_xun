@@ -21,7 +21,11 @@ public class BitmapUtil {
         bmStart = BitmapDescriptorFactory.fromResource(R.mipmap.icon_start);
         bmEnd = BitmapDescriptorFactory.fromResource(R.mipmap.icon_end);
     }
-
+    public static void init(int tag) {
+        bmArrowPoint = BitmapDescriptorFactory.fromResource(R.mipmap.icon_point);
+        bmStart = BitmapDescriptorFactory.fromResource(R.mipmap.icon_start);
+        bmEnd = BitmapDescriptorFactory.fromResource(R.mipmap.icon_end);
+    }
     /**
      * 回收bitmap，在MainActivity onDestroy()中调用
      */

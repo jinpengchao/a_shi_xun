@@ -2,10 +2,16 @@ package h.jpc.vhome.children.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,7 +40,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,21 +50,25 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.children.ChildrenMain;
 import h.jpc.vhome.children.fragment.dialog.MyDialog;
 import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
 import h.jpc.vhome.children.fragment.historyAdapter.HistoryWarnAdapter;
 import h.jpc.vhome.children.fragment.imageloader.GlideImageLoader;
 import h.jpc.vhome.children.fragment.slideadapter.ListViewCompat;
 import h.jpc.vhome.children.fragment.slideadapter.SlideView;
+import h.jpc.vhome.parents.fragment.HomeFragment;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
+import static h.jpc.vhome.children.ChildrenMain.mySendSize;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class WarnFragment extends Fragment implements AdapterView.OnItemLongClickListener, View.OnClickListener, SlideView.OnSlideListener {
+public class WarnFragment extends Fragment implements View.OnClickListener, SlideView.OnSlideListener {
     private static final String TAG = "MainActivity";
     private ListViewCompat mListView;
+    private  ListView lvHistory;
     private List<MessageItem> mMessageItems = new ArrayList<MessageItem>();
     private SlideView mLastSlideViewWithStatusOn;
     private SlideAdapter adapter;
@@ -65,6 +77,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
     private Button sendNewWarn;
     private Button quaryAllWarn;
     private EditText newNormalWarnMsg;
+    private HistoryWarnAdapter historyWarnAdapter;
     private Banner banner;
     private List<Integer> images;
     private List<String> titles;
@@ -73,6 +86,19 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
     private  List<String> minuteList;
     private  List<AlarmBean> alarmBeanList;
     private SharedPreferences sp;
+    private TextView info;
+    public static int normalSize;
+    private Handler myhandler= new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mMessageItems.clear();
+            setMyNormalAlarm();
+            adapter = new SlideAdapter();
+            mListView.setAdapter(adapter);
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,8 +109,13 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
         quaryAllWarn = view.findViewById(R.id.quaryAllWarn);
         newNormalWarnMsg = view.findViewById(R.id.new_normal_warn_text);
         banner = view.findViewById(R.id.banner);
+        info = view.findViewById(R.id.info);
+
+        mListView = view.findViewById(R.id.list);
         setBinder();
-        findMyRelation();
+//        String service = "showMysended";
+//        getMySendedAlarm(service);
+
         //点击事件
         addNewNormalWarn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +147,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
             @Override
             public void onClick(View v) {
                 View view = getLayoutInflater().inflate(R.layout.dialog_send_new_warn, null);
+                findMyRelation();
                 myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
                 Button cancle = (Button)view.findViewById(R.id.new_normal_warn_cancle);
                 Button ok = (Button)view.findViewById(R.id.new_normal_warn_ok);
@@ -165,8 +197,8 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 final EditText editText = (EditText)view.findViewById(R.id.send_new_warn_text);
 
                 //这呢 别找了
-                sp = getActivity().getSharedPreferences("childUserInfo",MODE_PRIVATE);
-                final String senderId = sp.getString("id","");
+                sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+                final String sendPersonId = sp.getString("phone","");
 
                 cancle.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -179,7 +211,7 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                     public void onClick(View v) {
                         //存入数据库放入常用列表
                         String content = editText.getText().toString();
-                        sendNewAlarm(receiver,hour,minute,"792997",content);
+                        sendNewAlarm(receiver,hour,minute,sendPersonId,content);
                         myDialog.dismiss();
                     }
                 });
@@ -187,36 +219,69 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                 myDialog.show();
             }
         });
-        //能查的数据为 所绑定关联的接收人的所有闹钟
+        //能查的数据为 寄几发的闹钟
         quaryAllWarn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 View view = getLayoutInflater().inflate(R.layout.dialog_quary_all_warn, null);
                 myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
-                ListView lvHistory = (ListView)view.findViewById(R.id.history_warn);
-                historyWarnData();
-                HistoryWarnAdapter historyWarnAdapter = new HistoryWarnAdapter(getActivity(),alarmBeanList,R.layout.item_history_alarm_warn);
+
+                lvHistory = (ListView)view.findViewById(R.id.history_warn);
+                TextView warnInfo = view.findViewById(R.id.warnInfo);
+                historyWarnData(warnInfo);
+                historyWarnAdapter = new HistoryWarnAdapter(getActivity(),alarmBeanList,R.layout.item_history_alarm_warn);
                 lvHistory.setAdapter(historyWarnAdapter);
-                historyWarnAdapter.notifyDataSetChanged();
+                lvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("是否取消发送？")
+                                .setItems(R.array.choose,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int which) {
+                                                String[] PK = getResources()
+                                                        .getStringArray(
+                                                                R.array.choose);
+                                                if (PK[which].equals("取消发送")) {
+                                                    if (null!=alarmBeanList) {
+                                                        alarmBeanList.remove(arg2);
+                                                        int alarmId = alarmBeanList.get(arg2).getAlarmId();
+                                                        Log.e("alarmId",alarmId+"");
+                                                        deleteSendedAlarm(alarmId);
+                                                        String service = "showMysended";
+                                                        getMySendedAlarm(service);
+                                                        if (alarmBeanList.size()==0){
+                                                            warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
+                                                        }
+                                                        historyWarnAdapter.notifyDataSetChanged();
+                                                    }
+                                                    Toast.makeText(getContext(),"取消成功啦~", Toast.LENGTH_LONG).show();
+                                                }
+                                                if (PK[which].equals("关闭")) {
+
+                                                }
+                                            }
+                                        }).show();
+                        return true;
+                    }
+                });
                 myDialog.setCancelable(true);
                 myDialog.show();
             }
+
         });
 
-        mListView = view.findViewById(R.id.list);
-        normalWarnData();
-        adapter = new SlideAdapter();
-        mListView.setAdapter(adapter);
-        mListView.setOnItemLongClickListener(this);
+        getMyNormalAlarm();
+        longClickItem();
         return view;
     }
-
-    public void sendNewAlarm(String[] receiver,String[] hour,String[] minute,String senderId,String content){
+    public void sendNewAlarm(String[] receiver,String[] hour,String[] minute,String sendPersonId,String content){
         //准备数据
         AlarmBean alarmBean = new AlarmBean();
         String time = hour[0]+":"+minute[0];
         alarmBean.setReceivePersonId(receiver[0]);
-        alarmBean.setSendPersonId(senderId);
+        alarmBean.setSendPersonId(sendPersonId);
         alarmBean.setAlarmTime(time);
         alarmBean.setContent(content);
         Gson gson = new Gson();
@@ -237,6 +302,15 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
                             @Override
                             public void run() {
                                 Toast.makeText(getActivity(),data,Toast.LENGTH_SHORT).show();
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("hour"+mySendSize,hour[0]);
+                                editor.putString("minute"+mySendSize,minute[0]);
+                                editor.putString("receiveperson"+mySendSize,receiver[0]);
+                                editor.putString("sendperson"+mySendSize,sendPersonId);
+                                editor.putString("content"+mySendSize,content);
+                                mySendSize++;
+                                editor.commit();
                             }
                         });
                     }else {
@@ -255,37 +329,174 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
             }
         }.start();
     }
-    public void historyWarnData(){
-//        alarmBeanList = new ArrayList<>();
-//        AlarmBean alarmBean = new AlarmBean();
-//        alarmBean.setContent("鸡哥哥，记得按时吃屎！！！");
-//        alarmBean.setAlarmTime("07:08");
-//        alarmBean.setSendPerson("靳爹爹");
-//        alarmBean.setReceivePerson("鸡哥哥");
-//        alarmBeanList.add(alarmBean);
-//        AlarmBean alarmBean1 = new AlarmBean();
-//        alarmBean1.setContent("鸡哥哥，记得按时吃屎！！！");
-//        alarmBean1.setAlarmTime("07:08");
-//        alarmBean1.setSendPerson("靳爹爹");
-//        alarmBean1.setReceivePerson("鸡哥哥");
-//        alarmBeanList.add(alarmBean1);
-//        AlarmBean alarmBean13 = new AlarmBean();
-//        alarmBean13.setContent("鸡哥哥，记得按时吃屎！！！");
-//        alarmBean13.setAlarmTime("07:08");
-//        alarmBean13.setSendPerson("靳爹爹");
-//        alarmBean13.setReceivePerson("鸡哥哥");
-//        alarmBeanList.add(alarmBean13);
-    }
-    public void normalWarnData(){
-        for (int i = 0; i < 20; i++) {
-            MessageItem item = new MessageItem();
-            if (i % 3 == 0) {
-                item.msg = "青岛爆炸满月：大量鱼虾死亡"+i;
-            } else {
-                item.msg = "欢迎你使用微信"+i;
+    public void getMySendedAlarm(String service){
+        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        final String data = phone;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/"+service);
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                String json = data;
+                                //得到集合对应的具体类型
+                                Type type = new TypeToken<List<AlarmBean>>(){}.getType();
+                                List<AlarmBean> alarm = gson.fromJson(json,type);
+                                mySendSize = alarm.size();
+                                for (int i=0;i<mySendSize;i++){
+                                    int alarmId = alarm.get(i).getAlarmId();
+                                    String time = alarm.get(i).getAlarmTime();
+                                    String content = alarm.get(i).getContent();
+                                    String receivePerson = alarm.get(i).getReceivePersonId();
+                                    String[] timer = time.split(":");
+                                    int clocktype = alarm.get(i).getClocktype();
+                                    editor.putInt("alarmId"+i,alarmId);
+                                    editor.putString("hour"+i,timer[0]);
+                                    editor.putString("minute"+i,timer[1]);
+                                    editor.putString("content"+i,content);
+                                    editor.putString("receiveperson"+i,receivePerson);
+                                    editor.putString("sendperson"+i,phone);
+                                    editor.putInt("clocktype"+i, clocktype);
+                                    editor.commit();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        }.start();
+    }
+    public void historyWarnData(TextView warnInfo){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
+        alarmBeanList = new ArrayList<>();
+        alarmBeanList.clear();
+        for(int i=0;i< mySendSize;i++){
+            AlarmBean alarmBean = new AlarmBean();
+            String hour = sharedPreferences.getString("hour"+i,"");
+            String minute = sharedPreferences.getString("minute"+i,"");
+            alarmBean.setAlarmId(sharedPreferences.getInt("alarmId"+i,0));
+            alarmBean.setAlarmTime(hour+":"+minute);
+            alarmBean.setReceivePersonId(sharedPreferences.getString("receiveperson"+i,""));
+            alarmBean.setSendPersonId(sharedPreferences.getString("sendperson"+i,""));
+            alarmBean.setContent(sharedPreferences.getString("content"+i,""));
+            alarmBeanList.add(alarmBean);
+        }
+        if (alarmBeanList.size()==0){
+            warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
+        }
+    }
+    public void deleteSendedAlarm(int alarmId){
+        final String data = alarmId+"";
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/delAlarm");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.clear();
+                                editor.commit();
+                                Log.e("删除成功","!!!");
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void setMyNormalAlarm(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("normalalarm",MODE_PRIVATE);
+        if(normalSize==0){
+            info.setText("你还没有添加常用闹钟哦~");
+        }
+        for (int i = 0; i < normalSize; i++) {
+            String content = sharedPreferences.getString("content"+i,"");
+            MessageItem item = new MessageItem();
+            item.msg = content;
             mMessageItems.add(item);
         }
+    }
+    public void getMyNormalAlarm(){
+        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        final String data = phone;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/ReadNormalAlarmService");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("normalalarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                String json = data;
+                                //得到集合对应的具体类型
+                                Type type = new TypeToken<List<String>>(){}.getType();
+                                List<String> myAlarm = gson.fromJson(json,type);
+                                normalSize = myAlarm.size();
+                                if(normalSize==0){
+                                }else {
+                                    for (int i = 0; i < myAlarm.size(); i++) {
+                                        editor.putString("content" + i, myAlarm.get(i));
+                                        editor.commit();
+                                    }
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("我彻底彻底彻底","彻底服了Handler了！草！");
+                                    Message msg = new Message();
+                                    msg.setData(bundle);
+                                    msg.what=0;
+                                    myhandler.sendMessage(msg);
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     public void hourData(){
         //设置小时为5:00-22:00
@@ -410,76 +621,80 @@ public class WarnFragment extends Fragment implements AdapterView.OnItemLongClic
             deleteHolder = (ViewGroup)view.findViewById(R.id.holder);
         }
     }
+    public void longClickItem(){
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                view = getLayoutInflater().inflate(R.layout.dialog_send_new_warn, null);
+                MessageItem item = mMessageItems.get(position);
+                Log.e("ss",item.msg);
+                EditText sendNewWarnMsg = view.findViewById(R.id.send_new_warn_text);
+                sendNewWarnMsg.setText(item.msg);
+                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
 
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        view = getLayoutInflater().inflate(R.layout.dialog_send_new_warn, null);
-        MessageItem item = mMessageItems.get(position);
-        Log.e("ss",item.msg);
-        EditText sendNewWarnMsg = view.findViewById(R.id.send_new_warn_text);
-        sendNewWarnMsg.setText(item.msg);
-        myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
+                Button cancle = (Button)view.findViewById(R.id.new_normal_warn_cancle);
+                Button ok = (Button)view.findViewById(R.id.new_normal_warn_ok);
+                final Spinner sPeople = (Spinner)view.findViewById(R.id.spinner_people);
+                final Spinner sHour = (Spinner)view.findViewById(R.id.spinner_hour);
+                final Spinner sMinute = (Spinner)view.findViewById(R.id.spinner_minute);
+                peopleData();
+                hourData();
+                minuteData();
+                sPeople.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("sPeople",sPeople.getSelectedItem()+"");
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+                sHour.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("sPeople",sHour.getSelectedItem()+"");
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+                sMinute.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("sPeople",sMinute.getSelectedItem()+"");
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
 
-        Button cancle = (Button)view.findViewById(R.id.new_normal_warn_cancle);
-        Button ok = (Button)view.findViewById(R.id.new_normal_warn_ok);
-        final Spinner sPeople = (Spinner)view.findViewById(R.id.spinner_people);
-        final Spinner sHour = (Spinner)view.findViewById(R.id.spinner_hour);
-        final Spinner sMinute = (Spinner)view.findViewById(R.id.spinner_minute);
-        peopleData();
-        hourData();
-        minuteData();
-        sPeople.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("sPeople",sPeople.getSelectedItem()+"");
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        sHour.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("sPeople",sHour.getSelectedItem()+"");
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        sMinute.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("sPeople",sMinute.getSelectedItem()+"");
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+                ArrayAdapter adapterPeople = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,peopleList);
+                sPeople.setAdapter(adapterPeople);
+                ArrayAdapter adapterHour = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,hourList);
+                sHour.setAdapter(adapterHour);
+                ArrayAdapter adapterMinute = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,minuteList);
+                sMinute.setAdapter(adapterMinute);
 
-        ArrayAdapter adapterPeople = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,peopleList);
-        sPeople.setAdapter(adapterPeople);
-        ArrayAdapter adapterHour = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,hourList);
-        sHour.setAdapter(adapterHour);
-        ArrayAdapter adapterMinute = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,minuteList);
-        sMinute.setAdapter(adapterMinute);
-
-        final EditText editText = (EditText)view.findViewById(R.id.send_new_warn_text);
-        cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
+                final EditText editText = (EditText)view.findViewById(R.id.send_new_warn_text);
+                cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //存入数据库放入常用列表
+                        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.setCancelable(true);
+                myDialog.show();
+                return true;
             }
         });
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //存入数据库放入常用列表
-                Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
-            }
-        });
-        myDialog.setCancelable(true);
-        myDialog.show();
-        return true;
     }
 
     @Override

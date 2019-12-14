@@ -36,12 +36,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.children.ChildrenMain;
 import h.jpc.vhome.parents.TrackUtil.BitmapUtil;
@@ -74,7 +76,8 @@ public class LocationFragment extends Fragment {
         getLocation();//定位
         hideLogo();//隐藏百度logo
         zoomLevelOp();//设置比例尺
-        final String url = getResources().getString(R.string.trans_url) + "ServerForAndroid/SendIMEI";
+        String ip = (new MyApp()).getIp();
+        final String url = "http://"+ip+":8080/vhome/ServerForAndroid/SendIMEI";
 //            final Handler handler = new Handler(){
 //
 //                @Override
@@ -343,13 +346,15 @@ public class LocationFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return " ";
+        return " , ";
     }
 
     @Override
     public void onStop() {
         super.onStop();
         locationClient.stop();
+        select0.clear();
+        select1.clear();
     }
 
 
