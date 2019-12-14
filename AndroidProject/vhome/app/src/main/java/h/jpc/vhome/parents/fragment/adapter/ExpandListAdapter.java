@@ -1,7 +1,6 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,7 +89,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images"+commentBeanList.get(i).getHeadimg();
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .error(R.mipmap.errorImg1)
+                .error(R.mipmap.errorimg1)
                 .centerCrop()
                 .into(groupHolder.commentLogo);
         groupHolder.tv_name.setText(commentBeanList.get(i).getNickName());//设置用户昵称
