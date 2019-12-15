@@ -249,35 +249,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 lvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
-                        String content = alarmBeanList.get(arg2).getContent();
-                        new AlertDialog.Builder(getContext())
-                                .setTitle("是否取消发送？")
-                                .setItems(R.array.choose,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,
-                                                                int which) {
-                                                String[] PK = getResources()
-                                                        .getStringArray(
-                                                                R.array.choose);
-                                                if (PK[which].equals("取消发送")) {
-                                                    if (null!=alarmBeanList) {
-                                                        alarmBeanList.remove(arg2);
-                                                        Log.e("content",content+"");
-                                                        deleteSendedAlarm(content);
-                                                        historyWarnData(warnInfo);
-                                                        if (alarmBeanList.size()==0){
-                                                            warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
-                                                        }
-                                                        historyWarnAdapter.notifyDataSetChanged();
-                                                    }
-                                                    Toast.makeText(getContext(),"取消成功啦~", Toast.LENGTH_LONG).show();
-                                                }
-                                                if (PK[which].equals("关闭")) {
-                                                    String service = "showMysended";
-                                                    getMySendedAlarm(service);
-                                                }
-                                            }
-                                        }).show();
+
                         return true;
                     }
                 });
