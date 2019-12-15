@@ -42,25 +42,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Button>
     </LinearLayout>
-    <TextView
-        android:layout_above="@id/list"
-        android:layout_below="@id/buttonLl"
-        android:layout_marginTop="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:id="@+id/info"
-        ></TextView>
-    <h.jpc.vhome.children.fragment.slideadapter.ListViewCompat
-        android:id="@+id/list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
         android:layout_below="@id/buttonLl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="#dddbdb"
-        android:dividerHeight="1.0px"
-        android:drawSelectorOnTop="false"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none" />
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <h.jpc.vhome.children.fragment.slideadapter.ListViewCompat
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="20dp"
+        android:textColor="#000000"
+        android:textSize="16sp"/>
 </RelativeLayout>

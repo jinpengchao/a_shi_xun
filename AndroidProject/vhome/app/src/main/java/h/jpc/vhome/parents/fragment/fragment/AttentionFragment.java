@@ -322,6 +322,7 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
     }
 
     private void getdata() {
+
         loadNum = 0;
         list.clear();
         loadList.clear();

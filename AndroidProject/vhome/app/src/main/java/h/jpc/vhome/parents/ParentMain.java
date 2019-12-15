@@ -1,9 +1,14 @@
 package h.jpc.vhome.parents;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTabHost;
+import androidx.viewpager.widget.ViewPager;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.chat.activity.BaseActivity;
 import h.jpc.vhome.chat.activity.fragment.ConversationListFragment;
 import h.jpc.vhome.parents.Receiver.TrackReceiver;
 import h.jpc.vhome.parents.TrackUtil.BitmapUtil;
@@ -84,10 +89,21 @@ import java.util.TimerTask;
 import static h.jpc.vhome.parents.HttpLinked.connection;
 
 public class ParentMain extends AppCompatActivity implements SensorEventListener {
-    private Map<String,ImageView> imageViewMap = new HashMap<>();
-    private Map<String,TextView> textViewMap = new HashMap<>();
-    private SharedPreferences sp2;
     private SDKReceiver mReceiver;
+    private LayoutInflater layoutInflater;
+    private ViewPager viewPager;
+    private Fragment[] fragments;
+    private FragmentTabHost fragmentTabHost;
+    private Class[] tabFragmentArray = {HomeFragment.class, CommunityFragment.class,
+            ConversationListFragment.class,MyselfFragment.class};
+
+    private String[] tabStringArray = {"首页","社区","子女","我的"};
+    private int[] tabImageNoramlArray = {
+            R.mipmap.home,R.mipmap.comment,
+            R.mipmap.child,R.mipmap.me};
+    private int[] tabImageSelectedArray = {
+            R.mipmap.home1,R.mipmap.comment1,
+            R.mipmap.child1,R.mipmap.me1};
 
     //定时器
     private Timer timer;
@@ -217,120 +233,147 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
             }
         }
     }
-    //    //后台运行
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            moveTaskToBack(false);
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
     public void setTabHost(){
+        viewPager = (ViewPager) findViewById(R.id.act_main_view_pager);
         //获取FragmentTabHost对象
-        FragmentTabHost fragmentTabHost = findViewById(android.R.id.tabhost);
+        fragmentTabHost = (FragmentTabHost) findViewById(R.id.act_main_tab_host);//安卓自定义的tabhost！！
+        layoutInflater = LayoutInflater.from(this);
         //初始化参数
-        fragmentTabHost.setup(this,
-                getSupportFragmentManager(),
-                android.R.id.tabcontent
-        );
-        //tab1
-        TabHost.TabSpec tabSpec1 = fragmentTabHost
-                .newTabSpec("tag1")
-                .setIndicator(getTabSpaceView("tag1",R.mipmap.home,"首页"));
-        fragmentTabHost.addTab(tabSpec1,
-                HomeFragment.class,
-                null
-        );
-        //tab2
-        TabHost.TabSpec tabSpec2 = fragmentTabHost
-                .newTabSpec("tag2")
-                .setIndicator(getTabSpaceView("tag2",R.mipmap.comment,"社区"));
-        fragmentTabHost.addTab(tabSpec2,
-                CommunityFragment.class,
-                null
-        );
-        //tab3
-        TabHost.TabSpec tabSpec3 = fragmentTabHost
-                .newTabSpec("tag3")
-                .setIndicator(getTabSpaceView("tag3",R.mipmap.child,"子女"));
-        fragmentTabHost.addTab(tabSpec3,
-                ConversationListFragment.class,
-                null
-        );
-        //tab4
-        TabHost.TabSpec tabSpec4 = fragmentTabHost
-                .newTabSpec("tag4")
-                .setIndicator(getTabSpaceView("tag4",R.mipmap.me,"我"));
-        fragmentTabHost.addTab(tabSpec4,
-                MyselfFragment.class,
-                null
-        );
-        fragmentTabHost.setCurrentTab(0);
-        imageViewMap.get("tag1").setImageResource(R.mipmap.home1);
-        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
-        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
+        fragmentTabHost.setup(this,getSupportFragmentManager(),R.id.act_main_view_pager);
+        int count = tabStringArray.length;
+        for(int i = 0;i < count;i++){
+            TabHost.TabSpec tabSpec ;
+            if(i == 0){
+                //生成一个tab标签，i=0是默认选中的
+                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageSelectedArray[i], tabStringArray[i]));
+            }else{
+                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageNoramlArray[i],tabStringArray[i]));
+
+            }
+            //去除分割线
+            fragmentTabHost.getTabWidget().setDividerDrawable(null);
+            //给tabspec添加fragment
+            fragmentTabHost.addTab(tabSpec,tabFragmentArray[i],null);
+            //给fragmentTabHost添加点击事件
+            fragmentTabHost.getTabWidget().getChildTabViewAt(i).setOnClickListener(new TabOnClickListener(fragmentTabHost,i));
+        }
+
+        /**
+         * 当点击Tab时，用ViewPager对fragment进行切换，否则fragment将会叠加
+         */
         fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                switch (tabId){
-                    case "tag1":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.home1);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        break;
-                    case "tag2":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment1);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.choseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        break;
-                    case "tag3":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.child1);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
-                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        break;
-                    case "tag4":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.home);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.comment);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.child);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.me1);
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.choseColor));
-                        break;
-                }
+                int position = fragmentTabHost.getCurrentTab();
+                viewPager.setCurrentItem(position);
             }
         });
+        /**
+         * 当点击Tab时，用ViewPager对fragment进行切换，否则fragment将会叠加
+         */
+        fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                int position = fragmentTabHost.getCurrentTab();
+                viewPager.setCurrentItem(position);
+            }
+        });
+
+        HomeFragment homeFragment = new HomeFragment();
+        CommunityFragment communityFragment = new CommunityFragment();
+        ConversationListFragment conversationListFragment = new ConversationListFragment();
+        MyselfFragment myselfFragment = new MyselfFragment();
+        fragments = new Fragment[]{homeFragment,communityFragment,conversationListFragment,myselfFragment};
+
+        fragmentTabHost.setCurrentTab(0);
+        viewPager.setOffscreenPageLimit(4);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        viewPager.setOnPageChangeListener(new ViewPagerListener());
     }
-    public View getTabSpaceView(String tag,  int imageResId,String title){
-        //加载布局文件
-        LayoutInflater layoutInflater1 = getLayoutInflater();
-        View view = layoutInflater1.inflate(R.layout.tab_space_parent,null);
-        ImageView imageView = view.findViewById(R.id.icon);//去tab_space去找id
+    /**
+     * FragmentTabHost的点击事件
+     */
+    class TabOnClickListener implements View.OnClickListener {
+
+        private FragmentTabHost fragmentTabHost;
+        private int index;
+
+        public TabOnClickListener(FragmentTabHost fragmentTabHost, int index) {
+            this.fragmentTabHost = fragmentTabHost;
+            this.index = index;
+        }
+
+        @Override
+        public void onClick(View v) {
+            for (int i = 0; i < fragmentTabHost.getTabWidget().getTabCount(); i++) {
+                View view = fragmentTabHost.getTabWidget().getChildAt(i);
+                ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+                if (i == index) {
+                    imageView.setImageResource(tabImageSelectedArray[i]);
+                } else {
+                    imageView.setImageResource(tabImageNoramlArray[i]);
+                }
+                fragmentTabHost.setCurrentTab(index);
+            }
+        }
+    }
+    /**
+     * ViewPager适配器
+     * 继承自PagerAdapter，将页面信息持续的保存在fragment manager中，方便用户返回该页面
+     */
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        public ViewPagerAdapter(FragmentManager fragmentManager){
+            super(fragmentManager);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return fragments[position];
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.length;
+        }
+    }
+
+    /**
+     * ViewPager的监听事件
+     * 当前选择页面发生变化时的回调接口
+     */
+    class ViewPagerListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageSelected(int position) {
+            for (int i = 0; i < fragmentTabHost.getTabWidget().getTabCount(); i++) {
+                View view = fragmentTabHost.getTabWidget().getChildAt(i);
+                ImageView image = (ImageView) view.findViewById(R.id.icon);
+                TextView text = (TextView) view.findViewById(R.id.tv_title);
+                if (i == position) {
+                    image.setImageResource(tabImageSelectedArray[i]);
+                    text.setText(tabStringArray[i]);
+                } else {
+                    image.setImageResource(tabImageNoramlArray[i]);
+                }
+            }
+            fragmentTabHost.setCurrentTab(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+    }
+    public View getTabItemView(int imageResId,String stringResId){
+        View view = layoutInflater.inflate(R.layout.tab_space_parent,null);
+        ImageView imageView = (ImageView)view.findViewById(R.id.icon);
+        TextView text = (TextView)view.findViewById(R.id.tv_title);
         imageView.setImageResource(imageResId);
-        //Text对象
-        TextView textView = view.findViewById(R.id.tv_title);
-        textView.setText(title);
-        imageViewMap.put(tag,imageView);
-        textViewMap.put(tag,textView);
+        text.setText(stringResId);
         return view;
     }
     /**

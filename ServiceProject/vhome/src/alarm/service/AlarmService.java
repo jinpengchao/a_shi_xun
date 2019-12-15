@@ -32,10 +32,15 @@ public class AlarmService {
 		return alarmDao.mySendedAlarm(phone);
 	}
 	//删除我发送的闹钟
-	public void deleteSendedAlarm(int alarmId) {
+	public void deleteSendedAlarm(String content ) {
 		AlarmDao alarmDao = new AlarmDao();
-		alarmDao.removeSendedAlarm(alarmId);
+		alarmDao.removeSendedAlarm(content);
 	}
+	//删除我发送的闹钟
+		public void deleteNormalAlarm(String content ) {
+			AlarmDao alarmDao = new AlarmDao();
+			alarmDao.removeNormalAlarm(content);
+		}
 	//修改闹钟信息
 	public void updateAlarmInfo(int alarmId,String time,String content,int clocktype) {
 		AlarmDao alarmDao = new AlarmDao();

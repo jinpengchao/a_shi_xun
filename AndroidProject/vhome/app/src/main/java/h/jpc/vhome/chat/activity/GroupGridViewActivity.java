@@ -84,7 +84,7 @@ public class GroupGridViewActivity extends BaseActivity {
                 Intent intent = new Intent();
                 if (position < mCurrentNum) {
                     if (mMemberInfoList.get(position).getUserName().equals(userName)) {
-                        intent.setClass(GroupGridViewActivity.this, PersonalActivity.class);
+//                        intent.setClass(GroupGridViewActivity.this, PersonalActivity.class);
                     } else {
                         UserInfo userInfo = mMemberInfoList.get(position);
                         if (userInfo.isFriend()) {

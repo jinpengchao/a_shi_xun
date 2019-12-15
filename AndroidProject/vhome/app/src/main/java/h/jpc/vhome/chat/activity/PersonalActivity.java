@@ -45,6 +45,7 @@ import h.jpc.vhome.chat.utils.citychoose.view.SelectAddressDialog;
 import h.jpc.vhome.chat.utils.citychoose.view.myinterface.SelectAddressInterface;
 import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
 import h.jpc.vhome.chat.utils.photochoose.PhotoUtils;
+import h.jpc.vhome.parents.fragment.MyselfFragment;
 import h.jpc.vhome.user.entity.EventBean;
 import h.jpc.vhome.util.ConnectionUtil;
 
@@ -108,7 +109,7 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
         if (mMyInfo != null) {
             mTv_nickName.setText(mMyInfo.getNickname());
             SharePreferenceManager.setRegisterUsername(mMyInfo.getNickname());
-            mTv_userName.setText("用户名:" + mMyInfo.getUserName());
+            mTv_userName.setText("手机:" + mMyInfo.getUserName());
             mTv_sign.setText(mMyInfo.getSignature());
             UserInfo.Gender gender = mMyInfo.getGender();
             if (gender != null) {
@@ -285,6 +286,7 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                 if(type == 1){
 
                 }
+
             default:
                 break;
         }

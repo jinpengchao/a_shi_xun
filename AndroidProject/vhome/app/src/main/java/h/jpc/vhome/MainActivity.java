@@ -85,14 +85,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             int type = sp.getInt("type", 0);
             isLogin(p, pwd, type);
         }
-//        togglePwd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent();
-//                i.setClass(MainActivity.this,ParentMain.class);
-//                startActivity(i);
-//            }
-//        });
+        togglePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(MainActivity.this,ParentMain.class);
+                startActivity(i);
+            }
+        });
         togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

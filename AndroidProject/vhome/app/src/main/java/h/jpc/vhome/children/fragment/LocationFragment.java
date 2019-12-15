@@ -3,6 +3,8 @@ package h.jpc.vhome.children.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,8 @@ public class LocationFragment extends Fragment {
     private Spinner moth;
     private MapView mapView;
     private BaiduMap bdMap;
-    private SharedPreferences sp;//存储entity_name
+    private SharedPreferences sp;//获取entity_name
+    private SharedPreferences share;//获取登录人手机号
     private LocationClient locationClient;
     private LocationClientOption locationClientOption;
     private List<String> select0 = new ArrayList<>();//spinner所用数组0
@@ -71,56 +73,57 @@ public class LocationFragment extends Fragment {
         SDKInitializer.initialize(getApplicationContext());
         view = inflater.inflate(R.layout.fragment_children_location,null);
         sp = getActivity().getSharedPreferences("myEntities",MODE_PRIVATE);
-        init();
+        share = getActivity().getSharedPreferences("user",MODE_PRIVATE);
         BitmapUtil.init();
+        initView();
         getLocation();//定位
         hideLogo();//隐藏百度logo
         zoomLevelOp();//设置比例尺
         String ip = (new MyApp()).getIp();
-        final String url = "http://"+ip+":8080/vhome/ServerForAndroid/SendIMEI";
-//            final Handler handler = new Handler(){
-//
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    super.handleMessage(msg);
-//                    if(msg.getData()!=null){
-//                        Bundle get = msg.getData();
-//                        String[] params=  get.getString("pars").split(",");
-//                        String faEntity = params[0];
-//                        Log.e("entity",faEntity);
-//                        String moEntity = params[1];
-//                        if(faEntity.equals(" ")&&moEntity.equals(" ")) {
-//                              Toast.makeText(MainActivity.this,"您的父母还未注册",Toast.LENGTH_SHORT).show();
-////                          }
-        setMessage("myTrace"," myTrace");
-//
-//                    }
-//                }
-//            };
-//            new Thread(){
-//                @Override
-//                public void run() {
-//                    super.run();
-//                    String pars= getMapParams("120",url);
-//                        Message message = new Message();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("pars", pars);
-//                        message.setData(bundle);
-//                        handler.sendMessage(message);
-//                }
-//            }.start();
+        final String url = "http://"+ip+":8080/vhome/SendIMEI";
+        Log.e("url",url);
+            final Handler handler = new Handler(){
+
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    if(msg.getData()!=null){
+                        Bundle get = msg.getData();
+                        String[] params=  get.getString("pars").split("/n");
+                        String faEntity=params[0];
+                        String moEntity= params[1];
+                        Log.e("entity",faEntity);
+                        if(faEntity.equals("nasp")&&moEntity.equals("nasp")) {
+                              Toast.makeText(getApplicationContext(),"您的父母还未注册",Toast.LENGTH_SHORT).show();
+                        }
+                        setMessage(faEntity,moEntity);
+
+                    }
+                }
+            };
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    String phone = share.getString("phone","");
+                    String pars= getMapParams(phone,url);
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("pars", pars);
+                        message.setData(bundle);
+                        handler.sendMessage(message);
+                }
+            }.start();
         return view;
     }
 
     private void init() {
-        initView();
-        bdMap.setMyLocationEnabled(true);
         select0.add("查看父亲");
-        select0.add("查看父亲当前轨迹");
-        select0.add("查看父亲历史轨迹");
+        select0.add("父亲当前轨迹");
+        select0.add("父亲历史轨迹");
         select1.add("查看母亲");
-        select1.add("查看母亲当前轨迹");
-        select1.add("查看母亲历史轨迹");
+        select1.add("母亲当前轨迹");
+        select1.add("母亲历史轨迹");
         setSpinner();
     }
 
@@ -129,6 +132,7 @@ public class LocationFragment extends Fragment {
         moth = view.findViewById(R.id.bt_moth);
         mapView = view.findViewById(R.id.loc_map);
         bdMap = mapView.getMap();
+        bdMap.setMyLocationEnabled(true);
     }
 
     private void setMessage(String faEntity,String moEntity) {
@@ -141,9 +145,12 @@ public class LocationFragment extends Fragment {
     public  void setSpinner() {
         final ArrayAdapter adapter0 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, select0);
         final ArrayAdapter adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, select1);
-        adapter0.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter0.setDropDownViewResource(R.layout.item_drop);
+        adapter1.setDropDownViewResource(R.layout.item_drop);
         fath.setAdapter(adapter0);
         moth.setAdapter(adapter1);
+        fath.setSelection(0, true);
+        moth.setSelection(0, true);
         fath.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,31 +159,28 @@ public class LocationFragment extends Fragment {
                 String faEntity = sp.getString("faEntity", " ");
                 switch (position) {
                     case 0:
-                        adapter0.getItem(0).toString();
                         break;
                     case 1:
-                        adapter0.getItem(1).toString();
-                        if (faEntity.equals(" ")) {
+                        if (faEntity.equals("nasp")) {
                             Toast.makeText(getApplicationContext(),
                                     "您还未关联您父亲的手机号",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         } else {
                             Log.e("点击", "跳转");
-                            intent.setClass(getActivity(), TracingActivity.class);
+                            intent.setClass(getApplicationContext(), TracingActivity.class);
                             startActivity(intent);
                         }
                         break;
                     case 2:
-                        adapter0.getItem(2).toString();
-                        if (faEntity.equals(" ")) {
+                        if (faEntity.equals("nasp")) {
                             Toast.makeText(getApplicationContext(),
                                     "您还未关联您父亲的手机号",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         } else {
                             Log.e("点击", "跳转");
-                            intent.setClass(getActivity(), TrackQueryActivity.class);
+                            intent.setClass(getApplicationContext(), TrackQueryActivity.class);
                             startActivity(intent);
                         }
                         break;
@@ -199,28 +203,26 @@ public class LocationFragment extends Fragment {
                         adapter1.getItem(0).toString();
                         break;
                     case 1:
-                        adapter1.getItem(1).toString();
-                        if (moEntity.equals(" ")) {
+                        if (moEntity.equals("nasp")) {
                             Toast.makeText(getApplicationContext(),
                                     "您还未关联您母亲的手机号",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         } else {
                             Log.e("点击", "跳转");
-                            intent.setClass(getActivity(), TracingActivity.class);
+                            intent.setClass(getApplicationContext(), TracingActivity.class);
                             startActivity(intent);
                         }
                         break;
                     case 2:
-                        adapter1.getItem(2).toString();
-                        if (moEntity.equals(" ")) {
+                        if (moEntity.equals("nasp")) {
                             Toast.makeText(getApplicationContext(),
                                     "您还未关联您母亲的手机号",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         } else {
                             Log.e("点击", "跳转");
-                            intent.setClass(getActivity(), TrackQueryActivity.class);
+                            intent.setClass(getApplicationContext(), TrackQueryActivity.class);
                             startActivity(intent);
                         }
                         break;
@@ -284,10 +286,7 @@ public class LocationFragment extends Fragment {
                         String addr = bdLocation.getAddrStr();
                         //获取经纬度
                         double lat = bdLocation.getLatitude();
-                        Log.e("经度",lat+"");
                         double lng = bdLocation.getLongitude();
-                        int tag = bdLocation.getLocType();
-                        Log.e("定位代码",tag+"");
                         //将定位数据显示在地图上
                         showLocOnMap(lat, lng);
                     }
@@ -329,24 +328,26 @@ public class LocationFragment extends Fragment {
         HttpURLConnection con = connection(url,"?phone="+phone);
         BufferedWriter checkTo = null;
         BufferedReader checkFrom = null;
-        String entity="";
+        String buffer;
+        StringBuffer entity= new StringBuffer();
         //建立流
         try {
             //获取输入输出流建立连接
             checkTo = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
             checkFrom = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            while(checkFrom.readLine()!=null){
-                entity+=checkFrom.readLine()+",";
+            while((buffer = checkFrom.readLine())!=null){
+                entity.append(buffer);
             }
+            Log.e("参数",entity.toString());
             checkTo.close();
             checkFrom.close();
-            return entity;
+            return entity.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return " , ";
+        return "null/nnull";
     }
 
     @Override
@@ -364,6 +365,7 @@ public class LocationFragment extends Fragment {
         if(!locationClient.isStarted()){
             locationClient.start();
         }
+        init();
     }
 
     @Override

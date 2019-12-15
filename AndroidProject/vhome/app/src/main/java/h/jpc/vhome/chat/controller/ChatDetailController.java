@@ -45,7 +45,6 @@ import h.jpc.vhome.chat.activity.GroupMemberListActivity;
 import h.jpc.vhome.chat.activity.GroupNotFriendActivity;
 import h.jpc.vhome.chat.activity.GroupUserInfoActivity;
 import h.jpc.vhome.chat.activity.MembersInChatActivity;
-import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.chat.activity.SilenceUsersActivity;
 import h.jpc.vhome.chat.activity.VerificationActivity;
 import h.jpc.vhome.chat.adapter.GroupMemberGridAdapter;
@@ -504,7 +503,6 @@ public class ChatDetailController implements OnClickListener, OnItemClickListene
             // 点击群成员项时
             if (position < mCurrentNum) {
                 if (mMemberInfoList.get(position).getUserName().equals(mMyUsername)) {
-                    intent.setClass(mContext, PersonalActivity.class);
                 } else {
                     UserInfo userInfo = mMemberInfoList.get(position);
                     intent.setClass(mContext, GroupUserInfoActivity.class);

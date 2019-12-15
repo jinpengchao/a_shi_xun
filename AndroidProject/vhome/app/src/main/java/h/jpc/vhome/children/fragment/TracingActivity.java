@@ -34,7 +34,7 @@ import h.jpc.vhome.parents.TrackUtil.ViewUtil;
 /**
  * 轨迹追踪
  */
-public class TracingActivity extends BaseActivity{
+public class TracingActivity extends myBaseActivity{
 
     private MyApp trackApp = null;
 
@@ -70,8 +70,8 @@ public class TracingActivity extends BaseActivity{
         powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
-        mapUtil.init((MapView) findViewById(R.id.tracing_mapView));
-        mapUtil.setCenter(0);
+        mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));
+        mapUtil.setCenter(mCurrentDirection);
         trackPoints = new ArrayList<>();
         initListener();
         //循环每隔30秒读取一次轨迹
@@ -145,6 +145,21 @@ public class TracingActivity extends BaseActivity{
             requestPermissions(permissions.toArray(new String[permissions.size()]), 0);
         }
 
+        // 在Android 6.0及以上系统，若定制手机使用到doze模式，请求将应用添加到白名单。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String packageName = trackApp.getPackageName();
+            boolean isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName);
+            if (!isIgnoring) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+                try {
+                    startActivity(intent);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
     }
 
     private boolean isNeedRequestPermissions(List<String> permissions) {
@@ -168,21 +183,6 @@ public class TracingActivity extends BaseActivity{
     protected void onResume() {
         super.onResume();
         mapUtil.onResume();
-
-        // 在Android 6.0及以上系统，若定制手机使用到doze模式，请求将应用添加到白名单。
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String packageName = trackApp.getPackageName();
-            boolean isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName);
-            if (!isIgnoring) {
-                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setData(Uri.parse("package:" + packageName));
-                try {
-                    startActivity(intent);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override

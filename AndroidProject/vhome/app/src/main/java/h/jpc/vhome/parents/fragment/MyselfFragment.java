@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -26,9 +27,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+=======
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+>>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -52,6 +60,10 @@ import h.jpc.vhome.parents.fragment.myself.MyPostActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -62,7 +74,7 @@ public class MyselfFragment extends BaseFragment {
     public static TextView nikeName;
     private TextView ids;
     public static TextView areas;
-    public static ImageView sexs;
+    private ImageView sexs;
     private SharedPreferences sp2;
     private RelativeLayout myRelation;
     private RelativeLayout mySetting;
@@ -76,10 +88,26 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout tvMyCollect;
     private RelativeLayout tvMyNews;
     public static String header_phone;
+    private OkHttpClient okHttpClient;
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    initData();
+                    initMyselfInfo();
+                    Log.e("handler","Handler");
+//                    SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+//                    String imgName = sp.getString("headImg","");
+//                    Glide.with(getActivity()).load("http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName).placeholder(R.mipmap.sss).into(header);
+            }
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
+<<<<<<< HEAD
 
         getViews(view);
 
@@ -104,6 +132,10 @@ public class MyselfFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+=======
+        okHttpClient = new OkHttpClient();
+        asyncDownOp();
+>>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
         blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
         header = (ImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
@@ -147,6 +179,7 @@ public class MyselfFragment extends BaseFragment {
             }
         });
 
+<<<<<<< HEAD
         initMyselfInfo();
         initData();
 
@@ -249,6 +282,20 @@ public class MyselfFragment extends BaseFragment {
     /**
      * 初始化数据
      */
+=======
+        return view;
+    }
+    public void asyncDownOp() {
+        new Thread(){
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                msg.what = 1;
+                handler.sendMessage(msg);
+            }
+        }.start();
+    }
+>>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
     private void initData(){
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         header_phone = sp.getString("phone","");
@@ -266,24 +313,24 @@ public class MyselfFragment extends BaseFragment {
                 .into(header);
     }
     public void initMyselfInfo(){
-            Log.e("缓存的个人信息","old");
-            sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-            String id = sp2.getString("id","");
-            String nickName = sp2.getString("nickName","");
-            String sex = sp2.getString("sex","");
-            String area = sp2.getString("area","");
-            String achieve = sp2.getString("achieve","");
-            String personalWord = sp2.getString("personalWord","");
-            String headImg = sp2.getString("headImg","");
-            nikeName.setText(nickName);
-            ids.setText(id);
-            areas.setText(area);
-            if (sex.equals("female")){
-                sexs.setImageResource(R.mipmap.female);
-            }else if (sex.equals("male")){
-                sexs.setImageResource(R.mipmap.male);
-            }else
-                sexs.setImageResource(R.mipmap.unknown);
+        Log.e("缓存的个人信息","old");
+        sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+        String id = sp2.getString("id","");
+        String nickName = sp2.getString("nickName","");
+        String sex = sp2.getString("sex","");
+        String area = sp2.getString("area","");
+        String achieve = sp2.getString("achieve","");
+        String personalWord = sp2.getString("personalWord","");
+        String headImg = sp2.getString("headImg","");
+        nikeName.setText(nickName);
+        ids.setText(id);
+        areas.setText(area);
+        if (sex.equals("female")){
+            sexs.setImageResource(R.mipmap.female);
+        }else if (sex.equals("male")){
+            sexs.setImageResource(R.mipmap.male);
+        }else
+            sexs.setImageResource(R.mipmap.unknown);
     }
     public void cancelNotification() {
         NotificationManager manager = (NotificationManager) this.getActivity().getApplicationContext()
