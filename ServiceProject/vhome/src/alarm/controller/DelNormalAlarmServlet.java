@@ -1,6 +1,9 @@
-package user.controller;
+package alarm.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -9,19 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.service.GetInfo;
+import alarm.service.AlarmService;
 
 /**
- * Servlet implementation class SendParentIMEI
+ * Servlet implementation class DelNormalAlarmServlet
  */
-@WebServlet("/SendIMEI")
-public class SendTIMEIServlet extends HttpServlet {
+@WebServlet("/DelNormalAlarmServlet")
+public class DelNormalAlarmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendTIMEIServlet() {
+    public DelNormalAlarmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,35 +33,31 @@ public class SendTIMEIServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doPost(request,response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter writer = response.getWriter();
-		String phone = request.getParameter("phone");
-		System.out.println(phone);
-		GetInfo service = new GetInfo();
-		String[] imeis=null;
-		if(phone!=null&&(!phone.equals(" "))) {
-			imeis =  service.getInform(phone);
-			if(!imeis[0].equals(" ")) {
-			System.out.println(imeis[0].toString());
-			}else {
-				System.out.println("查询数据为空");
-			}
-			writer.write(imeis[0]+"/n"+imeis[1]);
-			writer.flush();
-			writer.close();
-		}else {
-			System.out.println("数据为空");
-		}
+		response.setContentType("text/text;charset=utf-8");
+		InputStream is = request.getInputStream();
+		PrintWriter out = response.getWriter();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
+		String data = br.readLine();
+	
+//		int phone = 
+//		
+//		AlarmService alarmService = new AlarmService();
+//		alarmService.deleteSendedAlarm(alarmId);
+		System.out.println("delAlarm--删除闹钟成功！");
+		out.write("删除成功!");
+		out.flush();
+		out.close();
+		br.close();
+		is.close();
 	}
 
 }

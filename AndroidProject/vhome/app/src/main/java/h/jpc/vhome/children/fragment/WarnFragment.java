@@ -249,7 +249,9 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 lvHistory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
+                        int alarmId = alarmBeanList.get(arg2).getAlarmId();
                         new AlertDialog.Builder(getContext())
+
                                 .setTitle("是否取消发送？")
                                 .setItems(R.array.choose,
                                         new DialogInterface.OnClickListener() {
@@ -261,7 +263,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                                                 if (PK[which].equals("取消发送")) {
                                                     if (null!=alarmBeanList) {
                                                         alarmBeanList.remove(arg2);
-                                                        int alarmId = alarmBeanList.get(arg2).getAlarmId();
+
                                                         Log.e("alarmId",alarmId+"");
                                                         deleteSendedAlarm(alarmId);
                                                         String service = "showMysended";
@@ -689,7 +691,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 @Override
                 public void onClick(View v) {
                     mMessageItems.remove(position);
-                    String content = mMessageItems.get(position).msg;
+                    String content = mMessageItems.get(position-1).msg;
                     Log.e("content",content);
 //                    new Thread(new Runnable() {
 //                        @Override

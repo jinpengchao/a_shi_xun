@@ -1,11 +1,12 @@
-package transport.dao;
+package user.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import util.DBManage;
+import dbutil.DBUtil;
+
 
 public class GetMoreDao {
 	private Statement stmt;
@@ -17,9 +18,10 @@ public class GetMoreDao {
 	private String sex;
 	private String imei;
 	private String[] all= {" "," "};
+	DBUtil util = DBUtil.getInstance();
 	public String[] getMore(String phone) {
 		try {
-			Connection conn = DBManage.getInstance().getConnection();
+			Connection conn = util.getConnection();
 			stmt = conn.createStatement();
 			// 执行查询
 			rs0 = stmt.executeQuery("select id from tbl_child_userinfo where phone ='"+phone+"'");

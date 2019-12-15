@@ -1,6 +1,6 @@
-package transport.service;
+package user.service;
 
-import transport.dao.GetMoreDao;
+import user.dao.GetMoreDao;
 
 public class GetInfo {
 	private String[] info;
