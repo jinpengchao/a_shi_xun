@@ -26,19 +26,30 @@
             android:id="@+id/bt_fath"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="查看父亲"/>
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            android:popupBackground="@color/color_grey_eaeaea"
+            android:text="查看父亲"
+            android:textAlignment="center"
+            android:background="@color/color_b3b3b3"
+            android:dropDownSelector="@color/choseColor"/>
         <TextView
             android:layout_weight="0.1"
             android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/choseColor"/>
 
         <Spinner
             android:layout_weight="0.45"
             android:id="@+id/bt_moth"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="查看母亲"/>
+            android:textAlignment="center"
+            android:spinnerMode="dropdown"
+            android:dropDownSelector="@color/choseColor"
+            android:popupBackground="@color/color_grey_eaeaea"
+            android:text="查看母亲"
+            android:background="@color/color_b3b3b3"/>
     </LinearLayout>
 
 

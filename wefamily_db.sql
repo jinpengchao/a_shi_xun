@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-14 17:26:14
+Date: 2019-12-15 12:52:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -255,7 +255,7 @@ CREATE TABLE `tbl_parent_userinfo` (
   `nickName` varchar(20) DEFAULT NULL,
   `sex` varchar(10) DEFAULT NULL,
   `area` varchar(50) DEFAULT NULL,
-  `happy` int(11) DEFAULT NULL,
+  `imeiNumber` varchar(20) DEFAULT NULL,
   `achieve` int(11) DEFAULT NULL,
   `personalWord` varchar(50) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
@@ -277,7 +277,7 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('9866521', '109156', '哈哈', '', '',
 INSERT INTO `tbl_parent_userinfo` VALUES ('987654222438', '201977', '123123', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('99442205', '863018', '232.3', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('9963438', '231042', '靳朋朝', '', '安徽省-黄山市-黄山区', '0', '0', '', 'header1576025129320.jpg');
-INSERT INTO `tbl_parent_userinfo` VALUES ('99663438', '909874', '4381111安市', 'male', '北京市-北京市-昌平区', '0', '0', '', 'header99663438.jpg');
+INSERT INTO `tbl_parent_userinfo` VALUES ('99663438', '909874', '4381111安市', '男', '北京市-北京市-昌平区', '123', '0', '', 'header99663438.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('996663438', '254653', '996663438', '', '', '0', '0', '', '');
 
 -- ----------------------------
