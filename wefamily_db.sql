@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-14 17:26:14
+Date: 2019-12-15 21:32:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -78,11 +78,16 @@ CREATE TABLE `tbl_comment` (
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_comment
 -- ----------------------------
+INSERT INTO `tbl_comment` VALUES ('1', '67', '165196', '舒淇', 'header96548751.jpg', '傻', '2019-12-15 08:27:38');
+INSERT INTO `tbl_comment` VALUES ('3', '76', '165196', '舒淇', 'header96548751.jpg', '评论', '2019-12-15 09:15:46');
+INSERT INTO `tbl_comment` VALUES ('4', '76', '165196', '舒淇', 'header96548751.jpg', '嗨', '2019-12-15 09:37:22');
+INSERT INTO `tbl_comment` VALUES ('6', '77', '414223', '怪兽马克', '', '睡懒觉啊', '2019-12-15 13:29:31');
+INSERT INTO `tbl_comment` VALUES ('7', '77', '414223', '怪兽马克', '', '睡', '2019-12-15 13:29:38');
 
 -- ----------------------------
 -- Table structure for `tbl_connect`
@@ -106,22 +111,6 @@ INSERT INTO `tbl_connect` VALUES ('4', '56454', '242424000', '0');
 INSERT INTO `tbl_connect` VALUES ('5', '88888', '242424000', '0');
 
 -- ----------------------------
--- Table structure for `tbl_goodcomment`
--- ----------------------------
-DROP TABLE IF EXISTS `tbl_goodcomment`;
-CREATE TABLE `tbl_goodcomment` (
-  `commantId` int(30) NOT NULL,
-  `postId` int(30) NOT NULL,
-  `goodPersonId` varchar(30) DEFAULT NULL,
-  `time` datetime DEFAULT NULL,
-  PRIMARY KEY (`commantId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tbl_goodcomment
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `tbl_goodpost`
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodpost`;
@@ -132,7 +121,7 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_goodpost
@@ -153,6 +142,9 @@ INSERT INTO `tbl_goodpost` VALUES ('13', '66', '909874', '909874', '2019-12-13 1
 INSERT INTO `tbl_goodpost` VALUES ('14', '67', '249984', '909874', '2019-12-13 14:28:23');
 INSERT INTO `tbl_goodpost` VALUES ('15', '65', '249984', '909874', '2019-12-13 14:28:24');
 INSERT INTO `tbl_goodpost` VALUES ('16', '68', '909874', '249984', '2019-12-14 10:58:03');
+INSERT INTO `tbl_goodpost` VALUES ('17', '76', '165196', '165196', '2019-12-15 12:59:45');
+INSERT INTO `tbl_goodpost` VALUES ('18', '75', '414223', '165196', '2019-12-15 13:27:57');
+INSERT INTO `tbl_goodpost` VALUES ('19', '77', '414223', '414223', '2019-12-15 13:28:16');
 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
@@ -192,15 +184,16 @@ CREATE TABLE `tbl_myachievement` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_myattentions`;
 CREATE TABLE `tbl_myattentions` (
-  `num` int(11) NOT NULL AUTO_INCREMENT,
-  `attentionId` varchar(30) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attentionPersonId` varchar(30) NOT NULL,
   `personId` varchar(30) NOT NULL,
-  PRIMARY KEY (`num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_myattentions
 -- ----------------------------
+INSERT INTO `tbl_myattentions` VALUES ('3', '249984', '165196');
 
 -- ----------------------------
 -- Table structure for `tbl_mycollection`
@@ -212,7 +205,7 @@ CREATE TABLE `tbl_mycollection` (
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_mycollection
@@ -226,6 +219,9 @@ INSERT INTO `tbl_mycollection` VALUES ('90', '909874', '65', '2019-12-10 08:56:4
 INSERT INTO `tbl_mycollection` VALUES ('91', '909874', '54', '2019-12-12 17:25:16');
 INSERT INTO `tbl_mycollection` VALUES ('92', '909874', '58', '2019-12-12 17:25:17');
 INSERT INTO `tbl_mycollection` VALUES ('93', '909874', '67', '2019-12-13 19:48:24');
+INSERT INTO `tbl_mycollection` VALUES ('94', '165196', '68', '2019-12-15 04:32:08');
+INSERT INTO `tbl_mycollection` VALUES ('95', '165196', '75', '2019-12-15 12:59:23');
+INSERT INTO `tbl_mycollection` VALUES ('96', '414223', '76', '2019-12-15 13:27:55');
 
 -- ----------------------------
 -- Table structure for `tbl_news`
@@ -273,6 +269,7 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', 
 INSERT INTO `tbl_parent_userinfo` VALUES ('19198080', '796031', '阿斯顿', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('199906060', '249984', '阿达安市安市', 'female', '安徽省-阜阳市-阜南县', '0', '0', '', 'header199906060.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('43843866', '609387', '阿达啊', '', '', '0', '0', '', '');
+INSERT INTO `tbl_parent_userinfo` VALUES ('57852687', '414223', '怪兽马克', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('9866521', '109156', '哈哈', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('987654222438', '201977', '123123', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('99442205', '863018', '232.3', '', '', '0', '0', '', '');
@@ -293,7 +290,7 @@ CREATE TABLE `tbl_post` (
   `time` datetime DEFAULT NULL,
   `imgs` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -313,6 +310,9 @@ INSERT INTO `tbl_post` VALUES ('65', '驱蚊器', '', '？？？？？？？？�
 INSERT INTO `tbl_post` VALUES ('66', '20205555', 'header1575981189195.jpg', '？？？？？？？', '909874', '2019-12-10 20:33:45', '[]');
 INSERT INTO `tbl_post` VALUES ('67', '438', 'header99663438.jpg', '草你妈的', '909874', '2019-12-12 17:25:39', '[\"temp_photo1576142734885.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('68', '阿达安市安市', 'header199906060.jpg', '？？？？？嘤嘤嘤', '249984', '2019-12-13 19:51:35', '[\"temp_photo1576237890074.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('75', '舒淇', 'header96548751.jpg', '我的', '165196', '2019-12-15 09:15:01', '[]');
+INSERT INTO `tbl_post` VALUES ('76', '舒淇', 'header96548751.jpg', '尅', '165196', '2019-12-15 09:15:18', '[]');
+INSERT INTO `tbl_post` VALUES ('77', '怪兽马克', '', '马克发送', '414223', '2019-12-15 13:28:08', '[]');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`
@@ -351,7 +351,7 @@ INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `commentid` int(30) NOT NULL,
+  `commentId` int(30) NOT NULL,
   `nickName` varchar(30) DEFAULT NULL,
   `headimg` varchar(50) DEFAULT NULL,
   `PersonId` varchar(30) DEFAULT NULL,
@@ -359,11 +359,13 @@ CREATE TABLE `tbl_reply_comment` (
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_reply_comment
 -- ----------------------------
+INSERT INTO `tbl_reply_comment` VALUES ('2', '3', '舒淇', 'header96548751.jpg', '165196', '0', '这是回复', '2019-12-15 12:57:34');
+INSERT INTO `tbl_reply_comment` VALUES ('3', '6', '怪兽马克', '', '414223', '0', '不会', '2019-12-15 13:29:48');
 
 -- ----------------------------
 -- Table structure for `tbl_step`
@@ -413,6 +415,7 @@ INSERT INTO `tbl_user` VALUES ('199908177', '11111', '0000-00-00 00:00:00', '', 
 INSERT INTO `tbl_user` VALUES ('2', '2', '0000-00-00 00:00:00', '2', null, null, '1');
 INSERT INTO `tbl_user` VALUES ('242424000', '11111', '2019-12-13 22:25:14', '635192', '', '', '1');
 INSERT INTO `tbl_user` VALUES ('542400', '11111', '2019-12-13 08:16:40', '840875', '', '', '1');
+INSERT INTO `tbl_user` VALUES ('57852687', '654321', '2019-12-15 13:27:44', '414223', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('8885201', '11111', '2019-12-12 17:27:51', '550707', '', '', '1');
 INSERT INTO `tbl_user` VALUES ('9696438', '555555555', '2019-12-09 20:14:06', '114607', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('9866521', '1111', '2019-12-10 08:48:24', '109156', '', '', '0');

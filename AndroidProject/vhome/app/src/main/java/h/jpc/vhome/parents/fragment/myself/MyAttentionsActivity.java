@@ -238,9 +238,9 @@ public class MyAttentionsActivity extends AppCompatActivity implements AbsListVi
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.e(TAG,"调用了onresume方法");
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG,"调用了onStart方法");
         getdata();
     }
 

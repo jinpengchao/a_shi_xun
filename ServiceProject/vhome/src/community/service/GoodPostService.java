@@ -48,6 +48,10 @@ public class GoodPostService {
 		return (new GoodPostDao()).queryGoodPosts(personId);
 	
 	}
+	//通过发布人id查找点赞人id
+	public List<String> findGoodPersonId(String publishPersonId){
+		return (new GoodPostDao()).queryGoodPerson(publishPersonId);
+	}
 	
 	//通过帖子id和点赞人id查询一条点赞信息
 	public GoodPostBean findGoodPost(String personId,int postId) {

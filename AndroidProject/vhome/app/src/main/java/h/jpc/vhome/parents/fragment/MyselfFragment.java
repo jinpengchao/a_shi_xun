@@ -44,14 +44,11 @@ import h.jpc.vhome.chat.activity.ResetPasswordActivity;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
-import h.jpc.vhome.chat.utils.photochoose.ChoosePhoto;
-import h.jpc.vhome.chat.utils.photochoose.SelectableRoundedImageView;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyNewsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyPostActivity;
-import h.jpc.vhome.user.entity.EventBean;
-import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -166,6 +163,14 @@ public class MyselfFragment extends BaseFragment {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MyCollectionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMyNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyNewsActivity.class);
                 startActivity(intent);
             }
         });
@@ -321,8 +326,8 @@ public class MyselfFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         getCount();
         initMyselfInfo();
         initData();

@@ -355,12 +355,11 @@ public class AttentionFragment extends Fragment implements AbsListView.OnScrollL
 
 
     @Override
-    public void onResume() {
-
-        super.onResume();
-        Log.e("hotspot","调用了onresume方法");
+    public void onStart() {
+        super.onStart();
         getdata();
     }
+
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){

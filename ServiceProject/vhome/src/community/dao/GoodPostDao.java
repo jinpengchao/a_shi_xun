@@ -150,6 +150,45 @@ public class GoodPostDao {
 		}
 		return list;
 	}
+	
+	/**
+	 * 通过发布人找到点赞人id
+	 *  @title:queryGoodPerson
+	 * @Description: todo
+	 * @throws下午7:52:34
+	 * returntype:List<String>
+	 */
+	public List<String> queryGoodPerson(String publishPersonId){
+		List<String> list = new ArrayList<>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_goodpost where publishPersonId = ? order by time desc";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,publishPersonId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String goodPersonId = rs.getString("goodPersonId");
+				list.add(goodPersonId);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
 	//通过点赞人id和帖子id查询一个点赞信息
 	public GoodPostBean queryGoodPosts(String goodPersonId,int postId){
 		GoodPostBean goodPost = new GoodPostBean();

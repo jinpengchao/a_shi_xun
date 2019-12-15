@@ -2,6 +2,7 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,20 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import community.service.CollectionService;
-import community.service.GoodPostService;
+import community.service.CommentService;
+import community.service.ReplyService;
+import entity.ReplyDetailBean;
 
 /**
- * Servlet implementation class RemoveCollectServlet
+ * Servlet implementation class RemoveCommentServlet
  */
-@WebServlet("/RemoveCollectServlet")
-public class RemoveCollectServlet extends HttpServlet {
+@WebServlet("/RemoveCommentServlet")
+public class RemoveCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RemoveCollectServlet() {
+    public RemoveCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +38,10 @@ public class RemoveCollectServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String postId = request.getParameter("postId");
-		String personId = request.getParameter("personId");
-		int i = (new CollectionService()).delCollection(personId, Integer.parseInt(postId));
-		out.write(i);
+		int commentId = Integer.parseInt(request.getParameter("commentId"));
+		new ReplyService().delCommentReply(commentId);
+		int i = new CommentService().delComment(commentId);
+		out.write(i+"");
 		out.flush();
 		out.close();
 	}

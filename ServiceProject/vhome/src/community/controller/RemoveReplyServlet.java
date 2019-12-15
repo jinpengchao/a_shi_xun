@@ -9,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import community.service.CollectionService;
-import community.service.GoodPostService;
+import community.service.CommentService;
+import community.service.ReplyService;
 
 /**
- * Servlet implementation class RemoveCollectServlet
+ * Servlet implementation class RemoveReplyServlet
  */
-@WebServlet("/RemoveCollectServlet")
-public class RemoveCollectServlet extends HttpServlet {
+@WebServlet("/RemoveReplyServlet")
+public class RemoveReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RemoveCollectServlet() {
+    public RemoveReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +34,9 @@ public class RemoveCollectServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String postId = request.getParameter("postId");
-		String personId = request.getParameter("personId");
-		int i = (new CollectionService()).delCollection(personId, Integer.parseInt(postId));
-		out.write(i);
+		int replyId = Integer.parseInt(request.getParameter("replyId"));
+		int i = new ReplyService().delReply(replyId);
+		out.write(i+"");
 		out.flush();
 		out.close();
 	}

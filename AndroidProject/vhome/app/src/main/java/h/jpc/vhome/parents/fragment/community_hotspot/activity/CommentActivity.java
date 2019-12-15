@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -63,8 +64,8 @@ import java.util.List;
 public class CommentActivity extends AppCompatActivity {
     private static final String TAG = "CommentActivity";
     private ExpandableListView expandableListView;
-    private TextView tvLoadMore;
     private EditText edtCommentContent;
+    private TextView tvLoadMore;
     private Button btnCommentCommit;
     private MyClickListener listener;
     private List<CommentDetailBean> commentList;
@@ -86,26 +87,45 @@ public class CommentActivity extends AppCompatActivity {
     private ExpandListAdapter adapter;
     private BottomSheetDialog dialog;
     private TextView tvAttention;
+    private int DEL_COMMENT = 2;
+    private int DEL_REPLY = 3;
+    private int SAVE_COMMENT = 4;
 
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==1){
+            if (msg.what==1) {
                 Bundle bundle = msg.getData();
                 String data = bundle.getString("data");
-                commentList = gson.fromJson(data,new TypeToken<List<CommentDetailBean>>(){}.getType());
-                if(commentList.size()>0){
-                    Log.e(TAG,"查询到数据id"+commentList.get(0).getId());
-                }else {
-                    Log.e(TAG,"查询到数据为空");
+                commentList = gson.fromJson(data, new TypeToken<List<CommentDetailBean>>() {
+                }.getType());
+                if (commentList.size() > 0) {
+                    Log.e(TAG, "查询到数据id" + commentList.get(0).getId());
+                } else {
+                    Log.e(TAG, "查询到数据为空");
                 }
                 //给控件填充
                 fillPost();
-
+            }else if (msg.what==DEL_COMMENT){
+                int position = msg.getData().getInt("position");
+                commentList.remove(position);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(CommentActivity.this, "删除成功！", Toast.LENGTH_SHORT).show();
+            }else if (msg.what == DEL_REPLY){
+                Bundle bundle = msg.getData();
+                int groupPosition = bundle.getInt("groupPosition");
+                int childPosition = bundle.getInt("childPosition");
+                commentList.get(groupPosition).getReplyList().remove(childPosition);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(CommentActivity.this, "删除成功！", Toast.LENGTH_SHORT).show();
+            }else if (msg.what == SAVE_COMMENT){
+                getCommentData();
+                adapter.notifyDataSetChanged();
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +133,7 @@ public class CommentActivity extends AppCompatActivity {
         //获取帖子数据
         Intent postIntent = getIntent();
         post = (PostBean) postIntent.getSerializableExtra("post");
+        Log.e(TAG, "onCreate: post内容"+post.getHeadimg() );
         getViews();
         registerListener();
         //判断是否收藏点赞关注过，修改图标
@@ -120,6 +141,150 @@ public class CommentActivity extends AppCompatActivity {
         getCommentData();
 
     }
+
+    //评论与恢复的长按删除
+
+    AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            final long packedPosition = expandableListView.getExpandableListPosition(position);
+            final int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+            final int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
+            SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+            String personId = sp.getString("id","");
+            //赋予权限，如果发帖人是自己可以删除全部
+            if(personId.equals(post.getPersonId())){
+                //长按的是group的时候，childPosition = -1，这是子条目的长按点击
+                if(childPosition!=-1) {//删除回复
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                    builder.setTitle("删除回复：");
+                    builder.setMessage("确定要删除这条回复吗？");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            delReply(groupPosition,childPosition);
+                        }
+                    });
+                    builder.setNegativeButton("取消", null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }else {//删除评论
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                    builder.setTitle("删除评论：");
+                    builder.setMessage("确定要删除这条评论吗？");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            delComment(groupPosition);
+                        }
+                    });
+                    builder.setNegativeButton("取消", null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            }else {//发帖人不是自己只能删除自己的
+                if(childPosition==-1){//点击了评论
+                    if (commentList.get(groupPosition).getPersonId().equals(personId)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                        builder.setTitle("删除评论：");
+                        builder.setMessage("确定要删除这条评论吗？");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                delComment(groupPosition);
+                            }
+                        });
+                        builder.setNegativeButton("取消", null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                }else {//点击回复
+                    if (commentList.get(groupPosition).getReplyList().get(childPosition).getPersonId().equals(personId)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                        builder.setTitle("删除回复：");
+                        builder.setMessage("确定要删除这条回复吗？");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                delReply(groupPosition,childPosition);
+                            }
+                        });
+                        builder.setNegativeButton("取消", null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                }
+            }
+            return true;
+        }
+    };
+
+    /**
+     * 删除一条回复
+     * @param groupPosition
+     * @param childPosition
+     */
+    private void delReply(int groupPosition, int childPosition) {
+        new Thread(){
+            @Override
+            public void run() {
+                int replyId = commentList.get(groupPosition).getReplyList().get(childPosition).getId();
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveReplyServlet?replyId="+replyId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String data = util.getData(url);
+                    if (data != null) {
+                        Log.i(TAG,"删除回复成功！");
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("groupPosition",groupPosition);
+                        bundle.putInt("childPosition",childPosition);
+                        Message msg = new Message();
+                        msg.what = DEL_REPLY;
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }else {
+                        Log.e(TAG, "run: 删除评论失败" );
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    /**
+     * 删除一条评论
+     * @param position
+     */
+    private void delComment(int position) {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveCommentServlet?commentId="+commentList.get(position).getId());
+                    ConnectionUtil util = new ConnectionUtil();
+                    String data = util.getData(url);
+                    if (data != null) {
+                        Log.i(TAG,"删除评论成功！");
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);
+                        Message msg = new Message();
+                        msg.what = DEL_COMMENT;
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }else {
+                        Log.e(TAG, "run: 删除评论失败" );
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     /**
      * 给控件添加数据
      */
@@ -162,6 +327,10 @@ public class CommentActivity extends AppCompatActivity {
         for(int i = 0; i<commentList.size(); i++){
             expandableListView.expandGroup(i);
         }
+        //注册长按事件
+        expandableListView.setOnItemLongClickListener(onItemLongClickListener);
+
+        //当点击评论的时候
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
@@ -232,6 +401,7 @@ public class CommentActivity extends AppCompatActivity {
                                 String receive = util.getData(connection);
                                 if (null != receive && !"".equals(receive)) {
                                     Log.i(TAG, "保存回复成功" + replyData);
+                                    util.sendMsg(receive,SAVE_COMMENT,handler);
                                 } else {
                                     Log.e(TAG, "保存回复失败！" + replyData);
                                 }
@@ -591,6 +761,7 @@ public class CommentActivity extends AppCompatActivity {
                         String receive = util.getData(connection);
                         if (null != receive && !"".equals(receive)) {
                             Log.i(TAG, "保存评论成功" + commentData);
+                            util.sendMsg(receive,SAVE_COMMENT,handler);
                         } else {
                             Log.e(TAG, "保存评论失败！" + commentContent);
                         }

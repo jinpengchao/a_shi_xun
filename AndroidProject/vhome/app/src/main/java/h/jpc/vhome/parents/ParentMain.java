@@ -200,7 +200,22 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
         init();
         AutoStart();
         AutoEnd();
-
+        //获取权限
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
+        // 在Android 6.0及以上系统，若定制手机使用到doze模式，请求将应用添加到白名单。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String packageName = trackApp.getPackageName();
+            boolean isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName);
+            if (!isIgnoring) {
+                Intent mintent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                mintent.setData(Uri.parse("package:" + packageName));
+                try {
+                    startActivity(mintent);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
     //    //后台运行
 //    @Override
@@ -820,26 +835,6 @@ public class ParentMain extends AppCompatActivity implements SensorEventListener
             startRealTimeLoc(Constants.LOC_INTERVAL);
         }
 
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapUtil.onResume();
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
-        // 在Android 6.0及以上系统，若定制手机使用到doze模式，请求将应用添加到白名单。
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String packageName = trackApp.getPackageName();
-            boolean isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName);
-            if (!isIgnoring) {
-                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                intent.setData(Uri.parse("package:" + packageName));
-                try {
-                    startActivity(intent);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override

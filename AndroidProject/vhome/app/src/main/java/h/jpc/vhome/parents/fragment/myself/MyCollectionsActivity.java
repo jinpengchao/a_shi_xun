@@ -344,10 +344,10 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
 
 
     @Override
-    public void onResume() {
+    public void onStart() {
 
-        super.onResume();
-        Log.e("Mypost","调用了onresume方法");
+        super.onStart();
+        Log.e("MyCollections","调用了onStart方法");
         getdata();
     }
     @Override

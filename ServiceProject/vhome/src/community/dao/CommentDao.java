@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.CommentBean;
+import entity.CommentDetailBean;
 
 /**
  * @ClassName: CommentDao
@@ -24,7 +24,7 @@ import entity.CommentBean;
  * @author wzw
  * @date 2019年11月27日
  *
- */
+ */ 
 public class CommentDao {
 
 	/**
@@ -34,18 +34,20 @@ public class CommentDao {
 	 * @throws下午8:48:30
 	 * returntype:int
 	 */
-	public int insertComment(CommentBean comment) {
+	public int insertComment(CommentDetailBean comment) {
 		DBUtil util = new DBUtil();
 		int n = 0;
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_comment values(?,?,?,?,?)";
+			String sql = "insert into tbl_comment values(?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, comment.getId());
+			ps.setInt(1, 0);
 			ps.setInt(2, comment.getPostId());
 			ps.setString(3, comment.getPersonId());
-			ps.setString(4, comment.getContent());
-			ps.setString(5, comment.getTime());
+			ps.setString(4, comment.getNickName());
+			ps.setString(5, comment.getHeadimg());
+			ps.setString(6, comment.getContent());
+			ps.setString(7, comment.getTime());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -72,8 +74,8 @@ public class CommentDao {
 	 * @throws下午9:04:03
 	 * returntype:List<Comment>
 	 */
-	public List<CommentBean> queryComment(int postId){
-		List<CommentBean> list = new ArrayList<CommentBean>();
+	public List<CommentDetailBean> queryComment(int postId){
+		List<CommentDetailBean> list = new ArrayList<CommentDetailBean>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
@@ -82,13 +84,48 @@ public class CommentDao {
 			ps.setInt(1, postId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				CommentBean comment = new CommentBean();
+				CommentDetailBean comment = new CommentDetailBean();
 				comment.setId(rs.getInt("id"));
 				comment.setPostId(rs.getInt("postId"));
 				comment.setPersonId(rs.getString("personId"));
 				comment.setContent(rs.getString("content"));
 				comment.setTime(rs.getString("time"));
+				comment.setNickName(rs.getString("nickName"));
+				comment.setHeadimg(rs.getString("headimg"));
 				list.add(comment);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+		
+	}
+	//查询我的评论
+	public List<Integer> queryComment(String personId){
+		List<Integer> list = new ArrayList<Integer>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_comment where personId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				int a = rs.getInt("id");
+				list.add(a);
 			}
 			rs.close();
 			ps.close();

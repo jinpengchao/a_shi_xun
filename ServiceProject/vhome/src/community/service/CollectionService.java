@@ -52,5 +52,9 @@ public class CollectionService {
 	public int delCollection(String personId,int postId) {
 		return (new CollectionDao()).delCollection(personId, postId);
 	}
+	//根据postId删除
+	public int delCollectionByPostId(int postId) {
+		return (new CollectionDao()).delCollecionByPostId(postId);
+	}
 	
 }

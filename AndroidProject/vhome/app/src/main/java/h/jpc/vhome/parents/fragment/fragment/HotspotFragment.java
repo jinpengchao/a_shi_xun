@@ -327,7 +327,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
         adapter.notifyDataSetChanged();
     }
 
-    private void getdata() {
+    public final void getdata() {
         loadNum = 0;
         list.clear();
         loadList.clear();
@@ -365,7 +365,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
         listener = new MyClickListener();
         addPost.setOnClickListener(listener);
     }
-   private class MyClickListener implements View.OnClickListener{
+    private class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             switch (view.getId()){
@@ -380,16 +380,9 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
 
     @Override
     public void onResume() {
-
         super.onResume();
-        Log.e("hotspot", "调用了onresume方法");
+        Log.e("hotspot","调用了onResume方法");
         getdata();
-//        firstPosition=sp.getInt("firstPosition", 0);
-//        top=sp.getInt("top", 0);
-//        if(firstPosition!=0&&top!=0){
-//            lvHotSpot.setSelectionFromTop(firstPosition, top);
-//            Log.e("jj", "onResume: 没有改变位置"+firstPosition+":top+"+top);
-//        }
 
     }
 

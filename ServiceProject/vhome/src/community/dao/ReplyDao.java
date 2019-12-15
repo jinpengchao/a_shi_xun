@@ -1,9 +1,9 @@
 /**
- * @Title:CollecitonDao.java
+ * @Title:ReplyDao.java
  * @Packagecommunity.dao
  * @Description: TODO
  * @auther wzw
- * @date 2019年12月7日
+ * @date 2019年12月10日
  * @version v1.0
  */
 package community.dao;
@@ -16,35 +16,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
-import entity.CollectionBean;
+import entity.ReplyDetailBean;
 
 /**
- * @ClassName: CollecitonDao
+ * @ClassName: ReplyDao
  * @Description: TODO
  * @author wzw
- * @date 2019年12月7日
+ * @date 2019年12月10日
  *
  */
-public class CollectionDao {
+public class ReplyDao {
+
 	/**
 	 * 
-	 *  @title:insertCollection
-	 * @Description: 插入一条收藏的帖子
-	 * @throws下午2:07:31
+	 *  @title:insertReply
+	 * @Description: 保存回复数据
+	 * @throws上午8:35:27
 	 * returntype:int
 	 */
-	public int insertCollection(CollectionBean collection) {
-		int i = 0;
+	public int insertReply(ReplyDetailBean reply) {
 		DBUtil util = new DBUtil();
+		int n = 0;
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_mycollection values(?,?,?,?)";
+			String sql = "insert into tbl_reply_comment values(?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
-			ps.setString(2, collection.getPersonId());
-			ps.setInt(3, collection.getPostId());
-			ps.setString(4, collection.getTime());
-			i = ps.executeUpdate();
+			ps.setInt(2, reply.getCommentId());
+			ps.setString(3, reply.getNickName());
+			ps.setString(4, reply.getHeadimg());
+			ps.setString(5, reply.getPersonId());
+			ps.setInt(6, reply.getReplyTotal());
+			ps.setString(7, reply.getContent());
+			ps.setString(8, reply.getTime());
+			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -60,31 +65,35 @@ public class CollectionDao {
 				e.printStackTrace();
 			}
 		}
-		return i;
+		return n;
 	}
 	/**
 	 * 
-	 *  @title:queryCollection
-	 * @Description: 查找某一用户收藏的所有的帖子
-	 * @throws下午2:14:29
-	 * returntype:List<CollectionBean>
+	 *  @title:queryReply
+	 * @Description: todo
+	 * @throws上午8:49:38
+	 * returntype:List<ReplyDetailBean>
 	 */
-	public List<CollectionBean> queryCollection(String personId){
-		List<CollectionBean> list = new ArrayList<CollectionBean>();
+	public List<ReplyDetailBean> queryReply(int commentId){
+		List<ReplyDetailBean> list = new ArrayList<ReplyDetailBean>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_mycollection where personId = ?";
+			String sql = "select * from tbl_reply_comment where commentId = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, personId);
+			ps.setInt(1, commentId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				CollectionBean collection = new CollectionBean();
-				collection.setId(rs.getInt("id"));
-				collection.setPersonId(personId);
-				collection.setPostId(rs.getInt("postId"));
-				collection.setTime(rs.getString("time"));
-				list.add(collection);
+				ReplyDetailBean reply = new ReplyDetailBean();
+				reply.setId(rs.getInt("id"));
+				reply.setCommentId(commentId);
+				reply.setNickName(rs.getString("nickName"));
+				reply.setHeadimg(rs.getString("headimg"));
+				reply.setPersonId(rs.getString("personId"));
+				reply.setContent(rs.getString("content"));
+				reply.setReplyTotal(rs.getInt("replyTotal"));
+				reply.setTime(rs.getString("time"));
+				list.add(reply);
 			}
 			rs.close();
 			ps.close();
@@ -105,27 +114,25 @@ public class CollectionDao {
 		return list;
 		
 	}
+	
 	/**
 	 * 
-	 *  @title:queryCollection
-	 * @Description: 通过personId和postId查询是够收藏过
-	 * @throws下午3:53:29
-	 * returntype:String
+	 *  @title:queryReplyCount
+	 * @Description: 查询总数
+	 * @throws上午8:52:40
+	 * returntype:int
 	 */
-	public String queryCollection(CollectionBean collection){
-		String exist = null;
+	public int queryReplyCount(int commentId){
+		int num = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_mycollection where personId = ? and postId = ?";
+			String sql = "select count(*) from tbl_reply_comment where commentId=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, collection.getPersonId());
-			ps.setInt(2, collection.getPostId());
+			ps.setInt(1, commentId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
-				exist = "exist";
-			}else {
-				exist = "notExist";
+				num = rs.getInt(1);
 			}
 			rs.close();
 			ps.close();
@@ -143,61 +150,25 @@ public class CollectionDao {
 				e.printStackTrace();
 			}
 		}
-		return exist;
+		return num;
 		
 	}
-	/**
-	 * 通过personId和postId删除指定的收藏信息
-	 *  @title:delCollection
-	 * @Description: todo
-	 * @throws下午3:50:34
-	 * returntype:int
-	 */
-	public int delCollection(String personId,int postId){
-		int i = 0;
-		DBUtil util = new DBUtil();
-		try {
-			Connection con = util.getConnection();
-			String sql = "delete from tbl_mycollection where personId = ? and postId = ?";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, personId);
-			ps.setInt(2, postId);
-			i = ps.executeUpdate();
-			ps.close();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				util.closeConnection();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return i;
-		
-	}
-	
 	/**
 	 * 
-	 *  @title:delCollecion
-	 * @Description: 删除指定id的收藏帖子
-	 * @throws下午2:21:41
+	 *  @title:delReply
+	 * @Description: 删除指定id 的回复
+	 * @throws上午8:58:36
 	 * returntype:int
 	 */
-	public int delCollecion(int id) {
-		int i = 0;
+	public int delReply(int id) {
+		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "delete from tbl_mycollection where id = ?";
+			String sql = "delete from tbl_reply_comment where id=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
-			i = ps.executeUpdate();
+			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -213,24 +184,25 @@ public class CollectionDao {
 				e.printStackTrace();
 			}
 		}
-		return i;
+		return n;
 	}
+	
 	/**
-	 * 根据postId删除收藏信息
-	 *  @title:delCollecionByPostId
+	 * 删除指定评论id的回复
+	 *  @title:delCommentReply
 	 * @Description: todo
-	 * @throws下午1:16:00
+	 * @throws下午12:08:37
 	 * returntype:int
 	 */
-	public int delCollecionByPostId(int postId) {
-		int i = 0;
+	public int delCommentReply(int commentId) {
+		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "delete from tbl_mycollection where postId = ?";
+			String sql = "delete from tbl_reply_comment where commentId=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, postId);
-			i = ps.executeUpdate();
+			ps.setInt(1, commentId);
+			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -246,7 +218,6 @@ public class CollectionDao {
 				e.printStackTrace();
 			}
 		}
-		return i;
+		return n;
 	}
-	
 }

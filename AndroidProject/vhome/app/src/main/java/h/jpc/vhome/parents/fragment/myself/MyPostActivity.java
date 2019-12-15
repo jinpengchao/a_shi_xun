@@ -1,6 +1,7 @@
 package h.jpc.vhome.parents.fragment.myself;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
@@ -12,6 +13,7 @@ import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -46,6 +49,7 @@ public class MyPostActivity extends AppCompatActivity implements AbsListView.OnS
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
     private int POST_STATUS = 1;
+    private int DEL_POST = 2;
     private HotSpotAdapter adapter;
     private SmartRefreshLayout srl;
     private List<PostBean> loadList = new ArrayList<>();
@@ -83,61 +87,90 @@ public class MyPostActivity extends AppCompatActivity implements AbsListView.OnS
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                Bundle b = msg.getData();
-                String data = b.getString("data");
-                Gson gson = new Gson();
-                list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
-                Log.i("hotspotFragment","list数据个数"+list.size());
-                //设置加载的数据list,默认首先加载5条数据
+                if (msg.what==POST_STATUS){
+                    Bundle b = msg.getData();
+                    String data = b.getString("data");
+                    Gson gson = new Gson();
+                    list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
+                    Log.i("hotspotFragment","list数据个数"+list.size());
+                    //设置加载的数据list,默认首先加载5条数据
 
-                if(list.size()>5){
-                    for (int k=0;k<5;k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
+                    if(list.size()>5){
+                        for (int k=0;k<5;k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
+                    }else{
+                        for (int k=0;k<list.size();k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
                     }
-                }else{
-                    for (int k=0;k<list.size();k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
-                    }
-                }
 
-                adapter = new HotSpotAdapter(MyPostActivity.this,loadList,R.layout.item_hotspot);
-                lvHotSpot.setAdapter(adapter);
-                lvHotSpot.setEmptyView(tvEmpty);
+                    adapter = new HotSpotAdapter(MyPostActivity.this,loadList,R.layout.item_hotspot);
+                    lvHotSpot.setAdapter(adapter);
+                    lvHotSpot.setEmptyView(tvEmpty);
 //                当点击收藏点赞的时候
-                adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
-                    @Override
-                    public void myLikeClick(int position, int status) {
-                        if(status==1){
-                            delPostLike(position);
-                        }else if(status==0){
-                            addPostLike(position);
-                        }else {
-                            Log.e(TAG, "myLikeClick: 出错");
+                    adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
+                        @Override
+                        public void myLikeClick(int position, int status) {
+                            if(status==1){
+                                delPostLike(position);
+                            }else if(status==0){
+                                addPostLike(position);
+                            }else {
+                                Log.e(TAG, "myLikeClick: 出错");
+                            }
                         }
-                    }
 
-                    @Override
-                    public void myCollectClick(int position, int status) {
-                        if(status==1){
-                            delPostCollection(position);
-                        }else if(status==0){
-                            addPostCollection(position);
-                        }else {
-                            Log.e(TAG, "myCollectClick: 出错");
+                        @Override
+                        public void myCollectClick(int position, int status) {
+                            if(status==1){
+                                delPostCollection(position);
+                            }else if(status==0){
+                                addPostCollection(position);
+                            }else {
+                                Log.e(TAG, "myCollectClick: 出错");
+                            }
                         }
-                    }
-                });
-                lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent simple = new Intent();
-                        simple.putExtra("post",list.get(i));
-                        simple.setClass(MyPostActivity.this, CommentActivity.class);
-                        startActivity(simple);
-                    }
-                });
+                    });
+                    lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent simple = new Intent();
+                            simple.putExtra("post",list.get(i));
+                            simple.setClass(MyPostActivity.this, CommentActivity.class);
+                            startActivity(simple);
+                        }
+                    });
+                    //长按删除帖子
+                    lvHotSpot.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MyPostActivity.this);
+                            builder.setTitle("删除提示：");
+                            builder.setMessage("确定要删除本条帖子吗？");
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    delMyPost(position);
+                                }
+                            });
+                            builder.setNegativeButton("取消",null);
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            return true;
+                        }
+                    });
+
+                }else if (msg.what==DEL_POST){
+                    int position = msg.getData().getInt("position");
+                    list.remove(position);
+                    loadList.remove(position);
+                    Log.e(TAG, "handleMessage: 位置postion"+position );
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(MyPostActivity.this,"删除成功！",Toast.LENGTH_SHORT).show();
+                }
                 adapter.notifyDataSetChanged();
                 //定位回到上一次的浏览位置
                 firstPosition=sp.getInt("firstPosition", 0);
@@ -145,9 +178,40 @@ public class MyPostActivity extends AppCompatActivity implements AbsListView.OnS
                 if(firstPosition!=0&&top!=0){
                     lvHotSpot.setSelectionFromTop(firstPosition, top);
                 }
+
             }
         };
     }
+
+    private void delMyPost(int i) {
+        new Thread(){
+            @Override
+            public void run() {
+                int postId = list.get(i).getId();
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveMyPost?postId="+postId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (receive != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",i);
+                        Message msg = new Message();
+                        msg.what=DEL_POST;
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+
+                    }else {
+                        Log.e(TAG, "run: 删除个人帖子失败" );
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     /**
      * 增加收藏数据
      * @param i
@@ -343,10 +407,10 @@ public class MyPostActivity extends AppCompatActivity implements AbsListView.OnS
 
 
     @Override
-    public void onResume() {
+    public void onStart() {
 
-        super.onResume();
-        Log.e("Mypost","调用了onresume方法");
+        super.onStart();
+        Log.e("Mypost","调用了onStart方法");
         getdata();
     }
     @Override
