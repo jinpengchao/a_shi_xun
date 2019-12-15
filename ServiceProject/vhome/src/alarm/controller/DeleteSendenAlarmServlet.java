@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 
 import alarm.service.AlarmService;
@@ -51,12 +54,19 @@ public class DeleteSendenAlarmServlet extends HttpServlet {
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
 	
-		int alarmId = Integer.parseInt(data);
+		JSONObject json;
+		try {
+			json = new JSONObject(data);
+			String content = json.getString("content");
+			AlarmService alarmService = new AlarmService();
+			alarmService.deleteSendedAlarm(content);
+			System.out.println("delAlarm--删除闹钟成功！");
+			out.write("删除成功!");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		AlarmService alarmService = new AlarmService();
-		alarmService.deleteSendedAlarm(alarmId);
-		System.out.println("delAlarm--删除闹钟成功！");
-		out.write("删除成功!");
 		out.flush();
 		out.close();
 		br.close();

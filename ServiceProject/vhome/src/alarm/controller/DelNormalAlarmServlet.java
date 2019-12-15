@@ -47,11 +47,10 @@ public class DelNormalAlarmServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-	
-//		int phone = 
-//		
-//		AlarmService alarmService = new AlarmService();
-//		alarmService.deleteSendedAlarm(alarmId);
+		String content = data;
+		
+		AlarmService alarmService = new AlarmService();
+		alarmService.deleteNormalAlarm(content);
 		System.out.println("delAlarm--删除闹钟成功！");
 		out.write("删除成功!");
 		out.flush();

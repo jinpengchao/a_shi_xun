@@ -57,7 +57,6 @@ public class HistoryWarnAdapter extends BaseAdapter {
         holder.history_time.setText(alarmBean.getAlarmTime());
         holder.history_receiver.setText(alarmBean.getReceivePersonId());
         holder.history_sender.setText(alarmBean.getSendPersonId());
-
         return convertView;
     }
 

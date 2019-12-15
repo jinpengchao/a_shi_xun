@@ -170,17 +170,17 @@ public class AlarmDao {
 		return list;
 	}
 	//删除已经发送的闹钟
-	public void removeSendedAlarm(int alarmId) {
+	public void removeSendedAlarm(String content) {
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
 			conn = util.getConnection();
-			String sql = "delete from tbl_alarm where alarmId='"+alarmId+"'";
+			String sql = "delete from tbl_alarm where content='"+content+"'";
 			psmt = conn.prepareStatement(sql);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
-				System.out.println("AlarmDao--闹钟删除成功"+alarmId);
+				System.out.println("AlarmDao--闹钟删除成功"+content);
 			}else {
 				System.out.println("AlarmDao--闹钟删除成功");
 			}
@@ -192,6 +192,29 @@ public class AlarmDao {
 			e.printStackTrace();
 		}
 	}
+	//删除常用列表闹钟
+		public void removeNormalAlarm(String content) {
+			DBUtil util = DBUtil.getInstance();
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			try {
+				conn = util.getConnection();
+				String sql = "delete from tbl_remind where content='"+content+"'";
+				psmt = conn.prepareStatement(sql);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("AlarmDao--常用闹钟删除成功"+content);
+				}else {
+					System.out.println("AlarmDao--常用闹钟删除成功");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	//修改闹钟信息
 	public void chandeAlarm(int alarmId,String time,String content,int clocktype) {
 		DBUtil util = DBUtil.getInstance();
