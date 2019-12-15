@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class HistoryWarnAdapter extends BaseAdapter {
             holder.history_time = convertView.findViewById(R.id.history_time);
             holder.history_receiver = convertView.findViewById(R.id.history_receiver);
             holder.history_sender = convertView.findViewById(R.id.history_sender);
+            holder.todetail = convertView.findViewById(R.id.todetail);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -57,10 +59,12 @@ public class HistoryWarnAdapter extends BaseAdapter {
         holder.history_time.setText(alarmBean.getAlarmTime());
         holder.history_receiver.setText(alarmBean.getReceivePersonId());
         holder.history_sender.setText(alarmBean.getSendPersonId());
+        
         return convertView;
     }
 
     final static class ViewHolder{
+        private RelativeLayout todetail;
         private TextView history_content;
         private TextView history_time;
         private TextView history_receiver;
