@@ -140,6 +140,7 @@ public class AttentionFragment extends Fragment {
     }
 
     private void getdata() {
+
         loadNum = 0;
         list.clear();
         loadList.clear();

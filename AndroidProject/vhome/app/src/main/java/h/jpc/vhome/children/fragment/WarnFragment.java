@@ -27,6 +27,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -41,8 +44,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,7 +74,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class WarnFragment extends Fragment implements View.OnClickListener, SlideView.OnSlideListener {
     private static final String TAG = "MainActivity";
     private ListViewCompat mListView;
-    private  ListView lvHistory;
+    private ListView lvHistory;
     private List<MessageItem> mMessageItems = new ArrayList<MessageItem>();
     private SlideView mLastSlideViewWithStatusOn;
     private SlideAdapter adapter;
@@ -85,6 +91,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
     private  List<String> hourList;
     private  List<String> minuteList;
     private  List<AlarmBean> alarmBeanList;
+    private SmartRefreshLayout srl;
     private SharedPreferences sp;
     private TextView info;
     public static int normalSize;
@@ -113,8 +120,14 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
 
         mListView = view.findViewById(R.id.list);
         setBinder();
-//        String service = "showMysended";
-//        getMySendedAlarm(service);
+        srl = view.findViewById(R.id.srl);
+        srl.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData();
+                srl.finishRefresh();
+            }
+        });
 
         //点击事件
         addNewNormalWarn.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +148,8 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                     @Override
                     public void onClick(View v) {
                         //存入数据库放入常用列表
-                        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
+                        addNewNormal((editText.getText()).toString());
+
                         myDialog.dismiss();
                     }
                 });
@@ -225,7 +239,8 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
             public void onClick(View v) {
                 View view = getLayoutInflater().inflate(R.layout.dialog_quary_all_warn, null);
                 myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
-
+                String service = "showMysended";
+                getMySendedAlarm(service);
                 lvHistory = (ListView)view.findViewById(R.id.history_warn);
                 TextView warnInfo = view.findViewById(R.id.warnInfo);
                 historyWarnData(warnInfo);
@@ -250,7 +265,9 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                                                         Log.e("alarmId",alarmId+"");
                                                         deleteSendedAlarm(alarmId);
                                                         String service = "showMysended";
+                                                        //__________bug_________________//
                                                         getMySendedAlarm(service);
+                                                        historyWarnData(warnInfo);
                                                         if (alarmBeanList.size()==0){
                                                             warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
                                                         }
@@ -275,6 +292,10 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
         getMyNormalAlarm();
         longClickItem();
         return view;
+    }
+    public void refreshData(){
+        mMessageItems.clear();
+        setMyNormalAlarm();
     }
     public void sendNewAlarm(String[] receiver,String[] hour,String[] minute,String sendPersonId,String content){
         //准备数据
@@ -309,7 +330,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                                 editor.putString("receiveperson"+mySendSize,receiver[0]);
                                 editor.putString("sendperson"+mySendSize,sendPersonId);
                                 editor.putString("content"+mySendSize,content);
-                                mySendSize++;
+//                                mySendSize++;
                                 editor.commit();
                             }
                         });
@@ -317,7 +338,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getActivity(),"发送失败error500",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"服务器走丢了~",Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -332,6 +353,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
     public void getMySendedAlarm(String service){
         SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
         String phone = sp.getString("phone","");
+        Log.e("new要死了，","啊啊啊");
         final String data = phone;
         new Thread(){
             @Override
@@ -386,6 +408,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
     public void historyWarnData(TextView warnInfo){
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
         alarmBeanList = new ArrayList<>();
+        Log.e("old要死了，","啊啊啊");
         alarmBeanList.clear();
         for(int i=0;i< mySendSize;i++){
             AlarmBean alarmBean = new AlarmBean();
@@ -421,7 +444,6 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                             public void run() {
                                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("alarm",MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.clear();
                                 editor.commit();
                                 Log.e("删除成功","!!!");
                             }
@@ -446,6 +468,65 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
             item.msg = content;
             mMessageItems.add(item);
         }
+    }
+    public void addNewNormal(String content){
+        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        String phone = sp.getString("phone","");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone",phone);
+            jsonObject.put("content",content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/addnormal");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("normalalarm",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                Set<String> set = new HashSet<>();
+                                for (int i=0;i<normalSize;i++){
+                                    String co = sharedPreferences.getString("content"+i,"");
+                                    set.add(co);
+                                }
+                                Log.e("set",set.size()+"");
+                                if(!set.contains(content)){
+                                    editor.putString("content" + normalSize, content);
+                                    normalSize++;
+                                    editor.commit();
+                                    Toast.makeText(getActivity(),("添加成功！刷新试试看~"),Toast.LENGTH_SHORT).show();
+                                }else
+                                    Toast.makeText(getActivity(),"已经添加过相同的提醒了~",Toast.LENGTH_SHORT).show();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("我彻底彻底彻底","彻底服了Handler了！草！");
+                                Message msg = new Message();
+                                msg.setData(bundle);
+                                msg.what=0;
+                                myhandler.sendMessage(msg);
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     public void getMyNormalAlarm(){
         SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
@@ -474,12 +555,23 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                                 Type type = new TypeToken<List<String>>(){}.getType();
                                 List<String> myAlarm = gson.fromJson(json,type);
                                 normalSize = myAlarm.size();
+                                Set<String> set = new HashSet<>();
                                 if(normalSize==0){
+                                    info.setText("你还没有添加常用提示哦~");
                                 }else {
                                     for (int i = 0; i < myAlarm.size(); i++) {
-                                        editor.putString("content" + i, myAlarm.get(i));
-                                        editor.commit();
+                                        if(!set.contains( myAlarm.get(i))) {
+                                            set.add(myAlarm.get(i));
+                                        }
                                     }
+                                    Iterator<String> it = set.iterator();
+                                    int i = 0;
+                                    while(it.hasNext()){
+                                        editor.putString("content" + i, it.next());
+                                        editor.commit();
+                                        i++;
+                                    }
+                                    normalSize = set.size();
                                     Bundle bundle = new Bundle();
                                     bundle.putString("我彻底彻底彻底","彻底服了Handler了！草！");
                                     Message msg = new Message();
@@ -597,8 +689,19 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 @Override
                 public void onClick(View v) {
                     mMessageItems.remove(position);
+                    String content = mMessageItems.get(position).msg;
+                    Log.e("content",content);
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            String u = "&cakename="+n;
+//                            String C_URL = "http://10.0.2.2:8080/Gcake/delcar";
+//                            HttpConnect.ByPost(u,C_URL);
+//                        }
+//                    }).start();
                     adapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "删除成功",Toast.LENGTH_SHORT).show();
+
                 }
             });
 
@@ -606,7 +709,68 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
         }
 
     }
-
+//    public void deleteNormal(String content){
+//        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+//        String phone = sp.getString("phone","");
+//        final String data = phone;
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                String ip = (new MyApp()).getIp();
+//                try {
+//                    URL url = new URL("http://"+ip+":8080/vhome/ReadNormalAlarmService");
+//                    ConnectionUtil util = new ConnectionUtil();
+//                    //发送数据
+//                    HttpURLConnection connection = util.sendData(url,data);
+//                    //获取数据
+//                    final String data = util.getData(connection);
+//                    if(null!=data){
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Gson gson = new Gson();
+//                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("normalalarm",MODE_PRIVATE);
+//                                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                String json = data;
+//                                //得到集合对应的具体类型
+//                                Type type = new TypeToken<List<String>>(){}.getType();
+//                                List<String> myAlarm = gson.fromJson(json,type);
+//                                normalSize = myAlarm.size();
+//                                Set<String> set = new HashSet<>();
+//                                if(normalSize==0){
+//                                    info.setText("你还没有添加常用提示哦~");
+//                                }else {
+//                                    for (int i = 0; i < myAlarm.size(); i++) {
+//                                        if(!set.contains( myAlarm.get(i))) {
+//                                            set.add(myAlarm.get(i));
+//                                        }
+//                                    }
+//                                    Iterator<String> it = set.iterator();
+//                                    int i = 0;
+//                                    while(it.hasNext()){
+//                                        editor.putString("content" + i, it.next());
+//                                        editor.commit();
+//                                        i++;
+//                                    }
+//                                    normalSize = set.size();
+//                                    Bundle bundle = new Bundle();
+//                                    bundle.putString("我彻底彻底彻底","彻底服了Handler了！草！");
+//                                    Message msg = new Message();
+//                                    msg.setData(bundle);
+//                                    msg.what=0;
+//                                    myhandler.sendMessage(msg);
+//                                }
+//                            }
+//                        });
+//                    }
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//    }
     public class MessageItem {
         public String msg;
         public SlideView slideView;

@@ -43,7 +43,6 @@ import cn.jpush.im.api.BasicCallback;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.FriendInfoActivity;
 import h.jpc.vhome.chat.activity.GroupNotFriendActivity;
-import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.chat.activity.receiptmessage.ReceiptMessageListActivity;
 import h.jpc.vhome.chat.application.JGApplication;
 import h.jpc.vhome.chat.controller.ChatItemController;
@@ -584,7 +583,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     Intent intent = new Intent();
                     if (msg.getDirect() == MessageDirect.send) {
                         intent.putExtra(JGApplication.TARGET_ID, JMessageClient.getMyInfo().getUserName());
-                        intent.setClass(mContext, PersonalActivity.class);
+//                        intent.setClass(mContext, PersonalActivity.class);
                         mContext.startActivity(intent);
                     } else {
                         String targetID = userInfo.getUserName();

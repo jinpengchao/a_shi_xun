@@ -62,7 +62,7 @@ public class AddNormalAlarmServlet extends HttpServlet {
 			AlarmService alarmService = new AlarmService();
 			alarmService.insertNormalAlarm(content,phone);
 			System.out.println("AddNormalAlarmServlet--增加常用闹钟成功！");
-			out.write("发送新闹钟成功!");
+			out.write("AddNormalAlarmServlet--增加常用闹钟成功！");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

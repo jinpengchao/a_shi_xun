@@ -179,7 +179,7 @@ public class MyApp extends com.activeandroid.app.Application {
     /**
      * 轨迹服务ID
      */
-    public long serviceId = 218002;//这里是申请的鹰眼服务id
+    public long serviceId = 218366;//这里是申请的鹰眼服务id
 
     /**
      * Entity标识

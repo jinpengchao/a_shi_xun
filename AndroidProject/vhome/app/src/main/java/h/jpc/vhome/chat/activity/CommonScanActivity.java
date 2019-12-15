@@ -163,7 +163,7 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
                             //扫出来的是自己
                             Intent intent = new Intent();
                             if (userInfo.getUserName().equals(JMessageClient.getMyInfo().getUserName())) {
-                                intent.setClass(CommonScanActivity.this, PersonalActivity.class);
+//                                intent.setClass(CommonScanActivity.this, PersonalActivity.class);
                                 //扫出来的是好友
                             } else if (userInfo.isFriend()) {
                                 intent.setClass(CommonScanActivity.this, FriendInfoActivity.class);

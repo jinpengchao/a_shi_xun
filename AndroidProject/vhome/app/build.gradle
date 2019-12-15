@@ -3,14 +3,14 @@ apply plugin: 'com.android.application'
 
 android {
 
-//    signingConfigs {
-//        config {
-//            storeFile file('D:\\Andriod\\android-studio\\keyStore\\MapKey2.jks')
-//            storePassword '123456'
-//            keyAlias = 'baidukey'
-//            keyPassword '123456'
-//        }
-//    }
+    signingConfigs {
+        config {
+            storeFile file('F:\\xuexi\\Android\\baiduKey.jks')
+            storePassword '123456'
+            keyAlias = 'baiduKey'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "h.jpc.vhome"

@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentTabHost
-    android:id="@android:id/tabhost"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="match_parent">
     <com.baidu.mapapi.map.MapView
         android:id="@+id/tracing_mapView"
         android:layout_width="1dp"
         android:layout_height="1dp"
         />
-    <RelativeLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/act_main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TabWidget
-            android:id="@android:id/tabs"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize" />
+    <FrameLayout
+        android:id="@+id/act_main_layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize">
+    </FrameLayout>
+
+    <androidx.fragment.app.FragmentTabHost
+        android:id="@+id/act_main_tab_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:paddingTop="8dp">
+        <FrameLayout
+            android:id="@+id/act_main_layout_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-        </TabWidget>
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@android:id/tabs">
-        </FrameLayout>
-    </RelativeLayout>
-</androidx.fragment.app.FragmentTabHost>
+            android:layout_gravity="bottom"></FrameLayout>
+    </androidx.fragment.app.FragmentTabHost>
+</RelativeLayout>

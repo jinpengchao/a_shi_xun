@@ -38,7 +38,6 @@ import cn.jpush.im.api.BasicCallback;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.FriendInfoActivity;
 import h.jpc.vhome.chat.activity.MembersInChatActivity;
-import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.chat.application.JGApplication;
 import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.ToastUtil;
@@ -256,7 +255,7 @@ public class AllMembersAdapter extends BaseAdapter implements AdapterView.OnItem
         String userName = userInfo.getUserName();
         Intent intent = new Intent();
         if (userName.equals(JMessageClient.getMyInfo().getUserName())) {
-            intent.setClass(mContext, PersonalActivity.class);
+//            intent.setClass(mContext, PersonalActivity.class);
             mContext.startActivity(intent);
         } else {
             intent.setClass(mContext, FriendInfoActivity.class);

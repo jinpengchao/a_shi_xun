@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.ContactsActivity;
-import h.jpc.vhome.chat.activity.PersonalActivity;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -41,12 +40,12 @@ public class MyselfFragment extends Fragment {
                 getActivity().startActivity(new Intent(getActivity(), ContactsActivity.class));
             }
         });
-        header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
-            }
-        });
+//        header.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
+//            }
+//        });
         return view;
     }
     private void initData() {
