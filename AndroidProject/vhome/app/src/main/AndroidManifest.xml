@@ -49,7 +49,10 @@
         android:enabled="true"
         android:process=":remote" />
         <!--轨迹采集上传服务-->
-
+        <activity android:name=".children.fragment.TrackQueryActivity"/>
+        <activity android:name=".children.fragment.TracingActivity"/>
+        <activity android:name=".children.fragment.TrackQueryOptionsActivity"/>
+        <!--喜马拉雅-->
         <activity android:name=".parents.fragment.radio_ximalaya.DetailActivity"/>
         <activity android:name=".parents.fragment.radio_ximalaya.PlayerActivity"/>
         <activity android:name=".parents.fragment.radio_ximalaya.RadioActivity"/>
