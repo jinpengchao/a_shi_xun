@@ -21,7 +21,7 @@ import h.jpc.vhome.children.fragment.dialog.DateDialog;
 import h.jpc.vhome.parents.TrackUtil.CommonUtil;
 import h.jpc.vhome.parents.TrackUtil.Constants;
 
-public class TrackQueryOptionsActivity extends BaseActivity
+public class TrackQueryOptionsActivity extends myBaseActivity
         implements CompoundButton.OnCheckedChangeListener {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日 HH:mm");

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import h.jpc.vhome.R;
 
 
-public abstract class BaseActivity extends Activity {
+public abstract class myBaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

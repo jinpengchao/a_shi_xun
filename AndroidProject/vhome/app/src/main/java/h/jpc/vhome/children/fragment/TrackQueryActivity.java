@@ -36,7 +36,7 @@ import h.jpc.vhome.parents.TrackUtil.Constants;
 import h.jpc.vhome.parents.TrackUtil.MapUtil;
 import h.jpc.vhome.parents.TrackUtil.ViewUtil;
 
-public class TrackQueryActivity extends BaseActivity implements View.OnClickListener {
+public class TrackQueryActivity extends myBaseActivity implements View.OnClickListener {
 
     private MyApp trackApp = null;
     private ViewUtil viewUtil = null;

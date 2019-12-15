@@ -34,7 +34,7 @@ import h.jpc.vhome.parents.TrackUtil.ViewUtil;
 /**
  * 轨迹追踪
  */
-public class TracingActivity extends BaseActivity{
+public class TracingActivity extends myBaseActivity{
 
     private MyApp trackApp = null;
 
@@ -71,7 +71,7 @@ public class TracingActivity extends BaseActivity{
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
         mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));
-        mapUtil.setCenter(0);
+        mapUtil.setCenter(mCurrentDirection);
         trackPoints = new ArrayList<>();
         initListener();
         //循环每隔30秒读取一次轨迹
@@ -125,11 +125,11 @@ public class TracingActivity extends BaseActivity{
                 }
                 trackPoints.add(currentLatLng);
                 Log.e("经度", currentLatLng.longitude + "");
-//                if (trackPoints.size() < 10) {
-//                    mapUtil.drawHistoryTrack(trackPoints, false, 0);
-//                } else {
-//                    mapUtil.drawHistoryTrack(trackPoints, true, 0);
-//                }
+                if (trackPoints.size() < 10) {
+                    mapUtil.drawHistoryTrack(trackPoints, false, 0);
+                } else {
+                    mapUtil.drawHistoryTrack(trackPoints, true, 0);
+                }
             }
         };
     }
