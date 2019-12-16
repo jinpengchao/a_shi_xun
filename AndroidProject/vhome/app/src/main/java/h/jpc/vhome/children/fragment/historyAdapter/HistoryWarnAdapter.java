@@ -2,6 +2,7 @@ package h.jpc.vhome.children.fragment.historyAdapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,30 +12,41 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.util.ConnectionUtil;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class HistoryWarnAdapter extends BaseAdapter {
-    private List<AlarmBean> alarmBeans;
+    private List<AlarmBean> alarmBeansList;
     private Context context;
     private int itemLayout;
 
     public HistoryWarnAdapter(Context context, List<AlarmBean> alarmBeans, int itemLayout) {
-        this.alarmBeans = alarmBeans;
+        this.alarmBeansList = alarmBeans;
         this.context = context;
         this.itemLayout = itemLayout;
     }
 
     @Override
     public int getCount() {
-        return alarmBeans.size();
+        return alarmBeansList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return alarmBeans.get(position);
+        return alarmBeansList.get(position);
     }
 
     @Override
@@ -58,40 +70,34 @@ public class HistoryWarnAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        AlarmBean alarmBean = alarmBeans.get(position);
+        AlarmBean alarmBean = alarmBeansList.get(position);
         holder.history_content.setText(alarmBean.getContent());
         holder.history_time.setText(alarmBean.getAlarmTime());
         holder.history_receiver.setText(alarmBean.getReceivePersonId());
         holder.history_sender.setText(alarmBean.getSendPersonId());
+        String content = alarmBean.getContent();
         holder.todetail.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                String content = alarmBeanList.get(arg2).getContent();
-                new AlertDialog.Builder(getContext())
+                new AlertDialog.Builder(context)
                         .setTitle("是否取消发送？")
                         .setItems(R.array.choose,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
-                                        String[] PK = getResources()
+                                        String[] PK = context.getResources()
                                                 .getStringArray(
                                                         R.array.choose);
                                         if (PK[which].equals("取消发送")) {
-                                            if (null!=alarmBeanList) {
-                                                alarmBeanList.remove(arg2);
+                                            if (null!=alarmBeansList) {
+                                                alarmBeansList.remove(position);
                                                 Log.e("content",content+"");
                                                 deleteSendedAlarm(content);
-                                                historyWarnData(warnInfo);
-                                                if (alarmBeanList.size()==0){
-                                                    warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
-                                                }
-                                                historyWarnAdapter.notifyDataSetChanged();
+                                                notifyDataSetChanged();
                                             }
-                                            Toast.makeText(getContext(),"取消成功啦~", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(context,"取消成功啦~", Toast.LENGTH_LONG).show();
                                         }
                                         if (PK[which].equals("关闭")) {
-                                            String service = "showMysended";
-                                            getMySendedAlarm(service);
                                         }
                                     }
                                 }).show();
@@ -107,5 +113,34 @@ public class HistoryWarnAdapter extends BaseAdapter {
         private TextView history_time;
         private TextView history_receiver;
         private TextView history_sender;
+    }
+    public void deleteSendedAlarm(String content){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content",content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/delAlarm");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    //发送数据
+                    util.sendData(url,data);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

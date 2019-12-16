@@ -160,27 +160,43 @@ public class UserDao {
 			if(type==0) {
 				System.out.println("type=0");
 				sql = "select * from tbl_parent_userinfo where phone='"+phone+"'";
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					userInfo = new ParentUserInfo();
+					userInfo.setPhone(rs.getString("phone"));
+					userInfo.setId(rs.getString("id"));
+					userInfo.setNikeName(rs.getString("nickName"));
+					userInfo.setSex(rs.getString("sex"));
+					userInfo.setArea(rs.getString("area"));
+					userInfo.setAcieve(rs.getString("achieve"));
+					userInfo.setPersonalWord(rs.getString("personalWord"));
+					userInfo.setHeaderImg(rs.getString("headimg"));
+					userInfo.setType(type);
+					System.out.println("用户信息存储完毕--父母");
+				}else {
+					System.out.println("未查到这个人的信息--父母");
+				}
 			}else if(type==1) {
 				System.out.println("type=1");
 				sql = "select * from tbl_child_userinfo where phone='"+phone+"'";
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					userInfo = new ParentUserInfo();
+					userInfo.setPhone(rs.getString("phone"));
+					userInfo.setId(rs.getString("id"));
+					userInfo.setNikeName(rs.getString("nickName"));
+					userInfo.setSex(rs.getString("sex"));
+					userInfo.setArea(rs.getString("area"));
+					userInfo.setHeaderImg(rs.getString("headerImg"));
+					userInfo.setType(type);
+					System.out.println("用户信息存储完毕--子女");
+				}else {
+					System.out.println("未查到这个人的信息--子女");
+				}
 			}
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				userInfo = new ParentUserInfo();
-				userInfo.setPhone(rs.getString("phone"));
-				userInfo.setId(rs.getString("id"));
-				userInfo.setNikeName(rs.getString("nickName"));
-				userInfo.setSex(rs.getString("sex"));
-				userInfo.setArea(rs.getString("area"));
-				userInfo.setAcieve(rs.getString("achieve"));
-				userInfo.setPersonalWord(rs.getString("personalWord"));
-				userInfo.setHeaderImg(rs.getString("headimg"));
-				userInfo.setType(type);
-				System.out.println("用户信息存储完毕");
-			}else {
-				System.out.println("未查到这个人的信息");
-			}
+			
 			rs.close();
 			psmt.close();
 			util.closeConnection();
@@ -253,10 +269,10 @@ public class UserDao {
 			conn = util.getConnection();
 			String sql = "";
 			if(type==0) {
-				System.out.println("type=0");
+				System.out.println("header--type=0");
 				sql = "update tbl_parent_userinfo set headimg='"+headimg+"' where phone='"+phone+"'";
 			}else if(type==1) {
-				System.out.println("type=1");
+				System.out.println("header--type=1");
 				sql = "update tbl_child_userinfo set headerImg='"+headimg+"' where phone='"+phone+"'";
 			}
 			psmt = conn.prepareStatement(sql);

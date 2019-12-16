@@ -16,7 +16,6 @@ tools:context=".user.LoginByCodeActivity">
         android:background="@drawable/login_bg"
         android:layout_width="wrap_content"
         android:paddingBottom="20dp"
-        android:layout_marginTop="20dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/text1"
@@ -42,18 +41,19 @@ tools:context=".user.LoginByCodeActivity">
                 android:text="手机号"
                 android:textSize="15dp"
                 android:layout_height="wrap_content"/>
-            <EditText
+            <h.jpc.vhome.chat.utils.ClearWriteEditText
                 android:id="@+id/etPhone"
                 android:maxLength="11"
                 android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
                 android:hint="请填写手机号"
                 android:textSize="15dp"
                 android:background="@null"
                 android:inputType="number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:layout_height="30dp">
+            </h.jpc.vhome.chat.utils.ClearWriteEditText>
         </LinearLayout>
         <View
             android:layout_below="@+id/text2"
@@ -83,22 +83,23 @@ tools:context=".user.LoginByCodeActivity">
                     android:text="密码"
                     android:textSize="15dp"
                     android:layout_height="wrap_content"/>
-                <EditText
+                <h.jpc.vhome.chat.utils.ClearWriteEditText
                     android:id="@+id/etPwd"
                     android:textSize="15dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="45dp"
-                    android:maxLength="25"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:maxLength="18"
                     android:hint="输入密码"
                     android:background="@null"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </EditText>
+                    android:layout_height="30dp">
+                </h.jpc.vhome.chat.utils.ClearWriteEditText>
             </LinearLayout>
             <ToggleButton
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="70dp"
                 android:layout_gravity="center"
                 android:id="@+id/togglePwd"
                 android:layout_width="30dp"
@@ -138,7 +139,7 @@ tools:context=".user.LoginByCodeActivity">
         android:text="登录"
         android:textSize="20dp"
         android:textColor="#ffffff"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_press"
         >
     </Button>
 
@@ -156,13 +157,13 @@ tools:context=".user.LoginByCodeActivity">
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorPrimary">
+            android:background="#ffffff">
         </View>
         <TextView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#ffffff"
             android:text="社交账号登录"
             android:textSize="15dp"
             android:layout_marginLeft="10dp"
@@ -174,7 +175,7 @@ tools:context=".user.LoginByCodeActivity">
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorPrimary">
+            android:background="#ffffff">
         </View>
     </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,15 +42,13 @@ public class ChildrenMain extends AppCompatActivity {
     private Map<String,ImageView> imageViewMap = new HashMap<>();
     private Map<String,TextView> textViewMap = new HashMap<>();
 
-    public static int mySendSize;
     private static String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_children_main);
         setTabHost();
-        String service = "showMysended";
-        getMySendedAlarm(service);
+        getMySendedAlarm();
 
     }
     public void setTabHost(){
@@ -104,7 +103,7 @@ public class ChildrenMain extends AppCompatActivity {
                 switch (tabId){
                     case "tag1":
                         imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.notchat);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
                         imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
                         imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.childrenColor));
@@ -114,7 +113,7 @@ public class ChildrenMain extends AppCompatActivity {
                         break;
                     case "tag2":
                         imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.chat);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian1);
                         imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
                         imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -124,7 +123,7 @@ public class ChildrenMain extends AppCompatActivity {
                         break;
                     case "tag3":
                         imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.notchat);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
                         imageViewMap.get("tag3").setImageResource(R.mipmap.location);
                         imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -134,7 +133,7 @@ public class ChildrenMain extends AppCompatActivity {
                         break;
                     case "tag4":
                         imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.notchat);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
                         imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
                         imageViewMap.get("tag4").setImageResource(R.mipmap.myself);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -160,16 +159,17 @@ public class ChildrenMain extends AppCompatActivity {
         textViewMap.put(tag,textView);
         return view;
     }
-    public void getMySendedAlarm(String service){
+    public void getMySendedAlarm(){
         SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
         String phone = sp.getString("phone","");
+        Log.e("new要死了，","啊啊啊");
         final String data = phone;
         new Thread(){
             @Override
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/"+service);
+                    URL url = new URL("http://"+ip+":8080/vhome/showMysended");
                     ConnectionUtil util = new ConnectionUtil();
                     //发送数据
                     HttpURLConnection connection = util.sendData(url,data);
@@ -180,28 +180,26 @@ public class ChildrenMain extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Gson gson = new Gson();
-                                SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
                                 String json = data;
                                 //得到集合对应的具体类型
                                 Type type = new TypeToken<List<AlarmBean>>(){}.getType();
                                 List<AlarmBean> alarm = gson.fromJson(json,type);
-                                mySendSize = alarm.size();
-                                for (int i=0;i<mySendSize;i++){
+                                WarnFragment.alarmBeanList = new ArrayList<>();
+                                for (int i=0;i<alarm.size();i++){
+                                    SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
                                     int alarmId = alarm.get(i).getAlarmId();
                                     String time = alarm.get(i).getAlarmTime();
                                     String content = alarm.get(i).getContent();
                                     String receivePerson = alarm.get(i).getReceivePersonId();
-                                    String[] timer = time.split(":");
-                                    int clocktype = alarm.get(i).getClocktype();
-                                    editor.putInt("alarmId"+i,alarmId);
-                                    editor.putString("hour"+i,timer[0]);
-                                    editor.putString("minute"+i,timer[1]);
-                                    editor.putString("content"+i,content);
-                                    editor.putString("receiveperson"+i,receivePerson);
-                                    editor.putString("sendperson"+i,phone);
-                                    editor.putInt("clocktype"+i, clocktype);
-                                    editor.commit();
+                                    String sendPerson = alarm.get(i).getSendPersonId();
+                                    AlarmBean alarmBean = new AlarmBean();
+                                    alarmBean.setAlarmId(alarmId);
+                                    alarmBean.setAlarmTime(time);
+                                    alarmBean.setContent(content);
+                                    alarmBean.setReceivePersonId(receivePerson);
+                                    alarmBean.setSendPersonId(sendPerson);
+                                    WarnFragment.alarmBeanList.add(alarmBean);
                                 }
                             }
                         });

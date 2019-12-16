@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="144a36bb-64da-494e-9969-1c97dc720d7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../drawable/dialog_shape.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../drawable/item_shape.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../drawable/left_bottom_shape.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../drawable/right_bottom_shape.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liaotian0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liaotian1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/MyApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/MyApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/ChildrenMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/ChildrenMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/LocationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/LocationFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/WarnFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/WarnFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/historyAdapter/HistoryWarnAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/children/fragment/historyAdapter/HistoryWarnAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/h/jpc/vhome/parents/fragment/MyselfFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/h/jpc/vhome/parents/fragment/MyselfFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/delete_bg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../drawable/delete_bg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/delete_item_point_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../drawable/delete_list_item_bg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../drawable/button_press.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/dialog_add_new_normal_warn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/dialog_add_new_normal_warn.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/dialog_quary_all_warn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/dialog_quary_all_warn.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/dialog_send_new_warn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/dialog_send_new_warn.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/fragment_children_myself.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/fragment_children_myself.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/fragment_children_warn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/fragment_children_warn.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/item_history_alarm_warn.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/item_history_alarm_warn.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/item_listview_delete.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/item_listview_delete.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../layout/tab_space_children.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../layout/tab_space_children.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../ServiceProject/vhome/src/alarm/controller/SendNewAlarmServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../ServiceProject/vhome/src/alarm/controller/SendNewAlarmServlet.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../../.." />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1405" />
+    <option name="height" value="1005" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="android.sdk.path" value="F:/xuexi/Android/AndroidSDK" />
+    <property name="last_opened_file_path" value="F:/xuexi/Android/ch06ResourcesDemo" />
+    <property name="settings.editor.selected.configurable" value="ics" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="144a36bb-64da-494e-9969-1c97dc720d7e" name="Default Changelist" comment="" />
+      <created>1576455816973</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576455816973</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.23712021" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
+    </layout>
+  </component>
+</project>

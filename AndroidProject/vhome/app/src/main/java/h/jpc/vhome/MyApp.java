@@ -150,7 +150,7 @@ public class MyApp extends com.activeandroid.app.Application {
     public static ArrayList<String> selectedUser;
     //10.7.89.13
     //10.7.89.128  192.168.199.158
-    private String ip = "10.7.81.220";
+    private String ip = "10.7.89.237";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
@@ -179,7 +179,7 @@ public class MyApp extends com.activeandroid.app.Application {
     /**
      * 轨迹服务ID
      */
-    public long serviceId = 218366;//这里是申请的鹰眼服务id
+    public long serviceId = 218002;//这里是申请的鹰眼服务id
 
     /**
      * Entity标识

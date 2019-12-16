@@ -8,11 +8,11 @@
         android:allowBackup="false"
         android:hardwareAccelerated="false"
         android:listSelector="@android:color/transparent"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         tools:replace="android:allowBackup,android:icon"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_security_config">
         <meta-data
             android:name="AA_DB_NAME"
@@ -41,7 +41,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="naPrEZlXot73MxhiggzvGRMLWoA4FTsx" />
+            android:value="ESou607h0sjFs7HkioFg7ykHDKR5NDWN" />
 
         <!--鹰眼轨迹-->
         <service
@@ -70,9 +70,6 @@
         </activity>
         <activity
             android:name=".chat.activity.ContactsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".children.fragment.TracingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.activity.PersonalActivity"

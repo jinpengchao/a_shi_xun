@@ -65,7 +65,7 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout myRelation;
     private RelativeLayout mySetting;
     private RelativeLayout myResetPwd;
-    private Button myLogout;
+    private RelativeLayout myLogout;
     private EventBus eventBus;
     public static String header_phone;
     private OkHttpClient okHttpClient;
@@ -77,9 +77,6 @@ public class MyselfFragment extends BaseFragment {
                     initData();
                     initMyselfInfo();
                     Log.e("handler","Handler");
-//                    SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-//                    String imgName = sp.getString("headImg","");
-//                    Glide.with(getActivity()).load("http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName).placeholder(R.mipmap.sss).into(header);
             }
         }
     };
@@ -144,6 +141,14 @@ public class MyselfFragment extends BaseFragment {
             }
         }.start();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData();
+        initMyselfInfo();
+    }
+
     private void initData(){
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         header_phone = sp.getString("phone","");
@@ -163,7 +168,7 @@ public class MyselfFragment extends BaseFragment {
     public void initMyselfInfo(){
         Log.e("缓存的个人信息","old");
         sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-        String id = sp2.getString("id","");
+        String id = sp2.getString("phone","");
         String nickName = sp2.getString("nickName","");
         String sex = sp2.getString("sex","");
         String area = sp2.getString("area","");
@@ -202,11 +207,13 @@ public class MyselfFragment extends BaseFragment {
             SharedPreferences.Editor editor1 = sp1.edit();
             editor.clear();
             editor1.clear();
-            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
-            if(null!=files){
-                deleteCache(files);
-                editor.commit();
-            }
+            editor1.commit();
+            editor.commit();
+//            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
+//            if(null!=files){
+//                deleteCache(files);
+//                editor.commit();
+//            }
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画
@@ -219,13 +226,13 @@ public class MyselfFragment extends BaseFragment {
             ToastUtil.shortToast(getActivity(), "退出失败");
         }
     }
-    public void deleteCache(File[] files){
-        boolean flag;
-        for(File itemFile : files){
-            flag = itemFile.delete();
-            if (flag == false) {
-                deleteCache(itemFile.listFiles());
-            }
-        }
-    }
+//    public void deleteCache(File[] files){
+//        boolean flag;
+//        for(File itemFile : files){
+//            flag = itemFile.delete();
+//            if (flag == false) {
+//                deleteCache(itemFile.listFiles());
+//            }
+//        }
+//    }
 }

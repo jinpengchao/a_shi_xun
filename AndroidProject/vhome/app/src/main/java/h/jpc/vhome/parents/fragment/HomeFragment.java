@@ -50,7 +50,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class HomeFragment extends BaseFragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
-    private ImageView alarm;
+    private Button alarm;
     private ImageView weather;
     private ImageView news;
     private ImageView tools;
@@ -80,7 +80,7 @@ public class HomeFragment extends BaseFragment {
          *  时间：2019年11月26日18:41:11
          */
         alarm = view.findViewById(R.id.chizixin);
-        Glide.with(getActivity()).load(R.mipmap.nz).into(alarm);
+//        Glide.with(getActivity()).load(R.mipmap.nz).into(alarm);
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +199,7 @@ public class HomeFragment extends BaseFragment {
                                     Gson gson = new Gson();
                                     ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
                                     String phone = userInfo.getPhone();
-                                    String id = userInfo.getId();
+                                    String id = userInfo.getPhone();
                                     String nickName = userInfo.getNikeName();
                                     String sex = userInfo.getSex();
                                     String area = userInfo.getArea();

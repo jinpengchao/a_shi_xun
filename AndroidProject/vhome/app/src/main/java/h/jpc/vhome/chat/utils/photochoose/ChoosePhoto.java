@@ -122,7 +122,7 @@ public class ChoosePhoto {
         });
     }
     public void saveHeaderImg(String path){
-        SharedPreferences sp = mContext.getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        SharedPreferences sp = mContext.getSharedPreferences("user",MODE_PRIVATE);
         String phone = sp.getString("phone","");
         int type = sp.getInt("type",0);
         String[] file = path.split("/");

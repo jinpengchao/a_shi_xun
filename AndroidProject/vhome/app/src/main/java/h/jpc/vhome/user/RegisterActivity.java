@@ -58,6 +58,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private Button registerBtn;
     private RadioGroup radioGroup;
     private RadioButton rb;
+    private RadioButton rb1;
+    private RadioButton rb2;
     int i = 30;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -75,12 +77,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-
+                        registerUser();
                         finish();
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码",
                                 Toast.LENGTH_SHORT).show();
                     } else {
+                        Toast.makeText(getApplicationContext(), "验证码错误！",
+                                Toast.LENGTH_SHORT).show();
                         ((Throwable) data).printStackTrace();
                     }
                 }
@@ -118,6 +122,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         requestCodeBtn = (Button) findViewById(R.id.request_code_btn);
         registerBtn = (Button) findViewById(R.id.registerOK);
         radioGroup = (RadioGroup) findViewById(R.id.rgType);
+        rb1 = (RadioButton) findViewById(R.id.rb1);
+        rb2 = (RadioButton) findViewById(R.id.rb2);
     }
     private void init() {
         requestCodeBtn.setOnClickListener(this);
@@ -180,8 +186,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 //将收到的验证码和手机号提交再次核对
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
-                registerUser();
-//                registerOver();
                 break;
         }
     }
@@ -261,65 +265,78 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String phoneNums = inputPhoneEt.getText().toString();
         String nikeNames = userName.getText().toString();
         String passWords = etPwd.getText().toString();
-        String rbText = rb.getText().toString();
         String id = getRandomId(6);
-        int type;
-        if(rbText.equals("父母注册")){
-            type = 0;
-        }else{
-            type = 1;
-        }
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = sdf.format(date);
-        final User user = new User(phoneNums,passWords,time,nikeNames,id,"","",type);
-        Gson gson = new Gson();
-        final String data = gson.toJson(user);
-        new Thread(){
-            @Override
-            public void run() {
-                String ip = (new MyApp()).getIp();
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/register");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    final String data = util.getData(connection);
-                    if(null!=data){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplication(),data,Toast.LENGTH_SHORT).show();
-                            }
-                        });
+        int type = -1;
+        if(nikeNames.length()==0 || nikeNames.length()>=16){
+            Toast.makeText(this,"请输入正确的昵称！", Toast.LENGTH_SHORT).show();
+        } else if(phoneNums.length()!=11){
+            Toast.makeText(this,"请检查手机号是否正确！", Toast.LENGTH_SHORT).show();
+        } else if (passWords.length()<4){
+            Toast.makeText(this,"密码至少4位！", Toast.LENGTH_SHORT).show();
+        } else if (!rb1.isChecked() && !rb2.isChecked()){
+            Toast.makeText(this,"请先选择一款需要的系统！", Toast.LENGTH_SHORT).show();
+        } else {
+            String rbText = rb.getText().toString();
+            if(rbText.equals("父母注册")){
+                type = 0;
+            }else{
+                type = 1;
+            }
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time = sdf.format(date);
+            final User user = new User(phoneNums, passWords, time, nikeNames, id, "", "", type);
+            Gson gson = new Gson();
+            final String data = gson.toJson(user);
+            new Thread() {
+                @Override
+                public void run() {
+                    String ip = (new MyApp()).getIp();
+                    try {
+                        URL url = new URL("http://" + ip + ":8080/vhome/register");
+                        ConnectionUtil util = new ConnectionUtil();
+                        //发送数据
+                        HttpURLConnection connection = util.sendData(url, data);
+                        //获取数据
+                        final String data = util.getData(connection);
+                        if (null != data) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (data.equals("yes")){
+                                        JMessageClient.register(phoneNums, passWords, new BasicCallback() {
+                                            @Override
+                                            public void gotResult(int i, String s) {
+                                                SharePreferenceManager.setRegisterName(phoneNums);
+                                                SharePreferenceManager.setRegistePass(passWords);
+                                                Log.e("MainActivity", "极光注册-->over");
+                                            }
+                                        });
+                                        Intent i = new Intent();
+                                        i.setClass(RegisterActivity.this, MainActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("phone", phoneNums);
+                                        bundle.putString("pwd", passWords);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+                                        finish();
+                                        overridePendingTransition(
+                                                R.anim.in,//进入动画
+                                                R.anim.out//出去动画
+                                        );
+                                        finish();
+                                    }else
+                                        Toast.makeText(getApplication(), "该手机号已经被注册", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            }
-        }.start();
-        JMessageClient.register(phoneNums, passWords, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                SharePreferenceManager.setRegisterName(phoneNums);
-                SharePreferenceManager.setRegistePass(passWords);
-                Log.e("MainActivity","极光注册-->over");
-            }
-        });
-        Intent i = new Intent();
-        i.setClass(this,MainActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putString("phone",phoneNums);
-        bundle.putString("pwd",passWords);
-        i.putExtras(bundle);
-        startActivity(i);
-        finish();
-        overridePendingTransition(
-                R.anim.in,//进入动画
-                R.anim.out//出去动画
-        );
+            }.start();
+        }
     }
 }
