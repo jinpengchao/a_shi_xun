@@ -23,12 +23,13 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.signature.StringSignature;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,12 @@ import h.jpc.vhome.chat.activity.ResetPasswordActivity;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
+import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyNewsActivity;
+import h.jpc.vhome.parents.fragment.myself.MyPostActivity;
+import h.jpc.vhome.util.ConnectionUtil;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.Call;
@@ -67,6 +74,12 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout myResetPwd;
     private RelativeLayout myLogout;
     private EventBus eventBus;
+    private TextView tvAttention;
+    private TextView tvFuns;
+    private String TAG = "MyselfFragment";
+    private RelativeLayout tvMyPost;
+    private RelativeLayout tvMyCollect;
+    private RelativeLayout tvMyNews;
     public static String header_phone;
     private OkHttpClient okHttpClient;
     public Handler handler = new Handler(){
@@ -77,6 +90,24 @@ public class MyselfFragment extends BaseFragment {
                     initData();
                     initMyselfInfo();
                     Log.e("handler","Handler");
+//                    SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+//                    String imgName = sp.getString("headImg","");
+//                    Glide.with(getActivity()).load("http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName).placeholder(R.mipmap.sss).into(header);
+                    break;
+                case 5:
+                    Bundle bundle = msg.getData();
+                    String receive = bundle.getString("data");
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(receive);
+                        int attentionNum = jsonObject.getInt("attentionNum");
+                        int funsNum = jsonObject.getInt("funsNum");
+                        tvAttention.setText(attentionNum+"");
+                        tvFuns.setText(funsNum+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
@@ -84,8 +115,33 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
+
+        getViews(view);
+
+        getCount();//获取关注和粉丝数
+
+
+        //点击关注的人的时候,显示关注人的列表
+        tvAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyAttentionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        //点击粉丝的时候，显示粉丝列表
+        tvFuns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyFunsActivity.class);
+                startActivity(intent);
+            }
+        });
         okHttpClient = new OkHttpClient();
         asyncDownOp();
+
         blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
         header = (ImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
@@ -129,8 +185,87 @@ public class MyselfFragment extends BaseFragment {
             }
         });
 
+        initMyselfInfo();
+        initData();
+
+        tvMyPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyPostActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMyCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyCollectionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        tvMyNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyNewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
+
+    private void getViews(View view) {
+        blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
+        header = (ImageView) view.findViewById(R.id.parent_head);
+        nikeName = (TextView) view.findViewById(R.id.parent_name);
+        ids = (TextView) view.findViewById(R.id.parent_id);
+        areas = (TextView) view.findViewById(R.id.parent_area);
+        sexs = (ImageView) view.findViewById(R.id.parent_sex);
+        myRelation = view.findViewById(R.id.my_relation);
+//        mySetting = view.findViewById(R.id.my_setting);
+        myLogout = view.findViewById(R.id.my_logout);
+        myResetPwd = view.findViewById(R.id.my_resetpwd);
+        tvAttention = view.findViewById(R.id.tv_myself_attention);
+        tvFuns = view.findViewById(R.id.tv_myself_funs);
+        tvMyCollect = view.findViewById(R.id.tv_myself_mycollect);
+        tvMyNews = view.findViewById(R.id.tv_myself_mynews);
+        tvMyPost = view.findViewById(R.id.tv_myself_mypost);
+    }
+
+
+    /**
+     * 获取关注数和粉丝数
+     */
+    private void getCount() {
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+                String personId = sp.getString("id","");
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/GetCountServlet?personId="+personId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (null!=receive&&!"".equals(receive)){
+                        Log.i(TAG, "run: 获得数量成功！");
+                        util.sendMsg(receive,5,handler);
+                    }else {
+                        Log.e(TAG, "run: 获取关注和粉丝数量失败" );
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 初始化数据
+     */
     public void asyncDownOp() {
         new Thread(){
             @Override
@@ -140,13 +275,6 @@ public class MyselfFragment extends BaseFragment {
                 handler.sendMessage(msg);
             }
         }.start();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        initData();
-        initMyselfInfo();
     }
 
     private void initData(){
@@ -209,11 +337,6 @@ public class MyselfFragment extends BaseFragment {
             editor1.clear();
             editor1.commit();
             editor.commit();
-//            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
-//            if(null!=files){
-//                deleteCache(files);
-//                editor.commit();
-//            }
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画
@@ -226,13 +349,21 @@ public class MyselfFragment extends BaseFragment {
             ToastUtil.shortToast(getActivity(), "退出失败");
         }
     }
-//    public void deleteCache(File[] files){
-//        boolean flag;
-//        for(File itemFile : files){
-//            flag = itemFile.delete();
-//            if (flag == false) {
-//                deleteCache(itemFile.listFiles());
-//            }
-//        }
-//    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getCount();
+        initMyselfInfo();
+        initData();
+    }
+    public void deleteCache(File[] files) {
+        boolean flag;
+        for (File itemFile : files) {
+            flag = itemFile.delete();
+            if (flag == false) {
+                deleteCache(itemFile.listFiles());
+            }
+        }
+    }
 }

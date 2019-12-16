@@ -26,13 +26,11 @@
             android:id="@+id/bt_fath"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:spinnerMode="dropdown"
-            android:popupBackground="@color/color_grey_eaeaea"
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/white"
             android:text="查看父亲"
-            android:textAlignment="center"
-            android:background="@color/color_b3b3b3"
-            android:dropDownSelector="@color/choseColor"/>
+            android:textAlignment="center" />
         <TextView
             android:layout_weight="0.1"
             android:layout_width="20dp"
@@ -44,12 +42,11 @@
             android:id="@+id/bt_moth"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAlignment="center"
             android:spinnerMode="dropdown"
-            android:dropDownSelector="@color/choseColor"
-            android:popupBackground="@color/color_grey_eaeaea"
-            android:text="查看母亲"
-            android:background="@color/color_b3b3b3"/>
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/white"
+            android:textAlignment="center"
+            android:text="查看母亲" />
     </LinearLayout>
 
 

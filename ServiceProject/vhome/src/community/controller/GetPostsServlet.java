@@ -47,8 +47,9 @@ public class GetPostsServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String data = null;
 		List<PostBean> list = null;
+		String personId = null;
 		//获取当前人的id
-		String personId = request.getParameter("personId");
+		personId = request.getParameter("personId");
 //		获取当前人的所有收藏表
 		List<CollectionBean> collections = (new CollectionService()).findCollection(personId);
 		//获取当前人的所有点赞表

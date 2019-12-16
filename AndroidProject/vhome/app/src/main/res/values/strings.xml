@@ -1,14 +1,13 @@
 <resources>
-    <string-array name="indicator_title">
-        <item>推荐</item>
-    </string-array>
+    <string name="title_activity_intent">IntentActivity</string>
+    <string name="title_activity_radio">RadioActivity</string>
     <string name="app_name">微家</string>
     <string name="userName">用户名</string>
+    <string name="change_user_btn">切换账号</string>
+    <string name="register">注册</string>
     <!-- fixProfile界面中使用到的字符串 -->
 
     <!-- ReLogin/login/register界面中使用到的字符串 -->
-    <string name="change_user_btn">切换账号</string>
-    <string name="register">注册</string>
     <string name="registering_hint">注册中</string>
     <string name="register_failed_toast">注册失败</string>
     <string name="login">登录</string>
@@ -30,10 +29,10 @@
     <string name="preview_count">预览(%1$s)</string>
     <string name="preview_image_count">%1$s/%2$s</string>
     <string name="origin_size">原图(%1$s)</string>
-
-    <!-- fixProfile界面中使用到的字符串 -->
     <string name="nickname_hit">昵称</string>
     <string name="jmui_take_new_photo">拍摄照片</string>
+
+    <!-- fixProfile界面中使用到的字符串 -->
     <string name="jmui_take_photo">拍照</string>
     <string name="jmui_pick_picture_from_local">选择图片</string>
     <string name="get_photo">　使用照片</string>
@@ -42,10 +41,10 @@
     <string name="later_setting">稍后设置</string>
     <string name="saving_hint">正在保存</string>
     <string name="nickname_save_failed">昵称保存失败</string>
-
-    <!--聊天相关-->
     <string name="network_disconnected_hint">当前网络不可用, 请检查您的网络设置</string>
     <string name="actionbar_msg">会话</string>
+
+    <!--聊天相关-->
     <string name="cross_app_key">跨应用</string>
     <string name="actionbar_conversation">会话</string>
     <string name="actionbar_contact">通讯录</string>
@@ -157,13 +156,13 @@
     <string name="jmui_sdcard_not_exist_toast">暂无外部存储</string>
     <string name="camera_not_prepared">摄像头尚未准备好</string>
     <string name="sdcard_not_prepare_toast">sdcard尚未准备好</string>
-
     <string name="select_friend_title">添加成员</string>
     <string name="selected_num">(%s)</string>
 
-    <!-- 通讯录相关-->
     <string name="switch_to_friendless_mode">切换到无好友模式</string>
     <string name="switch_to_friend_mode">切换到好友模式</string>
+
+    <!-- 通讯录相关-->
     <string name="switch_to_friend_mode_hint">在设置中切换到好友模式\n以启用通讯录功能</string>
     <string name="friend_inviting">等待验证</string>
     <string name="friend_verify_title">验证消息</string>
@@ -178,10 +177,10 @@
     <string name="decline_friend_invitation">对方已拒绝</string>
     <string name="delete_friend_dialog_title">确定删除好友？</string>
     <string name="friend_already_deleted_hint">已移除好友</string>
-
-    <!-- 发送文件 -->
     <string name="file">文件</string>
     <string name="document">文档</string>
+
+    <!-- 发送文件 -->
     <string name="album">相册</string>
     <string name="audio">音频</string>
     <string name="other">其他</string>
@@ -192,10 +191,10 @@
     <string name="download_file_failed">下载失败</string>
     <string name="file_not_support_hint">无法打开该类型的文件</string>
     <string name="file_already_copy_hint">文件已保存到 sdcard/JChatDemo/recvFiles 目录下</string>
-
-    <!--设置相关-->
     <string name="birthday">出生日期</string>
     <string name="sex">性别</string>
+
+    <!--设置相关-->
     <string name="area">地区</string>
     <string name="sign">个性签名</string>
     <string name="commit">确认</string>
@@ -258,18 +257,18 @@
     <string name="end_time">结束时间</string>
     <string name="jmui_logout_confirm">确定退出登录？</string>
     <string name="somebody_at_me">[有人@我]</string>
-
     <string name="about">关于</string>
     <string name="demo_version_name">demo版本号:%s</string>
+
     <string name="sdk_version">\nsdk版本号:</string>
     <string name="about_date">\n12月16日</string>
     <string name="new_functions">\n增加通讯录功能，在设置中打开好友模式即可开启。
         \n（无好友与好友模式的区别在于添加好友的时候是否需要验证，无好友模式添加完后可以直接进行会话）
         \n 增加发送位置功能</string>
-
-    <!--聊天详情-->
     <string name="friend_request_title">新朋友</string>
     <string name="friend_info">好友信息</string>
+
+    <!--聊天详情-->
     <string name="group">群聊</string>
     <string name="unnamed">未命名</string>
     <string name="undesc">无描述</string>
@@ -306,26 +305,26 @@
     <string name="jmui_delete_group_confirm_title">确定删除并退出群聊？</string>
     <string name="deleting_hint">删除中</string>
     <string name="group_exit_btn">删除并退出</string>
-
     <string name="crop_image_title">裁剪头像</string>
+    <string name="user_logout_dialog_title">下线提示</string>
+
+    <string name="user_logout_dialog_message">您的账号已经在另一台设备上登录，您被迫下线</string>
 
     <!-- 下线提示 -->
-    <string name="user_logout_dialog_title">下线提示</string>
-    <string name="user_logout_dialog_message">您的账号已经在另一台设备上登录，您被迫下线</string>
     <string name="user_delete_hint_message">您的账号已被删除，您被迫下线</string>
     <string name="change_password_message">您的密码已被修改，请重新登录</string>
-
     <string name="ac_search_no_result_pre">没有搜到</string>
     <string name="ac_search_no_result_suffix">相关的信息</string>
+
     <string name="server_abnormal_toast">服务器返回异常，请重试</string>
     <string name="connect_failed_toast">连接服务器失败，请稍后重试</string>
     <string name="server_return_error_toast">服务器返回格式错误</string>
     <string name="unknown_error_toast">未知错误</string>
     <string name="system_error_toast">系统内部错误，请稍候重试</string>
     <string name="parameter_illegal">参数值不合法</string>
-    <!--以下为错误码提示-->
     <string name="jmui_server_800002">AppKey信息为空</string>
     <string name="jmui_server_800003">AppKey未注册</string>
+    <!--以下为错误码提示-->
     <string name="jmui_server_800004">用户ID为空</string>
     <string name="jmui_server_800005">用户ID未注册(AppKey无该UID)</string>
     <string name="jmui_server_800006">用户ID不存在(数据库中无该UID)</string>
@@ -418,20 +417,25 @@
     <string name="scan_qrcode_hint">将取景框对准二维码，即可自动扫描</string>
     <string name="unsupported_msg">当前版本不支持此消息类型</string>
     <string name="no_more_load">没有更多数据啦</string>
-
-    <!-- 聊天室相关 -->
     <string name="room_name">聊天室名称</string>
     <string name="room_desc">聊天室介绍</string>
+
+    <!-- 聊天室相关 -->
     <string name="room_owner">房主</string>
     <string name="room_keeper">管理员</string>
     <string name="room_exit">退出聊天室</string>
+    <string name="start_trace">开启服务</string>
+    <!--    <string-array name="indicator_title">-->
+    <!--        <item>推荐</item>-->
+    <!--        <item>订阅</item>-->
+    <!--        <item>历史</item>-->
+    <!--    </string-array>-->
 
     <!--鹰眼轨迹相关-->
-<!--    <string name="app_title">百度鹰眼Android SDK</string>-->
-<!--    <string name="trans_url">http://192.168.43.75:8080/</string>-->
+    <!--    <string name="app_title">百度鹰眼Android SDK</string>-->
+    <!--    <string name="trans_url">http://192.168.43.75:8080/</string>-->
 
     <!-- 追踪控制子选项 -->
-    <string name="start_trace">开启服务</string>
     <string name="stop_trace">停止服务</string>
     <string name="start_gather">开启采集</string>
     <string name="stop_gather">停止采集</string>
@@ -443,34 +447,37 @@
     <string name="tracing_options_title">追踪设置</string>
     <string name="track_query_title">轨迹查询</string>
     <string name="track_query_options_title">查询设置</string>
-    <!-- 起止时间子选项 -->
     <string name="start_time">开始：</string>
+    <!-- 起止时间子选项 -->
     <string name="end">结束：</string>
     <string name="all_cancel">取消</string>
     <string name="all_sure">确定</string>
+    <string name="no_supplement">不补充</string>
 
     <!-- 公共字符串 里程补偿选项 -->
-    <string name="no_supplement">不补充</string>
     <string name="straight">直线距离</string>
     <string name="driving">最短驾车路线</string>
     <string name="riding">最短骑行路线</string>
     <string name="walking">最短步行路线</string>
+    <string name="bd09ll">百度经纬度坐标</string>
 
     <!-- 公共字符串 坐标类型 -->
-    <string name="bd09ll">百度经纬度坐标</string>
     <string name="gcj02">国测局加密坐标</string>
     <string name="all_supplement_model">里程补偿方式:</string>
     <string name="all_coord_type">坐标类型:</string>
+    <string name="track_query_option_time">起止时间:</string>
 
     <!-- TrackQueryOptionsActivity主选项 -->
-    <string name="track_query_option_time">起止时间:</string>
     <string name="track_query_option_process">纠偏与数据分析:</string>
     <string name="track_query_option_radius_threshold">精度过滤(单位:米):</string>
     <string name="track_query_option_transport_mode">交通方式:</string>
     <string name="track_query_option_sort_type">排序规则:</string>
+    <string name="driving_mode">驾车</string>
 
     <!-- 交通方式子选项 -->
-    <string name="driving_mode">驾车</string>
     <string name="riding_mode">骑行</string>
     <string name="walking_mode">步行</string>
+    <string-array name="indicator_title">
+        <item>推荐</item>
+    </string-array>
 </resources>

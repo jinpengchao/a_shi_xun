@@ -48,6 +48,15 @@ public class GoodPostService {
 		return (new GoodPostDao()).queryGoodPosts(personId);
 	
 	}
+	//通过发布人id查找点赞人id
+	public List<String> findGoodPersonId(String publishPersonId){
+		return (new GoodPostDao()).queryGoodPerson(publishPersonId);
+	}
+	
+	//通过帖子id和点赞人id查询一条点赞信息
+	public GoodPostBean findGoodPost(String personId,int postId) {
+		return (new GoodPostDao()).queryGoodPosts(personId, postId);
+	}
 	/**
 	 * 通过postId查询数量
 	 *  @title:findGoodPostCount
@@ -57,5 +66,13 @@ public class GoodPostService {
 	 */
 	public int findGoodPostCount(int postId) {
 		return (new GoodPostDao()).queryGoodPostCount(postId);
+	}
+	//通过id删除点赞信息
+	public int removeGoodPost(int id) {
+		return (new GoodPostDao()).delGoodPost(id);
+	}
+	//通过点赞人id和帖子id删除点赞信息
+	public int removeGoodPost(String goodPersonId,int postId) {
+		return (new GoodPostDao()).delGoodPost(goodPersonId,postId);
 	}
 }

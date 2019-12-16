@@ -123,6 +123,7 @@
                 android:text="关注：">
             </TextView>
             <TextView
+                android:id="@+id/tv_myself_attention"
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,6 +139,7 @@
                 android:text="粉丝：">
             </TextView>
             <TextView
+                android:id="@+id/tv_myself_funs"
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,6 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <RelativeLayout
+                android:id="@+id/tv_myself_mynews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rl_press"
@@ -169,6 +172,7 @@
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
+
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/msg1"
@@ -188,7 +192,8 @@
                 </ImageView>
             </RelativeLayout>
             <RelativeLayout
-                android:layout_marginTop="10dp"
+                android:id="@+id/tv_myself_mypost"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rl_press"
@@ -203,6 +208,7 @@
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
+
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/post1"
@@ -223,6 +229,7 @@
                 </ImageView>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/tv_myself_mycollect"
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -239,6 +246,7 @@
                 </ImageView>
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

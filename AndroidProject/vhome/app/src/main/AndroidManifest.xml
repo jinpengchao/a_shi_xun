@@ -41,13 +41,14 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="ESou607h0sjFs7HkioFg7ykHDKR5NDWN" />
+
+            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
 
         <!--鹰眼轨迹-->
         <service
-        android:name="com.baidu.trace.LBSTraceService"
-        android:enabled="true"
-        android:process=":remote" />
+            android:name="com.baidu.trace.LBSTraceService"
+            android:enabled="true"
+            android:process=":remote" />
         <!--轨迹采集上传服务-->
         <activity android:name=".children.fragment.TrackQueryActivity"/>
         <activity android:name=".children.fragment.TracingActivity"/>
@@ -331,6 +332,11 @@
         <activity android:name=".children.fragment.WarnFragment" />
         <activity android:name=".parents.fragment.news.NewsActivity" />
         <activity android:name=".parents.fragment.weather.WeatherActivity" />
+        <activity android:name=".parents.fragment.myself.MyNewsActivity"></activity>
+        <activity android:name=".parents.fragment.myself.MyCollectionsActivity" />
+        <activity android:name=".parents.fragment.myself.MyPostActivity" />
+        <activity android:name=".parents.fragment.myself.MyFunsActivity" />
+        <activity android:name=".parents.fragment.myself.MyAttentionsActivity" />
 
         <meta-data
             android:name="AA_DB_NAME"

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,9 +26,12 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -36,14 +40,18 @@ import androidx.fragment.app.Fragment;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
 import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
+import static android.content.Context.MODE_PRIVATE;
 import static cn.jpush.im.android.api.jmrtc.JMRTCInternalUse.getApplicationContext;
 
-public class HotspotFragment extends Fragment {
+public class HotspotFragment extends Fragment implements AbsListView.OnScrollListener {
+    private final static String TAG = "HotspotFragment";
     private ListView lvHotSpot;
     private MyClickListener listener;
     private View view;
@@ -57,6 +65,10 @@ public class HotspotFragment extends Fragment {
     private List<PostBean> loadList = new ArrayList<>();
     private int loadNum = 0;
     private TextView tvEmpty;
+    private int firstPosition; //滑动以后的可见的第一条数据
+    private int top;//滑动以后的第一条item的可见部分距离top的像素值
+    private SharedPreferences sp;//偏好设置
+    private SharedPreferences.Editor editor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,7 +109,6 @@ public class HotspotFragment extends Fragment {
                         loadList.add(list.get(k));
                         loadNum++;
                     }
-                    Log.e("加载数","loadNum"+loadNum);
                 }else{
                     for (int k=0;k<list.size();k++){
                         loadList.add(list.get(k));
@@ -108,9 +119,33 @@ public class HotspotFragment extends Fragment {
                 adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
                 lvHotSpot.setEmptyView(tvEmpty);
+                adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
+                    @Override
+                    public void myLikeClick(int position, int status) {
+                        if(status==1){
+                            delPostLike(position);
+                        }else if(status==0){
+                            addPostLike(position);
+                        }else {
+                            Log.e(TAG, "myLikeClick: 出错");
+                        }
+                    }
+
+                    @Override
+                    public void myCollectClick(int position, int status) {
+                        if(status==1){
+                            delPostCollection(position);
+                        }else if(status==0){
+                            addPostCollection(position);
+                        }else {
+                            Log.e(TAG, "myCollectClick: 出错");
+                        }
+                    }
+                });
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                         Intent simple = new Intent();
                         simple.putExtra("post",list.get(i));
                         simple.setClass(getContext(), CommentActivity.class);
@@ -118,12 +153,159 @@ public class HotspotFragment extends Fragment {
                     }
                 });
                 adapter.notifyDataSetChanged();
+                //定位回到上一次的浏览位置
+                firstPosition=sp.getInt("firstPosition", 0);
+                top=sp.getInt("top", 0);
+                if(firstPosition!=0&&top!=0){
+                    lvHotSpot.setSelectionFromTop(firstPosition, top);
+                }
 
             }
         };
 //        getdata();
         return view;
     }
+
+    /**
+     * 增加收藏数据
+     * @param i
+     */
+    private void addPostCollection(int i) {
+        CollectionBean collection = new CollectionBean();
+        PostBean post = list.get(i);
+        SharedPreferences sp = getActivity().getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
+        String personId = sp.getString("id", "");
+        Log.i("热点：收藏人id===", personId);
+        collection.setPersonId(personId);
+        collection.setPostId(post.getId());
+        //首先准备收藏的数据
+        Date collectDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(collectDate);
+        collection.setTime(time);
+        final Gson gson = new Gson();
+        final String data = gson.toJson(collection);
+        //开启线程保存到数据库
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://" + (new MyApp()).getIp() + ":8080/vhome/SaveCollectionServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    HttpURLConnection connection = util.sendData(url, data);
+                    String receive = util.getData(connection);
+                    if (null != receive && !"".equals(receive)) {
+                        Log.i("hotSpotAdapter", "收藏成功" + data);
+                    } else {
+                        Log.e("hotSpotAdapter", "收藏失败！" + data);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+    }
+
+    /**
+     * 删除收藏数据
+     * @param position
+     */
+    private void delPostCollection(int position) {
+        String personId = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        int postId = list.get(position).getId();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveCollectServlet" +
+                            "?personId="+personId+"&postId="+postId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (receive == null) {
+                        Log.e(TAG, "run: 删除收藏数据出错" );
+                    }else {
+                        Log.i(TAG, "run: 删除收藏数据成功");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    /**
+     * 添加点赞数据
+     * @param i
+     */
+    private void addPostLike(int i) {
+        SharedPreferences sp = getActivity().getSharedPreferences(new MyApp().getPathInfo(), Context.MODE_PRIVATE);
+        GoodPostBean goodPost = new GoodPostBean();
+        goodPost.setPostId(list.get(i).getId());
+        String goodPersonId = sp.getString("id", "");
+        goodPost.setGoodPersonId(goodPersonId);
+        goodPost.setPublishPersonId(list.get(i).getPersonId());
+        Date likeDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(likeDate);
+        goodPost.setTime(time);
+        Gson gson = new Gson();
+        final String likeData = gson.toJson(goodPost);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveGoodPostServlet");
+                    ConnectionUtil connectionUtil = new ConnectionUtil();
+                    HttpURLConnection connection = connectionUtil.sendData(url,likeData);
+                    String receive = connectionUtil.getData(connection);
+                    if (null != receive && !"".equals(receive)) {
+                        Log.i("hotSpotAdapter", "点赞成功" + likeData);
+                    } else {
+                        Log.e("hotSpotAdapter", "点赞失败！" + likeData);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+    }
+
+    /**
+     * 删除点赞数据
+     * @param position
+     */
+    private void delPostLike(int position) {
+        String personId = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE).getString("id","");
+        int postId = list.get(position).getId();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/RemoveGoodPostServlet" +
+                            "?personId="+personId+"&postId="+postId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (receive == null) {
+                        Log.e(TAG, "run: 删除点赞数据出错" );
+                    }else {
+                        Log.i(TAG, "run: 删除点赞数据成功");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     //刷新数据
     public void refreshData(){
         getdata();
@@ -145,11 +327,11 @@ public class HotspotFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void getdata() {
+    public final void getdata() {
         loadNum = 0;
         list.clear();
         loadList.clear();
-        SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), MODE_PRIVATE);
         final String personId = sp.getString("id","");
         new Thread(){
             @Override
@@ -170,6 +352,8 @@ public class HotspotFragment extends Fragment {
     }
 
     private void getViews() {
+        sp=getActivity().getPreferences(MODE_PRIVATE);
+        editor=sp.edit();
         lvHotSpot = view.findViewById(R.id.lv_hot_spot);
         addPost = view.findViewById(R.id.addPost);
         srl = view.findViewById(R.id.srl);
@@ -177,10 +361,11 @@ public class HotspotFragment extends Fragment {
     }
 
     private void registerListener() {
+        lvHotSpot.setOnScrollListener(this);
         listener = new MyClickListener();
         addPost.setOnClickListener(listener);
     }
-   private class MyClickListener implements View.OnClickListener{
+    private class MyClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             switch (view.getId()){
@@ -194,19 +379,28 @@ public class HotspotFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Log.i("hotspot","调用了result方法");
-//        if(requestCode==addPostCode){
-//            Log.e("hotspot","调用了getdata()方法");
-//            getdata();
-//        }
+    public void onResume() {
+        super.onResume();
+        Log.e("hotspot","调用了onResume方法");
+        getdata();
+
     }
 
     @Override
-    public void onResume() {
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
+            firstPosition=lvHotSpot.getFirstVisiblePosition();
+        }
+        View v=lvHotSpot.getChildAt(0);
+        top=v.getTop();
 
-        super.onResume();
-        Log.e("hotspot","调用了onresume方法");
-        getdata();
+        editor.putInt("firstPosition", firstPosition);
+        editor.putInt("top", top);
+        editor.commit();
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
     }
 }

@@ -24,6 +24,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.baidu.trace.model.CoordType;
+import com.baidu.trace.model.SortType;
 import com.baidu.trace.model.TraceLocation;
 
 import java.util.List;
@@ -187,82 +188,57 @@ public class MapUtil {
         }
     }
 
+
+
     /**
      * 绘制历史轨迹
      */
-    public List<LatLng> drawHistoryTrack(List<LatLng> points, boolean staticLine, float direction) {
-        // 绘制新覆盖物前，清空之前的覆盖物
+    public void drawHistoryTrack(List<LatLng> points, boolean staticLine) {
         baiduMap.clear();
         if (points == null || points.size() == 0) {
             if (null != polylineOverlay) {
                 polylineOverlay.remove();
                 polylineOverlay = null;
             }
-            return null;
+            return;
         }
 
         if (points.size() == 1) {
             OverlayOptions startOptions = new MarkerOptions().position(points.get(0)).icon(bmStart)
                     .zIndex(9).draggable(true);
             baiduMap.addOverlay(startOptions);
-            updateMapLocation(points.get(0),direction);
             animateMapStatus(points.get(0));
-            return points;
+            return;
         }
 
-        LatLng startPoint = points.get(0);
-        LatLng endPoint = points.get(points.size() - 1);
+        LatLng  startPoint = points.get(0);
+        LatLng  endPoint = points.get(points.size() - 1);
 
         // 添加起点图标
         OverlayOptions startOptions = new MarkerOptions()
-                .position(startPoint).icon(bmStart)
+                .position(startPoint).icon(BitmapUtil.bmStart)
                 .zIndex(9).draggable(true);
+        if(staticLine==true) {
+            // 添加终点图标
+            OverlayOptions endOptions = new MarkerOptions().position(endPoint)
+                    .icon(bmEnd).zIndex(9).draggable(true);
+            baiduMap.addOverlay(endOptions);
+        }
 
         // 添加路线（轨迹）
         OverlayOptions polylineOptions = new PolylineOptions().width(10)
                 .color(Color.BLUE).points(points);
-        if(staticLine){
-            // 添加终点图标
-            drawEndPoint(endPoint);
-        }
 
         baiduMap.addOverlay(startOptions);
         polylineOverlay = baiduMap.addOverlay(polylineOptions);
 
-        if(staticLine){
-            animateMapStatus(points);
-        }else{
-            updateMapLocation(points.get(points.size() - 1),direction);
-            animateMapStatus(points.get(points.size() - 1));
-        }
-        return points;
+        OverlayOptions markerOptions =
+                new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(bmStart)
+                        .position(points.get(points.size() - 1));
+        mMoveMarker = (Marker) baiduMap.addOverlay(markerOptions);
 
-    }
+        animateMapStatus(points);
 
-    public Marker addOverlay(LatLng currentPoint, BitmapDescriptor icon, Bundle bundle) {
-        OverlayOptions overlayOptions = new MarkerOptions().position(currentPoint)
-                .icon(icon).zIndex(9).draggable(true);
-        Marker marker = (Marker) baiduMap.addOverlay(overlayOptions);
-        if (null != bundle) {
-            marker.setExtraInfo(bundle);
-        }
-        return marker;
-    }
-    /**
-     * 添加地图覆盖物
-     */
-    public void addMarker(LatLng currentPoint) {
-        if (null == mMoveMarker) {
-            mMoveMarker = addOverlay(currentPoint, BitmapUtil.bmArrowPoint, null);
-            return;
-        }
-    }
-
-    public void drawEndPoint(LatLng endPoint) {
-        // 添加终点图标
-        OverlayOptions endOptions = new MarkerOptions().position(endPoint)
-                .icon(bmEnd).zIndex(9).draggable(true);
-        baiduMap.addOverlay(endOptions);
     }
 
     public void updateMapLocation(LatLng currentPoint, float direction) {
@@ -270,7 +246,7 @@ public class MapUtil {
         if(currentPoint == null){
             return;
         }
-        baiduMap.clear();
+
         locData = new MyLocationData.Builder().accuracy(0).
                 direction(direction).
                 latitude(currentPoint.latitude).
@@ -279,33 +255,7 @@ public class MapUtil {
 
     }
 
-    public void updateStatus(LatLng currentPoint, boolean showMarker) {
-        baiduMap.clear();
-        if (null == baiduMap || null == currentPoint) {
-            return;
-        }
-
-        if (null != baiduMap.getProjection()) {
-            Point screenPoint = baiduMap.getProjection().toScreenLocation(currentPoint);
-            // 点在屏幕上的坐标超过限制范围，则重新聚焦底图
-            if (screenPoint.y < 200 || screenPoint.y > MyApp.screenHeight - 500
-                    || screenPoint.x < 200 || screenPoint.x > MyApp.screenWidth - 200
-                    || null == mapStatus) {
-                animateMapStatus(currentPoint);
-            }
-        } else if (null == mapStatus) {
-            // 第一次定位时，聚焦底图
-            animateMapStatus(currentPoint);
-        }
-
-        if (showMarker) {
-            addMarker(currentPoint);
-        }
-
-    }
-
     public void animateMapStatus(List<LatLng> points) {
-        baiduMap.clear();
         if (null == points || points.isEmpty()) {
             return;
         }
@@ -317,7 +267,6 @@ public class MapUtil {
         baiduMap.animateMapStatus(msUpdate);
     }
     public void animateMapStatus(LatLng point) {
-        baiduMap.clear();
         MapStatus.Builder builder = new MapStatus.Builder();
         mapStatus = builder.target(point).build();
         baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatus));

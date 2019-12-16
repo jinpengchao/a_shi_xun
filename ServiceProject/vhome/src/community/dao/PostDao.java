@@ -20,7 +20,6 @@ import entity.PostBean;
  *
  */
 public class PostDao {
-	private Connection con;
 	/**
 	 * 
 	 *  @title:insertPost
@@ -32,7 +31,7 @@ public class PostDao {
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
@@ -72,7 +71,7 @@ public class PostDao {
 		List<PostBean> list = new ArrayList<PostBean>();
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "select * from tbl_post order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -116,7 +115,7 @@ public class PostDao {
 		List<PostBean> list = new ArrayList<PostBean>();
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "select * from tbl_post where personId = ? order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, personId);
@@ -150,6 +149,49 @@ public class PostDao {
 		}
 		return list;
 	}
+	/**
+	 * 通过id查询单个帖子
+	 *  @title:queryPosts
+	 * @Description: todo
+	 * @throws下午7:20:56
+	 * returntype:PostBean
+	 */
+	public PostBean queryPosts(int id){
+		PostBean post = new PostBean();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_post where id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return post;
+	}
 	
 	/**
 	 * 
@@ -162,7 +204,7 @@ public class PostDao {
 		int n = 0;
 		DBUtil util = new DBUtil();
 		try {
-			con = util.getConnection();
+			Connection con = util.getConnection();
 			String sql = "delete from tbl_post where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
