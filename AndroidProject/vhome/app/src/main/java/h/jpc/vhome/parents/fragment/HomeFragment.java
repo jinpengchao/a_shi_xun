@@ -50,10 +50,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class HomeFragment extends BaseFragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
-    private Button alarm;
+    private ImageView alarm;
     private ImageView weather;
     private ImageView news;
-    private ImageView tools;
     public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
@@ -80,7 +79,7 @@ public class HomeFragment extends BaseFragment {
          *  时间：2019年11月26日18:41:11
          */
         alarm = view.findViewById(R.id.chizixin);
-//        Glide.with(getActivity()).load(R.mipmap.nz).into(alarm);
+        Glide.with(getActivity()).load(R.mipmap.nz).into(alarm);
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,22 +124,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
         Glide.with(getActivity()).load(R.mipmap.xw).into(news);
-        /*
-         *  功能：小工具跳转
-         *  作者：靳朋朝
-         *  时间：2019年11月26日09:05:26
-         */
-        tools = view.findViewById(R.id.xiaogongju);
-        Glide.with(getActivity()).load(R.mipmap.gj).into(tools);
-
-        tools.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),AllToolsActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }

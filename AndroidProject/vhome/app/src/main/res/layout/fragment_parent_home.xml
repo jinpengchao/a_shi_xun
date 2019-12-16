@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00ffffff"
         android:orientation="vertical">
         <TextView
             android:id="@+id/yang_li_calendar"
@@ -17,7 +16,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textColor="@color/notChoseColor"
-            android:textSize="30dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/yin_li_calendar"
@@ -36,14 +35,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <Button
+            <ImageView
                 android:id="@+id/chizixin"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                ></Button>
+                ></ImageView>
             <ImageView
                 android:id="@+id/kantianqi"
                 android:layout_marginLeft="20dp"
@@ -54,14 +53,6 @@
                 ></ImageView>
             <ImageView
                 android:id="@+id/quxinwen"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                ></ImageView>
-            <ImageView
-                android:id="@+id/xiaogongju"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_width="match_parent"

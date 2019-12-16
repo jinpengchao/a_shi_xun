@@ -36,15 +36,12 @@ public class ParentMain extends AppCompatActivity {
 
     private String[] tabStringArray = {"首页", "社区", "子女", "我的"};
     private int[] tabImageNoramlArray = {
-            R.mipmap.home, R.mipmap.comment,
-            R.mipmap.child, R.mipmap.me};
+            R.mipmap.home, R.mipmap.comm,
+            R.mipmap.msg, R.mipmap.me};
     private int[] tabImageSelectedArray = {
-            R.mipmap.home1, R.mipmap.comment1,
-            R.mipmap.child1, R.mipmap.me1};
+            R.mipmap.home1, R.mipmap.comm1,
+            R.mipmap.msg1, R.mipmap.me1};
 
-    //定时器
-    private Timer timer;
-    private int sumTime = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
