@@ -45,6 +45,7 @@ import h.jpc.vhome.chat.activity.ResetPasswordActivity;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
+import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
@@ -328,7 +329,6 @@ public class MyselfFragment extends BaseFragment {
                 SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
             }
             JMessageClient.logout();
-
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -345,6 +345,8 @@ public class MyselfFragment extends BaseFragment {
                     R.anim.in,//进入动画
                     R.anim.out//出去动画
             );
+            Intent intent2 = new Intent(getActivity(), AlarmService.class);
+            getActivity().stopService(intent2);// 关闭闹钟服务
         } else {
             ToastUtil.shortToast(getActivity(), "退出失败");
         }
