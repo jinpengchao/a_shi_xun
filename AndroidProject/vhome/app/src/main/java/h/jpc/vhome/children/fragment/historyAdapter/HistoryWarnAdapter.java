@@ -63,41 +63,6 @@ public class HistoryWarnAdapter extends BaseAdapter {
         holder.history_time.setText(alarmBean.getAlarmTime());
         holder.history_receiver.setText(alarmBean.getReceivePersonId());
         holder.history_sender.setText(alarmBean.getSendPersonId());
-//        holder.todetail.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                String content = alarmBeanList.get(arg2).getContent();
-//                new AlertDialog.Builder(getContext())
-//                        .setTitle("是否取消发送？")
-//                        .setItems(R.array.choose,
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog,
-//                                                        int which) {
-//                                        String[] PK = getResources()
-//                                                .getStringArray(
-//                                                        R.array.choose);
-//                                        if (PK[which].equals("取消发送")) {
-//                                            if (null!=alarmBeanList) {
-//                                                alarmBeanList.remove(arg2);
-//                                                Log.e("content",content+"");
-//                                                deleteSendedAlarm(content);
-//                                                historyWarnData(warnInfo);
-//                                                if (alarmBeanList.size()==0){
-//                                                    warnInfo.setText("暂时你还没有发送提醒哦~\r\n快去为爱的人发送一条提醒吧！");
-//                                                }
-//                                                historyWarnAdapter.notifyDataSetChanged();
-//                                            }
-//                                            Toast.makeText(getContext(),"取消成功啦~", Toast.LENGTH_LONG).show();
-//                                        }
-//                                        if (PK[which].equals("关闭")) {
-//                                            String service = "showMysended";
-//                                            getMySendedAlarm(service);
-//                                        }
-//                                    }
-//                                }).show();
-//                return true;
-//            }
-//        });
         return convertView;
     }
 
