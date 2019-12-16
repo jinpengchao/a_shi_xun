@@ -8,7 +8,6 @@ import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -84,7 +84,7 @@ public class NewsActivity extends AppCompatActivity {
 
 
         srl = (SmartRefreshLayout) findViewById(R.id.srl);
-        srl.setReboundDuration(2000);
+        srl.setReboundDuration(1000);
         load();
         lvStus= (ListView) findViewById(R.id.lv_data);
         newsAdapter=new NewsAdapter(getApplicationContext(),news);
@@ -113,7 +113,7 @@ public class NewsActivity extends AppCompatActivity {
         srl.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(news.size() > 40){
+                if(news.size()>40){
                     srl.finishLoadMoreWithNoMoreData();
                     Toast.makeText(getApplicationContext(),
                             "页面最多显示40条新闻",
@@ -122,7 +122,7 @@ public class NewsActivity extends AppCompatActivity {
                     loadMoreData();
                     srl.finishLoadMore();
                     Toast.makeText(getApplicationContext(),
-                            "加载7条数据",
+                            "加载20条数据",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -150,7 +150,95 @@ public class NewsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpLogin httpLogin=new HttpLogin();
-                String result=httpLogin.JasonAccpt3();
+                String result=null;
+                switch (getNum()){
+                    case 0:
+                        result=httpLogin.JasonAccpt1();
+                        break;
+                    case 1:
+                        result=httpLogin.JasonAccpt3();
+                        break;
+                    case 2:
+                        result=httpLogin.JasonAccpt4();
+                        break;
+                    case 3:
+                        result=httpLogin.JasonAccpt5();
+                        break;
+                    case 4:
+                        result=httpLogin.JasonAccpt6();
+                        break;
+                    case 5:
+                        result=httpLogin.JasonAccpt7();
+                        break;
+                    case 6:
+                        result=httpLogin.JasonAccpt8();
+                        break;
+                    case 7:
+                        result=httpLogin.JasonAccpt9();
+                        break;
+                    case 8:
+                        result=httpLogin.JasonAccpt10();
+                        break;
+                    case 9:
+                        result=httpLogin.JasonAccpt11();
+                        break;
+                }
+                Bundle bundle=new Bundle();
+                bundle.putString("result1",result);
+                Message message=new Message();
+                message.setData(bundle);
+                message.what=3;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+    private int getNum(){
+        //新闻类型 top(头条，默认),shehui(社会),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育)junshi(军事),keji(科技),caijing(财经),shishang(时尚)
+        int min=0;
+        int max=9;
+        Random random = new Random();
+        int num = random.nextInt(max)%(max-min+1) + min;
+        return num;
+    }
+
+    private void loadMore(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLogin httpLogin=new HttpLogin();
+                String result=null;
+                switch (getNum()){
+                    case 0:
+                        result=httpLogin.JasonAccpt1();
+                        break;
+                    case 1:
+                        result=httpLogin.JasonAccpt3();
+                        break;
+                    case 2:
+                        result=httpLogin.JasonAccpt4();
+                        break;
+                    case 3:
+                        result=httpLogin.JasonAccpt5();
+                        break;
+                    case 4:
+                        result=httpLogin.JasonAccpt6();
+                        break;
+                    case 5:
+                        result=httpLogin.JasonAccpt7();
+                        break;
+                    case 6:
+                        result=httpLogin.JasonAccpt8();
+                        break;
+                    case 7:
+                        result=httpLogin.JasonAccpt9();
+                        break;
+                    case 8:
+                        result=httpLogin.JasonAccpt10();
+                        break;
+                    case 9:
+                        result=httpLogin.JasonAccpt11();
+                        break;
+                }
                 Bundle bundle=new Bundle();
                 bundle.putString("result1",result);
                 Message message=new Message();
@@ -167,8 +255,7 @@ public class NewsActivity extends AppCompatActivity {
         newsAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){
-        news.clear();
-        load();
+        loadMore();
         newsAdapter.notifyDataSetChanged();
     }
 
