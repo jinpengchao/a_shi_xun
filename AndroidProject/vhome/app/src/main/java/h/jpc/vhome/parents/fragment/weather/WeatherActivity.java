@@ -172,7 +172,12 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void refreshData(){
         weather_information.clear();
-        loadnew(editText.getText().toString());
+
+        if (editText.getText().toString()==null||editText.getText().toString().equals("")) {
+            load("石家庄");
+        }else{
+            loadnew(editText.getText().toString());
+        }
         weatherAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){

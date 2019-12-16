@@ -113,10 +113,10 @@ public class NewsActivity extends AppCompatActivity {
         srl.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(news.size() > 20){
+                if(news.size() > 40){
                     srl.finishLoadMoreWithNoMoreData();
                     Toast.makeText(getApplicationContext(),
-                            "页面最多显示20条新闻",
+                            "页面最多显示40条新闻",
                             Toast.LENGTH_SHORT).show();
                 }else {
                     loadMoreData();
