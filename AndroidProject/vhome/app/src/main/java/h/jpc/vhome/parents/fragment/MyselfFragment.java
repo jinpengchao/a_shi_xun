@@ -27,16 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-<<<<<<< HEAD
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-=======
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
->>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -100,6 +93,21 @@ public class MyselfFragment extends BaseFragment {
 //                    SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
 //                    String imgName = sp.getString("headImg","");
 //                    Glide.with(getActivity()).load("http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName).placeholder(R.mipmap.sss).into(header);
+                    break;
+                case 5:
+                    Bundle bundle = msg.getData();
+                    String receive = bundle.getString("data");
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(receive);
+                        int attentionNum = jsonObject.getInt("attentionNum");
+                        int funsNum = jsonObject.getInt("funsNum");
+                        tvAttention.setText(attentionNum+"");
+                        tvFuns.setText(funsNum+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
         }
     };
@@ -107,7 +115,6 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
-<<<<<<< HEAD
 
         getViews(view);
 
@@ -132,10 +139,9 @@ public class MyselfFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-=======
         okHttpClient = new OkHttpClient();
         asyncDownOp();
->>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
+
         blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
         header = (ImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
@@ -179,7 +185,6 @@ public class MyselfFragment extends BaseFragment {
             }
         });
 
-<<<<<<< HEAD
         initMyselfInfo();
         initData();
 
@@ -229,27 +234,6 @@ public class MyselfFragment extends BaseFragment {
         tvMyPost = view.findViewById(R.id.tv_myself_mypost);
     }
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what==1){//获取关注和粉丝数量
-                Bundle bundle = msg.getData();
-                String receive = bundle.getString("data");
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(receive);
-                    int attentionNum = jsonObject.getInt("attentionNum");
-                    int funsNum = jsonObject.getInt("funsNum");
-                    tvAttention.setText(attentionNum+"");
-                    tvFuns.setText(funsNum+"");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    };
 
     /**
      * 获取关注数和粉丝数
@@ -266,7 +250,7 @@ public class MyselfFragment extends BaseFragment {
                     String receive = util.getData(url);
                     if (null!=receive&&!"".equals(receive)){
                         Log.i(TAG, "run: 获得数量成功！");
-                        util.sendMsg(receive,1,handler);
+                        util.sendMsg(receive,5,handler);
                     }else {
                         Log.e(TAG, "run: 获取关注和粉丝数量失败" );
                     }
@@ -282,9 +266,6 @@ public class MyselfFragment extends BaseFragment {
     /**
      * 初始化数据
      */
-=======
-        return view;
-    }
     public void asyncDownOp() {
         new Thread(){
             @Override
@@ -295,7 +276,7 @@ public class MyselfFragment extends BaseFragment {
             }
         }.start();
     }
->>>>>>> cf3a87061a34ab2fb10d94ea899b39627bb93790
+
     private void initData(){
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         header_phone = sp.getString("phone","");
