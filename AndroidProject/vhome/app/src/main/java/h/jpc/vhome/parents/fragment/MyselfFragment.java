@@ -45,6 +45,7 @@ import h.jpc.vhome.chat.activity.ResetPasswordActivity;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
+import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
@@ -72,7 +73,7 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout myRelation;
     private RelativeLayout mySetting;
     private RelativeLayout myResetPwd;
-    private Button myLogout;
+    private RelativeLayout myLogout;
     private EventBus eventBus;
     private TextView tvAttention;
     private TextView tvFuns;
@@ -296,7 +297,7 @@ public class MyselfFragment extends BaseFragment {
     public void initMyselfInfo(){
         Log.e("缓存的个人信息","old");
         sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-        String id = sp2.getString("id","");
+        String id = sp2.getString("phone","");
         String nickName = sp2.getString("nickName","");
         String sex = sp2.getString("sex","");
         String area = sp2.getString("area","");
@@ -328,18 +329,14 @@ public class MyselfFragment extends BaseFragment {
                 SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
             }
             JMessageClient.logout();
-
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             SharedPreferences.Editor editor1 = sp1.edit();
             editor.clear();
             editor1.clear();
-            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
-            if(null!=files){
-                deleteCache(files);
-                editor.commit();
-            }
+            editor1.commit();
+            editor.commit();
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画
@@ -348,6 +345,8 @@ public class MyselfFragment extends BaseFragment {
                     R.anim.in,//进入动画
                     R.anim.out//出去动画
             );
+            Intent intent2 = new Intent(getActivity(), AlarmService.class);
+            getActivity().stopService(intent2);// 关闭闹钟服务
         } else {
             ToastUtil.shortToast(getActivity(), "退出失败");
         }

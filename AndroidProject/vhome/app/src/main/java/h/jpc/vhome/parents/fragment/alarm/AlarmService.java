@@ -24,8 +24,6 @@ public class AlarmService extends Service {
     public AlarmService() {
         Log.i("alarm", "Service构造方法");
     }
-//    public int posi =
-
     @Override
     public IBinder onBind(Intent intent) {
         Log.i("alarm", "Service的onBind方法");
@@ -98,7 +96,6 @@ public class AlarmService extends Service {
         Log.i("alarm", "Service的onStartCommand方法");
         return super.onStartCommand(intent, flags, startId);
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

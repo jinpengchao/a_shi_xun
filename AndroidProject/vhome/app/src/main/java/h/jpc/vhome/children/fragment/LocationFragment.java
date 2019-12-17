@@ -96,7 +96,7 @@ public class LocationFragment extends Fragment {
                         if(faEntity.equals("nasp")&&moEntity.equals("nasp")) {
                               Toast.makeText(getApplicationContext(),"您的父母还未注册",Toast.LENGTH_SHORT).show();
                         }
-                        setMessage(faEntity,moEntity);
+                        setMessage("myTrece",moEntity);
 
                     }
                 }

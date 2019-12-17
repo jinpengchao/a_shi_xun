@@ -22,6 +22,8 @@ import h.jpc.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import h.jpc.vhome.parents.fragment.fragment.HotspotFragment;
 import h.jpc.vhome.parents.fragment.fragment.HealthFragment;
 import h.jpc.vhome.parents.fragment.fragment.AttentionFragment;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.RadioActivity;
+import h.jpc.vhome.parents.fragment.radio_ximalaya.fragment.RecommendFragment;
 
 public class CommunityFragment extends BaseFragment {
     private Map<String,TextView> textViewMap = new HashMap<>();
@@ -50,7 +52,7 @@ public class CommunityFragment extends BaseFragment {
                 .newTabSpec("tag2")
                 .setIndicator(getTabSpaceView("tag2","收音机"));
         fragmentTabHost.addTab(tabSpec2,
-                HealthFragment.class,
+                RecommendFragment.class,
                 null
         );
         //tab3

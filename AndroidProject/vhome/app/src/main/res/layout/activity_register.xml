@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/input_phone_et"
+            android:maxLength="11"
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:hint="请填写手机号"
@@ -117,7 +118,7 @@
                 android:id="@+id/input_code_et"
                 android:layout_gravity="center"
                 android:layout_marginLeft="30dp"
-                android:maxLength="11"
+                android:maxLength="6"
                 android:hint="输入验证码"
                 android:background="@null"
                 android:inputType="number"
@@ -169,7 +170,7 @@
                 android:id="@+id/etPwd"
                 android:layout_gravity="center"
                 android:layout_marginLeft="47dp"
-                android:maxLength="25"
+                android:maxLength="20"
                 android:hint="输入密码"
                 android:background="@null"
                 android:inputType="textPassword"
@@ -210,6 +211,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/rb1"
             android:textSize="15dp"
             android:buttonTint="@color/choseColor"
             android:text="父母注册" />
@@ -217,6 +219,7 @@
             android:layout_weight="1"
             android:textSize="15dp"
             android:buttonTint="@color/choseColor"
+            android:id="@+id/rb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="子女注册" />
@@ -255,7 +258,7 @@
         android:text="注册并登录"
         android:textSize="20dp"
         android:textColor="#ffffff"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_press"
         >
     </Button>
 </RelativeLayout>

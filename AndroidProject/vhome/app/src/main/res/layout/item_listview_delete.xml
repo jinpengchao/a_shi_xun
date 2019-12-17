@@ -1,43 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="58dp"
-    android:background="@drawable/delete_list_item_bg"
-    android:descendantFocusability="blocksDescendants"
-    android:gravity="center_vertical"
-    android:paddingBottom="5dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp" >
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="5dp"
-        android:src="@mipmap/myself" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/icon"
-        android:textColor="@color/colorAccent"
-        android:textSize="15sp" />
-
+    android:layout_height="60dp">
     <TextView
         android:id="@+id/msg"
+        android:maxLines="2"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/icon"
-        android:layout_alignLeft="@id/title"
-        android:textColor="@color/colorAccent" />
+        android:textSize="20dp"
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/title"
-        android:textColor="@color/colorAccent" />
-</RelativeLayout>
+        android:singleLine="true"
+        android:maxEms="15"
+        android:ellipsize="end"
+        android:textColor="@color/choseColor" />
+</LinearLayout>

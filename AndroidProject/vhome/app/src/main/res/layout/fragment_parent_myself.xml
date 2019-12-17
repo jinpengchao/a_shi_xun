@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:layout_height="match_parent">
     <RelativeLayout
-
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:background="#20ffffff"><!--#20ffffff-->
+        android:layout_height="200dp">
         <ImageView android:id="@+id/iv_blur"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <LinearLayout
             android:id="@+id/f1"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="wrap_content">
             <ImageView
-                android:src="@mipmap/icon"
+                android:src="@drawable/rc_default_portrait"
                 android:id="@+id/parent_head"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp">
             </ImageView>
@@ -28,49 +25,49 @@
                 android:layout_toRightOf="@id/parent_head"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
                 <TextView
                     android:id="@+id/parent_name"
-                    android:textColor="#ffffff"
-                    android:textSize="30dp"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     android:text="春天的野草"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="wrap_content">
                 </TextView>
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:gravity="center"
-                        android:textSize="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="15dp"
                         android:layout_marginLeft="10dp"
-                        android:text="ID:"
+                        android:text="电话:"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp">
+                        android:layout_height="wrap_content">
                     </TextView>
                     <TextView
                         android:id="@+id/parent_id"
-                        android:gravity="center"
-                        android:textSize="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="15dp"
                         android:text="123456"
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp">
+                        android:layout_height="wrap_content">
                     </TextView>
                     <ImageView
                         android:layout_gravity="center"
                         android:src="@mipmap/location"
                         android:id="@+id/parent_sex"
                         android:layout_marginLeft="20dp"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp">
+                        android:layout_width="25dp"
+                        android:layout_height="25dp">
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
@@ -84,14 +81,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="成就：">
             </TextView>
             <TextView
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="运动达人"
                 >
             </TextView>
@@ -99,7 +96,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="地区：">
             </TextView>
             <TextView
@@ -107,7 +104,7 @@
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="黑龙江"
                 >
             </TextView>
@@ -115,13 +112,14 @@
         <LinearLayout
             android:layout_below="@id/f1"
             android:id="@+id/f2"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="关注：">
             </TextView>
             <TextView
@@ -129,7 +127,7 @@
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="10"
                 >
             </TextView>
@@ -137,7 +135,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="粉丝：">
             </TextView>
             <TextView
@@ -145,7 +143,7 @@
                 android:textColor="#FF0000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="28W"
                 >
             </TextView>
@@ -162,15 +160,15 @@
                 android:id="@+id/tv_myself_mynews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:id="@+id/msg1"
                     android:src="@mipmap/message"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
@@ -180,15 +178,15 @@
                     android:layout_toRightOf="@id/msg1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="我的消息">
                 </TextView>
                 <ImageView
                     android:src="@mipmap/right"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp"
                     android:layout_alignParentRight="true">
                 </ImageView>
@@ -198,15 +196,15 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:src="@mipmap/post"
                     android:id="@+id/post1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
@@ -217,7 +215,7 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="我的帖子">
                 </TextView>
                 <ImageView
@@ -225,8 +223,8 @@
                     android:src="@mipmap/right"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
             </RelativeLayout>
@@ -235,15 +233,15 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:background="@mipmap/favourite"
                     android:id="@+id/favourite1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
 
@@ -256,15 +254,15 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/favourite1"
                     android:text="我的收藏"
-                    android:textSize="25dp"></TextView>
+                    android:textSize="20dp"></TextView>
 
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/right"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
             </RelativeLayout>
@@ -273,15 +271,15 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:src="@mipmap/gl"
                     android:id="@+id/wdgl1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
@@ -292,7 +290,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="我的关联">
                 </TextView>
                 <ImageView
@@ -300,8 +298,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
             </RelativeLayout>
@@ -310,15 +308,15 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:src="@mipmap/changepsw"
                     android:id="@+id/changepwd1"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
@@ -328,7 +326,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="修改密码">
                 </TextView>
                 <ImageView
@@ -336,25 +334,25 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/about"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/rl_press"
                 >
                 <ImageView
                     android:id="@+id/about1"
                     android:src="@drawable/about"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
                 <TextView
@@ -364,7 +362,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="关于微家">
                 </TextView>
                 <ImageView
@@ -372,24 +370,37 @@
                     android:src="@mipmap/right"
                     android:layout_marginLeft="180dp"
                     android:layout_marginTop="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="10dp">
                 </ImageView>
             </RelativeLayout>
-            <Button
-                android:layout_marginTop="20dp"
+            <RelativeLayout
                 android:id="@+id/my_logout"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/button_shape"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textSize="30dp"
-                android:text="退出登录"
-                android:textColor="#ffffff"></Button>
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/rl_press"
+                >
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="退出登录">
+                </TextView>
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="180dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp">
+                </ImageView>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

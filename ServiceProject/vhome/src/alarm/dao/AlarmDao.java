@@ -232,7 +232,7 @@ public class AlarmDao {
 			psmt = conn.prepareStatement(sql);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
-				System.out.println("AlarmDao--闹钟信息修改成功"+alarmId);
+				System.out.println("AlarmDao--闹钟信息修改成功"+clocktype+"=="+alarmId);
 			}else {
 				System.out.println("AlarmDao--闹钟信息修改失败");
 			}

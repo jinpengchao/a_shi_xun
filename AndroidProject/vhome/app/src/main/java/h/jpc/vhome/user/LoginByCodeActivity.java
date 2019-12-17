@@ -2,12 +2,25 @@ package h.jpc.vhome.user;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import h.jpc.vhome.MainActivity;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.chat.application.JGApplication;
+import h.jpc.vhome.chat.database.UserEntry;
+import h.jpc.vhome.chat.utils.DialogCreator;
+import h.jpc.vhome.chat.utils.HandleResponseCode;
+import h.jpc.vhome.chat.utils.SharePreferenceManager;
+import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.children.ChildrenMain;
+import h.jpc.vhome.user.entity.User;
+import h.jpc.vhome.util.ConnectionUtil;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -29,6 +42,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class LoginByCodeActivity extends AppCompatActivity implements View.OnClickListener {
     private long exitTime = 0;
@@ -160,12 +183,10 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
                     }
                 }).start();
                 break;
-
             case R.id.login_btn:
                 //将收到的验证码和手机号提交再次核对
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
-//                createProgressBar();
                 break;
         }
     }
@@ -214,21 +235,6 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
         else
             return mobileNums.matches(telRegex);
     }
-
-    /**
-     * progressbar
-     */
-    private void createProgressBar() {
-        FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-        ProgressBar mProBar = new ProgressBar(this);
-        mProBar.setLayoutParams(layoutParams);
-        mProBar.setVisibility(View.VISIBLE);
-        layout.addView(mProBar);
-    }
-
     @Override
     protected void onDestroy() {
         SMSSDK.unregisterAllEventHandler();
@@ -252,4 +258,105 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
             finish();
         }
     }
+//    public void loginByPsw() {
+//        //准备数据
+//        Log.e("MainActivity", "logBypsw");
+//        final String phoneNums = inputPhoneEt.getText().toString();
+//        if (TextUtils.isEmpty(phoneNums)){
+//            showToast("用户名不能为空！");
+//            return;
+//        }
+//        final User user = new User();
+//        user.setPhone(phoneNums);
+//        user.setPassword(passWords);
+//        Gson gson = new Gson();
+//        final String data = gson.toJson(user);
+//
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                String ip = (new MyApp()).getIp();
+//                try {
+//                    URL url = new URL("http://"+ip+":8080/vhome/pwdlogin");
+//                    ConnectionUtil util = new ConnectionUtil();
+//                    //发送数据
+//                    HttpURLConnection connection = util.sendData(url,data);
+//                    //获取数据
+//                    final String data = util.getData(connection);
+//                    if(null!=data){
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    JSONObject json = new JSONObject(data);
+//                                    String p1 = json.getString("p");
+//                                    String pwd1 = json.getString("pwd");
+//                                    int type1 = json.getInt("type");
+//                                    isLogin(p1,pwd1,type1);
+//                                    pwdLogin.setText("请稍候...");
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+//                    }else {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                etPwd.setText("");
+//                                showToast("用户名或密码错误");
+//                            }
+//                        });
+//                    }
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
+//        if (JGApplication.registerOrLogin % 2 == 1) {
+//            final Dialog dialog = DialogCreator.createLoadingDialog(this,
+//                    this.getString(R.string.login_hint));
+//            dialog.show();
+//            JMessageClient.login(phoneNums, passWords, new BasicCallback() {
+//                @Override
+//                public void gotResult(int responseCode, String responseMessage) {
+//                    dialog.dismiss();
+//                    if (responseCode == 0) {
+//                        SharePreferenceManager.setCachedPsw(passWords);
+//                        UserInfo myInfo = JMessageClient.getMyInfo();
+//                        File avatarFile = myInfo.getAvatarFile();
+//                        //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+//                        if (avatarFile != null) {
+//                            SharePreferenceManager.setCachedAvatarPath(avatarFile.getAbsolutePath());
+//                        } else {
+//                            SharePreferenceManager.setCachedAvatarPath(null);
+//                        }
+//                        String username = myInfo.getUserName();
+//                        String appKey = myInfo.getAppKey();
+//                        UserEntry user = UserEntry.getUser(username, appKey);
+//                        if (null == user) {
+//                            user = new UserEntry(username, appKey);
+//                            user.save();
+//                        }
+//                    }
+//                }
+//            });
+//        } else {
+//            JMessageClient.register(phoneNums, passWords, new BasicCallback() {
+//                @Override
+//                public void gotResult(int i, String s) {
+//                    if (i == 0) {
+//                        SharePreferenceManager.setRegisterName(phoneNums);
+//                        SharePreferenceManager.setRegistePass(passWords);
+//                        startActivity(new Intent(LoginByCodeActivity.this, RegisterActivity.class));
+//                        ToastUtil.shortToast(LoginByCodeActivity.this, "注册成功");
+//                    } else {
+//                        HandleResponseCode.onHandle(LoginByCodeActivity.this, i, false);
+//                    }
+//                }
+//            });
+//        }
+//    }
 }

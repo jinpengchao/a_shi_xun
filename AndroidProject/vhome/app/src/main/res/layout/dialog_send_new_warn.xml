@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/dialog_shape"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:background="#ffffff"
+        android:background="@drawable/dialog_shape"
         android:orientation="vertical">
         <EditText
             android:id="@+id/send_new_warn_text"
@@ -36,6 +36,7 @@
             android:id="@+id/spinner_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="200dp"></Spinner>
@@ -81,7 +82,7 @@
 
             <Button
                 android:id="@+id/new_normal_warn_cancle"
-                android:background="#FF0009"
+                android:background="@drawable/left_bottom_shape"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:layout_width="0dp"
@@ -103,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF9800"
+                android:background="@drawable/right_bottom_shape"
                 android:gravity="center"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"

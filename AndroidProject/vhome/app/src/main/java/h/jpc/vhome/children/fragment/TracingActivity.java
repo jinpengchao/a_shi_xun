@@ -126,9 +126,9 @@ public class TracingActivity extends myBaseActivity{
                 trackPoints.add(currentLatLng);
                 Log.e("经度", currentLatLng.longitude + "");
                 if (trackPoints.size() < 10) {
-                    mapUtil.drawHistoryTrack(trackPoints, false, 0);
+                    mapUtil.drawHistoryTrack(trackPoints, false);
                 } else {
-                    mapUtil.drawHistoryTrack(trackPoints, true, 0);
+                    mapUtil.drawHistoryTrack(trackPoints, true);
                 }
             }
         };
