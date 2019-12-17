@@ -151,7 +151,6 @@ public class LocationFragment extends Fragment {
         moth.setAdapter(adapter1);
         fath.setSelection(0, true);
         moth.setSelection(0, true);
-        TextView tv = view.findViewById(R.id.tv_item);
         fath.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
