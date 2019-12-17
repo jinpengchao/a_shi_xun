@@ -54,6 +54,7 @@ public class TracingActivity extends myBaseActivity{
 
     private int i=10;
     private int k=0;
+    private Timer timer;
     /**
      * 轨迹点集合
      */
@@ -75,18 +76,8 @@ public class TracingActivity extends myBaseActivity{
         trackPoints = new ArrayList<>();
         initListener();
         //循环每隔30秒读取一次轨迹
-        Timer timer=new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                trackApp.getCurrentLocation(trackListener);
-                i--;
-            }
-        },0,1000*30);
-        while(i==0){
-            timer.cancel();
-        }
-
+        timer=new Timer();
+        //onStart()每次进入再次执行
 
         //获取绑定手机的IMEI码
         SharedPreferences sp = getSharedPreferences("myEntities",MODE_PRIVATE);
@@ -124,7 +115,6 @@ public class TracingActivity extends myBaseActivity{
                     return;
                 }
                 trackPoints.add(currentLatLng);
-                Log.e("经度", currentLatLng.longitude + "");
                 if (trackPoints.size() < 10) {
                     mapUtil.drawHistoryTrack(trackPoints, false);
                 } else {
@@ -159,6 +149,18 @@ public class TracingActivity extends myBaseActivity{
                 }
             }
         }
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                trackApp.getCurrentLocation(trackListener);
+                --i;
+                Log.e("次数",i+"");
+                if(i<=0){
+                    timer.cancel();
+                }
+            }
+        },0,1000*30);
 
     }
 
@@ -205,21 +207,9 @@ public class TracingActivity extends myBaseActivity{
 
         trackPoints = null;
         mapUtil.clear();
-
-
-        if (trackApp.trackConf.contains("is_trace_started")
-                && trackApp.trackConf.getBoolean("is_trace_started", true)) {
-            // 退出app停止轨迹服务时，不再接收回调，将OnTraceListener置空
-            trackApp.mClient.setOnTraceListener(null);
-            trackApp.mClient.stopTrace(trackApp.mTrace, null);
-            trackApp.mClient.clear();
-        } else {
-            trackApp.mClient.clear();
-        }
-        SharedPreferences.Editor editor = trackApp.trackConf.edit();
-        editor.remove("is_trace_started");
-        editor.remove("is_gather_started");
-        editor.apply();
+        trackApp.mClient.setOnTraceListener(null);
+        trackApp.mClient.stopTrace(trackApp.mTrace, null);
+        trackApp.mClient.clear();
     }
 
     @Override

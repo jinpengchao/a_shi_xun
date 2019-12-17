@@ -2,6 +2,7 @@ package h.jpc.vhome.children.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
@@ -93,10 +95,10 @@ public class LocationFragment extends Fragment {
                         String faEntity=params[0];
                         String moEntity= params[1];
                         Log.e("entity",faEntity);
-                        if(faEntity.equals("nasp")&&moEntity.equals("nasp")) {
-                              Toast.makeText(getApplicationContext(),"您的父母还未注册",Toast.LENGTH_SHORT).show();
-                        }
-                        setMessage("myTrece",moEntity);
+//                        if(faEntity.equals("nasp")&&moEntity.equals("nasp")) {
+//                              Toast.makeText(getApplicationContext(),"您的父母还未注册",Toast.LENGTH_SHORT).show();
+//                        }
+                        setMessage("myTrace","myTrace");
 
                     }
                 }
@@ -143,10 +145,8 @@ public class LocationFragment extends Fragment {
     }
 
     public  void setSpinner() {
-        final ArrayAdapter adapter0 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, select0);
-        final ArrayAdapter adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, select1);
-        adapter0.setDropDownViewResource(R.layout.item_drop);
-        adapter1.setDropDownViewResource(R.layout.item_drop);
+        ArrayAdapter adapter0 = new ArrayAdapter(getActivity(),R.layout.item_drop, select0);
+        ArrayAdapter adapter1 = new ArrayAdapter(getActivity(),R.layout.item_drop, select1);
         fath.setAdapter(adapter0);
         moth.setAdapter(adapter1);
         fath.setSelection(0, true);
@@ -200,7 +200,6 @@ public class LocationFragment extends Fragment {
                 String moEntity = sp.getString("moEntity", " ");
                 switch (position) {
                     case 0:
-                        adapter1.getItem(0).toString();
                         break;
                     case 1:
                         if (moEntity.equals("nasp")) {
@@ -347,7 +346,28 @@ public class LocationFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "null/nnull";
+        return "nasp/nnasp";
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(!locationClient.isStarted()){
+            locationClient.start();
+        }
+        init();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
     }
 
     @Override
@@ -358,15 +378,6 @@ public class LocationFragment extends Fragment {
         select1.clear();
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(!locationClient.isStarted()){
-            locationClient.start();
-        }
-        init();
-    }
 
     @Override
     public void onDestroy() {
