@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
@@ -12,21 +13,158 @@
             <RelativeLayout
                 android:id="@+id/ll_comment_post"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/tv_attention"
                     style="@style/TextTheme"
-                    android:padding="7dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/attention_add_shape"
-                    android:text="+关注"/>
+                    android:padding="7dp"
+                    android:text="+关注"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
 
-                <include layout="@layout/item_hotspot"/>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical" android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability = "blocksDescendants"
+                    android:padding="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/iv_hot_person"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/loading_1"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/iv_hot_person"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv_hot_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textSize="20sp"/>
+                            <TextView
+                                android:id="@+id/tv_hot_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:textColor="@android:color/darker_gray"/>
+                        </LinearLayout>
+
+
+
+
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_hot_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="28sp"
+                        android:layout_marginTop="20dp"/>
+
+                    <h.jpc.vhome.parents.fragment.community_hotspot.MyGridView
+                        android:id="@+id/gv_post_show"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:horizontalSpacing="5dp"
+                        android:verticalSpacing="5dp"
+                        android:numColumns="3"
+                        android:columnWidth="100dp"
+                        android:stretchMode="columnWidth"
+                        android:gravity="center"/>
+                    <RelativeLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_post_save"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true">
+
+                            <ImageView
+                                android:id="@+id/iv_hot_save"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/post_save" />
+
+                            <TextView
+                                android:id="@+id/tv_hot_save"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="收藏"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/iv_hot_save"
+                                android:layout_centerVertical="true"
+                                android:textSize="20sp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_post_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_centerInParent="true">
+                            <ImageView
+                                android:id="@+id/iv_hot_comment"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/post_comment" />
+
+                            <TextView
+                                android:id="@+id/tv_hot_comnum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/iv_hot_comment"
+                                android:layout_centerVertical="true"
+                                android:textSize="20sp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_post_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentRight="true">
+                            <ImageView
+                                android:id="@+id/iv_hot_like"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/post_img_good" />
+
+
+                            <TextView
+                                android:id="@+id/tv_hot_likenum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@id/iv_hot_like"
+                                android:layout_marginLeft="10dp"
+                                android:text="20"
+                                android:textSize="20sp" />
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"

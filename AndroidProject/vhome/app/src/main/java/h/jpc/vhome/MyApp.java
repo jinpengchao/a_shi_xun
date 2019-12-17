@@ -148,10 +148,8 @@ public class MyApp extends com.activeandroid.app.Application {
     public static List<String> forAddIntoGroup = new ArrayList<>();
     public static Conversation delConversation;
     public static ArrayList<String> selectedUser;
-    //10.7.89.13
-    //10.7.89.128  192.168.199.158
 
-    private String ip = "10.7.89.237";
+    private String ip = "10.7.89.121";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
