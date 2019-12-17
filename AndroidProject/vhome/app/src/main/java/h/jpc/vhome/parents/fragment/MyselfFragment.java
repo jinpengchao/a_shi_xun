@@ -23,6 +23,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.signature.StringSignature;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,12 +47,14 @@ import h.jpc.vhome.chat.activity.ResetPasswordActivity;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
+import h.jpc.vhome.children.fragment.dialog.MyDialog;
 import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyCollectionsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyFunsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyNewsActivity;
 import h.jpc.vhome.parents.fragment.myself.MyPostActivity;
+import h.jpc.vhome.user.entity.EventBean;
 import h.jpc.vhome.util.ConnectionUtil;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -74,6 +78,7 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout mySetting;
     private RelativeLayout myResetPwd;
     private RelativeLayout myLogout;
+    private MyDialog myDialog;
     private EventBus eventBus;
     private TextView tvAttention;
     private TextView tvFuns;
@@ -87,15 +92,9 @@ public class MyselfFragment extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case 1:
+                case 5:
                     initData();
                     initMyselfInfo();
-                    Log.e("handler","Handler");
-//                    SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-//                    String imgName = sp.getString("headImg","");
-//                    Glide.with(getActivity()).load("http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName).placeholder(R.mipmap.sss).into(header);
-                    break;
-                case 5:
                     Bundle bundle = msg.getData();
                     String receive = bundle.getString("data");
                     JSONObject jsonObject = null;
@@ -116,12 +115,10 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
-
         getViews(view);
-
         getCount();//获取关注和粉丝数
-
-
+        initData();
+        initMyselfInfo();
         //点击关注的人的时候,显示关注人的列表
         tvAttention.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,18 +138,7 @@ public class MyselfFragment extends BaseFragment {
             }
         });
         okHttpClient = new OkHttpClient();
-        asyncDownOp();
 
-        blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
-        header = (ImageView) view.findViewById(R.id.parent_head);
-        nikeName = (TextView) view.findViewById(R.id.parent_name);
-        ids = (TextView) view.findViewById(R.id.parent_id);
-        areas = (TextView) view.findViewById(R.id.parent_area);
-        sexs = (ImageView) view.findViewById(R.id.parent_sex);
-        myRelation = view.findViewById(R.id.my_relation);
-//        mySetting = view.findViewById(R.id.my_setting);
-        myLogout = view.findViewById(R.id.my_logout);
-        myResetPwd = view.findViewById(R.id.my_resetpwd);
         //获取EventBus对象
         eventBus = EventBus.getDefault();
         myRelation.setOnClickListener(new View.OnClickListener() {
@@ -170,9 +156,27 @@ public class MyselfFragment extends BaseFragment {
         myLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logout();
-                cancelNotification();
-                getActivity().finish();
+                View view = getLayoutInflater().inflate(R.layout.dialog_logout, null);
+                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
+                Button cancle = (Button)view.findViewById(R.id.cancle);
+                Button ok = (Button)view.findViewById(R.id.commit);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logout();
+                        cancelNotification();
+                        myDialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+                cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.setCancelable(true);
+                myDialog.show();
             }
         });
         header.setOnClickListener(new View.OnClickListener() {
@@ -182,13 +186,11 @@ public class MyselfFragment extends BaseFragment {
                     eventBus.unregister(getActivity());
                 }
                 eventBus.register(getActivity());
+                Intent intent = new Intent();
+                intent.putExtra("nickName",nikeName.getText());
                 getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
             }
         });
-
-        initMyselfInfo();
-        initData();
-
         tvMyPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,7 +227,6 @@ public class MyselfFragment extends BaseFragment {
         areas = (TextView) view.findViewById(R.id.parent_area);
         sexs = (ImageView) view.findViewById(R.id.parent_sex);
         myRelation = view.findViewById(R.id.my_relation);
-//        mySetting = view.findViewById(R.id.my_setting);
         myLogout = view.findViewById(R.id.my_logout);
         myResetPwd = view.findViewById(R.id.my_resetpwd);
         tvAttention = view.findViewById(R.id.tv_myself_attention);
@@ -263,21 +264,6 @@ public class MyselfFragment extends BaseFragment {
             }
         }.start();
     }
-
-    /**
-     * 初始化数据
-     */
-    public void asyncDownOp() {
-        new Thread(){
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-                msg.what = 1;
-                handler.sendMessage(msg);
-            }
-        }.start();
-    }
-
     private void initData(){
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         header_phone = sp.getString("phone","");
@@ -368,4 +354,5 @@ public class MyselfFragment extends BaseFragment {
             }
         }
     }
+
 }

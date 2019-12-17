@@ -1,6 +1,7 @@
 package h.jpc.vhome.parents.fragment.weather;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +47,8 @@ public class WeatherActivity extends AppCompatActivity {
                     Bundle bundle1=new Bundle();
                     bundle1=msg.getData();
                     String result1=bundle1.getString("result1");
+                    SharedPreferences sharedPreferences = getSharedPreferences("today_weather",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     //显示jason数据
 //                    Toast.makeText(getApplication(),result1,Toast.LENGTH_LONG).show();
                     try{
@@ -65,6 +68,13 @@ public class WeatherActivity extends AppCompatActivity {
                             weatherBean.setWeather(jsonObject1.getString("weather"));
                             weatherBean.setWeek(jsonObject1.getString("week"));
                             weatherBean.setDate(jsonObject1.getString("date"));
+                            if(i==0){
+                                editor.putString("temperature",jsonObject1.getString("temperature"));
+                                editor.putString("weather",jsonObject1.getString("weather"));
+                                editor.putString("week",jsonObject1.getString("week"));
+                                editor.putString("date",jsonObject1.getString("date"));
+                                editor.commit();
+                            }
                             weather_information.add(weatherBean);
                         }
                         weatherAdapter.notifyDataSetChanged();

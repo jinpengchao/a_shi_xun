@@ -23,17 +23,21 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 
 
 public class ParentMain extends AppCompatActivity {
+
     private LayoutInflater layoutInflater;
     private ViewPager viewPager;
     private Fragment[] fragments;
     private FragmentTabHost fragmentTabHost;
     private Class[] tabFragmentArray = {HomeFragment.class, CommunityFragment.class,
             ConversationListFragment.class, MyselfFragment.class};
-
+    private Map<String,TextView> textViewMap = new HashMap<>();
     private String[] tabStringArray = {"首页", "社区", "子女", "我的"};
     private int[] tabImageNoramlArray = {
             R.mipmap.home, R.mipmap.comm,
@@ -66,9 +70,11 @@ public class ParentMain extends AppCompatActivity {
             TabHost.TabSpec tabSpec;
             if (i == 0) {
                 //生成一个tab标签，i=0是默认选中的
-                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageSelectedArray[i], tabStringArray[i]));
+                tabSpec = fragmentTabHost
+                        .newTabSpec(tabStringArray[i])
+                        .setIndicator(getTabItemView("tag"+i,tabImageSelectedArray[i], tabStringArray[i]));
             } else {
-                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageNoramlArray[i], tabStringArray[i]));
+                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView("tag"+i,tabImageNoramlArray[i], tabStringArray[i]));
 
             }
             //去除分割线
@@ -82,24 +88,43 @@ public class ParentMain extends AppCompatActivity {
         /**
          * 当点击Tab时，用ViewPager对fragment进行切换，否则fragment将会叠加
          */
+        textViewMap.get("tag0").setTextColor(getResources().getColor(R.color.choseColor));
+        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
+        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
+        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
         fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 int position = fragmentTabHost.getCurrentTab();
                 viewPager.setCurrentItem(position);
+                switch (position){
+                    case 0:
+                        textViewMap.get("tag0").setTextColor(getResources().getColor(R.color.choseColor));
+                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        break;
+                    case 1:
+                        textViewMap.get("tag0").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
+                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        break;
+                    case 2:
+                        textViewMap.get("tag0").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.choseColor));
+                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        break;
+                    case 3:
+                        textViewMap.get("tag0").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
+                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
+                        break;
+                }
             }
         });
-        /**
-         * 当点击Tab时，用ViewPager对fragment进行切换，否则fragment将会叠加
-         */
-        fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                int position = fragmentTabHost.getCurrentTab();
-                viewPager.setCurrentItem(position);
-            }
-        });
-
         HomeFragment homeFragment = new HomeFragment();
         CommunityFragment communityFragment = new CommunityFragment();
         ConversationListFragment conversationListFragment = new ConversationListFragment();
@@ -193,12 +218,13 @@ public class ParentMain extends AppCompatActivity {
         }
     }
 
-    public View getTabItemView(int imageResId, String stringResId) {
+    public View getTabItemView(String tag , int imageResId, String stringResId) {
         View view = layoutInflater.inflate(R.layout.tab_space_parent, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon);
         TextView text = (TextView) view.findViewById(R.id.tv_title);
         imageView.setImageResource(imageResId);
         text.setText(stringResId);
+        textViewMap.put(tag,text);
         return view;
     }
 
