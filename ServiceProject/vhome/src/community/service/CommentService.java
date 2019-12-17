@@ -21,6 +21,14 @@ import entity.CommentDetailBean;
  *
  */
 public class CommentService {
+	//通过id修改头像logo
+	public int changeImg(String logo,String personId) {
+		return (new CommentDao()).changeImg(logo, personId);
+	}
+	//通过id修改昵称
+	public int changeName(String nickName,String personId) {
+		return (new CommentDao()).changeName(nickName, personId);
+	}
 
 	/**
 	 * 

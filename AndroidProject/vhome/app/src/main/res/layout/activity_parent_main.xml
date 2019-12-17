@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/tracing_mapView"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        />
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/act_main_view_pager"
         android:layout_width="match_parent"

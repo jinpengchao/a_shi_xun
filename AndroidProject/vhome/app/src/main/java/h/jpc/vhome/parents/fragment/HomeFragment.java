@@ -53,7 +53,6 @@ public class HomeFragment extends BaseFragment {
     private ImageView alarm;
     private ImageView weather;
     private ImageView news;
-    private ImageView tools;
     public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
@@ -125,22 +124,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
         Glide.with(getActivity()).load(R.mipmap.xw).into(news);
-        /*
-         *  功能：小工具跳转
-         *  作者：靳朋朝
-         *  时间：2019年11月26日09:05:26
-         */
-        tools = view.findViewById(R.id.xiaogongju);
-        Glide.with(getActivity()).load(R.mipmap.gj).into(tools);
-
-        tools.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(),AllToolsActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }
@@ -199,7 +182,7 @@ public class HomeFragment extends BaseFragment {
                                     Gson gson = new Gson();
                                     ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
                                     String phone = userInfo.getPhone();
-                                    String id = userInfo.getId();
+                                    String id = userInfo.getPhone();
                                     String nickName = userInfo.getNikeName();
                                     String sex = userInfo.getSex();
                                     String area = userInfo.getArea();

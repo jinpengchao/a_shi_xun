@@ -21,6 +21,14 @@ import entity.ReplyDetailBean;
  *
  */
 public class ReplyService {
+	//通过id修改头像
+		public int changeLogo(String logo,String personId) {
+			return (new ReplyDao()).changeLogo(logo, personId);
+		}
+	//通过id修改昵称
+	public int changeName(String nickName,String personId) {
+		return (new ReplyDao()).changeName(nickName, personId);
+	}
 
 	public int saveReply(ReplyDetailBean reply) {
 		return (new ReplyDao()).insertReply(reply);

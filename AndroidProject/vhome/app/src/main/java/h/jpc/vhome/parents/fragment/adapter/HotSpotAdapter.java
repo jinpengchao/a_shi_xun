@@ -1,6 +1,8 @@
 package h.jpc.vhome.parents.fragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,10 +23,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import h.jpc.vhome.parents.fragment.myself.ShowMyselfActivity;
 
 public class HotSpotAdapter extends BaseAdapter {
     private List<PostBean> list;
@@ -92,12 +97,33 @@ public class HotSpotAdapter extends BaseAdapter {
         setImg(i,holder);
         //设置发帖人logo
         String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg();
+        Log.e("hostadapter","头像"+list.get(i).getHeadimg());
         Glide.with(context)
                 .load(user_logo)
                 .priority(Priority.HIGH)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(holder.ivHotPerson);
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
+        //当点击头像或名字的 时候跳转到个人页
+        holder.ivHotPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent person = new Intent();
+                person.putExtra("personId",list.get(i).getPersonId());
+                person.setClass(context, ShowMyselfActivity.class);
+                context.startActivity(person);
+            }
+        });
+        holder.tvHotName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent person = new Intent();
+                person.putExtra("personId",list.get(i).getPersonId());
+                person.setClass(context, ShowMyselfActivity.class);
+                context.startActivity(person);
+            }
+        });
         holder.tvHotContent.setText(list.get(i).getPostContent());
         //修改时间格式
         String time = list.get(i).getTime();
@@ -189,7 +215,7 @@ public class HotSpotAdapter extends BaseAdapter {
     }
 
 
-    static final class ViewHolder {
+    private class ViewHolder {
         ImageView ivHotPerson;
         TextView tvHotName;
         TextView tvHotContent;

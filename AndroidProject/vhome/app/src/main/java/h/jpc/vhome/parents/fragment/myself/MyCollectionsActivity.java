@@ -104,6 +104,7 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
 
                 adapter = new HotSpotAdapter(MyCollectionsActivity.this,loadList,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
+                tvEmpty.setText("还没有收藏哦~");
                 lvHotSpot.setEmptyView(tvEmpty);
 //                当点击收藏点赞的时候
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {

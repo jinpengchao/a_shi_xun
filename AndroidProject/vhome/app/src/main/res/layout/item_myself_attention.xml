@@ -45,13 +45,15 @@
                 android:textColor="@android:color/darker_gray"/>
         </RelativeLayout>
 
-        <ImageView
+        <TextView
             android:id="@+id/btn_attention_delete"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/attention_delete"/>
+            android:textColor="#F70C0C"
+            android:textSize="18sp"
+            android:text="取消关注" />
     </RelativeLayout>
 
 </LinearLayout>

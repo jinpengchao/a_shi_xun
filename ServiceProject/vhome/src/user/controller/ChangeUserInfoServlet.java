@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import community.service.CommentService;
+import community.service.PostService;
+import community.service.ReplyService;
+import entity.ParentUserInfo;
 import user.service.UserService;
 
 /**
@@ -59,6 +63,11 @@ public class ChangeUserInfoServlet extends HttpServlet {
 			if(flag.equals("nickName")) {
 				String nickName = json.getString("data");
 				userService.updateUserInfo(phone, type, flag , nickName);
+				ParentUserInfo pui = userService.selectUserInfo(phone, type);
+				String id = pui.getId();
+				(new PostService()).changeNameById(nickName, id);
+				(new CommentService()).changeName(nickName, id);
+				(new ReplyService()).changeName(nickName, id);
 			}
 			if(flag.equals("sex")) {
 				String sex = json.getString("data");

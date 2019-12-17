@@ -232,7 +232,7 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
                         historyTrackRequest.setPageIndex(++pageIndex);
                         queryHistoryTrack();
                     } else {
-                        mapUtil.drawHistoryTrack(trackPoints, true, 0);//画轨迹
+                        mapUtil.drawHistoryTrack(trackPoints, true);//画轨迹
                     }
 
                     queryDistance();// 查询里程

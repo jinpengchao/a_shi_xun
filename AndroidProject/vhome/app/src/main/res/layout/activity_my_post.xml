@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E6E3E3"
     android:orientation="vertical">
 
 
@@ -19,7 +20,9 @@
             android:layout_height="match_parent" />
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

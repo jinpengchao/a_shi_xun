@@ -21,6 +21,59 @@ import entity.PostBean;
  */
 public class PostDao {
 	/**
+	 * 通过个人id修改头像
+	 *  @title:changeImgByPId
+	 * @throws下午3:53:35
+	 * returntype:int
+	 */
+	public int changeImgByPId(String logo,String personId) {
+		int n=0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "update tbl_post set headimg = ? where personId=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, logo);
+			ps.setString(2, personId);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n;
+	}
+	/**
+	 * 通过个人id修改昵称
+	 *  @title:changeNameById
+	 * @Description: todo
+	 * @throws下午3:48:09
+	 * returntype:int
+	 */
+	public int changeNameByPId(String personId,String nickName) {
+		int k = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "update tbl_post set nickName = ? where personId=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, nickName);
+			ps.setString(2, personId);
+			k = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return k;
+	}
+	/**
 	 * 
 	 *  @title:insertPost
 	 * @Description: 插入单条帖子

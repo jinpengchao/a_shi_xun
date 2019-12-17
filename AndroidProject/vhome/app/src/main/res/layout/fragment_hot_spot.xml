@@ -21,7 +21,9 @@
         <ListView
             android:id="@+id/lv_hot_spot"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -25,25 +25,24 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import java.util.Timer;
 
-public class ParentMain extends AppCompatActivity  {
+
+public class ParentMain extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private ViewPager viewPager;
     private Fragment[] fragments;
     private FragmentTabHost fragmentTabHost;
     private Class[] tabFragmentArray = {HomeFragment.class, CommunityFragment.class,
-            ConversationListFragment.class,MyselfFragment.class};
+            ConversationListFragment.class, MyselfFragment.class};
 
-    private String[] tabStringArray = {"首页","社区","子女","我的"};
+    private String[] tabStringArray = {"首页", "社区", "子女", "我的"};
     private int[] tabImageNoramlArray = {
-            R.mipmap.home,R.mipmap.comment,
-            R.mipmap.child,R.mipmap.me};
+            R.mipmap.home, R.mipmap.comm,
+            R.mipmap.msg, R.mipmap.me};
     private int[] tabImageSelectedArray = {
-            R.mipmap.home1,R.mipmap.comment1,
-            R.mipmap.child1,R.mipmap.me1};
+            R.mipmap.home1, R.mipmap.comm1,
+            R.mipmap.msg1, R.mipmap.me1};
 
-    //定时器
-    private Timer timer;
-    private int sumTime = 25;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,29 +53,30 @@ public class ParentMain extends AppCompatActivity  {
         setTabHost();
 
     }
-    public void setTabHost(){
+
+    public void setTabHost() {
         viewPager = (ViewPager) findViewById(R.id.act_main_view_pager);
         //获取FragmentTabHost对象
         fragmentTabHost = (FragmentTabHost) findViewById(R.id.act_main_tab_host);//安卓自定义的tabhost！！
         layoutInflater = LayoutInflater.from(this);
         //初始化参数
-        fragmentTabHost.setup(this,getSupportFragmentManager(),R.id.act_main_view_pager);
+        fragmentTabHost.setup(this, getSupportFragmentManager(), R.id.act_main_view_pager);
         int count = tabStringArray.length;
-        for(int i = 0;i < count;i++){
-            TabHost.TabSpec tabSpec ;
-            if(i == 0){
+        for (int i = 0; i < count; i++) {
+            TabHost.TabSpec tabSpec;
+            if (i == 0) {
                 //生成一个tab标签，i=0是默认选中的
                 tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageSelectedArray[i], tabStringArray[i]));
-            }else{
-                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageNoramlArray[i],tabStringArray[i]));
+            } else {
+                tabSpec = fragmentTabHost.newTabSpec(tabStringArray[i]).setIndicator(getTabItemView(tabImageNoramlArray[i], tabStringArray[i]));
 
             }
             //去除分割线
             fragmentTabHost.getTabWidget().setDividerDrawable(null);
             //给tabspec添加fragment
-            fragmentTabHost.addTab(tabSpec,tabFragmentArray[i],null);
+            fragmentTabHost.addTab(tabSpec, tabFragmentArray[i], null);
             //给fragmentTabHost添加点击事件
-            fragmentTabHost.getTabWidget().getChildTabViewAt(i).setOnClickListener(new TabOnClickListener(fragmentTabHost,i));
+            fragmentTabHost.getTabWidget().getChildTabViewAt(i).setOnClickListener(new TabOnClickListener(fragmentTabHost, i));
         }
 
         /**
@@ -104,13 +104,14 @@ public class ParentMain extends AppCompatActivity  {
         CommunityFragment communityFragment = new CommunityFragment();
         ConversationListFragment conversationListFragment = new ConversationListFragment();
         MyselfFragment myselfFragment = new MyselfFragment();
-        fragments = new Fragment[]{homeFragment,communityFragment,conversationListFragment,myselfFragment};
+        fragments = new Fragment[]{homeFragment, communityFragment, conversationListFragment, myselfFragment};
 
         fragmentTabHost.setCurrentTab(0);
         viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         viewPager.setOnPageChangeListener(new ViewPagerListener());
     }
+
     /**
      * FragmentTabHost的点击事件
      */
@@ -138,15 +139,17 @@ public class ParentMain extends AppCompatActivity  {
             }
         }
     }
+
     /**
      * ViewPager适配器
      * 继承自PagerAdapter，将页面信息持续的保存在fragment manager中，方便用户返回该页面
      */
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        public ViewPagerAdapter(FragmentManager fragmentManager){
+        public ViewPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
+
         @Override
         public Fragment getItem(int position) {
             return fragments[position];
@@ -189,20 +192,23 @@ public class ParentMain extends AppCompatActivity  {
 
         }
     }
-    public View getTabItemView(int imageResId,String stringResId){
-        View view = layoutInflater.inflate(R.layout.tab_space_parent,null);
-        ImageView imageView = (ImageView)view.findViewById(R.id.icon);
-        TextView text = (TextView)view.findViewById(R.id.tv_title);
+
+    public View getTabItemView(int imageResId, String stringResId) {
+        View view = layoutInflater.inflate(R.layout.tab_space_parent, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+        TextView text = (TextView) view.findViewById(R.id.tv_title);
         imageView.setImageResource(imageResId);
         text.setText(stringResId);
         return view;
     }
+
     /**
      * 订阅事件(EventBean)
+     *
      * @param eventBean 发布的事件对象
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEventBeanStikyEvent(EventBean eventBean){
+    public void onEventBeanStikyEvent(EventBean eventBean) {
         MyselfFragment myselfFragment = new MyselfFragment();
         myselfFragment.nikeName.setText(eventBean.getNickName());
         myselfFragment.areas.setText(eventBean.getArea());

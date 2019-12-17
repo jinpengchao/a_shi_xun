@@ -26,6 +26,69 @@ import entity.ReplyDetailBean;
  *
  */
 public class ReplyDao {
+	/**
+	 * 通过id修改头像
+	 */
+	public int changeLogo(String logo,String personId) {
+		int n=0;
+		DBUtil util = new DBUtil();
+		Connection con;
+		try {
+			con = util.getConnection();
+			String sql = "update tbl_reply_comment set headimg=? where personId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, logo);
+			ps.setString(2, personId);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
+	
+	/**
+	 * 通过id修改昵称
+	 */
+	public int changeName(String nickName,String personId) {
+		int n=0;
+		DBUtil util = new DBUtil();
+		Connection con;
+		try {
+			con = util.getConnection();
+			String sql = "update tbl_reply_comment set nickName=? where personId = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, nickName);
+			ps.setString(2, personId);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
 
 	/**
 	 * 

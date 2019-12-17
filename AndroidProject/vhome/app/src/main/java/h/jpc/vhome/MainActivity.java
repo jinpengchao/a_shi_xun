@@ -7,6 +7,7 @@ import cn.jpush.im.api.BasicCallback;
 import h.jpc.vhome.chat.activity.BaseActivity;
 import h.jpc.vhome.chat.application.JGApplication;
 import h.jpc.vhome.chat.database.UserEntry;
+import h.jpc.vhome.chat.utils.ClearWriteEditText;
 import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.HandleResponseCode;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
@@ -19,11 +20,11 @@ import h.jpc.vhome.user.RegisterActivity;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
@@ -50,6 +51,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static h.jpc.vhome.chat.utils.ClearWriteEditText.shakeAnimation;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private long exitTime = 0;
     private TextView register;
@@ -62,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mainBackground;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-
+    private Toast mToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,8 +112,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void getView(){
         register = (TextView) findViewById(R.id.register);
         pwdLogin = (Button) findViewById(R.id.pwdLogin);
-        etPwd = (EditText) findViewById(R.id.etPwd);
-        etPhone  = (EditText) findViewById(R.id.etPhone);
+        etPwd = (ClearWriteEditText) findViewById(R.id.etPwd);
+        etPhone  = (ClearWriteEditText) findViewById(R.id.etPhone);
         togglePwd = (ToggleButton) findViewById(R.id.togglePwd);
         use_code = (TextView) findViewById(R.id.use_code);
         findBackPwd = (TextView) findViewById(R.id.findBackPwd);
@@ -128,9 +131,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.pwdLogin:
                 Log.e("MainActivity","Onclick");
                 loginByPsw();
-//                Intent intent5=new Intent();
-//                intent5.setClass(MainActivity.this,ParentMain.class);
-//                startActivity(intent5);
                 break;
             case R.id.register:
                 Intent intent = new Intent();
@@ -223,11 +223,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             finish();
         }
     }
+    private void showToast(String msg) {
+        if (mToast == null){
+            mToast = Toast.makeText(this,msg,Toast.LENGTH_SHORT);
+        }else{
+            mToast.setText(msg);
+        }
+        mToast.show();
+    }
     public void loginByPsw() {
         //准备数据
         Log.e("MainActivity", "logBypsw");
-        final String phoneNums = etPhone.getText().toString();
+        String phoneNums;phoneNums = etPhone.getText().toString();
         final String passWords = etPwd.getText().toString();
+        if (TextUtils.isEmpty(phoneNums)){
+            showToast("用户名不能为空！");
+            return;
+        }
+        if (TextUtils.isEmpty(passWords)){
+            showToast("密码不能为空！");
+            return;
+        }
         final User user = new User();
         user.setPhone(phoneNums);
         user.setPassword(passWords);
@@ -266,7 +282,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             @Override
                             public void run() {
                                 etPwd.setText("");
-                                etPwd.setHint("用户名或密码错误");
+                                showToast("用户名或密码错误");
                             }
                         });
                     }
@@ -302,9 +318,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             user = new UserEntry(username, appKey);
                             user.save();
                         }
-                        ToastUtil.shortToast(MainActivity.this, "登陆成功");
-                    } else {
-                        ToastUtil.shortToast(MainActivity.this, "登陆失败" + responseMessage);
                     }
                 }
             });

@@ -70,11 +70,11 @@ public class RegisterUserServlet extends HttpServlet {
 		UserService userService = new UserService();
 		if(userService.notExists(phone)) {
 			userService.insertUser(phone, password, registerTime, id, wechat, qq, type);
-			userService.insertUserInfo(phone, id, nikeName, "", "", "", type);
+			userService.insertUserInfo(phone, id, nikeName, "", "", "rc_default_portrait.png", type);
 			System.out.println("注册成功！");
-			out.write("注册成功");
+			out.write("yes");
 		}else
-			out.write("该手机已经被注册");
+			out.write("no");
 		out.flush();
 		out.close();
 		br.close();

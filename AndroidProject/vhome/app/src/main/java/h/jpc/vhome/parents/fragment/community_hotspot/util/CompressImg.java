@@ -2,6 +2,8 @@ package h.jpc.vhome.parents.fragment.community_hotspot.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.text.TextUtils;
 
 import java.io.ByteArrayOutputStream;

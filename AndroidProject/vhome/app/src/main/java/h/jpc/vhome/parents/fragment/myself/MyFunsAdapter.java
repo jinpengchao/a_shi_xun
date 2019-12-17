@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
@@ -63,8 +65,11 @@ public class MyFunsAdapter extends BaseAdapter {
             viewHolder = (MyAttentionAdapter.ViewHolder) view.getTag();
         }
         //设置头像
-        String user_logo = "http;//"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg();
-        Glide.with(context).load(user_logo).priority(Priority.HIGH).into(viewHolder.ivPerson);
+        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg();
+        Glide.with(context).load(user_logo).priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
+                .into(viewHolder.ivPerson);
         //设置昵称
         viewHolder.tvName.setText(list.get(i).getNikeName());
         //设置id

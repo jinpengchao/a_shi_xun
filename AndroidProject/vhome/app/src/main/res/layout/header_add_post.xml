@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="50dp"
     android:padding="10dp"
-    android:background="#008577">
+    android:background="#069EF1">
     <TextView
         android:id="@+id/tv_post_cancel"
         android:layout_width="50dp"
@@ -27,7 +27,7 @@
         android:textSize="18sp"
         android:textColor="#ffffff"
         android:layout_centerVertical="true"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/btn_publish_shape"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

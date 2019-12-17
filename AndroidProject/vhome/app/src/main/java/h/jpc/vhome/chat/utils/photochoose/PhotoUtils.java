@@ -2,6 +2,7 @@ package h.jpc.vhome.chat.utils.photochoose;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,7 +17,7 @@ import java.io.File;
 import java.util.List;
 
 import h.jpc.vhome.chat.utils.CommonUtils;
-import h.jpc.vhome.parents.fragment.MyselfFragment;
+import static h.jpc.vhome.MyApp.getAppContext;
 
 
 /**
@@ -38,7 +39,6 @@ public class PhotoUtils {
      * 拍照成功后返回
      **/
     public static final int INTENT_SELECT = 4;
-    public static final String CROP_FILE_NAME = "header"+ MyselfFragment.header_phone +".jpg";
 
     /**
      * PhotoUtils对象
@@ -105,6 +105,9 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
+        SharedPreferences sharedPreferences = getAppContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        String phoneNums = sharedPreferences.getString("phone","");
+        String CROP_FILE_NAME = "header"+ phoneNums +".jpg";
         if (CommonUtils.checkSDCard()) {
             return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
         } else {

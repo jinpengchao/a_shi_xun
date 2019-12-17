@@ -58,7 +58,7 @@ public class GetPostsServlet extends HttpServlet {
 		List<AttentionBean> attentions = (new AttentionService()).findAttention(personId);
 		//获取所有的帖子
 		list = (new PostService()).findPost();
-		System.out.println("getPostServlet中获得"+list.size()+"条数据");
+		System.out.println("getPostsServlet中获得"+list.size()+"条数据");
 		for(int i=0;i<list.size();i++) {
 			PostBean post = list.get(i);
 			int likeNum = (new GoodPostService()).findGoodPostCount(post.getId());
