@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
-            android:popupBackground="@color/color_activity_blue_bg"
+            android:popupBackground="#E6389fff"
             android:background="@color/white"
             android:text="查看父亲"
             android:textAlignment="center" />
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
-            android:popupBackground="@color/color_activity_blue_bg"
+            android:popupBackground="#E6389fff"
             android:background="@color/white"
             android:textAlignment="center"
             android:text="查看母亲" />
