@@ -2,6 +2,7 @@ package h.jpc.vhome.chat.activity.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,9 +23,11 @@ import h.jpc.vhome.R;
 import h.jpc.vhome.chat.utils.DialogCreator;
 import h.jpc.vhome.chat.utils.FileHelper;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
+import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.children.ChildrenMain;
 import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.parents.fragment.MyselfFragment;
+import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -102,6 +105,10 @@ public class BaseFragment extends Fragment {
                                     }
                                 });
                                 break;
+                            case R.id.jmui_cancel_btn:
+                                Logout();
+                                cancelNotification();
+                                getActivity().finish();
                         }
                     }
                 };
@@ -129,6 +136,7 @@ public class BaseFragment extends Fragment {
         super.onAttach(context);
         mActivity = context;
     }
+    //退出登录
     public void Logout() {
         final Intent intent = new Intent();
         UserInfo info = JMessageClient.getMyInfo();
@@ -138,15 +146,13 @@ public class BaseFragment extends Fragment {
                 SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
             }
             JMessageClient.logout();
-
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             SharedPreferences.Editor editor1 = sp1.edit();
             editor.clear();
             editor1.clear();
-            File[] files = new File("/data/data/"+getActivity().getPackageName()+"/shared_prefs").listFiles();
-            deleteCache(files);
+            editor1.commit();
             editor.commit();
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
@@ -156,7 +162,16 @@ public class BaseFragment extends Fragment {
                     R.anim.in,//进入动画
                     R.anim.out//出去动画
             );
+            Intent intent2 = new Intent(getActivity(), AlarmService.class);
+            getActivity().stopService(intent2);// 关闭闹钟服务
+        } else {
+            ToastUtil.shortToast(getActivity(), "退出失败");
         }
+    }
+    public void cancelNotification() {
+        NotificationManager manager = (NotificationManager) this.getActivity().getApplicationContext()
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.cancelAll();
     }
     public void deleteCache(File[] files){
         boolean flag;

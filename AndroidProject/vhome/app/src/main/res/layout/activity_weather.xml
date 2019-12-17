@@ -64,7 +64,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="#FFFFFF"
-            android:text="建议着大衣、呢外套加毛衣、卫衣等服装。"/>
+            android:text="建议着大衣、外套加毛衣、卫衣等服装。"/>
     </LinearLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl1"

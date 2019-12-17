@@ -2,7 +2,11 @@ package h.jpc.vhome.parents.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,12 +39,11 @@ import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
+import h.jpc.vhome.parents.HttpLogin;
 import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
-import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
 import h.jpc.vhome.parents.fragment.news.NewsActivity;
-import h.jpc.vhome.parents.fragment.tools.AllToolsActivity;
 import h.jpc.vhome.parents.fragment.weather.WeatherActivity;
 import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
@@ -50,12 +54,52 @@ import static android.content.Context.MODE_PRIVATE;
 public class HomeFragment extends BaseFragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
+    private TextView today_weather;
     private ImageView alarm;
     private ImageView weather;
     private ImageView news;
+    private ImageView top_bg;
     public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
+    private Handler handler,handler2=new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 3:
+                    Bundle bundle1=new Bundle();
+                    bundle1=msg.getData();
+                    String result1=bundle1.getString("result1");
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("today_weather",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    try{
+                        JSONObject jsonObject=new JSONObject(result1);
+                        JSONObject jsonObject2=jsonObject.getJSONObject("result");
+                        JSONArray jsonArray=jsonObject2.getJSONArray("future");
+                        JSONObject jsonObject1=jsonArray.getJSONObject(0);
+                        editor.putString("temperature",jsonObject1.getString("week"));
+                        editor.putString("weather",jsonObject1.getString("weather"));
+                        editor.putString("week",jsonObject1.getString("week"));
+                        editor.putString("date",jsonObject1.getString("date"));
+                        String weather = jsonObject1.getString("weather");
+                        String week = jsonObject1.getString("week");
+                        String temp = jsonObject1.getString("temperature");
+//                        if(weather.equals("晴")){
+//                            Glide.with(getActivity()).load(R.drawable.sun).asGif().into(gif_weather);
+//                        }else if(weather.equals("雨")){
+//                            Glide.with(getActivity()).load(R.drawable.yu).into(gif_weather);
+//                        }else {
+//                            Glide.with(getActivity()).load(R.drawable.yin).into(gif_weather);
+//                        }
+                        today_weather.setText(week + "  " + weather + "  " + temp);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +107,12 @@ public class HomeFragment extends BaseFragment {
         initUserInfo();
         String service = "showAllAlarm";
         getAlarm(service);
+        top_bg = view.findViewById(R.id.top_bg);
+        Glide.with(getActivity()).load(R.drawable.top_bg).into(top_bg);
+//        AssetManager mgr = getActivity().getAssets();
+//        Typeface tf = Typeface.createFromAsset(mgr, "fonts/kaiti.ttf");
+//        yang_li_calendar.setTypeface(tf);
+//        yin_li_calendar.setTypeface(tf);
         /*
          * 功能：设置时间
          * 作者：靳朋朝
@@ -70,9 +120,20 @@ public class HomeFragment extends BaseFragment {
          */
         yang_li_calendar = view.findViewById(R.id.yang_li_calendar);
         yin_li_calendar = view.findViewById(R.id.yin_li_calendar);
+        today_weather = view.findViewById(R.id.today_weather);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("today_weather",MODE_PRIVATE);
+        String w  = sharedPreferences.getString("weather","");
         Date date = new Date();
-        yang_li_calendar.setText(getDate(date)[0]);
+        load("石家庄");
+
         yin_li_calendar.setText(getDate(date)[1]);
+        handler = new Handler() {
+            public void handleMessage(Message msg) {
+                yang_li_calendar.setText((String) msg.obj);
+            }
+        };
+        Threads thread = new Threads();
+        thread.start();
         /*
          *  功能：闹钟跳转
          *  作者：靳朋朝
@@ -115,6 +176,8 @@ public class HomeFragment extends BaseFragment {
          *  作者：章鹏
          *  时间：2019年12月10号
          */
+
+        Glide.with(getActivity()).load(R.mipmap.xw).into(news);
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,8 +186,6 @@ public class HomeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        Glide.with(getActivity()).load(R.mipmap.xw).into(news);
-
         return view;
     }
     /*
@@ -144,9 +205,39 @@ public class HomeFragment extends BaseFragment {
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
         if (w < 0)
             w = 0;
-        d[0] =  day+","+weekDays[w];
         d[1] =  "【"+animal+"】农历"+lunarCalendar.toString();
         return d;
+    }
+    private void load(final String city) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLogin httpLogin=new HttpLogin();
+                String result=httpLogin.JasonAccpt2(city);
+                Bundle bundle=new Bundle();
+                bundle.putString("result1",result);
+                Message message=new Message();
+                message.setData(bundle);
+                message.what=3;
+                handler2.sendMessage(message);
+            }
+        }).start();
+    }
+    class Threads extends Thread {
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    SimpleDateFormat sdf = new SimpleDateFormat(
+                            "yyyy年MM月dd日   HH:mm:ss");
+                    String str = sdf.format(new Date());
+                    handler.sendMessage(handler.obtainMessage(100, str));
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void initUserInfo(){
         //准备数据
