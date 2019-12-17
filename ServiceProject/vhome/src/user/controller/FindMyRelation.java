@@ -56,10 +56,9 @@ public class FindMyRelation extends HttpServlet {
 		String d = br.readLine();
 		try {
 			JSONObject json = new JSONObject(d);
-			String receivePhone = json.getString("receivePhone");
-			int receiveType = json.getInt("receiveType");
+			String sendPhone = json.getString("sendPhone");
 			UserService userService = new UserService();
-			List<String> parentPhoneList = userService.selectParentPhone(receivePhone, receiveType);
+			List<String> parentPhoneList = userService.selectParentPhone(sendPhone);
 			Gson gson = new Gson();
 			String parentPhones = gson.toJson(parentPhoneList);
 			System.out.println(parentPhones);

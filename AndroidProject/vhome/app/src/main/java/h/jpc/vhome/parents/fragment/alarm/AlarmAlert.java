@@ -37,10 +37,8 @@ public class AlarmAlert extends Activity {
         mediaPlayer = MediaPlayer.create(this, R.raw.clockmusic2);
         mediaPlayer.start();
         SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         Intent ii = getIntent();
         int position1 = ii.getIntExtra("position",-1);
-
         String sendPerson = sharedPreferences.getString("sendperson"+position1,"");
         String content = sharedPreferences.getString("content"+position1,"");
         if(position1 != -1) {
@@ -55,9 +53,7 @@ public class AlarmAlert extends Activity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     AlarmAlert.this.finish();
                                     try {
-                                        editor.putInt("clocktype" + position1, clock_close);
-                                        editor.commit();
-                                        changeAlarm(clock_close);
+                                        changeAlarm(content,clock_close);
                                     } catch (IndexOutOfBoundsException e) {
                                         Log.e("被老子捕获了吧", "你个渣渣" + HomeFragment.size);
                                     } finally {
@@ -67,15 +63,13 @@ public class AlarmAlert extends Activity {
                             }).show();
         }
     }
-    public void changeAlarm(int clocktype){
-        SharedPreferences sp = getSharedPreferences("alarm",MODE_PRIVATE);
-        int alarmId = sp.getInt("alarmId"+position,0);
+    public void changeAlarm(String content,int clocktype){
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("alarmId",alarmId);
+            jsonObject.put("alarmId",0);
             jsonObject.put("hour","");
             jsonObject.put("minute","");
-            jsonObject.put("content","");
+            jsonObject.put("content",content);
             jsonObject.put("clocktype",clocktype);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -96,9 +90,6 @@ public class AlarmAlert extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putInt("content" + position, clocktype);
-                                editor.commit();
                                 Log.e("闹钟状态修改完毕", "!");
                             }
                         });

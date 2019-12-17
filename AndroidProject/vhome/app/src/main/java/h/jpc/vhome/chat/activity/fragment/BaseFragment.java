@@ -140,7 +140,7 @@ public class BaseFragment extends Fragment {
     public void Logout() {
         final Intent intent = new Intent();
         UserInfo info = JMessageClient.getMyInfo();
-        if (null != info) {
+        if (null == info) {
             SharePreferenceManager.setCachedUsername(info.getUserName());
             if (info.getAvatarFile() != null) {
                 SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());

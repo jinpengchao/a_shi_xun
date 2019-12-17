@@ -71,7 +71,6 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
         delete.setOnClickListener(this);
         calendar = Calendar.getInstance();
         initView();
-
     }
     @SuppressLint("SetTextI18n")
     private void initView() {
@@ -97,7 +96,6 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
                 new TimePickerDialog(ClockDetail.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        //calendar.setTimeInMillis(System.currentTimeMillis());
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
                         calendar.set(Calendar.SECOND, 0);

@@ -11,32 +11,44 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
+import h.jpc.vhome.util.ConnectionUtil;
 
-import static android.content.Context.ALARM_SERVICE;
 import static h.jpc.vhome.parents.fragment.alarm.Clock.clock_close;
 import static h.jpc.vhome.parents.fragment.alarm.Clock.clock_open;
 
 public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
-
+    private ClockStatus clockStatus;
+    public interface ClockStatus{
+        public void clockType(String content,int now, int wangTo);
+    }
+    public void setClockStatus(ClockStatus clockStatus){
+        this.clockStatus = clockStatus;
+    }
     List<Clock> list;
     LayoutInflater layoutInflater;
     Context context;
-    Calendar calendar = Calendar.getInstance();
-    public static int pos;
-    public static int po;
-    private ClockDetail clockDetail;
     public TimeAdapter(List<Clock> list, Context context) {
         this.list = list;
         this.context = context;
@@ -54,11 +66,10 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final TimeAdapter.ViewHolder viewHolder, final int i) {
         final Clock clock = list.get(i);
-        pos = i;
 
         Log.e("i=======",i+"  "+clock.getClockType());
         if (clock.getClockType() == clock_open){
-            viewHolder.aSwitch.setChecked(true);
+            viewHolder.aSwitch.setText("关闭");
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.net.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -66,7 +77,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
         }else if (clock.getClockType() == clock_close){
-            viewHolder.aSwitch.setChecked(false);
+            viewHolder.aSwitch.setText("开启");
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.sendPersonId.setTextColor(context.getResources().getColor(R.color.colorPrimary));
@@ -88,15 +99,16 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+        //点击收藏的时候,收藏成功改变图标颜色
+        final ViewHolder finalHolder = viewHolder;
+        viewHolder.aSwitch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-        viewHolder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                if (clock.getClockType() == clock_close) {
+                    viewHolder.aSwitch.setText("开启");
+                    String content = list.get(i).getContent();
+                    clockStatus.clockType(content,clock_close,clock_open);
                     clock.setClockType(clock_open);
-                    clockDetail = new ClockDetail();
-                    clockDetail.changeAlarm(context,"","","",clock_open);
                     Toast.makeText(context, "开启闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.minute.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -104,10 +116,11 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                     viewHolder.sendPersonId.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
-                } else if (!isChecked){
+                } else if (clock.getClockType() == clock_open){
+                    viewHolder.aSwitch.setText("关闭");
+                    String content = list.get(i).getContent();
+                    clockStatus.clockType(content,clock_open,clock_close);
                     clock.setClockType(clock_close);
-                    clockDetail = new ClockDetail();
-                    clockDetail.changeAlarm(context,"","","",clock_close);
                     Toast.makeText(context, "关闭闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                     viewHolder.minute.setTextColor(context.getResources().getColor(R.color.colorPrimary));
@@ -131,7 +144,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
         TextView sendPersonId;
         TextView from;
         TextView net;
-        Switch aSwitch;
+        Button aSwitch;
         LinearLayout todetail;
 
         public ViewHolder(@NonNull View itemView) {
@@ -146,4 +159,38 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             todetail = itemView.findViewById(R.id.todetail);
         }
     }
+    public void changeAlarm(String content,int clocktype){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("alarmId",0);
+            jsonObject.put("hour","");
+            jsonObject.put("minute","");
+            jsonObject.put("content",content);
+            jsonObject.put("clocktype",clocktype);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/changeAlarm");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    //发送数据
+                    util.sendData(url,data);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 }

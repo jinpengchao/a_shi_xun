@@ -272,26 +272,7 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                 startActivity(intent);
                 break;
             case R.id.jmui_commit_btn:
-                SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
-                int type = sp.getInt("type",0);
-                if(type==0){
-                    String nickName = mTv_nickName.getText().toString();
-                    String sex = mTv_gender.getText().toString();
-                    String area = mTv_city.getText().toString();
-                    EventBean stiEvent = new EventBean(nickName,sex,area);
-                    //发布粘性事件
-                    EventBus.getDefault().postSticky(stiEvent);
-                    finish();
-                }
-                if(type == 1){
-                    String nickName = mTv_nickName.getText().toString();
-                    String sex = mTv_gender.getText().toString();
-                    String area = mTv_city.getText().toString();
-                    EventBean stiEvent = new EventBean(nickName,sex,area);
-                    //发布粘性事件
-                    EventBus.getDefault().postSticky(stiEvent);
-                    finish();
-                }
+                finish();
             default:
                 break;
         }

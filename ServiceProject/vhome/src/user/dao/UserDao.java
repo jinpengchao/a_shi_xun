@@ -196,7 +196,7 @@ public class UserDao {
 					System.out.println("未查到这个人的信息--子女");
 				}
 			}
-			
+
 			rs.close();
 			psmt.close();
 			util.closeConnection();
@@ -363,7 +363,7 @@ public class UserDao {
 		}
 	}
 	//查询我的关联
-	public List<String> findMyRelation(String receivePhone,int receiveType) {
+	public List<String> findMyRelation(String sendPerson) {
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -371,23 +371,13 @@ public class UserDao {
 		List<String> parentPhoneList = new ArrayList<>();
 		try {
 			conn = util.getConnection();
-			if(receiveType == 0) {
-				String sql = "select * from tbl_connect where sendPhone='"+receivePhone+"'";
-				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
-				while(rs.next()) {
-					String phone = rs.getString("sendPhone");
-					parentPhoneList.add(phone);
-				}
-			}
-			if(receiveType == 1) {
-				String sql = "select * from tbl_connect where receivePhone='"+receivePhone+"'";
-				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
-				while(rs.next()) {
-					String phone = rs.getString("receivePhone");
-					parentPhoneList.add(phone);
-				}
+			String sql = "select * from tbl_connect where sendPhone='"+sendPerson+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String phone = rs.getString("receivePhone");
+				parentPhoneList.add(phone);
+				System.out.println("UserDao--"+phone);
 			}
 			rs.close();
 			psmt.close();

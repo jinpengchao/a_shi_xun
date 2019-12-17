@@ -69,13 +69,12 @@ public class MyselfFragment extends BaseFragment {
     private ImageView blurImageView;
     private Dialog mDialog;
     private ImageView header;
-    public static TextView nikeName;
+    private TextView nikeName;
     private TextView ids;
-    public static TextView areas;
+    private TextView areas;
     private ImageView sexs;
     private SharedPreferences sp2;
     private RelativeLayout myRelation;
-    private RelativeLayout mySetting;
     private RelativeLayout myResetPwd;
     private RelativeLayout myLogout;
     private MyDialog myDialog;
@@ -87,7 +86,6 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout tvMyCollect;
     private RelativeLayout tvMyNews;
     public static String header_phone;
-    private OkHttpClient okHttpClient;
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -137,10 +135,6 @@ public class MyselfFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        okHttpClient = new OkHttpClient();
-
-        //获取EventBus对象
-        eventBus = EventBus.getDefault();
         myRelation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,10 +176,6 @@ public class MyselfFragment extends BaseFragment {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (eventBus.isRegistered(getActivity())) {
-                    eventBus.unregister(getActivity());
-                }
-                eventBus.register(getActivity());
                 Intent intent = new Intent();
                 intent.putExtra("nickName",nikeName.getText());
                 getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
@@ -215,7 +205,6 @@ public class MyselfFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
@@ -235,8 +224,6 @@ public class MyselfFragment extends BaseFragment {
         tvMyNews = view.findViewById(R.id.tv_myself_mynews);
         tvMyPost = view.findViewById(R.id.tv_myself_mypost);
     }
-
-
     /**
      * 获取关注数和粉丝数
      */
@@ -333,8 +320,6 @@ public class MyselfFragment extends BaseFragment {
             );
             Intent intent2 = new Intent(getActivity(), AlarmService.class);
             getActivity().stopService(intent2);// 关闭闹钟服务
-        } else {
-            ToastUtil.shortToast(getActivity(), "退出失败");
         }
     }
 

@@ -6,9 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".parents.fragment.alarm.ClockDetail">
-
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#069EF1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="30dp"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:text="我的小提示"
+            android:layout_height="wrap_content">
+        </TextView>
+    </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

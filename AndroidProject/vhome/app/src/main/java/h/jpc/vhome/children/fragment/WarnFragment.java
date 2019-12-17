@@ -113,14 +113,13 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_children_warn, null);
 
+
         addNewNormalWarn = view.findViewById(R.id.addNormalWarn);
         sendNewWarn = view.findViewById(R.id.sendNewWarn);
         quaryAllWarn = view.findViewById(R.id.quaryAllWarn);
         banner = view.findViewById(R.id.banner);
         info = view.findViewById(R.id.info);
-        initUserInfo();
         mListView = view.findViewById(R.id.list);
-        setBinder();
         srl = view.findViewById(R.id.srl);
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -129,7 +128,11 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 srl.finishRefresh();
             }
         });
-
+        findMyRelation();
+        initUserInfo();
+        getMyNormalAlarm();
+        longClickItem();
+        setBinder();
         //点击事件
         addNewNormalWarn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +164,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
             @Override
             public void onClick(View v) {
                 View view = getLayoutInflater().inflate(R.layout.dialog_send_new_warn, null);
-                findMyRelation();
+
                 myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
                 Button cancle = (Button)view.findViewById(R.id.new_normal_warn_cancle);
                 Button ok = (Button)view.findViewById(R.id.new_normal_warn_ok);
@@ -171,7 +174,6 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 final String[] receiver = {""};
                 final String[] hour = {""};
                 final String[] minute = {""};
-                peopleData();
                 hourData();
                 minuteData();
                 sPeople.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
@@ -219,7 +221,6 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //存入数据库放入常用列表
                         String content = editText.getText().toString();
                         sendNewAlarm(receiver,hour,minute,sendPersonId,content);
                         myDialog.dismiss();
@@ -257,8 +258,6 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
 
         });
 
-        getMyNormalAlarm();
-        longClickItem();
         return view;
     }
     public void refreshData(){
@@ -468,12 +467,6 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 minuteList.add(i+"");
         }
     }
-    public void peopleData(){
-        //sPeople查询该账号关联的人，植入数据
-        peopleList = new ArrayList<>();
-        peopleList.add("195412");
-        peopleList.add("222222");
-    }
     public void setBinder(){
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
@@ -611,13 +604,15 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 final Spinner sPeople = (Spinner)view.findViewById(R.id.spinner_people);
                 final Spinner sHour = (Spinner)view.findViewById(R.id.spinner_hour);
                 final Spinner sMinute = (Spinner)view.findViewById(R.id.spinner_minute);
-                peopleData();
+                final String[] receiver = {""};
+                final String[] hour = {""};
+                final String[] minute = {""};
                 hourData();
                 minuteData();
                 sPeople.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("sPeople",sPeople.getSelectedItem()+"");
+                        receiver[0] = sPeople.getSelectedItem()+"";
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -626,7 +621,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 sHour.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("sPeople",sHour.getSelectedItem()+"");
+                        hour[0] = sHour.getSelectedItem()+"";
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -635,21 +630,21 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 sMinute.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("sPeople",sMinute.getSelectedItem()+"");
+                        minute[0] = sMinute.getSelectedItem()+"";
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
-
                 ArrayAdapter adapterPeople = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,peopleList);
                 sPeople.setAdapter(adapterPeople);
                 ArrayAdapter adapterHour = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,hourList);
                 sHour.setAdapter(adapterHour);
                 ArrayAdapter adapterMinute = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,minuteList);
                 sMinute.setAdapter(adapterMinute);
-
                 final EditText editText = (EditText)view.findViewById(R.id.send_new_warn_text);
+                sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+                final String sendPersonId = sp.getString("phone","");
                 cancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -659,8 +654,8 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //存入数据库放入常用列表
-                        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
+                        String content = editText.getText().toString();
+                        sendNewAlarm(receiver,hour,minute,sendPersonId,content);
                         myDialog.dismiss();
                     }
                 });
@@ -695,11 +690,9 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
         //获得接收人电话
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user",MODE_PRIVATE);
         String myPhone = sharedPreferences.getString("phone","");
-        int type = sharedPreferences.getInt("type",0);
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("receivePhone",myPhone);
-            jsonObject.put("receiveType",type);
+            jsonObject.put("sendPhone",myPhone);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -721,8 +714,10 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         String json = data;
                         //得到集合对应的具体类型
-                        Type type = new TypeToken<List<AlarmBean>>(){}.getType();
-                        List<String> parentPhones = gson.fromJson(json,type);
+                        Type type = new TypeToken<List<String>>(){}.getType();
+                        peopleList = new ArrayList<>();
+                        peopleList = gson.fromJson(json,type);
+                        Log.e("sbcnmdjwbsbyg",peopleList.toString());
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

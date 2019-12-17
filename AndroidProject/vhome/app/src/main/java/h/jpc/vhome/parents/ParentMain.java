@@ -15,12 +15,16 @@ import h.jpc.vhome.parents.fragment.alarm.AlarmService;
 import h.jpc.vhome.user.entity.EventBean;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.ximalaya.ting.android.opensdk.auth.utils.Logger;
+
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -226,17 +230,5 @@ public class ParentMain extends AppCompatActivity {
         text.setText(stringResId);
         textViewMap.put(tag,text);
         return view;
-    }
-
-    /**
-     * 订阅事件(EventBean)
-     *
-     * @param eventBean 发布的事件对象
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEventBeanStikyEvent(EventBean eventBean) {
-        MyselfFragment myselfFragment = new MyselfFragment();
-        myselfFragment.nikeName.setText(eventBean.getNickName());
-        myselfFragment.areas.setText(eventBean.getArea());
     }
 }
