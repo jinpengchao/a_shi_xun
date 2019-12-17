@@ -13,7 +13,7 @@
             android:id="@+id/iv_hot_person"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/header"/>
+            android:src="@drawable/loading_1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,14 +24,12 @@
                 android:id="@+id/tv_hot_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="春天"
                 android:layout_marginTop="5dp"
                 android:textSize="20sp"/>
             <TextView
                 android:id="@+id/tv_hot_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="9:30"
                 android:textSize="20sp"
                 android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
@@ -45,7 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="28sp"
-        android:text="明天大家能够一定好要出去玩"
         android:layout_marginTop="20dp"/>
 
     <h.jpc.vhome.parents.fragment.community_hotspot.MyGridView
