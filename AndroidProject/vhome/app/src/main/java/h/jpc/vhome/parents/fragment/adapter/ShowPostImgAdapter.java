@@ -10,8 +10,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.List;
+import java.util.UUID;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
@@ -58,13 +60,14 @@ public class ShowPostImgAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(url)
                 .priority(Priority.HIGH)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(viewHolder.ivimage);
 
         return convertView;
     }
-    public static class ViewHolder {
-        public final ImageView ivimage;
-        public final View root;
+    public class ViewHolder {
+        public ImageView ivimage;
+        public View root;
 
         public ViewHolder(View root) {
             ivimage = (ImageView) root.findViewById(R.id.iv_post_simplegv);

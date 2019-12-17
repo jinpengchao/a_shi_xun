@@ -15,6 +15,7 @@ import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
 import h.jpc.vhome.parents.fragment.myself.MyAttentionsActivity;
+import h.jpc.vhome.parents.fragment.myself.ShowMyselfActivity;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -60,6 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class CommentActivity extends AppCompatActivity {
     private static final String TAG = "CommentActivity";
@@ -291,7 +294,11 @@ public class CommentActivity extends AppCompatActivity {
     private void fillPost() {
         //设置头像
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg();
-        Glide.with(CommentActivity.this).load(url).priority(Priority.HIGH).into(ivHotPerson);
+        Glide.with(CommentActivity.this)
+                .load(url).priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
+                .signature(new StringSignature(UUID.randomUUID().toString()))//重新加载
+                .centerCrop().into(ivHotPerson);
         tvHotName.setText(post.getNickName());//设置发帖人昵称
         tvHotContent.setText(post.getPostContent());//设置帖子内容
         //设置时间
@@ -565,8 +572,12 @@ public class CommentActivity extends AppCompatActivity {
                     addComment();
                     break;
                 case R.id.iv_hot_person:
-                    break;
+
                 case R.id.tv_hot_name:
+                    Intent person = new Intent();
+                    person.putExtra("personId",post.getPersonId());
+                    person.setClass(CommentActivity.this, ShowMyselfActivity.class);
+                    startActivity(person);
                     break;
                 case R.id.tv_attention:
                     //添加关注

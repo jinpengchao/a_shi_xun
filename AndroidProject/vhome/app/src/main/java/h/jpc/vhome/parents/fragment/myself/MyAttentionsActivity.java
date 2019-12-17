@@ -132,11 +132,10 @@ public class MyAttentionsActivity extends AppCompatActivity implements AbsListVi
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                        Intent simple = new Intent();
-//                        simple.putExtra("post",list.get(i));
-//                        simple.setClass(getContext(), CommentActivity.class);
-//                        startActivity(simple);
-                        Toast.makeText(MyAttentionsActivity.this, "目前没有跳转", Toast.LENGTH_SHORT).show();
+                        Intent person = new Intent();
+                        person.putExtra("personId",list.get(i).getId());
+                        person.setClass(MyAttentionsActivity.this, ShowMyselfActivity.class);
+                        startActivity(person);
                     }
                 });
                 adapter.notifyDataSetChanged();

@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import community.service.CommentService;
+import community.service.PostService;
+import community.service.ReplyService;
+import entity.ParentUserInfo;
 import user.service.UserService;
 
 /**
@@ -55,8 +59,14 @@ public class SaveUserHeaderImgServlet extends HttpServlet {
 			JSONObject json = new JSONObject(d);
 			String phone = json.getString("phone");
 			int type = json.getInt("type");
+			//修改用户表和帖子表中信息
+			ParentUserInfo pui = userService.selectUserInfo(phone, type);
+			String personId = pui.getId();
 			String headimg = json.getString("fileName");
 			userService.updateUserHeaderImg(phone, type, headimg);
+			(new PostService()).changImgById(headimg, personId);
+			(new CommentService()).changeImg(headimg, personId);
+			(new ReplyService()).changeLogo(headimg, personId);
 			System.out.println(headimg);
 			out.write(headimg);
 		} catch (JSONException e) {

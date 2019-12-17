@@ -183,6 +183,10 @@ public class MyPostActivity extends AppCompatActivity implements AbsListView.OnS
         };
     }
 
+    /**
+     * 删除个人帖子
+     * @param i
+     */
     private void delMyPost(int i) {
         new Thread(){
             @Override

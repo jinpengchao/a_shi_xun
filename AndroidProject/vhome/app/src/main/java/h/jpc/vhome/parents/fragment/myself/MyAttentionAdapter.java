@@ -1,33 +1,24 @@
 package h.jpc.vhome.parents.fragment.myself;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Message;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.google.gson.Gson;
+import com.bumptech.glide.signature.StringSignature;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
-import h.jpc.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import h.jpc.vhome.user.entity.ParentUserInfo;
-import h.jpc.vhome.util.ConnectionUtil;
 
 
 public class MyAttentionAdapter extends BaseAdapter {
@@ -77,13 +68,18 @@ public class MyAttentionAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         //设置头像
-        String user_logo = "http;//"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg();
-        Glide.with(context).load(user_logo).priority(Priority.HIGH).into(viewHolder.ivPerson);
+        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg();
+        Glide.with(context).load(user_logo)
+                .priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
+                .into(viewHolder.ivPerson);
         //设置昵称
         viewHolder.tvName.setText(list.get(i).getNikeName());
+
         //设置id
         viewHolder.tvId.setText(list.get(i).getId());
-        //点击删除
+        //点击取消关注
         viewHolder.ivDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +93,7 @@ public class MyAttentionAdapter extends BaseAdapter {
     public static class ViewHolder {
         public ImageView ivPerson;
         public TextView tvName;
-        public ImageView ivDel;
+        public TextView ivDel;
         public TextView tvId;
         public View root;
 

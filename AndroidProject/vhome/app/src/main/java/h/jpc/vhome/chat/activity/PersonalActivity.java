@@ -319,11 +319,13 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                     break;
                 case NICK_NAME:
                     final String nick = bundle.getString(NICK_NAME_KEY);
-                    SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
+                    SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
                     String phone = sp.getString("phone","");
+                    String id = sp.getString("id","");
                     int type = sp.getInt("type",0);
                     JSONObject jsonObject = new JSONObject();
                     try {
+                        jsonObject.put("id",id);
                         jsonObject.put("phone",phone);
                         jsonObject.put("type",type);
                         jsonObject.put("data",nick);

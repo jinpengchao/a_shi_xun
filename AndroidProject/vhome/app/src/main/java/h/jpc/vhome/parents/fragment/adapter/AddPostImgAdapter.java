@@ -12,10 +12,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import h.jpc.vhome.R;
 
@@ -23,6 +25,14 @@ public class AddPostImgAdapter extends BaseAdapter {
     private List<Map<String, Object>> datas;
     private Context context;
     private LayoutInflater inflater;
+    private onMyDelClick onMyDelClick;
+
+    public interface onMyDelClick{
+        public void myDelClick(int position);
+    }
+    public void setOnMyDelClick(onMyDelClick onMyDelClick){
+        this.onMyDelClick = onMyDelClick;
+    }
     /**
      * 可以动态设置最多上传几张，之后就不显示+号了，用户也无法上传了
      * 默认3张
@@ -95,24 +105,35 @@ public class AddPostImgAdapter extends BaseAdapter {
             Glide.with(context)
                     .load(file)
                     .priority(Priority.HIGH)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(viewHolder.ivimage);
             viewHolder.btdel.setVisibility(View.VISIBLE);
             viewHolder.btdel.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
+                    onMyDelClick.myDelClick(i);
                     if (file.exists()) {
                         file.delete();
                     }
-                    datas.remove(i);
-                    notifyDataSetChanged();
                 }
             });
+//            viewHolder.btdel.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (file.exists()) {
+//                        file.delete();
+//                    }
+//                    datas.remove(i);
+//                    notifyDataSetChanged();
+//                }
+//            });
         } else {
             /**代表+号的需要+号图片显示图片**/
             Glide.with(context)
                     .load(R.mipmap.aimg)
                     .priority(Priority.HIGH)
                     .centerCrop()
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(viewHolder.ivimage);
             viewHolder.ivimage.setScaleType(ImageView.ScaleType.FIT_XY);
             viewHolder.btdel.setVisibility(View.GONE);

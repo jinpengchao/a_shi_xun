@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".parents.fragment.myself.ShowMyselfActivity">
+
+    <h.jpc.vhome.parents.fragment.myself.view.MyScrollView
+        android:id="@+id/show_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:gravity="center"
+                android:text="给你的"/>
+
+            <h.jpc.vhome.parents.fragment.myself.view.UnScrollListView
+                android:id="@+id/lv_hot_spot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="20dp"
+                android:text="这个人很懒，什么都没有说~"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </h.jpc.vhome.parents.fragment.myself.view.MyScrollView>
+
+</LinearLayout>

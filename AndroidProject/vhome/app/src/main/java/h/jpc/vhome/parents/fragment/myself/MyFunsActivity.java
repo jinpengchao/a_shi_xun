@@ -8,6 +8,7 @@ import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -106,11 +107,10 @@ public class MyFunsActivity extends AppCompatActivity implements AbsListView.OnS
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                        Intent simple = new Intent();
-//                        simple.putExtra("post",list.get(i));
-//                        simple.setClass(getContext(), CommentActivity.class);
-//                        startActivity(simple);
-                        Toast.makeText(MyFunsActivity.this, "目前没有跳转", Toast.LENGTH_SHORT).show();
+                        Intent person = new Intent();
+                        person.putExtra("personId",list.get(i).getId());
+                        person.setClass(MyFunsActivity.this, ShowMyselfActivity.class);
+                        startActivity(person);
                     }
                 });
                 adapter.notifyDataSetChanged();

@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
@@ -86,10 +88,10 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) view.getTag();
         }
         //加载logo
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images"+commentBeanList.get(i).getHeadimg();
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+commentBeanList.get(i).getHeadimg();
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .error(R.mipmap.errorimg1)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .centerCrop()
                 .into(groupHolder.commentLogo);
         groupHolder.tv_name.setText(commentBeanList.get(i).getNickName());//设置用户昵称

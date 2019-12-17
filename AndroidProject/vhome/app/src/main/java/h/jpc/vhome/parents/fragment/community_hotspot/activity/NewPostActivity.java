@@ -96,6 +96,14 @@ public class NewPostActivity extends AppCompatActivity {
         datas = new ArrayList<>();
         adapter = new AddPostImgAdapter(datas,this);
         gvNewPost.setAdapter(adapter);
+        adapter.setOnMyDelClick(new AddPostImgAdapter.onMyDelClick() {
+            @Override
+            public void myDelClick(int position) {
+                datas.remove(position);
+                imgsName.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
         gvNewPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -432,7 +440,6 @@ public class NewPostActivity extends AppCompatActivity {
             Toast.makeText(NewPostActivity.this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
         }else {
             String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
-//        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/SavePostServlet";
             RequestParams params = new RequestParams(url);
             params.addBodyParameter("msg","上传图片");
             for (int i=0;i<datas.size();i++){

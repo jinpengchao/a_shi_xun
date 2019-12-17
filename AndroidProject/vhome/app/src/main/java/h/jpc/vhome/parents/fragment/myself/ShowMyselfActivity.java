@@ -1,6 +1,6 @@
 package h.jpc.vhome.parents.fragment.myself;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
@@ -9,9 +9,12 @@ import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import h.jpc.vhome.parents.fragment.myself.view.MyScrollView;
+import h.jpc.vhome.parents.fragment.myself.view.UnScrollListView;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,17 +22,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -40,46 +39,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyCollectionsActivity extends AppCompatActivity implements AbsListView.OnScrollListener{
-    private String TAG = "MyCollectionsActivity";
-    private ListView lvHotSpot;
+public class ShowMyselfActivity extends AppCompatActivity {
+    private String TAG = "ShowMyselfActivity";
+    private MyScrollView myScrollView;
+    private UnScrollListView lvHotSpot;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
-    private int POST_STATUS = 1;
     private HotSpotAdapter adapter;
-    private SmartRefreshLayout srl;
     private List<PostBean> loadList = new ArrayList<>();
     private int loadNum = 0;
     private TextView tvEmpty;
-    private int firstPosition; //滑动以后的可见的第一条数据
-    private int top;//滑动以后的第一条item的可见部分距离top的像素值
-    private SharedPreferences sp;//偏好设置
-    private SharedPreferences.Editor editor;
+    private String personId = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_post);
+        setContentView(R.layout.activity_show_myself);
+        //获取传来的数据
+        Intent idInten = getIntent();
+        personId = idInten.getStringExtra("personId");
         getViews();
-        lvHotSpot.setOnScrollListener(this);
-
-        srl.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshData();
-                srl.finishRefresh();
-            }
-        });
-        srl.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if(loadNum >= list.size()){
-                    srl.finishLoadMoreWithNoMoreData();
-                }else {
-                    loadMoreData();
-                    srl.finishLoadMore();
-                }
-            }
-        });
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -102,9 +80,8 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
                     }
                 }
 
-                adapter = new HotSpotAdapter(MyCollectionsActivity.this,loadList,R.layout.item_hotspot);
+                adapter = new HotSpotAdapter(ShowMyselfActivity.this,loadList,R.layout.item_hotspot);
                 lvHotSpot.setAdapter(adapter);
-                tvEmpty.setText("还没有收藏哦~");
                 lvHotSpot.setEmptyView(tvEmpty);
 //                当点击收藏点赞的时候
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
@@ -135,25 +112,16 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
                         simple.putExtra("post",list.get(i));
-                        simple.setClass(MyCollectionsActivity.this, CommentActivity.class);
+                        simple.setClass(ShowMyselfActivity.this, CommentActivity.class);
                         startActivity(simple);
                     }
                 });
                 adapter.notifyDataSetChanged();
-                //定位回到上一次的浏览位置
-                firstPosition=sp.getInt("firstPosition", 0);
-                top=sp.getInt("top", 0);
-                if(firstPosition!=0&&top!=0){
-                    lvHotSpot.setSelectionFromTop(firstPosition, top);
-                }
+
             }
         };
     }
 
-    /**
-     * 增加收藏数据
-     * @param i
-     */
     private void addPostCollection(int i) {
         CollectionBean collection = new CollectionBean();
         PostBean post = list.get(i);
@@ -315,17 +283,16 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
         loadNum = 0;
         list.clear();
         loadList.clear();
-        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(), Context.MODE_PRIVATE);
-        final String personId = sp.getString("id","");
+
         new Thread(){
             @Override
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetCollectionsPostServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetMyPostServlet?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
-                    util.sendMsg(data,POST_STATUS,handler);
+                    util.sendMsg(data,1,handler);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -336,11 +303,9 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
     }
 
     private void getViews() {
-        sp=getPreferences(MODE_PRIVATE);
-        editor=sp.edit();
         lvHotSpot = findViewById(R.id.lv_hot_spot);
-        srl = findViewById(R.id.srl);
         tvEmpty = findViewById(R.id.tv_empty);
+        myScrollView = findViewById(R.id.show_scroll_view);
     }
 
 
@@ -348,24 +313,7 @@ public class MyCollectionsActivity extends AppCompatActivity implements AbsListV
     public void onStart() {
 
         super.onStart();
-        Log.e("MyCollections","调用了onStart方法");
+        Log.e(TAG,"调用了onStart方法");
         getdata();
-    }
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
-            firstPosition=lvHotSpot.getFirstVisiblePosition();
-        }
-        View v=lvHotSpot.getChildAt(0);
-        top=v.getTop();
-
-        editor.putInt("firstPosition", firstPosition);
-        editor.putInt("top", top);
-        editor.commit();
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
     }
 }

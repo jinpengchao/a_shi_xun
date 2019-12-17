@@ -101,7 +101,6 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                 String data = b.getString("data");
                 Gson gson = new Gson();
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
-                Log.i("hotspotFragment","list数据个数"+list.size());
                 //设置加载的数据list,默认首先加载5条数据
 
                 if(list.size()>5){

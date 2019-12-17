@@ -21,6 +21,15 @@ import entity.PostBean;
  *
  */
 public class PostService {
+	
+	//通过个人id修改头像
+	public int changImgById(String logo,String personId) {
+		return (new PostDao()).changeImgByPId(logo, personId);
+	}
+	//通过个人id修改昵称
+	public int changeNameById(String nickName,String personId) {
+		return (new PostDao()).changeNameByPId(personId, nickName);
+	}
 	/**
 	 * 
 	 *  @title:savePost
