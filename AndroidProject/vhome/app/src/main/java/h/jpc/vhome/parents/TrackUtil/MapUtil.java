@@ -32,6 +32,7 @@ import java.util.List;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.parents.model.CurrentLocation;
 
+import static h.jpc.vhome.parents.TrackUtil.BitmapUtil.bmArrowPoint;
 import static h.jpc.vhome.parents.TrackUtil.BitmapUtil.bmEnd;
 import static h.jpc.vhome.parents.TrackUtil.BitmapUtil.bmStart;
 
@@ -233,7 +234,7 @@ public class MapUtil {
         polylineOverlay = baiduMap.addOverlay(polylineOptions);
 
         OverlayOptions markerOptions =
-                new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(bmStart)
+                new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(bmArrowPoint)
                         .position(points.get(points.size() - 1));
         mMoveMarker = (Marker) baiduMap.addOverlay(markerOptions);
 
