@@ -170,7 +170,7 @@ public class HomeFragment extends BaseFragment {
          *  时间：2019年12月10号
          */
 
-        Glide.with(getActivity()).load(R.mipmap.xw0).into(news);
+        Glide.with(getActivity()).load(R.mipmap.xw1).into(news);
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
