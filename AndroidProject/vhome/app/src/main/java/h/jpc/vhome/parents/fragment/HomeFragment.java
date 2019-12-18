@@ -139,7 +139,7 @@ public class HomeFragment extends BaseFragment {
          *  时间：2019年11月26日18:41:11
          */
         alarm = view.findViewById(R.id.chizixin);
-        Glide.with(getActivity()).load(R.mipmap.nz).into(alarm);
+        Glide.with(getActivity()).load(R.mipmap.nz1).into(alarm);
 
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +165,7 @@ public class HomeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        Glide.with(getActivity()).load(R.mipmap.tq).into(weather);
+        Glide.with(getActivity()).load(R.mipmap.tq1).into(weather);
         //新闻
         news = view.findViewById(R.id.quxinwen);
         /*
@@ -174,7 +174,7 @@ public class HomeFragment extends BaseFragment {
          *  时间：2019年12月10号
          */
 
-        Glide.with(getActivity()).load(R.mipmap.xw).into(news);
+        Glide.with(getActivity()).load(R.mipmap.xw1).into(news);
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
