@@ -299,6 +299,7 @@
         <activity android:name=".parents.fragment.myself.MyFunsActivity" />
         <activity android:name=".parents.fragment.myself.MyAttentionsActivity" />
         <activity android:name=".parents.fragment.myself.ShowMyselfActivity" />
+        <activity android:name=".chat.activity.lead.ViewPageActivity"/>
         <meta-data
             android:name="AA_DB_NAME"
             android:value="jchat.db" />

@@ -184,11 +184,13 @@
                     </TextView>
                 </LinearLayout>
             </RelativeLayout>
+
             <h.jpc.vhome.parents.fragment.myself.view.UnScrollListView
                 android:id="@+id/lv_hot_spot"
                 android:layout_below="@id/tv_you"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            
 
             <TextView
                 android:id="@+id/tv_empty"

@@ -93,6 +93,7 @@ public class NewPostActivity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.hide();
         }
+
         datas = new ArrayList<>();
         adapter = new AddPostImgAdapter(datas,this);
         gvNewPost.setAdapter(adapter);

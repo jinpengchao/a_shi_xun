@@ -37,18 +37,6 @@ public class AlarmActivity extends AppCompatActivity {
     RelativeLayout drawerLayout;
     Context context = AlarmActivity.this;
     TextView textView;
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            timeAdapter.setClockStatus(new TimeAdapter.ClockStatus() {
-//                @Override
-//                public void clockType(String content, int now, int wangTo) {
-//                    Log.e("Handler","今日受你欺凌，明日我必三倍奉还！");
-//                    timeAdapter.changeAlarm(content,wangTo);
-//                }
-//            });
-//        }
-//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,19 +45,12 @@ public class AlarmActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.clock_list);
         drawerLayout = findViewById(R.id.layout1);
         textView.setText("");
-        list.clear();
-//        getAlarm();
-        initRecyclerView();
-//        cnmd();
-    }
-    private void cnmd() {
-        new Thread(){
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-//                handler.sendMessage(msg);
-            }
-        }.start();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        timeAdapter = new TimeAdapter(list, context);
+        recyclerView.setAdapter(timeAdapter);
+        timeAdapter.notifyDataSetChanged();
+//        initRecyclerView();
     }
     @Override
     protected void onRestart() {
@@ -81,11 +62,11 @@ public class AlarmActivity extends AppCompatActivity {
         if (list.size()==0){
             textView.setText("您还没有收到小提示哦~");
         }
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        timeAdapter = new TimeAdapter(list, context);
-        recyclerView.setAdapter(timeAdapter);
-        timeAdapter.notifyDataSetChanged();
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(layoutManager);
+//        timeAdapter = new TimeAdapter(list, context);
+//        recyclerView.setAdapter(timeAdapter);
+//        timeAdapter.notifyDataSetChanged();
     }
     @Override
     public void onBackPressed() {
@@ -135,6 +116,13 @@ public class AlarmActivity extends AppCompatActivity {
                                 timeAdapter.notifyDataSetChanged();
                             }
                         });
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initRecyclerView();
+                            }
+                        });
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -148,6 +136,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        list.clear();
         getAlarm();
     }
 }

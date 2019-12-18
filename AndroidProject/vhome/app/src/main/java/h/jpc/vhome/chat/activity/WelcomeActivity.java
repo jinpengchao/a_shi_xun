@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MainActivity;
+import h.jpc.vhome.chat.activity.lead.ViewPageActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Context mContext;
@@ -17,11 +18,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void initData() {
-            goToMainActivity();
+
+        goToMainActivity();
     }
 
     private void goToMainActivity() {
-        startActivity(new Intent(mContext, MainActivity.class));
+//        startActivity(new Intent(mContext, MainActivity.class));
+        startActivity(new Intent(mContext, ViewPageActivity.class));
         finish();
     }
 }
