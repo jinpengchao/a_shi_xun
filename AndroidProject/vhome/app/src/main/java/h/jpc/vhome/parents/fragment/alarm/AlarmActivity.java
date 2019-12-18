@@ -44,14 +44,13 @@ public class AlarmActivity extends AppCompatActivity {
         textView = findViewById(R.id.warnInfo1);
         recyclerView = findViewById(R.id.clock_list);
         drawerLayout = findViewById(R.id.layout1);
-        textView.setText("");
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         timeAdapter = new TimeAdapter(list, context);
         recyclerView.setAdapter(timeAdapter);
         timeAdapter.notifyDataSetChanged();
-//        initRecyclerView();
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -62,11 +61,6 @@ public class AlarmActivity extends AppCompatActivity {
         if (list.size()==0){
             textView.setText("您还没有收到小提示哦~");
         }
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-//        timeAdapter = new TimeAdapter(list, context);
-//        recyclerView.setAdapter(timeAdapter);
-//        timeAdapter.notifyDataSetChanged();
     }
     @Override
     public void onBackPressed() {
@@ -124,6 +118,14 @@ public class AlarmActivity extends AppCompatActivity {
                             }
                         });
                     }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initRecyclerView();
+                            }
+                        });
+                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -131,6 +133,12 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        list.clear();
     }
 
     @Override

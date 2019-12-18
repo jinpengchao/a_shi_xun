@@ -204,12 +204,12 @@ public class MyselfFragment extends Fragment {
     public void Logout() {
         final Intent intent = new Intent();
         UserInfo info = JMessageClient.getMyInfo();
-        if (null != info) {
-            SharePreferenceManager.setCachedUsername(info.getUserName());
-            if (info.getAvatarFile() != null) {
-                SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
-            }
-            JMessageClient.logout();
+//        if (null != info) {
+//            SharePreferenceManager.setCachedUsername(info.getUserName());
+//            if (info.getAvatarFile() != null) {
+//                SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
+//            }
+//            JMessageClient.logout();
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -227,6 +227,6 @@ public class MyselfFragment extends Fragment {
                     R.anim.in,//进入动画
                     R.anim.out//出去动画
             );
-        }
+//        }
     }
 }

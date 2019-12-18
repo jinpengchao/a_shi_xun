@@ -77,7 +77,7 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout myRelation;
     private RelativeLayout myResetPwd;
     private RelativeLayout myLogout;
-    private MyDialog myDialog;
+    private Dialog myDialog;
     private EventBus eventBus;
     private TextView tvAttention;
     private TextView tvFuns;
@@ -295,13 +295,13 @@ public class MyselfFragment extends BaseFragment {
     //退出登录
     public void Logout() {
         final Intent intent = new Intent();
-        UserInfo info = JMessageClient.getMyInfo();
-        if (null != info) {
-            SharePreferenceManager.setCachedUsername(info.getUserName());
-            if (info.getAvatarFile() != null) {
-                SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
-            }
-            JMessageClient.logout();
+//        UserInfo info = JMessageClient.getMyInfo();
+//        if (null != info) {
+//            SharePreferenceManager.setCachedUsername(info.getUserName());
+//            if (info.getAvatarFile() != null) {
+//                SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
+//            }
+//            JMessageClient.logout();
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -321,7 +321,7 @@ public class MyselfFragment extends BaseFragment {
             );
             Intent intent2 = new Intent(getActivity(), AlarmService.class);
             getActivity().stopService(intent2);// 关闭闹钟服务
-        }
+//        }
     }
 
     @Override

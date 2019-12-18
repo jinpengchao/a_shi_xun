@@ -2,8 +2,6 @@ package h.jpc.vhome.parents.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +37,6 @@ import h.jpc.vhome.R;
 import h.jpc.vhome.chat.activity.fragment.BaseFragment;
 import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
 import h.jpc.vhome.parents.HttpLogin;
-import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.parents.fragment.alarm.AlarmActivity;
 import h.jpc.vhome.parents.fragment.calendar.LunarCalendar;
 import h.jpc.vhome.parents.fragment.news.NewsActivity;
@@ -55,6 +51,7 @@ public class HomeFragment extends BaseFragment {
     private TextView yang_li_calendar;
     private TextView yin_li_calendar;
     private TextView today_weather;
+    private ImageView bg1;
     private ImageView alarm;
     private ImageView weather;
     private ImageView news;
@@ -86,7 +83,7 @@ public class HomeFragment extends BaseFragment {
                         String week = jsonObject1.getString("week");
                         String temp = jsonObject1.getString("temperature");
 //                        if(weather.equals("晴")){
-//                            Glide.with(getActivity()).load(R.drawable.sun).asGif().into(gif_weather);
+//                            Glide.with(getActivity()).load(R.drawable.sun).into(gif_weather);
 //                        }else if(weather.equals("雨")){
 //                            Glide.with(getActivity()).load(R.drawable.yu).into(gif_weather);
 //                        }else {
@@ -108,10 +105,9 @@ public class HomeFragment extends BaseFragment {
         getAlarm();
         top_bg = view.findViewById(R.id.top_bg);
         Glide.with(getActivity()).load(R.drawable.top_bg).into(top_bg);
-//        AssetManager mgr = getActivity().getAssets();
-//        Typeface tf = Typeface.createFromAsset(mgr, "fonts/kaiti.ttf");
-//        yang_li_calendar.setTypeface(tf);
-//        yin_li_calendar.setTypeface(tf);
+
+        bg1 = view.findViewById(R.id.bg1);
+        bg1.setBackgroundResource(R.mipmap.bg);
         /*
          * 功能：设置时间
          * 作者：靳朋朝

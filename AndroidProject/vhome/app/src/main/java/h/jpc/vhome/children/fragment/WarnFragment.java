@@ -474,17 +474,17 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
         images = new ArrayList<>();
-        images.add(R.mipmap.sss);
-        images.add(R.mipmap.sss);
-        images.add(R.mipmap.sss);
+        images.add(R.mipmap.p1);
+        images.add(R.mipmap.p2);
+        images.add(R.mipmap.p3);
         banner.setImages(images);
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
         titles = new ArrayList<>();
-        titles.add("jwbsb1");
-        titles.add("jwbsb2");
-        titles.add("jwbsb3");
+        titles.add("百善孝为先");
+        titles.add("常回家看看");
+        titles.add("回家");
         banner.setBannerTitles(titles);
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);

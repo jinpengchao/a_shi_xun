@@ -53,7 +53,7 @@ public class DeleteSendenAlarmServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-	
+		
 		JSONObject json;
 		try {
 			json = new JSONObject(data);
@@ -66,7 +66,6 @@ public class DeleteSendenAlarmServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		out.flush();
 		out.close();
 		br.close();
