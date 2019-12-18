@@ -58,8 +58,8 @@ public class UserService {
 		userDao.addNewRelation(receivePhone, sendPhone,receiveType);
 	}
 	//查找关联的父母
-	public List<String> selectParentPhone(String receivePhone,int receiveType) {
+	public List<String> selectParentPhone(String sendPhone) {
 		UserDao userDao = new UserDao();
-		return userDao.findMyRelation(receivePhone, receiveType);
+		return userDao.findMyRelation(sendPhone);
 	}
 }

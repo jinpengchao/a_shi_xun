@@ -224,15 +224,15 @@ public class AlarmDao {
 			conn = util.getConnection();
 			String sql = "";
 			if(":".equals(time)) {
-				sql = "update tbl_alarm set clocktype='"+clocktype+"' where alarmId='"+alarmId+"'";
+				sql = "update tbl_alarm set clocktype='"+clocktype+"' where content='"+content+"'";
 			}else {
-				sql = "update tbl_alarm set alarmTime='"+time+"',content='"+content+"' where alarmId='"+alarmId+"'";
+				sql = "update tbl_alarm set alarmTime='"+time+"',content='"+content+"',clocktype=1 where alarmId='"+alarmId+"'";
 			}
-			
+		
 			psmt = conn.prepareStatement(sql);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
-				System.out.println("AlarmDao--闹钟信息修改成功"+clocktype+"=="+alarmId);
+				System.out.println("AlarmDao--闹钟信息修改成功"+sql);
 			}else {
 				System.out.println("AlarmDao--闹钟信息修改失败");
 			}

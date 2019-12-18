@@ -105,8 +105,7 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_parent_home,null);
         initUserInfo();
-        String service = "showAllAlarm";
-        getAlarm(service);
+        getAlarm();
         top_bg = view.findViewById(R.id.top_bg);
         Glide.with(getActivity()).load(R.drawable.top_bg).into(top_bg);
 //        AssetManager mgr = getActivity().getAssets();
@@ -145,8 +144,6 @@ public class HomeFragment extends BaseFragment {
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String service = "showAllAlarm";
-                getAlarm(service);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), AlarmActivity.class);
                 startActivity(intent);
@@ -308,7 +305,7 @@ public class HomeFragment extends BaseFragment {
         editor2.putString("headImg",headimg);
         editor2.commit();
     }
-    public void getAlarm(String service){
+    public void getAlarm(){
         SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
         String phone = sp.getString("phone","");
         final String data = phone;
@@ -317,7 +314,7 @@ public class HomeFragment extends BaseFragment {
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/"+service);
+                    URL url = new URL("http://"+ip+":8080/vhome/showAllAlarm");
                     ConnectionUtil util = new ConnectionUtil();
                     //发送数据
                     HttpURLConnection connection = util.sendData(url,data);

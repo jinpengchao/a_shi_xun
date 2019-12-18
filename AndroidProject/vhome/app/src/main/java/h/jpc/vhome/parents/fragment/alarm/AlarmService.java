@@ -44,7 +44,6 @@ public class AlarmService extends Service {
                         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
                         final int minute = calendar.get(Calendar.MINUTE);
                         final int second = calendar.get(Calendar.SECOND);
-                        //以下数据皆来自数据库
                         SharedPreferences sharedPreferences = getSharedPreferences("alarm",MODE_PRIVATE);
                         List<Integer> h = new ArrayList<>();
                         List<Integer> min = new ArrayList<>();

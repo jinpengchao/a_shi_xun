@@ -285,7 +285,6 @@
         <activity android:name=".user.LoginByCodeActivity" />
         <activity android:name=".user.CheckPhoneActivity" />
         <activity android:name=".user.RegisterActivity" />
-        <activity android:name=".parents.fragment.alarm.ReadAlarm" />
         <activity android:name=".parents.fragment.alarm.ClockDetail" />
         <activity android:name=".parents.fragment.alarm.AlarmAlert" />
         <activity android:name=".children.ChildrenMain" />

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="260dp"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical|center_horizontal"
     android:orientation="vertical"
@@ -26,7 +28,7 @@
         <Button
             android:id="@+id/cancle"
             android:layout_height="50dp"
-            android:layout_width="0dip"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:text="@string/jmui_cancel"
             android:textColor="#808080"
@@ -36,7 +38,7 @@
         <Button
             android:id="@+id/commit"
             android:layout_height="50dp"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:text="@string/jmui_confirm"
             android:textColor="#808080"
