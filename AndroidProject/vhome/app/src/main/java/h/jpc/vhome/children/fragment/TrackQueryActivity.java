@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
@@ -116,6 +117,7 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
             imei = sp.getString("moEntity"," ");
             trackApp.setImei(imei);
         }
+        Toast.makeText(TrackQueryActivity.this, "请先在右上角设置时间区间", Toast.LENGTH_LONG).show();
     }
 
     /**

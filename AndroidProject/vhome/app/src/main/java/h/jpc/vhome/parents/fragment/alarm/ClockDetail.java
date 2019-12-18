@@ -123,13 +123,41 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.delete:
-                //删库
-                list.remove(position);
-                timeAdapter.notifyDataSetChanged();
+                String content = clock.getContent();
+                deleteSendedAlarm(content);
                 finish();
                 break;
 
         }
+    }
+    public void deleteSendedAlarm(String content){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content",content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/delAlarm");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    //发送数据
+                    util.sendData(url,data);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     public void changeAlarm(Context context,String hour,String minute,String content,int clocktype){
         SharedPreferences sp = context.getSharedPreferences("alarm",MODE_PRIVATE);

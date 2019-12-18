@@ -37,18 +37,6 @@ public class AlarmActivity extends AppCompatActivity {
     RelativeLayout drawerLayout;
     Context context = AlarmActivity.this;
     TextView textView;
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            timeAdapter.setClockStatus(new TimeAdapter.ClockStatus() {
-//                @Override
-//                public void clockType(String content, int now, int wangTo) {
-//                    Log.e("Handler","今日受你欺凌，明日我必三倍奉还！");
-//                    timeAdapter.changeAlarm(content,wangTo);
-//                }
-//            });
-//        }
-//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,21 +44,13 @@ public class AlarmActivity extends AppCompatActivity {
         textView = findViewById(R.id.warnInfo1);
         recyclerView = findViewById(R.id.clock_list);
         drawerLayout = findViewById(R.id.layout1);
-        textView.setText("");
-        list.clear();
-//        getAlarm();
-        initRecyclerView();
-//        cnmd();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        timeAdapter = new TimeAdapter(list, context);
+        recyclerView.setAdapter(timeAdapter);
+        timeAdapter.notifyDataSetChanged();
     }
-    private void cnmd() {
-        new Thread(){
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-//                handler.sendMessage(msg);
-            }
-        }.start();
-    }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -81,11 +61,7 @@ public class AlarmActivity extends AppCompatActivity {
         if (list.size()==0){
             textView.setText("您还没有收到小提示哦~");
         }
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        timeAdapter = new TimeAdapter(list, context);
-        recyclerView.setAdapter(timeAdapter);
-        timeAdapter.notifyDataSetChanged();
+
     }
     @Override
     public void onBackPressed() {
@@ -136,6 +112,14 @@ public class AlarmActivity extends AppCompatActivity {
                             }
                         });
                     }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initRecyclerView();
+                            }
+                        });
+                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -143,6 +127,12 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        list.clear();
     }
 
     @Override

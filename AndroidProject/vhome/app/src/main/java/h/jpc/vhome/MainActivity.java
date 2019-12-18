@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClass(MainActivity.this,ParentMain.class);
+                i.setClass(MainActivity.this,ChildrenMain.class);
                 startActivity(i);
             }
         });

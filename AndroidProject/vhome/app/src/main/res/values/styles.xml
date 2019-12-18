@@ -364,7 +364,7 @@
     statusBarColor这个属性可以改变系统状态栏颜色-->
 
     <style name="WelcomeStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/loading</item>
+        <item name="android:windowBackground">@drawable/load</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 

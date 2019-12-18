@@ -43,39 +43,40 @@
             android:textColor="@color/notChoseColor"
             android:textSize="20dp"></TextView>
     </RelativeLayout>
-    <ScrollView
+     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
-            android:orientation="vertical"
+         <ImageView
+             android:id="@+id/bg1"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+         </ImageView>
+        <ImageView
+            android:id="@+id/chizixin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/chizixin"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                ></ImageView>
-            <ImageView
-                android:id="@+id/kantianqi"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/chizixin"
-                ></ImageView>
-            <ImageView
-                android:id="@+id/quxinwen"
-                android:layout_below="@id/kantianqi"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                ></ImageView>
-        </RelativeLayout>
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            ></ImageView>
+        <ImageView
+            android:id="@+id/kantianqi"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/chizixin"
+            ></ImageView>
+        <ImageView
+            android:id="@+id/quxinwen"
+            android:layout_below="@id/kantianqi"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            ></ImageView>
+    </RelativeLayout>
 </LinearLayout>
