@@ -38,6 +38,7 @@ import h.jpc.vhome.chat.activity.PersonalActivity;
 import h.jpc.vhome.chat.activity.SearchForAddFriendActivity;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
+import h.jpc.vhome.children.fragment.dialog.MyDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -51,6 +52,7 @@ public class MyselfFragment extends Fragment {
     private RelativeLayout about_me;
     private RelativeLayout add_relation;
     private Button logout;
+    private MyDialog myDialog;
     private TextView ids;
     private TextView myName;
     private ImageView sexs;
@@ -109,9 +111,27 @@ public class MyselfFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logout();
-                cancelNotification();
-                getActivity().finish();
+                View view = getLayoutInflater().inflate(R.layout.dialog_logout, null);
+                myDialog = new MyDialog(getActivity(), 0, 0, view, R.style.DialogTheme);
+                Button cancle = (Button)view.findViewById(R.id.cancle);
+                Button ok = (Button)view.findViewById(R.id.commit);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Logout();
+                        cancelNotification();
+                        myDialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+                cancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.setCancelable(true);
+                myDialog.show();
             }
         });
         add_relation.setOnClickListener(new View.OnClickListener() {
