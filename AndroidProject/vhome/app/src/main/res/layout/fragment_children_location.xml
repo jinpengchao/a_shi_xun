@@ -27,13 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
-            android:popupBackground="#E6389fff"
-            android:background="@color/white"
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/colorPrimary"
             android:text="查看父亲"
             android:textAlignment="center" />
         <TextView
-            android:layout_weight="0.1"
-            android:layout_width="20dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/choseColor"/>
 
@@ -43,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:spinnerMode="dropdown"
-            android:popupBackground="#E6389fff"
-            android:background="@color/white"
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/colorPrimary"
             android:textAlignment="center"
             android:text="查看母亲" />
     </LinearLayout>
