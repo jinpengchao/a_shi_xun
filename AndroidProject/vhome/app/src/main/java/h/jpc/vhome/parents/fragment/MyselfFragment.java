@@ -310,6 +310,7 @@ public class MyselfFragment extends BaseFragment {
             editor1.clear();
             editor1.commit();
             editor.commit();
+            Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画

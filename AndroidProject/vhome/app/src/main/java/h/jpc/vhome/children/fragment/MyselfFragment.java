@@ -45,7 +45,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyselfFragment extends Fragment {
     private ImageView blurImageView;
-    public static ImageView header;
+    private ImageView header;
     private RelativeLayout myRelation;
     private RelativeLayout changePwd;
     private RelativeLayout about_me;
@@ -122,6 +122,8 @@ public class MyselfFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        initData();
+        initMyselfInfo();
         return view;
     }
     public void asyncDownOp() {
@@ -134,7 +136,6 @@ public class MyselfFragment extends Fragment {
             }
         }.start();
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -189,7 +190,6 @@ public class MyselfFragment extends Fragment {
                 SharePreferenceManager.setCachedAvatarPath(info.getAvatarFile().getAbsolutePath());
             }
             JMessageClient.logout();
-
             SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
             SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -198,11 +198,7 @@ public class MyselfFragment extends Fragment {
             editor1.clear();
             editor1.commit();
             editor.commit();
-            File file= new File("/data/data/"+getActivity().getPackageName().toString()+"/shared_prefs/");
-            if(file.exists()){
-                file.delete();
-                Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
-            }
+            Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
             intent.setClass(getActivity(), MainActivity.class);
             startActivity(intent);
             //应用页面跳转动画

@@ -62,7 +62,7 @@ public class ChildrenMain extends AppCompatActivity {
         //tab1
         TabHost.TabSpec tabSpec1 = fragmentTabHost
                 .newTabSpec("tag1")
-                .setIndicator(getTabSpaceView("tag1",R.mipmap.notwarn,"提醒"));
+                .setIndicator(getTabSpaceView("tag1",R.mipmap.warn,"提醒"));
         fragmentTabHost.addTab(tabSpec1,
                 WarnFragment.class,
                 null
@@ -70,7 +70,7 @@ public class ChildrenMain extends AppCompatActivity {
         //tab2
         TabHost.TabSpec tabSpec2 = fragmentTabHost
                 .newTabSpec("tag2")
-                .setIndicator(getTabSpaceView("tag2",R.mipmap.notchat,"聊天"));
+                .setIndicator(getTabSpaceView("tag2",R.mipmap.msg,"聊天"));
         fragmentTabHost.addTab(tabSpec2,
                 ConversationListFragment.class,
                 null
@@ -78,7 +78,7 @@ public class ChildrenMain extends AppCompatActivity {
         //tab3
         TabHost.TabSpec tabSpec3 = fragmentTabHost
                 .newTabSpec("tag3")
-                .setIndicator(getTabSpaceView("tag3",R.mipmap.notlocation,"位置"));
+                .setIndicator(getTabSpaceView("tag3",R.mipmap.path,"位置"));
         fragmentTabHost.addTab(tabSpec3,
                 LocationFragment.class,
                 null
@@ -86,14 +86,16 @@ public class ChildrenMain extends AppCompatActivity {
         //tab3
         TabHost.TabSpec tabSpec4 = fragmentTabHost
                 .newTabSpec("tag4")
-                .setIndicator(getTabSpaceView("tag4",R.mipmap.notmyself,"我的"));
+                .setIndicator(getTabSpaceView("tag4",R.mipmap.me,"我的"));
         fragmentTabHost.addTab(tabSpec4,
                 MyselfFragment.class,
                 null
         );
+        //去除分割线
+        fragmentTabHost.getTabWidget().setDividerDrawable(null);
         fragmentTabHost.setCurrentTab(0);
-        imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
-        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.childrenColor));
+        imageViewMap.get("tag1").setImageResource(R.mipmap.warn1);
+        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
@@ -102,44 +104,44 @@ public class ChildrenMain extends AppCompatActivity {
             public void onTabChanged(String tabId) {
                 switch (tabId){
                     case "tag1":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.childrenColor));
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.warn1);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.msg);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.path);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
+                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag2":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian1);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.msg1);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.path);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.childrenColor));
+                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag3":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.location);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.notmyself);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.msg);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.path1);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.childrenColor));
+                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
                         textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.notChoseColor));
                         break;
                     case "tag4":
-                        imageViewMap.get("tag1").setImageResource(R.mipmap.notwarn);
-                        imageViewMap.get("tag2").setImageResource(R.mipmap.liaotian0);
-                        imageViewMap.get("tag3").setImageResource(R.mipmap.notlocation);
-                        imageViewMap.get("tag4").setImageResource(R.mipmap.myself);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.warn);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.msg);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.path);
+                        imageViewMap.get("tag4").setImageResource(R.mipmap.me1);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.childrenColor));
+                        textViewMap.get("tag4").setTextColor(getResources().getColor(R.color.choseColor));
                         break;
                 }
             }

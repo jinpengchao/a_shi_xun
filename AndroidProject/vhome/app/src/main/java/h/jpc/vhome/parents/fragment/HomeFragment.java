@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("today_weather",MODE_PRIVATE);
         String w  = sharedPreferences.getString("weather","");
         Date date = new Date();
-        load("石家庄");
+//        load("石家庄");
 
         yin_li_calendar.setText(getDate(date)[1]);
         handler = new Handler() {
@@ -270,7 +270,7 @@ public class HomeFragment extends BaseFragment {
                                     Gson gson = new Gson();
                                     ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
                                     String phone = userInfo.getPhone();
-                                    String id = userInfo.getPhone();
+                                    String id = userInfo.getId();
                                     String nickName = userInfo.getNikeName();
                                     String sex = userInfo.getSex();
                                     String area = userInfo.getArea();

@@ -144,7 +144,6 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                 lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                         Intent simple = new Intent();
                         simple.putExtra("post",list.get(i));
                         simple.setClass(getContext(), CommentActivity.class);

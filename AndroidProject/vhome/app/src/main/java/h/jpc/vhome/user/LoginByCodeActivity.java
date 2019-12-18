@@ -17,11 +17,13 @@ import h.jpc.vhome.chat.utils.HandleResponseCode;
 import h.jpc.vhome.chat.utils.SharePreferenceManager;
 import h.jpc.vhome.chat.utils.ToastUtil;
 import h.jpc.vhome.children.ChildrenMain;
+import h.jpc.vhome.parents.ParentMain;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -63,6 +65,8 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
     private EditText inputCodeEt;
     private Button requestCodeBtn;
     private Button loginBtn;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     int i = 30;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -80,10 +84,7 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 短信注册成功后，返回MainActivity,然后提示
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
-                        Intent intent = new Intent(LoginByCodeActivity.this,
-                                ChildrenMain.class);
-                        startActivity(intent);
-                        finish();
+                        loginByCode();
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         Toast.makeText(getApplicationContext(), "正在获取验证码",
                                 Toast.LENGTH_SHORT).show();
@@ -101,6 +102,13 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
         getView();
         Glide.with(this).load(R.mipmap.mainbk1).centerCrop().into(loginByCodeBk);
         init();
+        sp = getSharedPreferences("user", MODE_PRIVATE);
+        if (sp.getString("phone","")!=null) {
+            String p = sp.getString("phone", "");
+            String pwd = sp.getString("pwd", "");
+            int type = sp.getInt("type", 0);
+            isLogin(p, pwd, type);
+        }
     }
 
     public void getView() {
@@ -258,105 +266,133 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
             finish();
         }
     }
-//    public void loginByPsw() {
-//        //准备数据
-//        Log.e("MainActivity", "logBypsw");
-//        final String phoneNums = inputPhoneEt.getText().toString();
-//        if (TextUtils.isEmpty(phoneNums)){
-//            showToast("用户名不能为空！");
-//            return;
-//        }
-//        final User user = new User();
-//        user.setPhone(phoneNums);
-//        user.setPassword(passWords);
-//        Gson gson = new Gson();
-//        final String data = gson.toJson(user);
-//
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                String ip = (new MyApp()).getIp();
-//                try {
-//                    URL url = new URL("http://"+ip+":8080/vhome/pwdlogin");
-//                    ConnectionUtil util = new ConnectionUtil();
-//                    //发送数据
-//                    HttpURLConnection connection = util.sendData(url,data);
-//                    //获取数据
-//                    final String data = util.getData(connection);
-//                    if(null!=data){
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    JSONObject json = new JSONObject(data);
-//                                    String p1 = json.getString("p");
-//                                    String pwd1 = json.getString("pwd");
-//                                    int type1 = json.getInt("type");
-//                                    isLogin(p1,pwd1,type1);
-//                                    pwdLogin.setText("请稍候...");
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-//                    }else {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                etPwd.setText("");
-//                                showToast("用户名或密码错误");
-//                            }
-//                        });
-//                    }
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.start();
-//        if (JGApplication.registerOrLogin % 2 == 1) {
-//            final Dialog dialog = DialogCreator.createLoadingDialog(this,
-//                    this.getString(R.string.login_hint));
-//            dialog.show();
-//            JMessageClient.login(phoneNums, passWords, new BasicCallback() {
-//                @Override
-//                public void gotResult(int responseCode, String responseMessage) {
-//                    dialog.dismiss();
-//                    if (responseCode == 0) {
-//                        SharePreferenceManager.setCachedPsw(passWords);
-//                        UserInfo myInfo = JMessageClient.getMyInfo();
-//                        File avatarFile = myInfo.getAvatarFile();
-//                        //登陆成功,如果用户有头像就把头像存起来,没有就设置null
-//                        if (avatarFile != null) {
-//                            SharePreferenceManager.setCachedAvatarPath(avatarFile.getAbsolutePath());
-//                        } else {
-//                            SharePreferenceManager.setCachedAvatarPath(null);
-//                        }
-//                        String username = myInfo.getUserName();
-//                        String appKey = myInfo.getAppKey();
-//                        UserEntry user = UserEntry.getUser(username, appKey);
-//                        if (null == user) {
-//                            user = new UserEntry(username, appKey);
-//                            user.save();
-//                        }
-//                    }
-//                }
-//            });
-//        } else {
-//            JMessageClient.register(phoneNums, passWords, new BasicCallback() {
-//                @Override
-//                public void gotResult(int i, String s) {
-//                    if (i == 0) {
-//                        SharePreferenceManager.setRegisterName(phoneNums);
-//                        SharePreferenceManager.setRegistePass(passWords);
-//                        startActivity(new Intent(LoginByCodeActivity.this, RegisterActivity.class));
-//                        ToastUtil.shortToast(LoginByCodeActivity.this, "注册成功");
-//                    } else {
-//                        HandleResponseCode.onHandle(LoginByCodeActivity.this, i, false);
-//                    }
-//                }
-//            });
-//        }
-//    }
+    public void loginByCode() {
+        //准备数据
+        Log.e("MainActivity", "logByCode");
+        final String phoneNums = inputPhoneEt.getText().toString();
+        if (TextUtils.isEmpty(phoneNums)){
+            Toast.makeText(LoginByCodeActivity.this,"用户名不能为空！",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final User user = new User();
+        user.setPhone(phoneNums);
+        Gson gson = new Gson();
+        final String data = gson.toJson(user);
+
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/LoginByCodeServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject json = new JSONObject(data);
+                                    String p1 = json.getString("p");
+                                    String pwd1 = json.getString("pwd");
+                                    int type1 = json.getInt("type");
+                                    isLogin(p1,pwd1,type1);
+                                    loginBtn.setText("请稍候...");
+                                    if (JGApplication.registerOrLogin % 2 == 1) {
+                                        final Dialog dialog = DialogCreator.createLoadingDialog(LoginByCodeActivity.this,
+                                                getString(R.string.login_hint));
+                                        dialog.show();
+                                        JMessageClient.login(phoneNums, pwd1, new BasicCallback() {
+                                            @Override
+                                            public void gotResult(int responseCode, String responseMessage) {
+                                                dialog.dismiss();
+                                                if (responseCode == 0) {
+                                                    SharePreferenceManager.setCachedPsw(pwd1);
+                                                    UserInfo myInfo = JMessageClient.getMyInfo();
+                                                    File avatarFile = myInfo.getAvatarFile();
+                                                    //登陆成功,如果用户有头像就把头像存起来,没有就设置null
+                                                    if (avatarFile != null) {
+                                                        SharePreferenceManager.setCachedAvatarPath(avatarFile.getAbsolutePath());
+                                                    } else {
+                                                        SharePreferenceManager.setCachedAvatarPath(null);
+                                                    }
+                                                    String username = myInfo.getUserName();
+                                                    String appKey = myInfo.getAppKey();
+                                                    UserEntry user = UserEntry.getUser(username, appKey);
+                                                    if (null == user) {
+                                                        user = new UserEntry(username, appKey);
+                                                        user.save();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        JMessageClient.register(phoneNums, pwd1, new BasicCallback() {
+                                            @Override
+                                            public void gotResult(int i, String s) {
+                                                if (i == 0) {
+                                                    SharePreferenceManager.setRegisterName(phoneNums);
+                                                    SharePreferenceManager.setRegistePass(pwd1);
+                                                    startActivity(new Intent(LoginByCodeActivity.this, RegisterActivity.class));
+                                                    ToastUtil.shortToast(LoginByCodeActivity.this, "注册成功");
+                                                } else {
+                                                    HandleResponseCode.onHandle(LoginByCodeActivity.this, i, false);
+                                                }
+                                            }
+                                        });
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+    }
+    public void isLogin(String phone,String pwd,int type) {
+        //存储登录状态
+        editor = sp.edit();
+        if (sp.getString("phone", "") == "") {
+            editor.putString("phone", phone);
+            editor.putString("pwd", pwd);
+            editor.putInt("type", type);
+            editor.commit();
+        }
+        if (sp.getString("phone", "") != "") {
+            if (sp.getString("phone", null) != phone) {
+                editor.putString("phone", phone);
+                editor.putString("pwd", pwd);
+                editor.putInt("type", type);
+                editor.commit();
+            } else if (sp.getInt("type", 0) == 0) {
+                Intent intent = new Intent();
+                intent.setClass(LoginByCodeActivity.this, ParentMain.class);
+                startActivity(intent);
+                overridePendingTransition(
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
+                );
+                finish();
+            } else if (sp.getInt("type", 0) == 1) {
+                Intent intent = new Intent();
+                intent.setClass(LoginByCodeActivity.this, ChildrenMain.class);
+                startActivity(intent);
+                overridePendingTransition(
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
+                );
+                finish();
+            }
+        }
+    }
 }

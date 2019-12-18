@@ -18,11 +18,16 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.exist(phone);
 	}
-	//用户登录
+	//用户密码登录
 	public User selectUser(String phone, String password) {
 		UserDao userDao = new UserDao();
 		return userDao.pwdLogin(phone, password);
 	}
+	//用户验证码登录
+		public User loginBycode(String phone) {
+			UserDao userDao = new UserDao();
+			return userDao.codeLogin(phone);
+		}
 	//向用户信息表添加个人信息
 	public void insertUserInfo(String phone, String id, String nikeName, String sex, String area, String headerImg, int type) {
 		UserDao userDao = new UserDao();

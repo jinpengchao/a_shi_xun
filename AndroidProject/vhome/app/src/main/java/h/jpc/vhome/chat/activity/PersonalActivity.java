@@ -306,9 +306,9 @@ public class PersonalActivity extends BaseActivity implements SelectAddressInter
                 case NICK_NAME:
                     final String nick = bundle.getString(NICK_NAME_KEY);
                     SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
-                    SharedPreferences sp1 = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                    SharedPreferences sp1 = getSharedPreferences("user",MODE_PRIVATE);
                     String phone = sp.getString("phone","");
-                    int type = sp.getInt("type",0);
+                    int type = sp1.getInt("type",0);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("phone",phone);

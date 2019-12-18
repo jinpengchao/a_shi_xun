@@ -121,6 +121,38 @@ public class UserDao {
 		}
 		return user;
 	}
+	//验证码登录
+	public User codeLogin(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		User user = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				String pwd = rs.getString("password");
+				user = new User();
+				int type = rs.getInt("type");
+				user.setPhone(phone);
+				user.setPassword(pwd);
+				user.setType(type);
+				System.out.println("登陆成功！");
+			} else {
+				System.out.println("用户不存在！");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 	//判断是否存在用户
 	public boolean exist(String phone) {
 		DBUtil util = DBUtil.getInstance();
@@ -177,7 +209,8 @@ public class UserDao {
 				}else {
 					System.out.println("未查到这个人的信息--父母");
 				}
-			}else if(type==1) {
+			}
+			if(type==1) {
 				System.out.println("type=1");
 				sql = "select * from tbl_child_userinfo where phone='"+phone+"'";
 				psmt = conn.prepareStatement(sql);
@@ -196,7 +229,6 @@ public class UserDao {
 					System.out.println("未查到这个人的信息--子女");
 				}
 			}
-
 			rs.close();
 			psmt.close();
 			util.closeConnection();

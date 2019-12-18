@@ -4,15 +4,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import h.jpc.vhome.MyApp;
 import h.jpc.vhome.R;
+import h.jpc.vhome.children.fragment.historyAdapter.AlarmBean;
 import h.jpc.vhome.parents.fragment.adapter.HotSpotAdapter;
 import h.jpc.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import h.jpc.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import h.jpc.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import h.jpc.vhome.parents.fragment.myself.view.MyScrollView;
 import h.jpc.vhome.parents.fragment.myself.view.UnScrollListView;
+import h.jpc.vhome.user.entity.ParentUserInfo;
 import h.jpc.vhome.util.ConnectionUtil;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,14 +29,19 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,11 +49,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import static h.jpc.vhome.parents.TrackUtil.Utils.getContext;
 
 public class ShowMyselfActivity extends AppCompatActivity {
     private String TAG = "ShowMyselfActivity";
     private MyScrollView myScrollView;
     private UnScrollListView lvHotSpot;
+    private ImageView blurImageView;
+    private ImageView header;
+    private TextView nikeName;
+    private SharedPreferences sp2;
+    private TextView ids;
+    private TextView areas;
+    private ImageView sexs;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
     private HotSpotAdapter adapter;
@@ -67,7 +88,6 @@ public class ShowMyselfActivity extends AppCompatActivity {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 Log.i("hotspotFragment","list数据个数"+list.size());
                 //设置加载的数据list,默认首先加载5条数据
-
                 if(list.size()>5){
                     for (int k=0;k<5;k++){
                         loadList.add(list.get(k));
@@ -122,6 +142,65 @@ public class ShowMyselfActivity extends AppCompatActivity {
         };
     }
 
+    public void initMyselfInfo(String personId){
+        //数据库
+        final String data = personId;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/ShowOthersInfoServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Gson gson = new Gson();
+                                ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
+                                String phone = userInfo.getPhone();
+                                String id = userInfo.getId();
+                                String nickName = userInfo.getNikeName();
+                                String sex = userInfo.getSex();
+                                String area = userInfo.getArea();
+                                String achieve = userInfo.getAcieve();
+                                nikeName.setText(nickName);
+                                ids.setText(id);
+                                areas.setText(area);
+                                if (sex.equals("female")){
+                                    sexs.setImageResource(R.mipmap.female);
+                                }else if (sex.equals("male")){
+                                    sexs.setImageResource(R.mipmap.male);
+                                }else
+                                    sexs.setImageResource(R.mipmap.unknown);
+                                String imgName = "header"+phone+".jpg";
+                                String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
+                                Log.e("img",imgName);
+                                Glide.with(ShowMyselfActivity.this).load(url)
+                                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                                        .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(ShowMyselfActivity.this))
+                                        .into(blurImageView);
+                                Glide.with(ShowMyselfActivity.this).load(url)
+                                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                                        .placeholder(R.drawable.rc_default_portrait)
+                                        .bitmapTransform(new CropCircleTransformation(ShowMyselfActivity.this))
+                                        .into(header);
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+    }
     private void addPostCollection(int i) {
         CollectionBean collection = new CollectionBean();
         PostBean post = list.get(i);
@@ -306,6 +385,12 @@ public class ShowMyselfActivity extends AppCompatActivity {
         lvHotSpot = findViewById(R.id.lv_hot_spot);
         tvEmpty = findViewById(R.id.tv_empty);
         myScrollView = findViewById(R.id.show_scroll_view);
+        blurImageView = (ImageView) findViewById(R.id.iv_blur);
+        header = (ImageView) findViewById(R.id.parent_head);
+        nikeName = (TextView) findViewById(R.id.parent_name);
+        ids = (TextView) findViewById(R.id.parent_id);
+        areas = (TextView) findViewById(R.id.parent_area);
+        sexs = (ImageView) findViewById(R.id.parent_sex);
     }
 
 
@@ -315,5 +400,6 @@ public class ShowMyselfActivity extends AppCompatActivity {
         super.onStart();
         Log.e(TAG,"调用了onStart方法");
         getdata();
+        initMyselfInfo(personId);
     }
 }
