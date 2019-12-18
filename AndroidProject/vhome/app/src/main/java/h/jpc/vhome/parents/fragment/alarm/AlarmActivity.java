@@ -37,18 +37,18 @@ public class AlarmActivity extends AppCompatActivity {
     RelativeLayout drawerLayout;
     Context context = AlarmActivity.this;
     TextView textView;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            timeAdapter.setClockStatus(new TimeAdapter.ClockStatus() {
-                @Override
-                public void clockType(String content, int now, int wangTo) {
-                    Log.e("Handler","今日受你欺凌，明日我必三倍奉还！");
-                    timeAdapter.changeAlarm(content,wangTo);
-                }
-            });
-        }
-    };
+//    private Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            timeAdapter.setClockStatus(new TimeAdapter.ClockStatus() {
+//                @Override
+//                public void clockType(String content, int now, int wangTo) {
+//                    Log.e("Handler","今日受你欺凌，明日我必三倍奉还！");
+//                    timeAdapter.changeAlarm(content,wangTo);
+//                }
+//            });
+//        }
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +58,16 @@ public class AlarmActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.layout1);
         textView.setText("");
         list.clear();
-        getAlarm();
+//        getAlarm();
         initRecyclerView();
-        cnmd();
+//        cnmd();
     }
     private void cnmd() {
         new Thread(){
             @Override
             public void run() {
                 Message msg = Message.obtain();
-                handler.sendMessage(msg);
+//                handler.sendMessage(msg);
             }
         }.start();
     }
@@ -143,5 +143,11 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAlarm();
     }
 }

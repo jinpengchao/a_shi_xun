@@ -105,9 +105,10 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 if (clock.getClockType() == clock_close) {
-                    viewHolder.aSwitch.setText("开启");
+                    viewHolder.aSwitch.setText("关闭");
                     String content = list.get(i).getContent();
-                    clockStatus.clockType(content,clock_close,clock_open);
+//                    clockStatus.clockType(content,clock_close,clock_open);
+                    changeAlarm(content,clock_open);
                     clock.setClockType(clock_open);
                     Toast.makeText(context, "开启闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -117,9 +118,10 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                     viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                 } else if (clock.getClockType() == clock_open){
-                    viewHolder.aSwitch.setText("关闭");
+                    viewHolder.aSwitch.setText("开启");
                     String content = list.get(i).getContent();
-                    clockStatus.clockType(content,clock_open,clock_close);
+//                    clockStatus.clockType(content,clock_open,clock_close);
+                    changeAlarm(content,clock_close);
                     clock.setClockType(clock_close);
                     Toast.makeText(context, "关闭闹钟", Toast.LENGTH_SHORT).show();
                     viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));

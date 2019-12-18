@@ -338,33 +338,11 @@
             android:authorities="${applicationId}"
             android:exported="false" />
 
-        <receiver
-            android:name=".parents.fragment.myself.MyMessageReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <category android:name="h.jpc.vhome" />
-            </intent-filter>
-        </receiver>
 
         <receiver
             android:name=".parents.fragment.alarm.CallAlarm"
             android:process=".remote" />
-        <receiver
-            android:name=".parents.fragment.alarm.CallAlarm"
-            android:process=".remote" />
 
-        <service
-            android:name=".parents.fragment.myself.MyMessageService"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
-            </intent-filter>
-        </service>
         <service
             android:name=".chat.MyService"
             android:process=":pushcore">

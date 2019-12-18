@@ -108,8 +108,7 @@ public class CommentActivity extends AppCompatActivity {
                 } else {
                     Log.e(TAG, "查询到数据为空");
                 }
-                //给控件填充
-                fillPost();
+                initExpandableListView(commentList);//初始化评论和回复
             }else if (msg.what==DEL_COMMENT){
                 int position = msg.getData().getInt("position");
                 commentList.remove(position);
@@ -143,6 +142,8 @@ public class CommentActivity extends AppCompatActivity {
         registerListener();
         //判断是否收藏点赞关注过，修改图标
         setCLImg();
+        //填充数据
+        fillPost();
         getCommentData();
 
     }
@@ -321,7 +322,7 @@ public class CommentActivity extends AppCompatActivity {
         gvPostShow.setAdapter(showPostImgAdapter);
         tvHotComnum.setText(post.getCommentNum()+"");//显示评论数
         tvHotLikenum.setText(post.getLikeNum()+"");//显示点赞数
-        initExpandableListView(commentList);//初始化评论和回复
+//        initExpandableListView(commentList);//初始化评论和回复
     }
 
     /**

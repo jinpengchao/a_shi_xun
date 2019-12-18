@@ -270,7 +270,7 @@ public class HomeFragment extends BaseFragment {
                                     Gson gson = new Gson();
                                     ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
                                     String phone = userInfo.getPhone();
-                                    String id = userInfo.getPhone();
+                                    String id = userInfo.getId();
                                     String nickName = userInfo.getNikeName();
                                     String sex = userInfo.getSex();
                                     String area = userInfo.getArea();
