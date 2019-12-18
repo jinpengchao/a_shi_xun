@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2019-12-18 13:44:35
+Date: 2019-12-18 17:56:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `tbl_alarm` (
 -- Records of tbl_alarm
 -- ----------------------------
 INSERT INTO `tbl_alarm` VALUES ('1', '16:04', '123456', '99663438', 'okok000111', '1');
-INSERT INTO `tbl_alarm` VALUES ('2', '18:36', '8520', '99663438', '*****22213131', '1');
+INSERT INTO `tbl_alarm` VALUES ('2', '16:43', '8520', '99663438', '*****22213131', '1');
 INSERT INTO `tbl_alarm` VALUES ('3', '520:520', '242424000', '21321', '8885208520', '0');
 INSERT INTO `tbl_alarm` VALUES ('5', '15:43', '2424000', '199906060', '哈哈哈爸爸吧吧吧', '0');
 INSERT INTO `tbl_alarm` VALUES ('6', '05:00', '792997', '222222', '1111111', '0');
@@ -61,7 +61,7 @@ CREATE TABLE `tbl_child_userinfo` (
 -- ----------------------------
 -- Records of tbl_child_userinfo
 -- ----------------------------
-INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '135632', '索211111', 'female', '', 'header15194980385.jpg');
+INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '135632', '索尔', 'female', '', 'header15194980385.jpg');
 INSERT INTO `tbl_child_userinfo` VALUES ('15199980888', '792997', 'qwqw', '', '', '');
 INSERT INTO `tbl_child_userinfo` VALUES ('242424000', '635192', '242424000', 'female', '', 'header242424000.jpg');
 INSERT INTO `tbl_child_userinfo` VALUES ('542400', '840875', '542400', '', '', '');
@@ -82,15 +82,19 @@ CREATE TABLE `tbl_comment` (
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_comment
 -- ----------------------------
 INSERT INTO `tbl_comment` VALUES ('11', '79', '414223', '怪兽马克', 'header57852687.jpg', '速度发货', '2019-12-16 06:29:52');
-INSERT INTO `tbl_comment` VALUES ('12', '82', '909874', '班纳', 'header99663438.jpg', '？？', '2019-12-16 17:11:50');
+INSERT INTO `tbl_comment` VALUES ('12', '82', '909874', '托尼', 'header99663438.jpg', '？？', '2019-12-16 17:11:50');
 INSERT INTO `tbl_comment` VALUES ('14', '83', '275686', '小店', 'header6330654.jpg', '牛啊', '2019-12-16 18:53:59');
 INSERT INTO `tbl_comment` VALUES ('15', '83', '275686', '小店', 'header6330654.jpg', '与君绝', '2019-12-16 18:55:37');
+INSERT INTO `tbl_comment` VALUES ('16', '101', '909874', '托尼', 'header99663438.jpg', '哈哈哈', '2019-12-18 17:05:46');
+INSERT INTO `tbl_comment` VALUES ('17', '101', '909874', '托尼', 'header99663438.jpg', '？。。', '2019-12-18 17:05:52');
+INSERT INTO `tbl_comment` VALUES ('18', '68', '909874', '托尼', 'header99663438.jpg', '嘤嘤嘤', '2019-12-18 17:31:35');
+INSERT INTO `tbl_comment` VALUES ('19', '102', '180321', '班纳', 'header18032168790.jpg', '嘿嘿', '2019-12-18 17:54:10');
 
 -- ----------------------------
 -- Table structure for `tbl_connect`
@@ -140,7 +144,7 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_goodpost
@@ -173,6 +177,11 @@ INSERT INTO `tbl_goodpost` VALUES ('27', '62', '99663438', '609387', '2019-12-17
 INSERT INTO `tbl_goodpost` VALUES ('28', '92', '99663438', '275686', '2019-12-17 16:36:43');
 INSERT INTO `tbl_goodpost` VALUES ('29', '87', '909874', '275686', '2019-12-18 11:08:00');
 INSERT INTO `tbl_goodpost` VALUES ('30', '88', '909874', '275686', '2019-12-18 11:08:01');
+INSERT INTO `tbl_goodpost` VALUES ('31', '96', '909874', '909874', '2019-12-18 14:02:15');
+INSERT INTO `tbl_goodpost` VALUES ('32', '96', '909874', '909874', '2019-12-18 14:31:42');
+INSERT INTO `tbl_goodpost` VALUES ('33', '101', '180321', '909874', '2019-12-18 16:56:40');
+INSERT INTO `tbl_goodpost` VALUES ('35', '68', '909874', '249984', '2019-12-18 17:31:30');
+INSERT INTO `tbl_goodpost` VALUES ('36', '102', '180321', '180321', '2019-12-18 17:37:14');
 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
@@ -216,7 +225,7 @@ CREATE TABLE `tbl_myattentions` (
   `attentionPersonId` varchar(30) NOT NULL,
   `personId` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_myattentions
@@ -224,7 +233,7 @@ CREATE TABLE `tbl_myattentions` (
 INSERT INTO `tbl_myattentions` VALUES ('5', '414223', '917106');
 INSERT INTO `tbl_myattentions` VALUES ('8', '249984', '414223');
 INSERT INTO `tbl_myattentions` VALUES ('9', '909874', '275686');
-INSERT INTO `tbl_myattentions` VALUES ('15', '275686', '909874');
+INSERT INTO `tbl_myattentions` VALUES ('16', '180321', '909874');
 
 -- ----------------------------
 -- Table structure for `tbl_mycollection`
@@ -305,6 +314,7 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('13133131313', '324686', '131241', '',
 INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '563794', '雷神', '', '', '0', '0', '', 'rc_default_portrait.png');
 INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '293876', '屎坦克', '', '', '0', '0', '', 'rc_default_portrait.png');
 INSERT INTO `tbl_parent_userinfo` VALUES ('15513155225', '195412', '史泰龙', '男', '石家庄', null, '100', '今晚必须死', 'rc_default_portrait.png');
+INSERT INTO `tbl_parent_userinfo` VALUES ('18032168790', '180321', '班纳', 'male', '北京市-北京市-昌平区', '0', '0', null, 'header18032168790.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('19198080', '796031', '阿斯顿', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('199906060', '249984', '阿达安市安市', 'female', '安徽省-阜阳市-阜南县', '0', '0', '', 'header199906060.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('38163816', '917106', '小黄', '', '', '0', '0', '', '');
@@ -319,7 +329,7 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('9866521', '109156', '哈哈', '', '',
 INSERT INTO `tbl_parent_userinfo` VALUES ('987654222438', '201977', '123123', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('99442205', '863018', '232.3', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('9963438', '231042', '靳朋朝', '', '安徽省-黄山市-黄山区', '0', '0', '', 'header1576025129320.jpg');
-INSERT INTO `tbl_parent_userinfo` VALUES ('99663438', '909874', '班纳', 'male', '北京市-北京市-房山区', '0', '0', '', 'header99663438.jpg');
+INSERT INTO `tbl_parent_userinfo` VALUES ('99663438', '909874', '托尼', 'male', '安徽省-亳州市-利辛县', '0', '0', '', 'header99663438.jpg');
 INSERT INTO `tbl_parent_userinfo` VALUES ('996663438', '254653', '996663438', '', '', '0', '0', '', '');
 INSERT INTO `tbl_parent_userinfo` VALUES ('99865324986', '202737', '123额', '', '', '0', '0', '', 'rc_default_portrait.png');
 
@@ -336,7 +346,7 @@ CREATE TABLE `tbl_post` (
   `time` datetime DEFAULT NULL,
   `imgs` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -352,25 +362,32 @@ INSERT INTO `tbl_post` VALUES ('61', '阿达啊', '', 'okhtttp', '609387', '2019
 INSERT INTO `tbl_post` VALUES ('62', '阿达啊', '', '11212', '609387', '2019-12-09 16:02:41', '[\"temp_photo1575878559995.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('63', '阿达啊', '', '23123 12', '609387', '2019-12-09 16:07:26', '[]');
 INSERT INTO `tbl_post` VALUES ('64', '阿达啊', '', '12312312的说法', '609387', '2019-12-09 16:07:40', '[]');
-INSERT INTO `tbl_post` VALUES ('65', '班纳', 'header99663438.jpg', '？？？？？？？？？？', '909874', '2019-12-10 08:56:40', '[]');
-INSERT INTO `tbl_post` VALUES ('66', '班纳', 'header99663438.jpg', '？？？？？？？', '909874', '2019-12-10 20:33:45', '[]');
+INSERT INTO `tbl_post` VALUES ('65', '托尼', 'header99663438.jpg', '？？？？？？？？？？', '909874', '2019-12-10 08:56:40', '[]');
+INSERT INTO `tbl_post` VALUES ('66', '托尼', 'header99663438.jpg', '？？？？？？？', '909874', '2019-12-10 20:33:45', '[]');
 INSERT INTO `tbl_post` VALUES ('68', '阿达安市安市', 'header199906060.jpg', '？？？？？嘤嘤嘤', '249984', '2019-12-13 19:51:35', '[\"temp_photo1576237890074.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('78', '怪兽马克', 'header57852687.jpg', '增加图片', '414223', '2019-12-16 00:47:25', '[\"temp_photo1576457243661.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('79', '怪兽马克', 'header57852687.jpg', '增加功能', '414223', '2019-12-16 06:25:33', '[\"temp_photo1576477531815.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('80', '照你', '', '是你', '981660', '2019-12-16 17:00:18', '[\"temp_photo1576486786433.jpg\",\"temp_photo1576486799381.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('81', '班纳', 'header99663438.jpg', 'sdfh', '909874', '2019-12-16 17:06:31', '[]');
-INSERT INTO `tbl_post` VALUES ('82', '班纳', 'header99663438.jpg', '？？？', '909874', '2019-12-16 17:11:44', '[\"temp_photo1576487471418.jpg\",\"temp_photo1576487480666.jpg\",\"temp_photo1576487498690.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('81', '托尼', 'header99663438.jpg', 'sdfh', '909874', '2019-12-16 17:06:31', '[]');
+INSERT INTO `tbl_post` VALUES ('82', '托尼', 'header99663438.jpg', '？？？', '909874', '2019-12-16 17:11:44', '[\"temp_photo1576487471418.jpg\",\"temp_photo1576487480666.jpg\",\"temp_photo1576487498690.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('83', '小店', 'header6330654.jpg', '您老', '275686', '2019-12-16 18:53:32', '[\"temp_photo1576493601906.jpg\",\"temp_photo1576493611051.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('84', '班纳', 'header99663438.jpg', '上小学到学校', '909874', '2019-12-16 19:07:49', '[]');
+INSERT INTO `tbl_post` VALUES ('84', '托尼', 'header99663438.jpg', '上小学到学校', '909874', '2019-12-16 19:07:49', '[]');
 INSERT INTO `tbl_post` VALUES ('85', '怪兽马克', 'header57852687.jpg', '图片', '414223', '2019-12-16 13:28:12', '[\"temp_photo1576502868854.jpg\",\"temp_photo1576502889201.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('86', '怪兽马克', 'header57852687.jpg', '水电费', '414223', '2019-12-16 13:28:33', '[]');
 INSERT INTO `tbl_post` VALUES ('87', '小店', 'header6330654.jpg', '头像', '275686', '2019-12-17 08:18:41', '[\"temp_photo1576541920065.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('88', '小店', 'header6330654.jpg', '1', '275686', '2019-12-17 08:40:28', '[\"temp_photo1576543227707.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('90', '班纳', 'header99663438.jpg', 'n', '909874', '2019-12-17 09:21:34', '[\"temp_photo1576545690774.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('90', '托尼', 'header99663438.jpg', 'n', '909874', '2019-12-17 09:21:34', '[\"temp_photo1576545690774.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('91', '小店', 'header6330654.jpg', '好的', '275686', '2019-12-17 10:27:43', '[\"temp_photo1576549661695.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('92', '小店', 'header6330654.jpg', '他们', '275686', '2019-12-17 10:30:01', '[\"temp_photo1576549796449.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('93', '小店', 'header6330654.jpg', '12121', '275686', '2019-12-17 10:30:32', '[\"temp_photo1576549828108.jpg\"]');
 INSERT INTO `tbl_post` VALUES ('94', '你麻痹EventBus', 'header99663438.jpg', '1231', '99663438', '2019-12-18 09:06:03', '[]');
+INSERT INTO `tbl_post` VALUES ('96', '托尼', 'header99663438.jpg', '复仇者！集结', '909874', '2019-12-18 14:02:10', '[\"temp_photo1576648929201.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('97', '班纳', 'header18032168790.jpg', '第一条帖子', '180321', '2019-12-18 16:04:41', '[\"temp_photo1576656280164.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('98', '托尼', 'header99663438.jpg', '新家', '909874', '2019-12-18 16:17:43', '[]');
+INSERT INTO `tbl_post` VALUES ('99', '班纳', 'header18032168790.jpg', '大结局道具', '180321', '2019-12-18 16:32:36', '[]');
+INSERT INTO `tbl_post` VALUES ('100', '托尼', 'header99663438.jpg', '？', '909874', '2019-12-18 16:52:00', '[]');
+INSERT INTO `tbl_post` VALUES ('101', '托尼', 'header99663438.jpg', '带图', '909874', '2019-12-18 16:56:17', '[\"temp_photo1576659375793.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('102', '班纳', 'header18032168790.jpg', '这一刻！完工喽！', '180321', '2019-12-18 17:37:10', '[\"temp_photo1576661829262.jpg\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`
@@ -395,14 +412,13 @@ CREATE TABLE `tbl_remind` (
   `content` varchar(200) DEFAULT NULL,
   `phone` char(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_remind
 -- ----------------------------
 INSERT INTO `tbl_remind` VALUES ('1', 'hahah', '242424000');
 INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
-INSERT INTO `tbl_remind` VALUES ('3', '妈、明天我回家啊', '15194980385');
 
 -- ----------------------------
 -- Table structure for `tbl_reply_comment`
@@ -471,6 +487,7 @@ INSERT INTO `tbl_user` VALUES ('15227856991', '111111', '2019-12-18 10:52:34', '
 INSERT INTO `tbl_user` VALUES ('15230145956', 'zhangpeng002', '2019-12-09 11:58:47', '734624', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('15230867500', '111111', '2019-12-18 10:39:56', '293876', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('15513155225', 'qqq123', '2019-12-03 15:29:25', '658943', '', '', '0');
+INSERT INTO `tbl_user` VALUES ('18032168790', '123456', '0000-00-00 00:00:00', '180321', null, null, '0');
 INSERT INTO `tbl_user` VALUES ('19198080', '1234', '2019-12-11 15:41:12', '796031', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('199906060', '11111', '2019-12-13 14:11:54', '249984', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('199908177', '11111', '0000-00-00 00:00:00', '', null, null, '1');

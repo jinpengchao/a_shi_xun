@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/dialog_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
@@ -28,7 +28,7 @@
         <Button
             android:id="@+id/cancle"
             android:layout_height="50dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="@string/jmui_cancel"
             android:textColor="#808080"
@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/commit"
             android:layout_height="50dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:text="@string/jmui_confirm"
             android:textColor="#808080"

@@ -185,7 +185,6 @@ public class UserDao {
 		ParentUserInfo userInfo = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		ResultSet rs = null;
 		try {
 			conn = util.getConnection();
 			String sql = "";
@@ -193,7 +192,7 @@ public class UserDao {
 				System.out.println("type=0");
 				sql = "select * from tbl_parent_userinfo where phone='"+phone+"'";
 				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
+				ResultSet rs = psmt.executeQuery();
 				if (rs.next()) {
 					userInfo = new ParentUserInfo();
 					userInfo.setPhone(rs.getString("phone"));
@@ -209,27 +208,28 @@ public class UserDao {
 				}else {
 					System.out.println("未查到这个人的信息--父母");
 				}
+				rs.close();
 			}
 			if(type==1) {
 				System.out.println("type=1");
 				sql = "select * from tbl_child_userinfo where phone='"+phone+"'";
 				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
-				if (rs.next()) {
+				ResultSet rs1 = psmt.executeQuery();
+				if (rs1.next()) {
 					userInfo = new ParentUserInfo();
-					userInfo.setPhone(rs.getString("phone"));
-					userInfo.setId(rs.getString("id"));
-					userInfo.setNikeName(rs.getString("nickName"));
-					userInfo.setSex(rs.getString("sex"));
-					userInfo.setArea(rs.getString("area"));
-					userInfo.setHeaderImg(rs.getString("headerImg"));
+					userInfo.setPhone(rs1.getString("phone"));
+					userInfo.setId(rs1.getString("id"));
+					userInfo.setNikeName(rs1.getString("nickName"));
+					userInfo.setSex(rs1.getString("sex"));
+					userInfo.setArea(rs1.getString("area"));
+					userInfo.setHeaderImg(rs1.getString("headerImg"));
 					userInfo.setType(type);
 					System.out.println("用户信息存储完毕--子女");
 				}else {
 					System.out.println("未查到这个人的信息--子女");
 				}
+				rs1.close();
 			}
-			rs.close();
 			psmt.close();
 			util.closeConnection();
 		} catch (ClassNotFoundException e) {

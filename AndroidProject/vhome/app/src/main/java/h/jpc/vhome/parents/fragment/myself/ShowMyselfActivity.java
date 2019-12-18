@@ -71,6 +71,7 @@ public class ShowMyselfActivity extends AppCompatActivity {
     private int loadNum = 0;
     private TextView tvEmpty;
     private String personId = null;
+    private String phone = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +138,18 @@ public class ShowMyselfActivity extends AppCompatActivity {
                     }
                 });
                 adapter.notifyDataSetChanged();
-
+                String imgName = "header"+phone+".jpg";
+                String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
+                Log.e("img====",imgName);
+                Glide.with(ShowMyselfActivity.this).load(url)
+                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                        .bitmapTransform(new BlurTransformation(ShowMyselfActivity.this, 25), new CenterCrop(ShowMyselfActivity.this))
+                        .into(blurImageView);
+                Glide.with(ShowMyselfActivity.this).load(url)
+                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                        .placeholder(R.drawable.rc_default_portrait)
+                        .bitmapTransform(new CropCircleTransformation(ShowMyselfActivity.this))
+                        .into(header);
             }
         };
     }
@@ -162,14 +174,14 @@ public class ShowMyselfActivity extends AppCompatActivity {
                             public void run() {
                                 Gson gson = new Gson();
                                 ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
-                                String phone = userInfo.getPhone();
+                                phone = userInfo.getPhone();
                                 String id = userInfo.getId();
                                 String nickName = userInfo.getNikeName();
                                 String sex = userInfo.getSex();
                                 String area = userInfo.getArea();
                                 String achieve = userInfo.getAcieve();
                                 nikeName.setText(nickName);
-                                ids.setText(id);
+                                ids.setText(phone);
                                 areas.setText(area);
                                 if (sex.equals("female")){
                                     sexs.setImageResource(R.mipmap.female);
@@ -177,18 +189,6 @@ public class ShowMyselfActivity extends AppCompatActivity {
                                     sexs.setImageResource(R.mipmap.male);
                                 }else
                                     sexs.setImageResource(R.mipmap.unknown);
-                                String imgName = "header"+phone+".jpg";
-                                String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
-                                Log.e("img",imgName);
-                                Glide.with(ShowMyselfActivity.this).load(url)
-                                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                                        .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(ShowMyselfActivity.this))
-                                        .into(blurImageView);
-                                Glide.with(ShowMyselfActivity.this).load(url)
-                                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                                        .placeholder(R.drawable.rc_default_portrait)
-                                        .bitmapTransform(new CropCircleTransformation(ShowMyselfActivity.this))
-                                        .into(header);
                             }
                         });
                     }
@@ -199,7 +199,6 @@ public class ShowMyselfActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
     }
     private void addPostCollection(int i) {
         CollectionBean collection = new CollectionBean();

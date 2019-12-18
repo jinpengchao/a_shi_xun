@@ -121,7 +121,6 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
         findBackPwd = findViewById(R.id.findBackPwd);
         register = findViewById(R.id.register);
     }
-
     /**
      * 初始化控件
      */
@@ -195,6 +194,18 @@ public class LoginByCodeActivity extends AppCompatActivity implements View.OnCli
                 //将收到的验证码和手机号提交再次核对
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
+                break;
+            case R.id.register:
+                Intent intent1 = new Intent();
+                intent1.setClass(
+                        LoginByCodeActivity.this,
+                        RegisterActivity.class);
+                startActivity(intent1);
+                //应用页面跳转动画
+                overridePendingTransition(
+                        R.anim.huadong_in,//进入动画
+                        R.anim.huadong_out//出去动画
+                );
                 break;
         }
     }
