@@ -125,6 +125,8 @@ public class CommentActivity extends AppCompatActivity {
             }else if (msg.what == SAVE_COMMENT){
                 getCommentData();
                 adapter.notifyDataSetChanged();
+                int num = Integer.parseInt(tvHotComnum.getText().toString().trim());
+                tvHotComnum.setText(num+1+"");
             }
         }
     };
@@ -738,7 +740,6 @@ public class CommentActivity extends AppCompatActivity {
     private void addComment() {
         String commentContent = edtCommentContent.getText().toString().trim();
         if(!TextUtils.isEmpty(commentContent)){
-//            dialog.dismiss();
             //隐藏软键盘
             InputMethodManager imm = (InputMethodManager) CommentActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(CommentActivity.this.getWindow().getDecorView().getWindowToken(), 0);
@@ -757,8 +758,6 @@ public class CommentActivity extends AppCompatActivity {
             String time = sdf.format(collectDate);
             detailBean.setTime(time);
             adapter.addTheCommentData(detailBean);//更新UI
-            int num = Integer.parseInt(tvHotComnum.getText().toString().trim());
-            tvHotComnum.setText(num+1+"");
             edtCommentContent.setText("");
             //更新数据库
             new Thread(){
