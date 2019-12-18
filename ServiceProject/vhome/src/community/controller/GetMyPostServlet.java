@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import community.service.AttentionService;
 import community.service.CollectionService;
 import community.service.CommentService;
 import community.service.GoodPostService;
@@ -52,6 +53,8 @@ public class GetMyPostServlet extends HttpServlet {
 		List<CollectionBean> collections = (new CollectionService()).findCollection(personId);
 		//获取当前人的所有点赞表
 		List<GoodPostBean> goodPosts = (new GoodPostService()).findGoodPost(personId);
+		//获取当前人的所有关注
+		List<AttentionBean> attentions = (new AttentionService()).findAttention(personId);
 		System.out.println("getMypostservlet中获取个人帖子数"+list.size());
 		for(int i=0;i<list.size();i++) {
 			PostBean post = list.get(i);
@@ -71,6 +74,13 @@ public class GetMyPostServlet extends HttpServlet {
 				GoodPostBean goodPost = goodPosts.get(k);
 				if(goodPost.getPostId() == post.getId()) {
 					post.setLike_status(1);
+					break;
+				}
+			}
+			for(int m=0;m<attentions.size();m++) {
+				AttentionBean attention = attentions.get(m);
+				if(attention.getPersonId().equals(post.getPersonId())) {
+					post.setAttention_status(1);
 					break;
 				}
 			}

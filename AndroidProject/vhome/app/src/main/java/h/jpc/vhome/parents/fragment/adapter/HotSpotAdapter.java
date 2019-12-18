@@ -101,6 +101,7 @@ public class HotSpotAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(user_logo)
                 .priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
                 .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(holder.ivHotPerson);
 //        holder.ivHotPerson.setImageResource();

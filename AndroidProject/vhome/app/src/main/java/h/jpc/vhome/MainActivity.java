@@ -1,6 +1,8 @@
 package h.jpc.vhome;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
@@ -20,9 +22,11 @@ import h.jpc.vhome.user.RegisterActivity;
 import h.jpc.vhome.user.entity.User;
 import h.jpc.vhome.util.ConnectionUtil;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -110,6 +114,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
     }
     public void getView(){
+        //动态请求权限相机权限
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.CAMERA,
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+        }
         register = (TextView) findViewById(R.id.register);
         pwdLogin = (Button) findViewById(R.id.pwdLogin);
         etPwd = (ClearWriteEditText) findViewById(R.id.etPwd);

@@ -112,7 +112,7 @@ public class ClockDetail extends AppCompatActivity implements View.OnClickListen
                 clock.setHour(hourformat);
                 clock.setMinute(minuteformat);
                 clock.setContent(content.getText().toString());
-                clock.setClockType(Clock.clock_open);
+                clock.setClockType(Clock.clock_open);//默认保存开启状态
 
                 calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(clock.getHour()));
                 calendar.set(Calendar.MINUTE, Integer.parseInt(clock.getMinute()));
