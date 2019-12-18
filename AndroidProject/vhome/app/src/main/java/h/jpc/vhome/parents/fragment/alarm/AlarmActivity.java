@@ -118,14 +118,6 @@ public class AlarmActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initRecyclerView();
-                            }
-                        });
-                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
