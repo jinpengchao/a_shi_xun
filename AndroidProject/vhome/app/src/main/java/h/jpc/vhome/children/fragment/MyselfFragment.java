@@ -142,8 +142,6 @@ public class MyselfFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        initData();
-        initMyselfInfo();
         return view;
     }
     public void asyncDownOp() {
