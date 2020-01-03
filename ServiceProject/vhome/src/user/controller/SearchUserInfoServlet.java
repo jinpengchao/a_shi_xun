@@ -64,7 +64,7 @@ public class SearchUserInfoServlet extends HttpServlet {
 				UserService userService = new UserService();
 				ParentUserInfo ui = userService.selectUserInfo(phone, type);
 				if(ui != null) {
-					Gson gson = new Gson();
+					Gson gson = new Gson(); 
 					String userInfos = gson.toJson(ui);
 					System.out.println("SearchUserInfoServlet--userInfos:"+userInfos);
 					out.write(userInfos);
