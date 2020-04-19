@@ -30,7 +30,7 @@
             android:layout_height="50dp"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="@string/jmui_cancel"
+            android:text="取消"
             android:textColor="#808080"
             android:background="@drawable/jmui_dialog_bottom_left_btn"
             />
@@ -40,7 +40,7 @@
             android:layout_height="50dp"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="@string/jmui_confirm"
+            android:text="确定"
             android:textColor="#808080"
             android:background="@drawable/jmui_dialog_bottom_right_btn"
             />

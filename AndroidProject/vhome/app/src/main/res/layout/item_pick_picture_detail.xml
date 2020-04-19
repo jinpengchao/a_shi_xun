@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">
 
-    <h.jpc.vhome.chat.view.MyImageView
+    <com.vhome.vhome.chat.view.MyImageView
         android:id="@+id/child_image"
         android:layout_width="fill_parent"
         android:layout_height="100dip"

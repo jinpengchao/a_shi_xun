@@ -69,12 +69,12 @@
         android:layout_height="0.33dp"
         android:background="#D2D2D2"/>
 
-    <h.jpc.vhome.chat.view.NoScrollViewPager
+    <com.vhome.vhome.chat.view.NoScrollViewPager
         android:id="@+id/verification_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </h.jpc.vhome.chat.view.NoScrollViewPager>
+    </com.vhome.vhome.chat.view.NoScrollViewPager>
 
 
 </LinearLayout>

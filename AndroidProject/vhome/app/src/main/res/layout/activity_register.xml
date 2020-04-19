@@ -255,7 +255,7 @@
         android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="注册并登录"
+        android:text="确定注册"
         android:textSize="20dp"
         android:textColor="#ffffff"
         android:background="@drawable/button_press"

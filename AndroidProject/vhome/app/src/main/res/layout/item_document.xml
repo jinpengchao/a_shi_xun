@@ -20,7 +20,7 @@
             android:background="@drawable/pictures_select_icon"
             android:button="@null"/>
 
-        <h.jpc.vhome.chat.view.MyImageView
+        <com.vhome.vhome.chat.view.MyImageView
             android:id="@+id/document_iv"
             android:layout_width="50dp"
             android:layout_height="50dp"

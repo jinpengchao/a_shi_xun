@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".parents.fragment.myself.ShowMyselfActivity">
 
-    <h.jpc.vhome.parents.fragment.myself.view.MyScrollView
+    <com.vhome.vhome.parents.fragment.myself.view.MyScrollView
         android:id="@+id/show_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -185,7 +185,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <h.jpc.vhome.parents.fragment.myself.view.UnScrollListView
+            <com.vhome.vhome.parents.fragment.myself.view.UnScrollListView
                 android:id="@+id/lv_hot_spot"
                 android:layout_below="@id/tv_you"
                 android:layout_width="match_parent"
@@ -203,6 +203,6 @@
                 android:layout_below="@id/lv_hot_spot"
                 android:textSize="16sp"/>
         </RelativeLayout>
-    </h.jpc.vhome.parents.fragment.myself.view.MyScrollView>
+    </com.vhome.vhome.parents.fragment.myself.view.MyScrollView>
 
 </LinearLayout>

@@ -61,7 +61,7 @@
                 android:visibility="invisible"/>
         </RelativeLayout>
 
-        <h.jpc.vhome.chat.utils.sidebar.SideBar
+        <com.vhome.vhome.chat.utils.sidebar.SideBar
             android:id="@+id/sidebar"
             android:layout_width="11.33dip"
             android:layout_height="fill_parent"

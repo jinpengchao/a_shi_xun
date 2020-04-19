@@ -74,7 +74,7 @@
                 style="@style/info_left_style"
                 android:text="加入黑名单"/>
 
-            <h.jpc.vhome.chat.view.SlipButton
+            <com.vhome.vhome.chat.view.SlipButton
                 android:id="@+id/btn_addBlackList"
                 android:layout_width="50dp"
                 android:layout_height="30dp"

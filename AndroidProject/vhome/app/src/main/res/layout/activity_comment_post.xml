@@ -74,7 +74,7 @@
                         android:textSize="28sp"
                         android:layout_marginTop="20dp"/>
 
-                    <h.jpc.vhome.parents.fragment.community_hotspot.MyGridView
+                    <com.vhome.vhome.parents.fragment.community_hotspot.MyGridView
                         android:id="@+id/gv_post_show"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <h.jpc.vhome.parents.fragment.community_hotspot.CommentExpandableListView
+                <com.vhome.vhome.parents.fragment.community_hotspot.CommentExpandableListView
                     android:id="@+id/elview_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

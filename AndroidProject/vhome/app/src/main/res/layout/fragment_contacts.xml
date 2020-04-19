@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<h.jpc.vhome.chat.view.ContactsView android:id="@+id/contacts_view"
+<com.vhome.vhome.chat.view.ContactsView android:id="@+id/contacts_view"
                                 xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -74,7 +74,7 @@
 
             </RelativeLayout>
 
-        <h.jpc.vhome.chat.utils.sidebar.SideBar
+        <com.vhome.vhome.chat.utils.sidebar.SideBar
             android:id="@+id/sidebar"
             android:layout_width="11.33dip"
             android:layout_height="fill_parent"
@@ -86,4 +86,4 @@
     </FrameLayout>
 
 
-</h.jpc.vhome.chat.view.ContactsView>
+</com.vhome.vhome.chat.view.ContactsView>

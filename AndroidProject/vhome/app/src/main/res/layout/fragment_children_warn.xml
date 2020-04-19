@@ -50,7 +50,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <h.jpc.vhome.children.fragment.slideadapter.ListViewCompat
+        <com.vhome.vhome.children.fragment.slideadapter.ListViewCompat
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

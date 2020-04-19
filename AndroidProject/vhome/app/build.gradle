@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-
     signingConfigs {
         config {
             storeFile file('F:\\xuexi\\Android\\baiduKey.jks')
@@ -12,45 +12,41 @@ android {
         }
     }
     compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
     defaultConfig {
-        applicationId "h.jpc.vhome"
+        applicationId "com.vhome.chat"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 61
-        versionName "2.3.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [
-                JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "4f7aef34fb361292c566a1cd", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
-        ]
-
         ndk {
-            // 设置支持的SO库架构
-            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
         }
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            lintOptions {
+                disable 'GoogleAppIndexingWarning'
+                checkReleaseBuilds false
+                abortOnError false
+            }
         }
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+
+	sourceSets {
+		main {
+			jniLibs.srcDirs = ['libs']
+		}
+	}
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    lintOptions {
-        disable 'GoogleAppIndexingWarning'
     }
     // 添加插件
     apply plugin: 'com.mob.sdk'
@@ -61,7 +57,6 @@ android {
         appSecret "df615af35c5b93f73c1b42a5b25a3ea9"
         SMSSDK {}
     }
-
 }
 repositories {
     mavenCentral()
@@ -71,9 +66,26 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation 'com.parse:parse-android:1.13.1'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    // Google firebase cloud messaging
+    implementation 'com.google.android.gms:play-services-base:11.4.0'
+    implementation 'com.google.firebase:firebase-messaging:11.4.0'
+    // bugly start
+    implementation 'com.tencent.bugly:crashreport:2.6.6.1'
+    implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
+    // bugly end
+    implementation project(':hmspush')
+    implementation project(':easeui')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // meizu push
+    implementation 'com.meizu.flyme.internet:push-internal:3.7.0@aar'
+
+    //微家相关  依赖
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -86,37 +98,33 @@ dependencies {
     //高斯模糊图
     implementation 'org.greenrobot:eventbus:3.1.1'//eventBus
     //------------------------------------------------------//
-    testImplementation 'junit:junit:4.12'
     implementation 'com.jakewharton:butterknife:7.0.1'
     annotationProcessor 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-    implementation 'com.facebook.fresco:fresco:0.8.1'
-    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation ('com.facebook.fresco:fresco:0.8.1') {
+        exclude group: 'com.parse.bolts',
+                module: 'bolts-android'
+    }
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.contrarywind:Android-PickerView:3.2.4'
     implementation 'com.yanzhenjie:permission:1.1.2'
-    implementation 'cn.jiguang.sdk:jmessage:2.9.0'  // 此处以J
-    implementation 'cn.jiguang.sdk:jcore:2.0.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-26'
     implementation 'com.github.mtotschnig:StickyListHeaders:2.7.1'
     implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation project(path: ':reclib-qq')
-    implementation project(path: ':reclib-testemoticons')
-    implementation project(path: ':emoji')
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.4.0'
 
+    //jar包
     implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
     implementation files('libs\\XmDownload_1.7.jar')
     implementation files('libs\\XmlyOAuth2SDK_V1.11.jar')
     implementation files('libs\\picasso-2.5.2.jar')
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
 
-    implementation files('libs\\BaiduLBS_Android.jar')
     implementation files('libs\\BaiduTraceSDK_v3_1_3.jar')
     implementation files('libs\\bos-android-sdk-1.0.3.jar')
 
@@ -124,4 +132,15 @@ dependencies {
     implementation files('libs\\TingPhoneOpenSDK_7.0.19.jar')
     implementation files('libs\\gson-2.8.5.jar')
 
+    implementation files('libs\\mi_push_v3.6.12.jar')
+    implementation files('libs\\oppo_push_v1.0.1.jar')
+    implementation files('libs\\vivo_push_v2.3.1.jar')
+
+
+}
+
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
 }

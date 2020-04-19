@@ -6,7 +6,7 @@ android:layout_width="match_parent"
 android:background="#ffffff"
 android:layout_height="match_parent"
 android:orientation="vertical"
-tools:context=".user.LoginByCodeActivity">
+tools:context="com.vhome.vhome.user.LoginByCodeActivity">
     <ImageView
         android:id="@+id/main_background"
         android:layout_width="match_parent"
@@ -41,19 +41,19 @@ tools:context=".user.LoginByCodeActivity">
                 android:text="手机号"
                 android:textSize="15dp"
                 android:layout_height="wrap_content"/>
-            <h.jpc.vhome.chat.utils.ClearWriteEditText
+            <com.vhome.vhome.util.ClearWriteEditText
                 android:id="@+id/etPhone"
                 android:maxLength="11"
                 android:layout_gravity="center"
+                android:inputType="number"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="20dp"
                 android:hint="请填写手机号"
                 android:textSize="15dp"
                 android:background="@null"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="30dp">
-            </h.jpc.vhome.chat.utils.ClearWriteEditText>
+            </com.vhome.vhome.util.ClearWriteEditText>
         </LinearLayout>
         <View
             android:layout_below="@+id/text2"
@@ -83,7 +83,7 @@ tools:context=".user.LoginByCodeActivity">
                     android:text="密码"
                     android:textSize="15dp"
                     android:layout_height="wrap_content"/>
-                <h.jpc.vhome.chat.utils.ClearWriteEditText
+                <com.vhome.vhome.util.ClearWriteEditText
                     android:id="@+id/etPwd"
                     android:textSize="15dp"
                     android:layout_gravity="center"
@@ -95,7 +95,7 @@ tools:context=".user.LoginByCodeActivity">
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="30dp">
-                </h.jpc.vhome.chat.utils.ClearWriteEditText>
+                </com.vhome.vhome.util.ClearWriteEditText>
             </LinearLayout>
             <ToggleButton
                 android:layout_alignParentRight="true"

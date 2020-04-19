@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <h.jpc.vhome.chat.utils.photovideo.takevideo.camera.CameraView
+    <com.vhome.vhome.chat.utils.photovideo.takevideo.camera.CameraView
         android:id="@+id/mCameraView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -68,7 +68,7 @@
             android:src="@drawable/camera_choice"
             android:visibility="invisible"/>
 
-        <h.jpc.vhome.chat.utils.photovideo.takevideo.camera.CameraProgressBar
+        <com.vhome.vhome.chat.utils.photovideo.takevideo.camera.CameraProgressBar
             android:id="@+id/mProgressbar"
             android:layout_width="100dp"
             android:layout_height="wrap_content"

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#c9c9c9</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#FF0000</color>
+
+    <!--子女自定义颜色-->
+    <!--父母自定义颜色-->
+    <color name="choseColor">#069EF1</color>
+    <color name="notChoseColor">#000000</color>
+    <color name="backgroundColor">#C5FBFF</color>
+    <color name="childrenColor">#FF9800</color>
+    <!-- 已关注自定义颜色-->
+    <color name="attentionedColor">#C2BFBF</color>
+    <!--关注自定义-->
+    <color name="attentionColor">#00B0FF</color>
+
+    <color name="titlebar_text_color">#fff</color>
+    <color name="item_click_bg_color">#E9EDED</color>
+    <color name="white">#FFFFFF</color>
+    <color name="jmui_chat_detail_split_line_color">#d3d3d3</color>
+    <color name="menu_item_back_pres_color">#069EF1</color>
+    <color name="action_bar_txt_color">#999999</color>
+    <color name="actionbar_pres_color">#2C2C2C</color>
+    <color name="conv_list_split_line_color">#d6d6d6</color>
+    <color name="network_disconnected_bg_color">#ffdfe0</color>
+    <color name="all_members_bg_color">#f0f1f3</color>
+    <color name="default_cursor_color">#8db4eb</color>
+    <color name="gray">#808080</color>
+    <color name="me_split_line_color">#d0d0d0</color>
+    <color name="chat_text_color">#0B1816</color>
+    <color name="line_press">#069EF1</color>
+    <color name="line_normal">#069EF1</color>
+    <color name="button_press">#069EF1</color>
+    <color name="del_conversation_background">#E9EDED</color>
+    <color name="text_back_ground">#7E1D22</color>
+    <color name="me_no_picture_color">#e1e1e1</color>
+    <color name="header_pressed">#ffc0392b</color>
+    <color name="section_color">#f8f8f8</color>
+    <color name="section_text_color">#858585</color>
+    <color name="conv_list_background">#f2f2f4</color>
+    <color name="red">#FC2828</color>
+    <color name="black1">#7A7E83</color>
+    <color name="black2">#ffeeeeee</color>
+    <color name="windows_color">#F5F5F5</color>
+    <color name="toolbar_btn_select">#D9D9D9</color>
+    <color name="toolbar_btn_nomal">@color/white</color>
+    <color name="toolbar_spilt_line">#CDCDCD</color>
+    <color name="btn_send_textcolor">@color/white</color>
+    <color name="menu_item_click_color">#346fc3</color>
+    <color name="jmui_reset_password_title_color">#4e4e4e</color>
+    <color name="transparent">#00000000</color>
+    <color name="blue">#33b5e5</color>
+    <color name="status_bar">#303135</color>
+    <color name="theme_body">#cc22292c</color>
+    <color name="color_grey_999999">#999999</color>
+    <color name="color_activity_blue_bg">#f7389fff</color>
+    <color name="color_b3b3b3">#b3b3b3</color>
+    <color name="split_line_grey_color_d9d9d9">#D9D9D9</color>
+    <color name="color_grey_eaeaea">#eaeaea</color>
+
+    <color name="transparent_background">#80000000</color>
+    <color name="dialog_select_color">#d4d4d4</color>
+    <color name="black">#000000</color>
+    <color name="color_black_333333">#333333</color>
+    <color name="color_gray_d9d9d9">#d9d9d9</color>
+    <color name="color_split_line_d9d9d9">#d9d9d9</color>
+    <color name="spilt_line">#CFCFCF</color>
+
+    <color name="color_line_border">#C7C7C7</color>
+    <color name="colorBlack_Three">#333333</color>
+    <color name="province_line_border">#3b3b3b</color>
+    <color name="login_button_normal">#069EF1</color>
+    <color name="button_no_click">#069EF1</color>
+    <color name="text_no_click">#069EF1</color>
+    <color name="login_button_pressed">#069EF1</color>
+    <color name="press">#e8e8e8</color>
+    <color name="text_black_color">#333333</color>
+    <color name="text_line_color">#dfdfdd</color>
+    <color name="text_tips_color">#666666</color>
+    <color name="main_theme_color">#0195ff</color>
+    <color name="accept_btn_default">#069EF1</color>
+    <color name="accept_btn_pressed">#069EF1</color>
+    <color name="contacts_pinner_txt">#858585</color>
+    <color name="finish_btn_clickable_color">#069EF1</color>
+    <color name="refuse_btn_default">#ea6e76</color>
+    <color name="wait_inviting">#069EF1</color>
+    <color name="send_file_action_bar">#2C2C2C</color>
+    <color name="send_file_desc_color">#808080</color>
+    <color name="send_file_action_bar_selected">#069EF1</color>
+    <color name="chat_item_file_size">#989898</color>
+    <color name="send_file_title_color">#545454</color>
+    <color name="send_file_divider_color">#dcdcdc</color>
+
+    <color name="reply_button_disable">#f5f5f5</color>
+    <color name="reply_button_text">#dfFFFFFF</color>
+    <color name="reply_button_text_disable">#b8b8b8</color>
+    <color name="text_primary">#df000000</color>
+
+    <color name="bg_edittext_color">#00000000</color>
+
+    <color name="bg_horizontal_line_color">#80a3a4a7</color>
+    <color name="bg_horizontal_btn_normal">#eeeeee</color>
+    <color name="bg_horizontal_btn_selected">#70a3a4a7</color>
+
+    <color name="bg_indicator_point_normal">#D8D8D8</color>
+    <color name="bg_indicator_point_selected">#A6A6A6</color>
+
+    <color name="picker_list_divider">#dadada</color>
+
+    <color name="picker_map_nearby_divider">@color/picker_list_divider</color>
+
+    <color name="chat_detail_item_hit_color">#555555</color>
+    <color name="scan_bg">#7f000000</color>
+    <color name="message_already_receipt">#999999</color>
+    <color name="message_no_receipt">#069EF1</color>
+
+
+    <color name="blue_btn_cannot_pressed">#069EF1</color>
+    <color name="blue_btn_normal">#0195ff</color>
+    <color name="blue_btn_pressed">#346fc3</color>
+    <color name="red_btn_normal">#EB424D</color>
+    <color name="red_btn_press">#CC3139</color>
+
+    <color name="blue_btn_text_70">#E0F8F8</color>
+    <color name="blue_btn_text_press">#069EF1</color>
+    <color name="red_btn_text_70">#EAACAF</color>
+
+    <color name="white_btn_press">#D2D2D2</color>
+
+    <color name="white_btn_text_press">#888888</color>
+    <color name="white_btn_text_normal">#2C2C2C</color>
+
+    <color name="bg">#346fc3</color>
+
+
+    <color name="common_top_bar_blue">#4ebcd3</color>
+    <color name="btn_login_normal">#00acff</color>
+    <color name="btn_login_pressed">#46678d</color>
+    <color name="btn_logout_normal">#d33f3f</color>
+    <color name="btn_logout_pressed">#DA5A4D</color>
+    <color name="btn_register_normal">#ffffff</color>
+    <color name="btn_register_pressed">#00acff</color>
+    <color name="common_bottom_bar_normal_bg">#2d2f31</color>
+    <color name="common_bottom_bar_selected_bg">#161718</color>
+    <color name="common_botton_bar_blue">#2ea7e0</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="btn_pressed_green_solid">#B6DA53</color>
+    <color name="divider_list">#d4d4d4</color>
+    <color name="top_bar_normal_bg">#00acff</color>
+    <color name="error_item_color">#F6EBE6</color>
+    <color name="bottom_bar_normal_bg">#2D2F31</color>
+    <color name="bottom_text_color_normal">#ffffff</color>
+    <color name="btn_white_normal">#f7f8f8</color>
+    <color name="btn_white_pressed">#b5b5b6</color>
+    <color name="btn_green_noraml">#68C270</color>
+    <color name="btn_green_pressed">#6FCD78</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="btn_gray_pressed_status">#b5b5b6</color>
+    <color name="btn_gray_pressed">#666667</color>
+    <color name="btn_blue_normal">#1e90ff</color>
+    <color name="btn_blue_pressed">#0066FF</color>
+    <color name="orange">#FFA500</color>
+    <color name="gray_pressed">#b5b5b6</color>
+    <color name="gray_normal">#666667</color>
+    <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
+    <color name="voip_interface_text_color">#bababa</color>
+    <color name="black_deep">#FF000000</color>
+    <color name="btn_answer_pressed">#4ebcd3</color>
+    <color name="btn_answer_normal">#2dafa3</color>
+	<color name="list_item_secondary_color">#888888</color>
+	<color name="list_item_primary_color">#000</color>
+	<color name="holo_blue_bright">#ff00ddff</color>
+	<color name="holo_green_light">#ff99cc00</color>
+	<color name="holo_orange_light">#ffffbb33</color>
+	<color name="holo_red_light">#ffff4444</color>
+    <color name="holo_black">#ff111111</color>
+
+    <color name="bg_tools_panel">#2F2F2F</color>
+    <color name="color_transparent">#00000000</color>
+
+    <color name="em_blue">#1E88E5</color>
+    <color name="em_blue_pressed">#0000aF</color>
+
+    <color name="em_indicator_select">#9E9E9E</color>
+    <color name="em_indicator_normal">#1AFFFFFF</color>
+</resources>
