@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -56,6 +57,7 @@ public class HomeFragment extends BaseFragment {
     private ImageView weather;
     private ImageView news;
     private ImageView top_bg;
+    private ImageView all_bg;
     public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
@@ -104,8 +106,9 @@ public class HomeFragment extends BaseFragment {
         initUserInfo();
         getAlarm();
         top_bg = view.findViewById(R.id.top_bg);
+        all_bg = view.findViewById(R.id.all_bg);
         Glide.with(getActivity()).load(R.drawable.top_bg).into(top_bg);
-
+        Glide.with(getActivity()).load(R.drawable.all_bg).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(all_bg);
         bg1 = view.findViewById(R.id.bg1);
         bg1.setBackgroundResource(R.mipmap.bg);
         /*

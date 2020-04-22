@@ -94,7 +94,9 @@ dependencies {
     //轮播图
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //Glide
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation 'com.google.android.material:material:1.0.0'
     //高斯模糊图
     implementation 'org.greenrobot:eventbus:3.1.1'//eventBus
     //------------------------------------------------------//
@@ -113,7 +115,6 @@ dependencies {
     implementation 'com.github.mtotschnig:StickyListHeaders:2.7.1'
     implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     implementation 'androidx.multidex:multidex:2.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'org.xutils:xutils:3.4.0'

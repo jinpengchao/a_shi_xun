@@ -25,6 +25,15 @@ import com.baidu.trace.model.BaseRequest;
 import com.baidu.trace.model.OnCustomAttributeListener;
 import com.baidu.trace.model.ProcessOption;
 import com.baidu.trace.model.TransportMode;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.HMSPushHelper;
 import com.vhome.chat.R;
@@ -42,6 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.vhome.vhome.parents.TrackUtil.CommonUtil;
@@ -117,9 +127,31 @@ public class MyApp extends Application {
 
     @Override
     public void onCreate() {
+
+        super.onCreate();
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+           @NonNull
+           @Override
+           public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+               //指定为经典Header，默认是 贝塞尔雷达Header
+               return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+           }
+         });
+
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
+                //指定为经典Footer，默认是 BallPulseFooter
+                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+            }
+        });
+
+
         //连接环信
         MultiDex.install(this);
-        super.onCreate();
         applicationContext = this;
         instance = this;
 
@@ -142,7 +174,6 @@ public class MyApp extends Application {
 
 
 
-        super.onCreate();
         //连接喜马拉雅
         CommonRequest mXimalaya = CommonRequest.getInstanse();
         if(DTransferConstants.isRelease) {

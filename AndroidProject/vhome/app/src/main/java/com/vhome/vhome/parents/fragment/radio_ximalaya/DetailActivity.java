@@ -82,8 +82,8 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
 
         mAlbumTitle.setText(album.getAlbumTitle());
         mAlbumAuthor.setText(album.getAnnouncer().getNickname());
-        Picasso.with(this).load(album.getCoverUrlMiddle()).into(mLargeCover);
-        Picasso.with(this).load(album.getCoverUrlMiddle()).into(mSmallCover);
+        Picasso.with(this).load(album.getCoverUrlLarge()).into(mLargeCover);
+        Picasso.with(this).load(album.getCoverUrlSmall()).into(mSmallCover);
     }
 
     @Override

@@ -11,7 +11,6 @@ import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
-import com.ximalaya.ting.android.opensdk.model.download.RecommendDownload;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,21 +36,23 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void getRecommendList() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put(DTransferConstants.CALC_DIMENSION, "3");
-        map.put(DTransferConstants.PAGE,"5");
-        CommonRequest.getRecommendDownloadList(map, new IDataCallBack<RecommendDownload>() {
+        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT+"");
+        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
             @Override
-            public void onSuccess(RecommendDownload recommendDownload) {
-                if (recommendDownload!=null){
-                    List<Album> albumList=recommendDownload.getAlbums();
+            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
+                LogUtil.d(TAG,"thread name -->"+Thread.currentThread().getName());
+                if(gussLikeAlbumList!=null){
+                    List<Album> albumList=gussLikeAlbumList.getAlbumList();
+                    //更新UI
+//                    upRecommendUI(albumList);
                     handlerRecommendResult(albumList);
                 }
             }
 
             @Override
             public void onError(int i, String s) {
-                LogUtil.d(TAG,"error--->"+i);
-                LogUtil.d(TAG,"errorMSg--->"+s);
+                LogUtil.d(TAG,"error ---->"+i);
+                LogUtil.d(TAG,"errorMSg ---->"+s);
             }
         });
     }

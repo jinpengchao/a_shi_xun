@@ -84,7 +84,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             ablumCount.setText(album.getPlayCount()+"");
             contentCount.setText(album.getIncludeTrackCount()+"");
 
-            Picasso.with(itemView.getContext()).load(album.getCoverUrlMiddle()).into(albumconverIv);
+            Picasso.with(itemView.getContext()).load(album.getCoverUrlLarge()).into(albumconverIv);
         }
     }
     public void setOnRecommendItemClickListener(OnRecommendClickListener listener){

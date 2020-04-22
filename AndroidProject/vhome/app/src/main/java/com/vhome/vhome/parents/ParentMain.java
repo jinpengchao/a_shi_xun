@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -103,6 +104,8 @@ public class ParentMain extends BaseActivity {
         Intent alarmService = new Intent();
         alarmService.setClass(ParentMain.this, AlarmService.class);
         startService(alarmService);
+
+        Drawable drawable1 = getResources().getDrawable(R.mipmap.home1);
 
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 		    String packageName = getPackageName();
