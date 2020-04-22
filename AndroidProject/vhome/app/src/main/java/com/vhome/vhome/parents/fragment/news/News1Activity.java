@@ -57,7 +57,8 @@ public class News1Activity extends BaseActivity {
         fragmentTabHost.addTab(tabSpec3,
                 GuoneiFragment.class,
                 null);
-        TabHost.TabSpec tabSpec4 = fragmentTabHost.newTabSpec("tag3")
+
+        TabHost.TabSpec tabSpec4 = fragmentTabHost.newTabSpec("tag4")
                 .setIndicator(getTabSpecView("tag4",R.drawable.guoji,"国际"));
 
         fragmentTabHost.addTab(tabSpec4,
