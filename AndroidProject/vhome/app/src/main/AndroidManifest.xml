@@ -102,16 +102,6 @@
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" /> <!-- 定位 -->
-        <!--<activity
-            android:name="com.vhome.vhome.WelcomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/WelcomeStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> &lt;!&ndash; 如果需要使用到位置服务，需要更换百度地图apikey为自己的apikey &ndash;&gt;-->
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmActivity" />
@@ -380,7 +370,16 @@
         <activity android:name=".ui.NamePasswordActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/horizontal_slide"/>
+        <activity android:name="com.vhome.vhome.user.personal.BaseActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
 
+        </activity>
+        <activity
+            android:name="com.vhome.vhome.user.personal.PersonalActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- iOS offline push nick -->
         <activity
             android:name=".ui.OfflinePushNickActivity"

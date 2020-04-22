@@ -9,14 +9,14 @@
     <LinearLayout
         android:id="@+id/main_bottom"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/bottom_bar_normal_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         tools:ignore="DisableBaselineAlignment">
         <RelativeLayout
-            android:id="@+id/btn_container_warn"
+            android:id="@+id/btn_container_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
@@ -25,18 +25,33 @@
                 android:id="@+id/btn_warn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignEnd="@+id/unread_clock_number"
+                android:layout_marginEnd="-9dp"
                 android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_chat_bg"
+                android:drawableTop="@drawable/em_tab_warn_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/session"
+                android:text="提醒"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/unread_clock_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/em_unread_count_bg"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/btn_container_location"
+            android:id="@+id/btn_container_comm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" >
@@ -46,12 +61,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/em_main_bottom_item_bg"
-                android:drawableTop="@drawable/em_tab_chat_bg"
+                android:drawableTop="@drawable/em_tab_path_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/session"
+                android:text="轨迹"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -71,7 +86,7 @@
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/session"
+                android:text="会话"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
 
@@ -105,7 +120,7 @@
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/address_book"
+                android:text="联系人"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
 
@@ -135,7 +150,7 @@
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/setting"
+                android:text="我的"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
         </RelativeLayout>

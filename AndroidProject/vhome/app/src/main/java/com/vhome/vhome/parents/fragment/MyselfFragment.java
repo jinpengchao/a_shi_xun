@@ -50,7 +50,7 @@ import com.vhome.vhome.parents.fragment.myself.MyFunsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyNewsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
-import com.vhome.vhome.user.entity.EventBean;
+import com.vhome.vhome.user.personal.PersonalActivity;
 import com.vhome.vhome.util.ConnectionUtil;
 import com.vhome.chat.ui.SettingActivity;
 
@@ -171,7 +171,7 @@ public class MyselfFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra("nickName",nikeName.getText());
-//                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
             }
         });
         tvMyPost.setOnClickListener(new View.OnClickListener() {
