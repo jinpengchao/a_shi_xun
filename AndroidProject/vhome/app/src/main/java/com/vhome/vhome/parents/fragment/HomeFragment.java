@@ -38,6 +38,7 @@ import com.vhome.vhome.children.fragment.historyAdapter.AlarmBean;
 import com.vhome.vhome.parents.HttpLogin;
 import com.vhome.vhome.parents.fragment.alarm.AlarmActivity;
 import com.vhome.vhome.parents.fragment.calendar.LunarCalendar;
+import com.vhome.vhome.parents.fragment.news.News1Activity;
 import com.vhome.vhome.parents.fragment.news.NewsActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.parents.fragment.weather.WeatherActivity;
@@ -175,7 +176,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), NewsActivity.class);
+                intent.setClass(getActivity(), News1Activity.class);
                 startActivity(intent);
             }
         });
