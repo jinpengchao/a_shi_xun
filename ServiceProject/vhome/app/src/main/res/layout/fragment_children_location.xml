@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <include layout="@layout/activity_antitle"></include>
+
+    </LinearLayout>
+    <com.baidu.mapapi.map.MapView
+        android:layout_weight="0.9"
+        android:id="@+id/loc_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_weight="0.1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <Spinner
+            android:layout_weight="0.45"
+            android:id="@+id/bt_fath"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown"
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/colorPrimary"
+            android:text="查看父亲"
+            android:textAlignment="center" />
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/choseColor"/>
+
+        <Spinner
+            android:layout_weight="0.45"
+            android:id="@+id/bt_moth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown"
+            android:popupBackground="@color/color_activity_blue_bg"
+            android:background="@color/colorPrimary"
+            android:textAlignment="center"
+            android:text="查看母亲" />
+    </LinearLayout>
+
+
+</LinearLayout>

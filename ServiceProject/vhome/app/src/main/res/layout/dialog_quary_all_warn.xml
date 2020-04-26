@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_shape"
+    >
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl2"
+        android:background="#00000000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:background="#00000000"
+            android:layout_height="wrap_content" >
+
+        </com.scwang.smartrefresh.layout.header.ClassicsHeader>
+        <RelativeLayout
+            android:layout_below="@id/srl2"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/dialog_shape"
+            android:orientation="vertical">
+
+            <ListView
+                android:divider="#ffffff"
+                android:dividerHeight="0dp"
+                android:background="@drawable/dialog_shape"
+                android:id="@+id/history_warn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+        </RelativeLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <TextView
+        android:id="@+id/warnInfo"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#069EF1"
+        android:textSize="25dp"></TextView>
+</RelativeLayout>

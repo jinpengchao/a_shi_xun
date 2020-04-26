@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+    <LinearLayout
+        android:layout_below="@id/banner"
+        android:id="@+id/buttonLl"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:textColor="#ffffff"
+            android:text="新建常用提醒"
+            android:textSize="15dp"
+            android:background="@drawable/left_bottom_shape"
+            android:id="@+id/addNormalWarn"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Button>
+        <Button
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textColor="#ffffff"
+            android:text="发送新提醒"
+            android:textSize="15dp"
+            android:background="#069EF1"
+            android:layout_weight="1"
+            android:id="@+id/sendNewWarn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Button>
+        <Button
+            android:textColor="#ffffff"
+            android:text="查看已发提醒"
+            android:textSize="15dp"
+            android:background="@drawable/right_bottom_shape"
+            android:layout_weight="1"
+            android:id="@+id/quaryAllWarn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
+        android:layout_below="@id/buttonLl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.vhome.vhome.children.fragment.slideadapter.ListViewCompat
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#069EF1"
+        android:textSize="20dp"/>
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+    <com.vhome.vhome.parents.MyImageView
+        android:id="@+id/item_img_icon"
+        android:layout_width="80dp"
+        android:layout_height="68dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/item_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="习近平带领国家领导人访问金砖国家领导人"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/item_tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="头条"
+                android:layout_marginLeft="10dp"
+                android:textColor="#FF3030"
+                android:background="@drawable/border_write"/>
+            <TextView
+                android:id="@+id/item_tv_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="养生那些事儿"
+                android:layout_marginLeft="50dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/item_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-11-27 09:59"
+                android:layout_marginLeft="180dp"
+                android:textStyle="bold"
+                android:maxLines="1" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

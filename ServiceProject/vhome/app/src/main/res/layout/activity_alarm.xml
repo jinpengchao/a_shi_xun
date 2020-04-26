@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/warnInfo1"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+    </TextView>
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#069EF1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="30dp"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:text="我的小提示"
+            android:layout_height="wrap_content">
+        </TextView>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/rl1"
+        android:id="@+id/clock_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

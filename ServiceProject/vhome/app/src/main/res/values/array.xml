@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="choose">
+        <item>取消发送</item>
+        <item>关闭</item>
+    </array>
+</resources>
