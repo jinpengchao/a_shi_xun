@@ -3,6 +3,8 @@ package com.vhome.vhome.children.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,8 @@ public abstract class myBaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //去掉标题栏，但是还是会显示系统的状态栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getContentViewId());
     }
 

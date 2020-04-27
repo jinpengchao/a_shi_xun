@@ -19,10 +19,22 @@
 
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryOptionsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
-        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" /> <!-- 定位 -->
+
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" /> <!-- 定位 -->
+        <!--<activity
+            android:name="com.vhome.vhome.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> &lt;!&ndash; &ndash;&gt;-->
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" />
+
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.tools.AllToolsActivity" />
         <activity android:name="com.vhome.vhome.user.FindBackPwdActivity" />
@@ -31,8 +43,9 @@
         <activity android:name="com.vhome.vhome.user.RegisterActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.ClockDetail" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmAlert" />
-        <activity android:name="com.vhome.vhome.children.ChildrenMain" />
-        <activity android:name="com.vhome.vhome.MainActivity" />
+        <activity android:name="com.vhome.vhome.children.ChildrenMain"
+            android:theme="@style/mainStyle"/>
+        <activity android:name="com.vhome.vhome.MainActivity" /><!--***************************************************-->
         <activity android:name="com.vhome.vhome.children.fragment.WarnFragment" />
         <activity android:name="com.vhome.vhome.parents.fragment.news.NewsActivity" /> <!-- *************************************************** -->
         <activity android:name="com.vhome.vhome.parents.fragment.weather.WeatherActivity" />
@@ -42,9 +55,9 @@
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" />
-        <activity android:name="com.vhome.vhome.lead.ViewPageActivity" />
-        <activity android:name=".ui.SettingActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity" />
+        <activity android:name="com.vhome.vhome.lead.ViewPageActivity"/>
+        <activity android:name=".ui.SettingActivity"></activity>
+
         <activity
             android:name="com.vhome.vhome.parents.ParentMain"
             android:launchMode="singleTask"
@@ -246,23 +259,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.MultiDeviceActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- upload error log -->
-        <activity
-            android:name=".ui.NamePasswordActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <activity
-            android:name="com.vhome.vhome.user.personal.BaseActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity
-            android:name="com.vhome.vhome.user.personal.PersonalActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.MultiDeviceActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/horizontal_slide"
+                  android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".ui.NamePasswordActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/horizontal_slide"/>
+
+        <!-- iOS offline push nick -->
         <activity
             android:name=".ui.OfflinePushNickActivity"
             android:screenOrientation="portrait"
@@ -358,8 +363,39 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver> <!-- 百度地图所需的service -->
-        <receiver android:name="com.hyphenate.push.platform.vivo.EMVivoMsgReceiver">
+        </receiver>
+
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
+        <!--鹰眼轨迹相关服务-->
+        <service
+            android:name="com.baidu.trace.LBSTraceService"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- VIVO推送配置 start -->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--推送配置项-->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="9b74dbfc-55c4-4441-9d0a-561ff21addc7" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="11025" />
+
+        <receiver android:name="com.hyphenate.push.platform.vivo.EMVivoMsgReceiver" >
             <intent-filter>
 
                 <!-- 接收 push 消息 -->
@@ -468,11 +504,6 @@
         <service
             android:name="com.xiaomi.mipush.sdk.MessageHandleService"
             android:enabled="true" />
-
-        <service
-            android:name="com.baidu.trace.LBSTraceService"
-            android:enabled="true"
-            android:process=":remote" />
 
         <service
             android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
