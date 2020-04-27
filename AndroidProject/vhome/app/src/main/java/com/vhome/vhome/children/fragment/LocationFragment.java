@@ -1,5 +1,6 @@
 package com.vhome.vhome.children.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,11 +9,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +49,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
@@ -54,12 +59,13 @@ import com.vhome.vhome.parents.TrackUtil.BitmapUtil;
 import static android.content.Context.MODE_PRIVATE;
 import static com.vhome.vhome.parents.HttpLinked.connection;
 import static com.superrtc.ContextUtils.getApplicationContext;
+import static com.vhome.vhome.parents.TrackUtil.BitmapUtil.init;
 
-public class LocationFragment extends Fragment {
+public class LocationFragment extends Fragment implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private Intent intent;
-    private Spinner fath;
-    private Spinner moth;
+    private ImageView fath;
+    private ImageView moth;
     private MapView mapView;
     private BaiduMap bdMap;
     private SharedPreferences sp;//获取entity_name
@@ -76,7 +82,7 @@ public class LocationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_children_location,null);
         sp = getActivity().getSharedPreferences("myEntities",MODE_PRIVATE);
         share = getActivity().getSharedPreferences("user",MODE_PRIVATE);
-        BitmapUtil.init();
+        init();
         initView();
         getLocation();//定位
         hideLogo();//隐藏百度logo
@@ -119,22 +125,14 @@ public class LocationFragment extends Fragment {
         return view;
     }
 
-    private void init() {
-        select0.add("查看父亲");
-        select0.add("父亲当前轨迹");
-        select0.add("父亲历史轨迹");
-        select1.add("查看母亲");
-        select1.add("母亲当前轨迹");
-        select1.add("母亲历史轨迹");
-        setSpinner();
-    }
-
     public void initView(){
-        fath = view.findViewById(R.id.bt_fath);
-        moth = view.findViewById(R.id.bt_moth);
+        fath = view.findViewById(R.id.menu_fa);
+        moth = view.findViewById(R.id.menu_mo);
         mapView = view.findViewById(R.id.loc_map);
         bdMap = mapView.getMap();
         bdMap.setMyLocationEnabled(true);
+        fath.setOnClickListener(this);
+        moth.setOnClickListener(this);
     }
 
     private void setMessage(String faEntity,String moEntity) {
@@ -144,97 +142,96 @@ public class LocationFragment extends Fragment {
         editor.commit();
     }
 
-    public  void setSpinner() {
-        ArrayAdapter adapter0 = new ArrayAdapter(getActivity(),R.layout.item_drop, select0);
-        ArrayAdapter adapter1 = new ArrayAdapter(getActivity(),R.layout.item_drop, select1);
-        fath.setAdapter(adapter0);
-        moth.setAdapter(adapter1);
-        fath.setSelection(0, true);
-        moth.setSelection(0, true);
-        fath.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent();
-                intent.putExtra("sex", "man");
-                String faEntity = sp.getString("faEntity", " ");
-                switch (position) {
-                    case 0:
-                        break;
-                    case 1:
-                        if (faEntity.equals("nasp")) {
-                            Toast.makeText(getApplicationContext(),
-                                    "您还未关联您父亲的手机号",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            Log.e("点击", "跳转");
-                            intent.setClass(getApplicationContext(), TracingActivity.class);
-                            startActivity(intent);
-                        }
-                        break;
-                    case 2:
-                        if (faEntity.equals("nasp")) {
-                            Toast.makeText(getApplicationContext(),
-                                    "您还未关联您父亲的手机号",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            Log.e("点击", "跳转");
-                            intent.setClass(getApplicationContext(), TrackQueryActivity.class);
-                            startActivity(intent);
-                        }
-                        break;
+    //点击按钮后，加载弹出式菜单
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if(id==R.id.menu_fa) {
+            initMenu(v, R.menu.pop_menu_fa);
+        }else{
+            initMenu(v, R.menu.pop_menu_mo);
+        }
 
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        moth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent();
-                intent.putExtra("sex", "woman");
-                String moEntity = sp.getString("moEntity", " ");
-                switch (position) {
-                    case 0:
-                        break;
-                    case 1:
-                        if (moEntity.equals("nasp")) {
-                            Toast.makeText(getApplicationContext(),
-                                    "您还未关联您母亲的手机号",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            Log.e("点击", "跳转");
-                            intent.setClass(getApplicationContext(), TracingActivity.class);
-                            startActivity(intent);
-                        }
-                        break;
-                    case 2:
-                        if (moEntity.equals("nasp")) {
-                            Toast.makeText(getApplicationContext(),
-                                    "您还未关联您母亲的手机号",
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        } else {
-                            Log.e("点击", "跳转");
-                            intent.setClass(getApplicationContext(), TrackQueryActivity.class);
-                            startActivity(intent);
-                        }
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-
-        });
     }
+    //创建弹出式菜单对象
+    public void initMenu(View v,int id){
+        Context wrapper = new ContextThemeWrapper(getContext(), R.style.mainStyle);
+        PopupMenu popup = new PopupMenu(wrapper, v);//第二个参数是绑定的那个view
+        //获取菜单填充器
+        MenuInflater inflater = popup.getMenuInflater();
+        //填充菜单
+        inflater.inflate(id, popup.getMenu());
+        //绑定菜单项的点击事件
+        popup.setOnMenuItemClickListener(this);
+        //显示(这一行代码不要忘记了)
+        popup.show();
+    }
+    //弹出式菜单的单击事件处理
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        // TODO Auto-generated method stub
+        intent = new Intent();
+        String faEntity = sp.getString("faEntity", " ");
+        String moEntity = sp.getString("moEntity", " ");
+        switch (item.getItemId()) {
+            case R.id.fa_current:
+                if (faEntity.equals("nasp")) {
+                    Toast.makeText(getApplicationContext(),
+                            "您还未关联您父亲的手机号",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Log.e("点击", "跳转");
+                    intent.putExtra("sex", "man");
+                    intent.setClass(getApplicationContext(), TracingActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.fa_history:
+                if (faEntity.equals("nasp")) {
+                    Toast.makeText(getApplicationContext(),
+                            "您还未关联您父亲的手机号",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Log.e("点击", "跳转");
+                    intent.putExtra("sex", "man");
+                    intent.setClass(getApplicationContext(), TrackQueryActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.mo_current:
+                if (moEntity.equals("nasp")) {
+                    Toast.makeText(getApplicationContext(),
+                            "您还未关联您母亲的手机号",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Log.e("点击", "跳转");
+                    intent.putExtra("sex", "woman");
+                    intent.setClass(getApplicationContext(), TracingActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.mo_history:
+                if (moEntity.equals("nasp")) {
+                    Toast.makeText(getApplicationContext(),
+                            "您还未关联您母亲的手机号",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Log.e("点击", "跳转");
+                    intent.putExtra("sex", "woman");
+                    intent.setClass(getApplicationContext(), TrackQueryActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
     private void hideLogo(){
         View v = mapView.getChildAt(1);//第一层
         if(null!=v&&(v instanceof ImageView ||v instanceof ZoomControls)){
