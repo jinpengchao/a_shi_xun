@@ -478,7 +478,7 @@ public class MySelfActivity extends AppCompatActivity {
         try {
             jsonObject.put("phone",phone);
             jsonObject.put("type",type);
-            jsonObject.put("fileName",fileName+".jpg");
+            jsonObject.put("fileName",fileName);
         } catch (JSONException e) {
             e.printStackTrace();
         }

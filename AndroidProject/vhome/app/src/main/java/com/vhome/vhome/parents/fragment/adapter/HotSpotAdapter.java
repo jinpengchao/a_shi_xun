@@ -97,7 +97,7 @@ public class HotSpotAdapter extends BaseAdapter {
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
         //设置发帖人logo
-        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg();
+        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg()+".jpg";
         Log.e("hostadapter","头像"+list.get(i).getHeadimg());
         Glide.with(context)
                 .load(user_logo)

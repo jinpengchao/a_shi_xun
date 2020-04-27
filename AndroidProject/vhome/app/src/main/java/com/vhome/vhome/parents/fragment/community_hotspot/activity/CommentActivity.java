@@ -299,7 +299,7 @@ public class CommentActivity extends Activity {
      */
     private void fillPost() {
         //设置头像
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg();
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg()+".jpg";;
         Glide.with(CommentActivity.this)
                 .load(url).priority(Priority.HIGH)
                 .error(R.mipmap.errorimg1)

@@ -77,7 +77,7 @@ public class EaseUserUtils {
         if(textView != null){
         	EaseUser user = getUserInfo(username);
         	if(user != null && user.getNickname() != null){
-        		textView.setText(user.getNickname());
+        		textView.setText("用户名不着急"+user.getNickname());
         	}else{
         		textView.setText("用户名不着急"+username);
         	}
