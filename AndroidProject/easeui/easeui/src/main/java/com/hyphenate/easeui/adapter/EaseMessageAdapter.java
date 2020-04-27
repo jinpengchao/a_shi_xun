@@ -39,6 +39,8 @@ import com.hyphenate.easeui.widget.presenter.EaseChatTextPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatVideoPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatVoicePresenter;
 
+import java.io.IOException;
+
 public class EaseMessageAdapter extends BaseAdapter{
 
 	private final static String TAG = "msg";
@@ -268,9 +270,13 @@ public class EaseMessageAdapter extends BaseAdapter{
 			presenter = (EaseChatRowPresenter) convertView.getTag();
 		}
 
-		presenter.setup(message, position, itemClickListener, itemStyle);
+        try {
+            presenter.setup(message, position, itemClickListener, itemStyle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return convertView;
+        return convertView;
 	}
 
 

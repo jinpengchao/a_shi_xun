@@ -24,6 +24,7 @@ import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListe
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
 
+import java.io.IOException;
 import java.util.Date;
 
 public abstract class EaseChatRow extends LinearLayout {
@@ -112,7 +113,7 @@ public abstract class EaseChatRow extends LinearLayout {
     public void setUpView(EMMessage message, int position,
             EaseChatMessageList.MessageListItemClickListener itemClickListener,
                           EaseChatRowActionCallback itemActionCallback,
-                          EaseMessageListItemStyle itemStyle) {
+                          EaseMessageListItemStyle itemStyle) throws IOException {
         this.message = message;
         this.position = position;
         this.itemClickListener = itemClickListener;
@@ -124,7 +125,7 @@ public abstract class EaseChatRow extends LinearLayout {
         setClickListener();
     }
 
-    private void setUpBaseView() {
+    private void setUpBaseView() throws IOException {
     	// set nickname, avatar and background of bubble
         TextView timestamp = (TextView) findViewById(R.id.timestamp);
         if (timestamp != null) {

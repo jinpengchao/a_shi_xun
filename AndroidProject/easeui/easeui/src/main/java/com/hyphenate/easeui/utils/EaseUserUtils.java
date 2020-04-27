@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,15 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseUser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -47,7 +57,7 @@ public class EaseUserUtils {
      * set user avatar
      * @param username
      */
-    public static void setUserAvatar(Context context, String username, ImageView imageView){
+    public static void setUserAvatar(Context context, String username, ImageView imageView) throws IOException {
     	EaseUser user = getUserInfo(username);
         if(user != null){
             String path = "/sdcard/header"+username+"/";// sd路径
@@ -64,12 +74,47 @@ public class EaseUserUtils {
                         .signature(new StringSignature(UUID.randomUUID().toString()))
                         .into(imageView);
 
+                setPicToView(username,returnBitMap(url));
             }
         }else{
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
         }
     }
-    
+
+    public static Bitmap returnBitMap(String url) throws IOException {
+        URL imgUrl = new URL(url);
+        Bitmap bitmap = null;
+        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+        conn.setDoInput(true);
+        conn.connect();
+        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
+        return bitmap;
+    }
+    private static void setPicToView(String username, Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        String path = "/sdcard/header"+username+"/";
+        FileOutputStream b = null;
+        File file = new File(path);
+        file.mkdirs();// 创建文件夹
+        String fileName = path + "header"+username+".jpg";// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * set user's nickname
      */

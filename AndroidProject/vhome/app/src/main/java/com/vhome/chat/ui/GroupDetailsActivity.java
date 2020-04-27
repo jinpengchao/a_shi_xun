@@ -54,6 +54,7 @@ import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -963,9 +964,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			convertView.setVisibility(View.VISIBLE);
 			button.setVisibility(View.VISIBLE);
 			EaseUserUtils.setUserNick(username, holder.textView);
-			EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+            try {
+                EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-			LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
+            LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 			id_background.setBackgroundColor(convertView.getResources().getColor(
 					position == 0 ? R.color.holo_red_light :
 							(isInMuteList(username) ? R.color.gray_normal : R.color.holo_orange_light)));
@@ -1064,9 +1069,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// members
 				final String username = getItem(position);
 				EaseUserUtils.setUserNick(username, holder.textView);
-				EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+                try {
+                    EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-				LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
+                LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 				if (isInMuteList(username)) {
 					id_background.setBackgroundColor(convertView.getResources().getColor(R.color.gray_normal));
 				} else if (isInBlackList(username)) {

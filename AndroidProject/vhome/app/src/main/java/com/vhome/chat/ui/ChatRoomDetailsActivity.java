@@ -50,6 +50,7 @@ import com.hyphenate.easeui.widget.EaseExpandGridView;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -560,8 +561,12 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			final String username = getItem(position);
 			holder.textView.setText(username);
 			EaseUserUtils.setUserNick(username, holder.textView);
-			EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
-			LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
+            try {
+                EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 			id_background.setBackgroundColor(convertView.getResources().getColor(
 					position == 0 ? R.color.holo_red_light: R.color.holo_orange_light));
 			button.setOnClickListener(new OnClickListener() {
@@ -732,9 +737,13 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			final String username = getItem(position);
 			holder.textView.setText(username);
 			EaseUserUtils.setUserNick(username, holder.textView);
-			EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+            try {
+                EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-			LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
+            LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 			if (isInMuteList(username)) {
 				id_background.setBackgroundColor(convertView.getResources().getColor(R.color.gray_normal));
 			} else if (isInBlackList(username)) {

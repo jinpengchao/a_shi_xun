@@ -346,6 +346,12 @@ public class MySelfActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.setView(localView);
         dialog.show();
     }
