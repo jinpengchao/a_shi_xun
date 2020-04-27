@@ -90,38 +90,38 @@ public class LocationFragment extends Fragment implements View.OnClickListener, 
         String ip = (new MyApp()).getIp();
         final String url = "http://"+ip+":8080/vhome/SendIMEI";
         Log.e("url",url);
-            final Handler handler = new Handler(){
+        final Handler handler = new Handler(){
 
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    if(msg.getData()!=null){
-                        Bundle get = msg.getData();
-                        String[] params=  get.getString("pars").split("/n");
-                        String faEntity=params[0];
-                        String moEntity= params[1];
-                        Log.e("entity",faEntity);
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.getData()!=null){
+                    Bundle get = msg.getData();
+                    String[] params=  get.getString("pars").split("/n");
+                    String faEntity=params[0];
+                    String moEntity= params[1];
+                    Log.e("entity",faEntity);
 //                        if(faEntity.equals("nasp")&&moEntity.equals("nasp")) {
 //                              Toast.makeText(getApplicationContext(),"您的父母还未注册",Toast.LENGTH_SHORT).show();
 //                        }
-                        setMessage("myTrace","myTrace");
+                    setMessage("myTrace","myTrace");
 
-                    }
                 }
-            };
-            new Thread(){
-                @Override
-                public void run() {
-                    super.run();
-                    String phone = share.getString("phone","");
-                    String pars= getMapParams(phone,url);
-                        Message message = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("pars", pars);
-                        message.setData(bundle);
-                        handler.sendMessage(message);
-                }
-            }.start();
+            }
+        };
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                String phone = share.getString("phone","");
+                String pars= getMapParams(phone,url);
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("pars", pars);
+                message.setData(bundle);
+                handler.sendMessage(message);
+            }
+        }.start();
         return view;
     }
 
