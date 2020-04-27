@@ -24,6 +24,7 @@ import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -144,7 +145,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         String imgs = null;
         imgs = list.get(i).getImgs();
         Gson gson = new Gson();
-        List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
+        ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
         Log.i("hotspotadaper", "图片列表数据个数：" + imgsList.size());
         if (imgsList.size() > 0) {
