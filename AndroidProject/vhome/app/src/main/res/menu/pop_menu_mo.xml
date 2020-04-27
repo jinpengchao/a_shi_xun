@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mo_current"
+        android:title="母亲当前轨迹"/>
+    <item android:id="@+id/mo_history"
+        android:title="母亲历史轨迹"/>
+</menu>
