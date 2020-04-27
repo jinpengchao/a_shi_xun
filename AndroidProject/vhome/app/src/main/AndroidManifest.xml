@@ -47,7 +47,7 @@
             android:theme="@style/mainStyle"/>
         <activity android:name="com.vhome.vhome.MainActivity" /><!--***************************************************-->
         <activity android:name="com.vhome.vhome.children.fragment.WarnFragment" />
-        <activity android:name="com.vhome.vhome.parents.fragment.news.NewsActivity" /> <!-- *************************************************** -->
+        <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity" /> <!-- *************************************************** -->
         <activity android:name="com.vhome.vhome.parents.fragment.weather.WeatherActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyCollectionsActivity" />
