@@ -1,6 +1,7 @@
 package com.vhome.vhome;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,15 +27,9 @@ import com.baidu.trace.model.BaseRequest;
 import com.baidu.trace.model.OnCustomAttributeListener;
 import com.baidu.trace.model.ProcessOption;
 import com.baidu.trace.model.TransportMode;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.HMSPushHelper;
 import com.vhome.chat.R;
@@ -51,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.vhome.vhome.parents.TrackUtil.CommonUtil;
@@ -125,33 +120,14 @@ public class MyApp extends Application {
     public static int screenHeight = 0;
     //--------------鹰眼轨迹-------------------
 
+    //步数
+    private int appCount = 0;
+
     @Override
     public void onCreate() {
-
-        super.onCreate();
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
-           @NonNull
-           @Override
-           public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-               //指定为经典Header，默认是 贝塞尔雷达Header
-               return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
-           }
-         });
-
-        //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
-            }
-        });
-
-
         //连接环信
         MultiDex.install(this);
+        super.onCreate();
         applicationContext = this;
         instance = this;
 
@@ -174,6 +150,7 @@ public class MyApp extends Application {
 
 
 
+        super.onCreate();
         //连接喜马拉雅
         CommonRequest mXimalaya = CommonRequest.getInstanse();
         if(DTransferConstants.isRelease) {
@@ -233,7 +210,69 @@ public class MyApp extends Application {
         });
 
         clearTraceStatus();
+        //图片
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.image_download_failed) //
+                .showImageOnFail(R.drawable.image_download_failed) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .build();//
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration//
+                .Builder(getApplicationContext())//
+                .defaultDisplayImageOptions(defaultOptions)//
+                .discCacheSize(50 * 1024 * 1024)//
+                .discCacheFileCount(100)// 缓存一百张图片
+                .writeDebugLogs()//
+                .build();//
+        ImageLoader.getInstance().init(config);
+        //步数
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                appCount++;
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                appCount--;
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
     }
+
+    /**
+     * app是否在前台
+     * @return true前台，false后台
+     */
+    public boolean isForeground(){
+        return appCount > 0;
+    }
+
+
     public static MyApp getInstance() {
         return instance;
     }
@@ -382,7 +421,5 @@ public class MyApp extends Application {
     public int getTag() {
         return mSequenceGenerator.incrementAndGet();
     }
-
-
     //鹰眼轨迹---------------------------------------------
 }

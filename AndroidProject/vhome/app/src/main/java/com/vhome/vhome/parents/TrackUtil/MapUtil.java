@@ -73,7 +73,7 @@ public class MapUtil {
 
     public void init(MapView view) {
         mapView = view;
-        baiduMap = mapView.getMap();
+        baiduMap = mapView.getMap();//获取的是传进来的
         mapView.showZoomControls(true);
         baiduMap.setMyLocationEnabled(true);
         hideLogo();

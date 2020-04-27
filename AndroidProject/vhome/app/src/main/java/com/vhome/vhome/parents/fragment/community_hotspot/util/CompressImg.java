@@ -40,6 +40,9 @@ public class CompressImg {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;//设置为true，不会申请内存，可以得到原生的宽和高
         Bitmap bitmap = BitmapFactory.decodeFile(srcFile.getAbsolutePath(), options);
+        //旋转操作
+        // 获取图片旋转角度，旋转图片
+        int degree = getRotateDegree(srcFile.getAbsolutePath());
         int outWidth = options.outWidth;//原生的宽
         int outHeight = options.outHeight;//原生的高
         /**
@@ -49,7 +52,11 @@ public class CompressImg {
         options.inSampleSize = getSampleSize(outWidth, outHeight, tagWidth, tagHeight);
         options.inJustDecodeBounds = false;
         Bitmap bitmap2 = BitmapFactory.decodeFile(srcFile.getAbsolutePath(), options);
-
+        /**
+         * 图片旋转
+         */
+//        int degree = getRotateDegree(srcFile.getAbsolutePath());
+        bitmap2 = rotateImage(bitmap2,degree);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         /**
          * 这里是图片质量压缩，第二个参数表示压缩率，100表示不压缩，0表示最大压缩
@@ -110,5 +117,47 @@ public class CompressImg {
         } else {
             return heightSize;
         }
+    }
+
+    /**
+     * 旋转图片
+     * @param bitmap
+     * @param degree
+     * @return
+     */
+    public Bitmap rotateImage(Bitmap bitmap, float degree) {
+        //create new matrix
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return bmp;
+    }
+
+    /**
+     * 获取图片的旋转角度。
+     * 只能通过原始文件获取，如果已经进行过bitmap操作无法获取。
+     */
+    private static int getRotateDegree(String path) {
+        int result = 0;
+        try {
+            ExifInterface exif = new ExifInterface(path);
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    result = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    result = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    result = 270;
+                    break;
+            }
+        } catch (IOException ignore) {
+            return 0;
+        }
+        return result;
     }
 }

@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -90,9 +91,9 @@ public class HotSpotAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         //设置gridview点击事件不响应
-        holder.gvPostShow.setClickable(false);
-        holder.gvPostShow.setPressed(false);
-        holder.gvPostShow.setEnabled(false);
+//        holder.gvPostShow.setClickable(false);
+//        holder.gvPostShow.setPressed(false);
+//        holder.gvPostShow.setEnabled(false);
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
         //设置发帖人logo
@@ -141,7 +142,7 @@ public class HotSpotAdapter extends BaseAdapter {
         String imgs = null;
         imgs = list.get(i).getImgs();
         Gson gson = new Gson();
-        List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
+        ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
         Log.i("hotspotadaper", "图片列表数据个数：" + imgsList.size());
         if (imgsList.size() > 0) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".parents.fragment.myself.ShowMyselfActivity">
+    tools:context="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity">
 
     <com.vhome.vhome.parents.fragment.myself.view.MyScrollView
         android:id="@+id/show_scroll_view"

@@ -87,7 +87,7 @@ public class CommentActivity extends Activity {
     private RelativeLayout rlPostSave;
     private RelativeLayout rlPostLike;
     private ShowPostImgAdapter showPostImgAdapter;
-    private List<String> imgs = new ArrayList<>();
+    private ArrayList<String> imgs = new ArrayList<>();
     private Gson gson = new Gson();
     private ExpandListAdapter adapter;
     private BottomSheetDialog dialog;

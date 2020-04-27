@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <string name="title_activity_intent">IntentActivity</string>
     <string name="title_activity_radio">RadioActivity</string>
     <string name="app_name">微家</string>
@@ -520,4 +518,6 @@
     <string name="msg_live_invite">%1$s invite you to join the interactive video - %2$s</string>
     <string name="alert_request_tobe_talker">Request to be talker &#8230;</string>
     <string name="alert_request_tobe_audience">Request to be audience &#8230;</string>
+    <!--viewpager-->
+    <string name="viewpager_indicator"></string>
 </resources>

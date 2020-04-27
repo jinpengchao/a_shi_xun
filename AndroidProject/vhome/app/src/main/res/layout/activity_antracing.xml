@@ -9,9 +9,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:background="@color/color_black_333333"
+        android:orientation="horizontal">
 
-        <include layout="@layout/activity_antop"></include>
+        <LinearLayout
+            android:id="@+id/btn_activity_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.01"
+            android:gravity="center"
+            android:onClick="onBack">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/icon_back"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="@string/track_query_title"
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 

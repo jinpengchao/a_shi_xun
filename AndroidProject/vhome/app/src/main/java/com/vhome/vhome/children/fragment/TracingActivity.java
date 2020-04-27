@@ -71,7 +71,7 @@ public class TracingActivity extends myBaseActivity{
         powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
-        mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));
+        mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));//他这意思是这个是空
         mapUtil.setCenter(mCurrentDirection);
         trackPoints = new ArrayList<>();
         initListener();
