@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/fa_current"
+        android:title="父亲当前轨迹"/>
+    <item android:id="@+id/fa_history"
+        android:title="父亲历史轨迹"/>
+</menu>

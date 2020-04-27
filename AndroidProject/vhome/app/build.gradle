@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     signingConfigs {
         config {
-            storeFile file('F:\\xuexi\\Android\\baiduKey.jks')
+            storeFile file('E:\\practisePro\\baiduKey.jks')
             storePassword '123456'
             keyAlias = 'baiduKey'
             keyPassword '123456'

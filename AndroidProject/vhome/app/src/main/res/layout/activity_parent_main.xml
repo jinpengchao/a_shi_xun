@@ -155,7 +155,11 @@
                 android:textSize="12sp" />
         </RelativeLayout>
     </LinearLayout>
-
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/main_tracing_mapView"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_toEndOf="@+id/main_bottom"/>
     <RelativeLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

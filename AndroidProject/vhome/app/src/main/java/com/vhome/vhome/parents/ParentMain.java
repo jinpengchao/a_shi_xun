@@ -716,7 +716,7 @@ public class ParentMain extends BaseActivity {
     private void init() {
         trackApp = (MyApp) getApplicationContext();
         mapUtil = MapUtil.getInstance();
-        mapUtil.init((MapView) findViewById(R.id.tracing_mapView));
+        mapUtil.init((MapView) findViewById(R.id.main_tracing_mapView));
         mapUtil.setCenter(mCurrentDirection);//设置地图中心点
         viewUtil = new ViewUtil();
         powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
@@ -1127,7 +1127,7 @@ public class ParentMain extends BaseActivity {
         editor.remove("is_trace_started");
         editor.remove("is_gather_started");
         editor.commit();
-
+        unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -1155,7 +1155,11 @@ public class ParentMain extends BaseActivity {
         EMClient.getInstance().removeClientListener(clientListener);
         DemoHelper sdkHelper = DemoHelper.getInstance();
         sdkHelper.popActivity(this);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
         stopRealTimeLoc();
-        unregisterReceiver(mReceiver);
     }
 }
