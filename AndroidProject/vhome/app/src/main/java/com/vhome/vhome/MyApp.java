@@ -25,6 +25,9 @@ import com.baidu.trace.model.BaseRequest;
 import com.baidu.trace.model.OnCustomAttributeListener;
 import com.baidu.trace.model.ProcessOption;
 import com.baidu.trace.model.TransportMode;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -72,7 +75,7 @@ public class MyApp extends Application {
 //    public static LocationService locationService;
 
     // 39.96.24.133
-    private String ip = "192.168.0.105";
+    private String ip = "192.168.124.29";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
@@ -233,6 +236,22 @@ public class MyApp extends Application {
         });
 
         clearTraceStatus();
+
+        //图片
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.image_download_failed) //
+                .showImageOnFail(R.drawable.image_download_failed) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .build();//
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration//
+                .Builder(getApplicationContext())//
+                .defaultDisplayImageOptions(defaultOptions)//
+                .discCacheSize(50 * 1024 * 1024)//
+                .discCacheFileCount(100)// 缓存一百张图片
+                .writeDebugLogs()//
+                .build();//
+        ImageLoader.getInstance().init(config);
     }
     public static MyApp getInstance() {
         return instance;

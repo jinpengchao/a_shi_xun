@@ -35,9 +35,9 @@ public class AddPostImgAdapter extends BaseAdapter {
     }
     /**
      * 可以动态设置最多上传几张，之后就不显示+号了，用户也无法上传了
-     * 默认3张
+     * 默认9张
      */
-    private int maxImages = 3;
+    private int maxImages = 9;
 
     public AddPostImgAdapter(List<Map<String, Object>> datas, Context context) {
         this.datas = datas;

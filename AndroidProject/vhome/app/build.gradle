@@ -37,11 +37,11 @@ android {
         }
     }
 
-	sourceSets {
-		main {
-			jniLibs.srcDirs = ['libs']
-		}
-	}
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     compileOptions {
@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:7.0.1'
     annotationProcessor 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-    implementation ('com.facebook.fresco:fresco:0.8.1') {
+    implementation('com.facebook.fresco:fresco:0.8.1') {
         exclude group: 'com.parse.bolts',
                 module: 'bolts-android'
     }
