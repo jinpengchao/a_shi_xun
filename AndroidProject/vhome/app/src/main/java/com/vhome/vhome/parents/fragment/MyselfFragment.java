@@ -6,9 +6,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +26,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.signature.StringSignature;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,7 +49,6 @@ import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.children.fragment.dialog.MyDialog;
-import com.vhome.vhome.parents.ParentMain;
 import com.vhome.vhome.parents.fragment.alarm.AlarmService;
 import com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyCollectionsActivity;
@@ -50,7 +56,7 @@ import com.vhome.vhome.parents.fragment.myself.MyFunsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyNewsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
-import com.vhome.vhome.user.personal.PersonalActivity;
+import com.vhome.vhome.user.personal.MySelfActivity;
 import com.vhome.vhome.util.ConnectionUtil;
 import com.vhome.chat.ui.SettingActivity;
 
@@ -67,6 +73,7 @@ public class MyselfFragment extends BaseFragment {
     private TextView ids;
     private TextView areas;
     private ImageView sexs;
+    private SharedPreferences sp1;
     private SharedPreferences sp2;
     private RelativeLayout settings;
     private RelativeLayout myResetPwd;
@@ -93,8 +100,8 @@ public class MyselfFragment extends BaseFragment {
                         jsonObject = new JSONObject(receive);
                         int attentionNum = jsonObject.getInt("attentionNum");
                         int funsNum = jsonObject.getInt("funsNum");
-                        tvAttention.setText(attentionNum+"");
-                        tvFuns.setText(funsNum+"");
+//                        tvAttention.setText(attentionNum+"");
+//                        tvFuns.setText(funsNum+"");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -111,23 +118,23 @@ public class MyselfFragment extends BaseFragment {
         initData();
         initMyselfInfo();
         //点击关注的人的时候,显示关注人的列表
-        tvAttention.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MyAttentionsActivity.class);
-                startActivity(intent);
-            }
-        });
-        //点击粉丝的时候，显示粉丝列表
-        tvFuns.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MyFunsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        tvAttention.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), MyAttentionsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        //点击粉丝的时候，显示粉丝列表
+//        tvFuns.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), MyFunsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +178,7 @@ public class MyselfFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra("nickName",nikeName.getText());
-                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), MySelfActivity.class));
             }
         });
         tvMyPost.setOnClickListener(new View.OnClickListener() {
@@ -211,13 +218,13 @@ public class MyselfFragment extends BaseFragment {
         header = (ImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
         ids = (TextView) view.findViewById(R.id.parent_id);
-        areas = (TextView) view.findViewById(R.id.parent_area);
-        sexs = (ImageView) view.findViewById(R.id.parent_sex);
+//        areas = (TextView) view.findViewById(R.id.parent_area);
+//        sexs = (ImageView) view.findViewById(R.id.parent_sex);
         settings = view.findViewById(R.id.settings);
         myLogout = view.findViewById(R.id.my_logout);
         myResetPwd = view.findViewById(R.id.my_resetpwd);
-        tvAttention = view.findViewById(R.id.tv_myself_attention);
-        tvFuns = view.findViewById(R.id.tv_myself_funs);
+//        tvAttention = view.findViewById(R.id.tv_myself_attention);
+//        tvFuns = view.findViewById(R.id.tv_myself_funs);
         tvMyCollect = view.findViewById(R.id.tv_myself_mycollect);
         tvMyNews = view.findViewById(R.id.tv_myself_mynews);
         tvMyPost = view.findViewById(R.id.tv_myself_mypost);
@@ -250,40 +257,46 @@ public class MyselfFragment extends BaseFragment {
         }.start();
     }
     private void initData(){
-        SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-        header_phone = sp.getString("phone","");
-        String imgName = sp.getString("headImg","");
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
-        Log.e("img",imgName);
-        Glide.with(getActivity()).load(url)
-                .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getActivity()))
-                .into(blurImageView);
-        Glide.with(getActivity()).load(url)
-                .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                .placeholder(R.drawable.rc_default_portrait)
-                .bitmapTransform(new CropCircleTransformation(getActivity()))
-                .into(header);
+
+        sp1 = getActivity().getSharedPreferences("user", MODE_PRIVATE);
+        String phone = sp1.getString("phone","");
+        String path = "/sdcard/header"+phone+"/";// sd路径
+        Bitmap bt = BitmapFactory.decodeFile(path + "header"+phone+".jpg");// 从SD卡中找头像，转换成Bitmap
+        if (bt != null) {
+            @SuppressWarnings("deprecation")
+            Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
+            header.setImageDrawable(drawable);
+        } else {
+            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+            Glide.with(getActivity())
+                    .load(url)
+                    .priority(Priority.HIGH)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .into(header);
+
+        }
+
     }
     public void initMyselfInfo(){
         Log.e("缓存的个人信息","old");
         sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+
         String id = sp2.getString("phone","");
         String nickName = sp2.getString("nickName","");
         String sex = sp2.getString("sex","");
         String area = sp2.getString("area","");
         String achieve = sp2.getString("achieve","");
         String personalWord = sp2.getString("personalWord","");
-        String headImg = sp2.getString("headImg","");
+        String headImg = sp1.getString("headImg","");
         nikeName.setText(nickName);
         ids.setText(id);
-        areas.setText(area);
-        if (sex.equals("female")){
-            sexs.setImageResource(R.mipmap.female);
-        }else if (sex.equals("male")){
-            sexs.setImageResource(R.mipmap.male);
-        }else
-            sexs.setImageResource(R.mipmap.unknown);
+//        areas.setText(area);
+//        if (sex.equals("female")){
+//            sexs.setImageResource(R.mipmap.female);
+//        }else if (sex.equals("male")){
+//            sexs.setImageResource(R.mipmap.male);
+//        }else
+//            sexs.setImageResource(R.mipmap.unknown);
     }
     public void cancelNotification() {
         NotificationManager manager = (NotificationManager) this.getActivity().getApplicationContext()
@@ -293,18 +306,18 @@ public class MyselfFragment extends BaseFragment {
     //退出登录
     public void Logout() {
         final Intent intent = new Intent();
-            SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
-            SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-            SharedPreferences.Editor editor1 = sp1.edit();
-            editor.clear();
-            editor1.clear();
-            editor1.commit();
-            editor.commit();
-            Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
-            easeLogout();
-            Intent intent2 = new Intent(getActivity(), AlarmService.class);
-            getActivity().stopService(intent2);// 关闭闹钟服务
+        SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+        SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        SharedPreferences.Editor editor1 = sp1.edit();
+        editor.clear();
+        editor1.clear();
+        editor1.commit();
+        editor.commit();
+        Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
+        easeLogout();
+        Intent intent2 = new Intent(getActivity(), AlarmService.class);
+        getActivity().stopService(intent2);// 关闭闹钟服务
     }
     //环信退出登录
     void easeLogout() {
@@ -354,14 +367,6 @@ public class MyselfFragment extends BaseFragment {
         initMyselfInfo();
         initData();
     }
-    public void deleteCache(File[] files) {
-        boolean flag;
-        for (File itemFile : files) {
-            flag = itemFile.delete();
-            if (flag == false) {
-                deleteCache(itemFile.listFiles());
-            }
-        }
-    }
 
 }
+

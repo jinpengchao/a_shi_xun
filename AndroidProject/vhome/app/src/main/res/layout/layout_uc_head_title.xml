@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/title_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/titlebar_height"
+    app:layout_collapseMode="pin">
+
+    <LinearLayout
+        android:id="@+id/title_center_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.vhome.vhome.user.personal.widget.CircleImageView
+            android:id="@+id/title_uc_avater"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:src="@drawable/rc_default_portrait" />
+
+        <TextView
+            android:id="@+id/title_uc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:paddingRight="15dp"
+            android:text="Lover's Day"
+            android:textColor="@color/colorBlack33"
+            android:textSize="28px" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/uc_msg_iv"
+        android:layout_width="@dimen/adaptive_65dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:src="@mipmap/left" />
+
+    <ImageView
+        android:id="@+id/uc_setting_iv"
+        android:layout_width="@dimen/adaptive_45dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="8dp"
+        android:src="@mipmap/setting" />
+
+
+</RelativeLayout>

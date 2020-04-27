@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/lv_hot_spot"
+        android:name="com.vhome.vhome.user.personal.fragment.ItemFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.vhome.vhome.user.personal.fragment.MyPostFragment"
+        tools:listitem="@layout/fragment_item" >
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

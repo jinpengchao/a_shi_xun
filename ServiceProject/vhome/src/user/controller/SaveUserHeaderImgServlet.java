@@ -64,9 +64,9 @@ public class SaveUserHeaderImgServlet extends HttpServlet {
 			String personId = pui.getId();
 			String headimg = json.getString("fileName");
 			userService.updateUserHeaderImg(phone, type, headimg);
-			(new PostService()).changImgById(headimg, personId);
-			(new CommentService()).changeImg(headimg, personId);
-			(new ReplyService()).changeLogo(headimg, personId);
+			(new PostService()).changImgById(headimg+".jpg", personId);
+			(new CommentService()).changeImg(headimg+".jpg", personId);
+			(new ReplyService()).changeLogo(headimg+".jpg", personId);
 			System.out.println(headimg);
 			out.write(headimg);
 		} catch (JSONException e) {

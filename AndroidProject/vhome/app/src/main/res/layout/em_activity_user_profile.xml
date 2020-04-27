@@ -42,7 +42,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="8dip"
                 android:scaleType="centerCrop"
-                android:src="@drawable/em_default_avatar"
+                android:src="@drawable/rc_default_portrait"
                 />
             <ImageView 
                 android:id="@+id/user_head_headphoto_update"

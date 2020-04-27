@@ -258,7 +258,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if(userAvatarView != null){
             userAvatarView.setOnClickListener(new OnClickListener() {
-    
+
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
@@ -271,7 +271,7 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             });
             userAvatarView.setOnLongClickListener(new OnLongClickListener() {
-                
+
                 @Override
                 public boolean onLongClick(View v) {
                     if(itemClickListener != null){

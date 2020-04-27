@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vhome.chat"
     android:versionCode="64"
-    android:versionName="3.6.5">
+    android:versionName="2.0.0">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -80,12 +80,11 @@
         android:name="com.vhome.vhome.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/em_logo_uidemo"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:label="微家">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-
-        <!-- 适配Android 7.0, 需要将下方的com.vhome.chat替换为你的app包名 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -95,7 +94,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
+        <activity android:name="com.vhome.vhome.user.personal.MySelfActivity"   android:theme="@style/NoTitleTheme"/>
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TracingActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryOptionsActivity" />
@@ -370,16 +369,6 @@
         <activity android:name=".ui.NamePasswordActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/horizontal_slide"/>
-        <activity android:name="com.vhome.vhome.user.personal.BaseActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            >
-
-        </activity>
-        <activity
-            android:name="com.vhome.vhome.user.personal.PersonalActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!-- iOS offline push nick -->
         <activity
             android:name=".ui.OfflinePushNickActivity"

@@ -70,11 +70,6 @@ class CanvasLegacy {
     }
 }
 
-
-/**
- * Created by lzan13 on 2015/4/30.
- * customized ImageView，Rounded Rectangle and border is implemented, and change color when you press
- */
 public class EaseImageView extends androidx.appcompat.widget.AppCompatImageView {
     // paint when user press
     private Paint pressPaint;
