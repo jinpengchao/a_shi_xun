@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
+import com.hyphenate.easeui.MyApp;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseUserProfileProvider;
@@ -67,7 +68,7 @@ public class EaseUserUtils {
                 Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
                 imageView.setImageDrawable(drawable);
             } else {
-                String url = "http://"+"192.168.0.101"+":8080/vhome/images/"+"header"+username+".jpg";
+                String url = "http://"+(new MyApp()).ip+":8080/vhome/images/"+"header"+username+".jpg";
                 Glide.with(context)
                         .load(url)
                         .priority(Priority.HIGH)
