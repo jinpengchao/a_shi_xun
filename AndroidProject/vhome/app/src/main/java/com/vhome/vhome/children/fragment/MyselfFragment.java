@@ -187,7 +187,7 @@ public class MyselfFragment extends BaseFragment {
         SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         header_phone = sp.getString("phone","");
         String imgName = sp.getString("headImg","");
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName+".jpg";;
         Log.e("img",imgName);
         Glide.with(getActivity()).load(url)
                 .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行

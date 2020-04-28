@@ -12,6 +12,8 @@ import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.util.EMLog;
 
+import java.io.IOException;
+
 /**
  * Created by zhangsong on 17-10-12.
  */
@@ -57,7 +59,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
 
     public void setup(EMMessage msg, int position,
                       EaseChatMessageList.MessageListItemClickListener itemClickListener,
-                      EaseMessageListItemStyle itemStyle) {
+                      EaseMessageListItemStyle itemStyle) throws IOException {
         this.message = msg;
         this.position = position;
         this.itemClickListener = itemClickListener;

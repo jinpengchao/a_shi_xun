@@ -23,6 +23,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.EMLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        
+        //按名称首字母分类
         EaseUser user = getItem(position);
         if(user == null)
             Log.d("ContactAdapter", position + "");
@@ -100,9 +101,13 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         }
 
         EaseUserUtils.setUserNick(username, holder.nameView);
-        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-        
-       
+        try {
+            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         if(primaryColor != 0)
             holder.nameView.setTextColor(primaryColor);
         if(primarySize != 0)
@@ -145,7 +150,6 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         positionOfSection.put(0, 0);
         sectionOfPosition.put(0, 0);
         for (int i = 1; i < count; i++) {
-
             String letter = getItem(i).getInitialLetter();
             int section = list.size() - 1;
             if (list.get(section) != null && !list.get(section).equals(letter)) {

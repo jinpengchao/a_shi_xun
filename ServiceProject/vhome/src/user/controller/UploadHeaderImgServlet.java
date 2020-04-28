@@ -32,17 +32,9 @@ public class UploadHeaderImgServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		List<String> imgs = new ArrayList<String>();
 		SmartUpload smartUpload = new SmartUpload();
 		try {
 			smartUpload.initialize(this.getServletConfig(), request, response);
@@ -54,7 +46,11 @@ public class UploadHeaderImgServlet extends HttpServlet {
 			for (int i = 0; i < files.getCount(); i++) {
 				com.jspsmart.upload.File file = files.getFile(i);
 				if (!file.isMissing()) {
+//					SimpleDateFormat sdf = new SimpleDateFormat(
+//							"yyyyMMddHHmmssSSS");
+//					String name = sdf.format(new java.util.Date());
 					String name = file.getFileName();
+//					name = name + "." + file.getFileExt();// 得到文件的扩展名
 					String filename = this.getServletContext().getRealPath("/")
 							+ "images\\" + name;
 					System.out.println("文件地址"+filename);
@@ -70,4 +66,11 @@ public class UploadHeaderImgServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 }

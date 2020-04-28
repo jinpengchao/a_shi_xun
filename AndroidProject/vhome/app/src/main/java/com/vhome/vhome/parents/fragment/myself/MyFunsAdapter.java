@@ -65,7 +65,7 @@ public class MyFunsAdapter extends BaseAdapter {
             viewHolder = (MyAttentionAdapter.ViewHolder) view.getTag();
         }
         //设置头像
-        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg();
+        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeaderImg()+".jpg";;
         Glide.with(context).load(user_logo).priority(Priority.HIGH)
                 .error(R.mipmap.errorimg1)
                 .signature(new StringSignature(UUID.randomUUID().toString()))

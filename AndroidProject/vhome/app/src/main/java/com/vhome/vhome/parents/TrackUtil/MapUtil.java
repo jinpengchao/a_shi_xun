@@ -145,7 +145,6 @@ public class MapUtil {
             child.setVisibility(View.INVISIBLE);
         }
     }
-
     /**
      * 将轨迹实时定位点转换为地图坐标
      */
@@ -168,7 +167,6 @@ public class MapUtil {
         }
         return currentLatLng;
     }
-
     /**
      * 将轨迹坐标对象转换为地图坐标对象
      */
@@ -187,9 +185,6 @@ public class MapUtil {
             return;
         }
     }
-
-
-
     /**
      * 绘制历史轨迹
      */

@@ -28,6 +28,7 @@ import com.vhome.chat.R;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.DateUtils;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -177,7 +178,11 @@ public class GroupSearchMessageActivity extends BaseActivity implements OnClickL
             
             EMMessage message = getItem(position);
             EaseUserUtils.setUserNick(message.getFrom(), holder.name);
-            EaseUserUtils.setUserAvatar(getContext(), message.getFrom(), holder.avatar);
+            try {
+                EaseUserUtils.setUserAvatar(getContext(), message.getFrom(), holder.avatar);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             holder.time.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
             holder.message.setText(((EMTextMessageBody)message.getBody()).getMessage());
             

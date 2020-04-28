@@ -20,6 +20,7 @@ import com.vhome.chat.R;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -122,9 +123,13 @@ public class BlacklistActivity extends BaseActivity {
 			String username = getItem(position);
 			TextView name = (TextView) convertView.findViewById(R.id.name);
 			ImageView avatar = (ImageView) convertView.findViewById(R.id.avatar);
-			
-			EaseUserUtils.setUserAvatar(getContext(), username, avatar);
-			EaseUserUtils.setUserNick(username, name);
+
+            try {
+                EaseUserUtils.setUserAvatar(getContext(), username, avatar);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            EaseUserUtils.setUserNick(username, name);
 			
 			return convertView;
 		}

@@ -116,18 +116,6 @@ public class NewPostActivity extends Activity {
     }
 
     private void showdialog() {
-//        //动态请求权限相机权限
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-//                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.CAMERA,
-//                            Manifest.permission.READ_EXTERNAL_STORAGE,
-//                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                            1);
-//        }
 
         View localView = LayoutInflater.from(this).inflate(
                 R.layout.dialog_add_postimg, null);

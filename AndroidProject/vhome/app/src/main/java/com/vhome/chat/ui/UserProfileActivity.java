@@ -1,6 +1,7 @@
 package com.vhome.chat.ui;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
@@ -49,8 +50,12 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 		super.onCreate(arg0);
 		setContentView(R.layout.em_activity_user_profile);
 		initView();
-		initListener();
-	}
+        try {
+            initListener();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	private void initView() {
 		headAvatar = (ImageView) findViewById(R.id.user_head_avatar);
@@ -61,7 +66,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 		iconRightArrow = (ImageView) findViewById(R.id.ic_right_arrow);
 	}
 	
-	private void initListener() {
+	private void initListener() throws IOException {
 		Intent intent = getIntent();
 		String username = intent.getStringExtra("username");
 		boolean enableUpdate = intent.getBooleanExtra("setting", false);

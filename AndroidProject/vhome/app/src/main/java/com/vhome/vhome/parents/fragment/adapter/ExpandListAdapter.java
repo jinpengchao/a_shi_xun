@@ -88,7 +88,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) view.getTag();
         }
         //加载logo
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+commentBeanList.get(i).getHeadimg();
+        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+commentBeanList.get(i).getHeadimg()+".jpg";
         Glide.with(context).load(url)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .signature(new StringSignature(UUID.randomUUID().toString()))
