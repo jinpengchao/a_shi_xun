@@ -2,6 +2,7 @@ package com.vhome.vhome.parents.fragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
@@ -99,12 +102,21 @@ public class HotSpotAdapter extends BaseAdapter {
         //设置发帖人logo
         String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg();
         Log.e("hostadapter","头像"+list.get(i).getHeadimg());
-        Glide.with(context)
-                .load(user_logo)
-                .priority(Priority.HIGH)
-                .error(R.mipmap.errorimg1)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
-                .into(holder.ivHotPerson);
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder()//
+                .cacheInMemory(true)//
+                .cacheOnDisk(true)//
+                .bitmapConfig(Bitmap.Config.RGB_565)//
+                .build();
+        ImageLoader.getInstance().displayImage(user_logo,
+                holder.ivHotPerson, options);
+
+//        Glide.with(context)
+//                .load(user_logo)
+//                .priority(Priority.HIGH)
+//                .error(R.mipmap.errorimg1)
+//                .signature(new StringSignature(UUID.randomUUID().toString()))
+//                .into(holder.ivHotPerson);
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
         //当点击头像或名字的 时候跳转到个人页
@@ -179,6 +191,7 @@ public class HotSpotAdapter extends BaseAdapter {
             public void onClick(View view) {
                 onMyLikeClick.myLikeClick(i,list.get(i).getLike_status());
                 if (1 == list.get(i).getLike_status()) {
+                    Log.e("点赞", "取消点赞成功" );
                     list.get(i).setLike_status(0);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good);
                     //点赞个数减一

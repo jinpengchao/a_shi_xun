@@ -280,6 +280,9 @@ public class GoodPostDao {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			i = ps.executeUpdate();
+			if(i>0) {
+				System.out.println("删除点赞信息成功！id为："+id);
+			}
 			ps.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
