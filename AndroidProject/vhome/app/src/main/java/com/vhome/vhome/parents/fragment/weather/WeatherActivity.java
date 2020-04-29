@@ -191,11 +191,10 @@ public class WeatherActivity extends Activity {
         if(city.equals("NULL")){
             Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
             load("石家庄");
-        }else if (city!=null&&editText.getText().toString()==null||editText.getText().toString().equals("")) {
+        }else {
             load(city);
-        }else{
-            loadnew(editText.getText().toString());
         }
+
         weatherAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){
