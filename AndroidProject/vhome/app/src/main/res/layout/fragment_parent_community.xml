@@ -1,32 +1,54 @@
-<androidx.fragment.app.FragmentTabHost
-    android:id="@android:id/tabhost"
-    android:layout_height="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#E6E3E3"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <RelativeLayout
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <com.vhome.vhome.user.personal.widget.DisInterceptNestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/ll_head"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FAF6F6"
-                android:layout_alignParentTop="true">
-            </TabWidget>
-        </LinearLayout>
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll_head">
-        </FrameLayout>
-    </RelativeLayout>
-</androidx.fragment.app.FragmentTabHost>
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+
+            <com.flyco.tablayout.CommonTabLayout
+                android:id="@+id/uc_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_centerVertical="true"
+                android:background="@android:color/white"
+                android:paddingBottom="8dp"
+                android:layout_marginBottom="@dimen/adaptive_3dp"
+                app:tl_indicator_color="@color/common_botton_bar_blue"
+                app:tl_indicator_corner_radius="2dp"
+                app:tl_indicator_height="4dp"
+                app:tl_indicator_margin_bottom="7dp"
+                app:tl_indicator_width="10dp"
+
+                app:tl_subtextSelectColor="@color/common_botton_bar_blue"
+                app:tl_subtextUnselectColor="#333333"
+                app:tl_subtextsize="17sp"
+                app:tl_textSelectColor="@color/common_botton_bar_blue"
+                app:tl_textUnselectColor="#333333"
+                app:tl_textsize="0sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBg" />
+        </LinearLayout>
+    </com.vhome.vhome.user.personal.widget.DisInterceptNestedScrollView>
+
+    <com.vhome.vhome.user.personal.util.widget.NoScrollViewPager
+        android:id="@+id/uc_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBg" />
+</LinearLayout>

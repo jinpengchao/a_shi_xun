@@ -59,12 +59,14 @@ public class AddNewRelationServlet extends HttpServlet {
 		try {
 			json = new JSONObject(data);
 			String receivePhone = json.getString("receivePhone");
+			String receiveName = json.getString("receiveName");
 			String sendPhone = json.getString("sendPhone");
-			int receiveType = json.getInt("receiveType");
+			String sendName = json.getString("sendName");
+			String setName = "";
 			UserService userService = new UserService();
-			userService.insertRelation(receivePhone, sendPhone,receiveType);
+			userService.insertRelation(receivePhone, receiveName,sendPhone,sendName,setName);
 			
-			System.out.println(sendPhone+"-->"+receivePhone);
+			System.out.println(sendPhone+"<-->"+receivePhone);
 			out.write("ojbk");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

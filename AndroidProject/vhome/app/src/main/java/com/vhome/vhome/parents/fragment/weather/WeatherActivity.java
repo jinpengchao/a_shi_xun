@@ -3,6 +3,7 @@ package com.vhome.vhome.parents.fragment.weather;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -95,8 +96,9 @@ public class WeatherActivity extends Activity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        //设置默认数据
+        //设置默认的天气
         load("石家庄");
+
 
         editText=(EditText)findViewById(R.id.city_name);
         textView1= (TextView) findViewById(R.id.city);
@@ -125,9 +127,7 @@ public class WeatherActivity extends Activity {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
                 srl1.finishRefresh();
-                Toast.makeText(getApplicationContext(),
-                        "刷新完成",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "刷新完成", Toast.LENGTH_SHORT).show();
             }
         });
         srl1.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -148,6 +148,8 @@ public class WeatherActivity extends Activity {
             }
         });
     }
+
+
 
 
     private void load(final String city) {
@@ -183,12 +185,16 @@ public class WeatherActivity extends Activity {
 
     public void refreshData(){
         weather_information.clear();
-
-        if (editText.getText().toString()==null||editText.getText().toString().equals("")) {
+        SharedPreferences preferences=getSharedPreferences("cityInfo",Context.MODE_PRIVATE);
+        String city=preferences.getString("city","NULL");
+        Toast.makeText(getApplication(),city,Toast.LENGTH_LONG).show();
+        if(city.equals("NULL")){
+            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
             load("石家庄");
-        }else{
-            loadnew(editText.getText().toString());
+        }else {
+            load(city);
         }
+
         weatherAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){

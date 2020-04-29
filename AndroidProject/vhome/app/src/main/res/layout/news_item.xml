@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginBottom="5dp">
     <com.vhome.vhome.parents.MyImageView
         android:id="@+id/item_img_icon"
         android:layout_width="80dp"

@@ -59,6 +59,7 @@ import com.hyphenate.EMMessageListener;
 import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
+import com.today.step.lib.TodayStepService;
 import com.vhome.chat.Constant;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.HMSPushHelper;
@@ -305,9 +306,9 @@ public class ParentMain extends BaseActivity {
         AutoStart();
         AutoEnd();
         //计步服务
-        //开启计步Service，同时绑定Activity进行aidl通信
-//        Intent step = new Intent(this, TodayStepService.class);
-//        startService(step);
+        //开启计步Service
+        Intent step = new Intent(this, TodayStepService.class);
+        startService(step);
     }
 
     EMClientListener clientListener = new EMClientListener() {
