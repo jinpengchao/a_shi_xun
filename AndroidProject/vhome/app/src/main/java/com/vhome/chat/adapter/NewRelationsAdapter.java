@@ -87,6 +87,9 @@ public class NewRelationsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        //做一个判断 为0运行这两个，其他不运行
+        holder.agreeBtn.setVisibility(View.GONE);
+        holder.refuseBtn.setVisibility(View.GONE);
         // set click listener
         holder.agreeBtn.setOnClickListener(new OnClickListener() {
             @Override
