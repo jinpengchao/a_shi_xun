@@ -95,6 +95,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name="com.vhome.vhome.user.personal.MySelfActivity"   android:theme="@style/NoTitleTheme"/>
+        <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity"></activity>
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TracingActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryOptionsActivity" />
@@ -377,7 +378,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <!-- robots list -->
         <activity
-            android:name=".ui.RobotsActivity"
+            android:name=".ui.NewRelationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -476,7 +477,7 @@
             android:process=":remote" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3ecea51f560650b1ed8a4b99808f52e8" />
+            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
 
         <!-- VIVO推送配置 start -->
         <service

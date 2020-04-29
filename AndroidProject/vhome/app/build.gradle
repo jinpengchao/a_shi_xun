@@ -5,7 +5,8 @@ apply plugin: 'kotlin-android-extensions'
 android {
     signingConfigs {
         config {
-            storeFile file('E:\\practisePro\\baiduKey.jks')
+            File strFile = new File('../../../../JksOfBaiduMap/MapKey2.jks')
+            storeFile file(strFile)
             storePassword '123456'
             keyAlias = 'baiduKey'
             keyPassword '123456'
@@ -21,7 +22,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64'
         }
     }
 
@@ -139,7 +140,9 @@ dependencies {
     implementation files('libs\\mi_push_v3.6.12.jar')
     implementation files('libs\\oppo_push_v1.0.1.jar')
     implementation files('libs\\vivo_push_v2.3.1.jar')
-
+    implementation project(path: ':base-lib-notification')
+    implementation project(path: ':lib-todaystepcounter')
+    implementation project(path: ':lib-jlogger')
 
 }
 

@@ -99,6 +99,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (isChecked) {
                     //如果选中，显示密码
                     etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    Intent jump0 = new Intent();
+                    jump0.setClass(MainActivity.this,ParentMain.class);
+                    startActivity(jump0);
                 } else {
                     //否则隐藏密码
                     etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -127,7 +130,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.pwdLogin:
                 Log.e("MainActivity","Onclick");
-                loginByPsw();
+//                loginByPsw();
+                Intent jump1 = new Intent();
+                jump1.setClass(MainActivity.this,ChildrenMain.class);
+                startActivity(jump1);
                 break;
             case R.id.register:
                 Intent intent = new Intent();
