@@ -99,9 +99,9 @@
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TracingActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryOptionsActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" /> <!-- 定位 -->
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity"/>
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmActivity" />
