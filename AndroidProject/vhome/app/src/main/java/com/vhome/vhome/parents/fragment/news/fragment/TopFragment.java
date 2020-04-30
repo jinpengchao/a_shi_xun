@@ -155,6 +155,7 @@ public class TopFragment extends BaseFragment {
             }
         }).start();
     }
+
     public void refreshData(){
         news.clear();
         load();
