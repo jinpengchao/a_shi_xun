@@ -9,6 +9,8 @@ import java.util.List;
 
 import dbutil.DBUtil;
 import entity.ParentUserInfo;
+import entity.PostBean;
+import entity.SendPerson;
 import entity.User;
 
 public class UserDao {
@@ -368,23 +370,52 @@ public class UserDao {
 		}
 	}
 	//添加父母子女关联-->只能子女发送请求，父母接收
-	public void addNewRelation(String receivePhone,String sendPhone,int receiveType) {
+	public void addNewRelation(String receivePhone,String receiveName,String sendPhone,String sendName,String setName) {
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
 			conn = util.getConnection();
-			String sql = "insert into tbl_connect values(?,?,?,?)";
+			String sql = "insert into tbl_connect values(?,?,?,?,?,?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, 0);
 			psmt.setString(2, receivePhone);
-			psmt.setString(3, sendPhone);
-			psmt.setInt(4, receiveType);
+			psmt.setString(3, receiveName);
+			psmt.setString(4, sendPhone);
+			psmt.setString(5, sendName);
+			psmt.setString(6, setName);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
 				System.out.println("添加关联成功");
 			}else {
 				System.out.println("添加关联失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void addRelationRequest(String sendPhone,String sendName,String receivePhone,int type) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "insert into tbl_relations_request values(?,?,?,?,?)";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, 0);
+			psmt.setString(2, sendPhone);
+			psmt.setString(3, sendName);
+			psmt.setString(4, receivePhone);
+			psmt.setInt(5, type);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("请求建立关系成功");
+			}else {
+				System.out.println("请求建立关系失败");
 			}
 			psmt.close();
 			util.closeConnection();
@@ -420,5 +451,38 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return parentPhoneList;
+	}
+	public List<SendPerson> queryRequset(String phone){
+		List<SendPerson> list = new ArrayList<SendPerson>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_relations_request where receive_phone=? and type=0";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, phone);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				SendPerson sendPerson = new SendPerson();
+				sendPerson.setSendName(rs.getString("send_name"));
+				sendPerson.setSendPhone(rs.getString("send_phone"));
+				list.add(sendPerson);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 }

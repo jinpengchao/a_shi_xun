@@ -27,17 +27,9 @@
         app:contactItemName="@string/chat_room" />
 
     <com.vhome.chat.widget.ContactItemView
-        android:id="@+id/robot_item"
+        android:id="@+id/relation_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
-        app:contactItemName="@string/robot_chat" />
-
-    <com.vhome.chat.widget.ContactItemView
-        android:id="@+id/conference_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_chat_video_call_normal"
-        app:contactItemName="@string/voice_and_video_conference" />
-
+        app:contactItemImage="@drawable/em_new_friends_icon"
+        app:contactItemName="@string/relations" />
 </LinearLayout>

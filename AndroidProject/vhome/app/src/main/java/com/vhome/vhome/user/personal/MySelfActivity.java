@@ -51,7 +51,10 @@ import java.util.UUID;
 
 import com.vhome.chat.R;
 import com.vhome.chat.ui.SettingActivity;
+import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
+import com.vhome.vhome.parents.ParentMain;
+import com.vhome.vhome.user.LoginByCodeActivity;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
@@ -160,6 +163,22 @@ public class MySelfActivity extends AppCompatActivity {
      * 绑定事件
      */
     private void initListener() {
+        mMsgIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                intent1.setClass(
+                        MySelfActivity.this,
+                        ParentMain.class);
+                startActivity(intent1);
+                //应用页面跳转动画
+                overridePendingTransition(
+                        R.anim.in,//进入动画
+                        R.anim.out//出去动画
+                );
+                finish();
+            }
+        });
         editInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

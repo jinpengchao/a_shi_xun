@@ -2,296 +2,191 @@ package com.vhome.chat.ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.R;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.vhome.chat.domain.Relations;
+import com.vhome.chat.domain.SendPerson;
+import com.vhome.vhome.MyApp;
+import com.vhome.vhome.util.ConnectionUtil;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UserProfileActivity extends BaseActivity implements OnClickListener{
-	
-	private static final int REQUESTCODE_PICK = 1;
-	private static final int REQUESTCODE_CUTTING = 2;
-	private ImageView headAvatar;
-	private ImageView headPhotoUpdate;
-	private ImageView iconRightArrow;
-	private TextView tvNickName;
-	private TextView tvUsername;
-	private ProgressDialog dialog;
-	private RelativeLayout rlNickName;
-	
-	
-	
-	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
-		setContentView(R.layout.em_activity_user_profile);
-		initView();
+
+    private ImageView headAvatar;
+    private TextView tvUsername;
+    private ImageView gender;
+    private TextView tvFriendName;
+    private Button addRelation;
+
+
+
+    @Override
+    protected void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+        setContentView(R.layout.em_activity_user_profile);
+        initView();
         try {
             initListener();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
-	
-	private void initView() {
-		headAvatar = (ImageView) findViewById(R.id.user_head_avatar);
-		headPhotoUpdate = (ImageView) findViewById(R.id.user_head_headphoto_update);
-		tvUsername = (TextView) findViewById(R.id.user_username);
-		tvNickName = (TextView) findViewById(R.id.user_nickname);
-		rlNickName = (RelativeLayout) findViewById(R.id.rl_nickname);
-		iconRightArrow = (ImageView) findViewById(R.id.ic_right_arrow);
-	}
-	
-	private void initListener() throws IOException {
-		Intent intent = getIntent();
-		String username = intent.getStringExtra("username");
-		boolean enableUpdate = intent.getBooleanExtra("setting", false);
-		if (enableUpdate) {
-			headPhotoUpdate.setVisibility(View.VISIBLE);
-			iconRightArrow.setVisibility(View.VISIBLE);
-			rlNickName.setOnClickListener(this);
-			headAvatar.setOnClickListener(this);
-		} else {
-			headPhotoUpdate.setVisibility(View.GONE);
-			iconRightArrow.setVisibility(View.INVISIBLE);
-		}
-		if(username != null){
-    		if (username.equals(EMClient.getInstance().getCurrentUser())) {
-    			tvUsername.setText(EMClient.getInstance().getCurrentUser());
-    			EaseUserUtils.setUserNick(username, tvNickName);
+
+    private void initView() {
+        headAvatar = (ImageView) findViewById(R.id.user_head_avatar);
+        tvUsername = (TextView) findViewById(R.id.user_username);
+        gender = (ImageView) findViewById(R.id.user_gender);
+        tvFriendName = (TextView) findViewById(R.id.friends_name);
+        addRelation = (Button) findViewById(R.id.relation);
+    }
+
+    private void initListener() throws IOException {
+
+        headAvatar.setOnClickListener(this);
+        addRelation.setOnClickListener(this);
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+
+        if(username != null){
+            if (username.equals(EMClient.getInstance().getCurrentUser())) {
+                tvUsername.setText(EMClient.getInstance().getCurrentUser());
+                EaseUserUtils.setUserNick(username, tvUsername);
                 EaseUserUtils.setUserAvatar(this, username, headAvatar);
-    		} else {
-    			tvUsername.setText(username);
-    			EaseUserUtils.setUserNick(username, tvNickName);
-    			EaseUserUtils.setUserAvatar(this, username, headAvatar);
-    			asyncFetchUserInfo(username);
-    		}
-		}
-	}
+            } else {
+                tvUsername.setText(username);
+                EaseUserUtils.setUserNick(username, tvUsername);
+                EaseUserUtils.setUserAvatar(this, username, headAvatar);
+                asyncFetchUserInfo(username);
+            }
+        }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.user_head_avatar:
-			uploadHeadPhoto();
-			break;
-		case R.id.rl_nickname:
-			final EditText editText = new EditText(this);
-			new AlertDialog.Builder(this).setTitle(R.string.setting_nickname).setIcon(android.R.drawable.ic_dialog_info).setView(editText)
-					.setPositiveButton(R.string.dl_ok, new DialogInterface.OnClickListener() {
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.user_head_avatar:
+                //查看大图
+                break;
+            case R.id.set_name:
+                //跳转添加备注页
+                break;
+            case R.id.relation:
+                sendRequest();
+                Log.e("发送成功","ok");
+                break;
+            case R.id.conversation:
+                //跳转聊天页
+                break;
+            default:
+                break;
+        }
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							String nickString = editText.getText().toString();
-							if (TextUtils.isEmpty(nickString)) {
-								Toast.makeText(UserProfileActivity.this, getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
-								return;
-							}
-							updateRemoteNick(nickString);
-						}
-					}).setNegativeButton(R.string.dl_cancel, null).show();
-			break;
-		default:
-			break;
-		}
+    }
+    public void sendRequest() {
+        //准备数据
+        SharedPreferences sp1 = getSharedPreferences("parentUserInfo",Context.MODE_PRIVATE);
+        SharedPreferences sp2 = getSharedPreferences("childUserInfo",Context.MODE_PRIVATE);
+        String sendPhone = sp1.getString("phone","indefindParent");
+        String sendName = "";
+        if(sendPhone.equals("indefindParent")){
+            sendPhone = sp2.getString("phone","indefindChild");
+            sendName = sp2.getString("nickName","");
+        }else{
+            sendPhone = sp1.getString("phone","indefindParent");
+            sendName = sp1.getString("nickName","");
+        }
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        SendPerson sendPerson = new SendPerson();
+        sendPerson.setSendPhone(sendPhone);
+        sendPerson.setSendName(sendName);
+        sendPerson.setReceivePhone(username);
+        Log.e("我的电话2","2"+username);
+        Gson gson = new Gson();
+        final String data = gson.toJson(sendPerson);
 
-	}
-	
-	public void asyncFetchUserInfo(String username){
-		DemoHelper.getInstance().getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
-			
-			@Override
-			public void onSuccess(EaseUser user) {
-				if (user != null) {
-				    DemoHelper.getInstance().saveContact(user);
-				    if(isFinishing()){
-				        return;
-				    }
-					tvNickName.setText(user.getNickname());
-					if(!TextUtils.isEmpty(user.getAvatar())){
-						 Glide.with(UserProfileActivity.this).load(user.getAvatar())
-								 .placeholder(R.drawable.em_default_avatar)
-								 .into(headAvatar);
-					}else{
-					    Glide.with(UserProfileActivity.this).load(R.drawable.em_default_avatar).into(headAvatar);
-					}
-				}
-			}
-			
-			@Override
-			public void onError(int error, String errorMsg) {
-			}
-		});
-	}
-	
-	
-	
-	private void uploadHeadPhoto() {
-		AlertDialog.Builder builder = new Builder(this);
-		builder.setTitle(R.string.dl_title_upload_photo);
-		builder.setItems(new String[] { getString(R.string.dl_msg_take_photo), getString(R.string.dl_msg_local_upload) },
-				new DialogInterface.OnClickListener() {
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/SendRequsetOfRelation");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject json = new JSONObject(data);
+                                    String ok = json.getString("ojbk");
+                                    Log.e("okk",ok);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void asyncFetchUserInfo(String username){
+        DemoHelper.getInstance().getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
+            @Override
+            public void onSuccess(EaseUser user) {
+                if (user != null) {
+                    DemoHelper.getInstance().saveContact(user);
+                    if(isFinishing()){
+                        return;
+                    }
+                    tvUsername.setText(user.getNickname());
+                    if(!TextUtils.isEmpty(user.getAvatar())){
+                        Glide.with(UserProfileActivity.this).load(user.getAvatar())
+                                .placeholder(R.mipmap.default_image)
+                                .into(headAvatar);
+                    }else{
+                        Glide.with(UserProfileActivity.this).load(R.mipmap.default_image).into(headAvatar);
+                    }
+                }
+            }
 
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						switch (which) {
-						case 0:
-							Toast.makeText(UserProfileActivity.this, getString(R.string.toast_no_support),
-									Toast.LENGTH_SHORT).show();
-							break;
-						case 1:
-							Intent pickIntent = new Intent(Intent.ACTION_PICK,null);
-							pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-							startActivityForResult(pickIntent, REQUESTCODE_PICK);
-							break;
-						default:
-							break;
-						}
-					}
-				});
-		builder.create().show();
-	}
-	
-	
+            @Override
+            public void onError(int error, String errorMsg) {
+            }
+        });
+    }
 
-	private void updateRemoteNick(final String nickName) {
-		dialog = ProgressDialog.show(this, getString(R.string.dl_update_nick), getString(R.string.dl_waiting));
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				boolean updatenick = DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(nickName);
-				if (UserProfileActivity.this.isFinishing()) {
-					return;
-				}
-				if (!updatenick) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_fail), Toast.LENGTH_SHORT)
-									.show();
-							dialog.dismiss();
-						}
-					});
-				} else {
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							dialog.dismiss();
-							Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatenick_success), Toast.LENGTH_SHORT)
-									.show();
-							tvNickName.setText(nickName);
-						}
-					});
-				}
-			}
-		}).start();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case REQUESTCODE_PICK:
-			if (data == null || data.getData() == null) {
-				return;
-			}
-			startPhotoZoom(data.getData());
-			break;
-		case REQUESTCODE_CUTTING:
-			if (data != null) {
-				setPicToView(data);
-			}
-			break;
-		default:
-			break;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
-	public void startPhotoZoom(Uri uri) {
-		Intent intent = new Intent("com.android.camera.action.CROP");
-		intent.setDataAndType(uri, "image/*");
-		intent.putExtra("crop", true);
-		intent.putExtra("aspectX", 1);
-		intent.putExtra("aspectY", 1);
-		intent.putExtra("outputX", 300);
-		intent.putExtra("outputY", 300);
-		intent.putExtra("return-data", true);
-		intent.putExtra("noFaceDetection", true);
-		startActivityForResult(intent, REQUESTCODE_CUTTING);
-	}
-	
-	/**
-	 * save the picture data
-	 * 
-	 * @param picdata
-	 */
-	private void setPicToView(Intent picdata) {
-		Bundle extras = picdata.getExtras();
-		if (extras != null) {
-			Bitmap photo = extras.getParcelable("data");
-			Drawable drawable = new BitmapDrawable(getResources(), photo);
-			headAvatar.setImageDrawable(drawable);
-			uploadUserAvatar(Bitmap2Bytes(photo));
-		}
-
-	}
-	
-	private void uploadUserAvatar(final byte[] data) {
-		dialog = ProgressDialog.show(this, getString(R.string.dl_update_photo), getString(R.string.dl_waiting));
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				final String avatarUrl = DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(data);
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						dialog.dismiss();
-						if (avatarUrl != null) {
-							Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatephoto_success),
-									Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(UserProfileActivity.this, getString(R.string.toast_updatephoto_fail),
-									Toast.LENGTH_SHORT).show();
-						}
-
-					}
-				});
-
-			}
-		}).start();
-
-		dialog.show();
-	}
-	
-	
-	public byte[] Bitmap2Bytes(Bitmap bm){
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-		return baos.toByteArray();
-	}
 }

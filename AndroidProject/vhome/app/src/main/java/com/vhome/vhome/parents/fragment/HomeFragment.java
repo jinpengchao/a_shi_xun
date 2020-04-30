@@ -240,6 +240,19 @@ public class HomeFragment extends BaseFragment {
             }
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initUserInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUserInfo();
+    }
+
     public void initUserInfo(){
         //准备数据
         SharedPreferences sp = getActivity().getSharedPreferences("user", MODE_PRIVATE);

@@ -31,17 +31,18 @@ import com.hyphenate.chat.EMClient;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.DemoHelper.DataSyncListener;
 import com.vhome.chat.R;
-import com.vhome.chat.conference.ConferenceActivity;
-import com.vhome.chat.conference.LiveActivity;
 import com.vhome.chat.db.InviteMessgeDao;
 import com.vhome.chat.db.UserDao;
+import com.vhome.chat.domain.SendPerson;
 import com.vhome.chat.widget.ContactItemView;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,7 +57,9 @@ public class ContactListFragment extends EaseContactListFragment {
     private ContactInfoSyncListener contactInfoSyncListener;
     private View loadingView;
     private ContactItemView applicationItem;
+    private ContactItemView relationItem;
     private InviteMessgeDao inviteMessgeDao;
+    private List<SendPerson> list = null;
 
     @SuppressLint("InflateParams")
     @Override
@@ -66,10 +69,10 @@ public class ContactListFragment extends EaseContactListFragment {
         HeaderItemClickListener clickListener = new HeaderItemClickListener();
         applicationItem = (ContactItemView) headerView.findViewById(R.id.application_item);
         applicationItem.setOnClickListener(clickListener);
+        relationItem = (ContactItemView) headerView.findViewById(R.id.relation_item);
+        relationItem.setOnClickListener(clickListener);
         headerView.findViewById(R.id.group_item).setOnClickListener(clickListener);
         headerView.findViewById(R.id.chat_room_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.robot_item).setOnClickListener(clickListener);
-        headerView.findViewById(R.id.conference_item).setOnClickListener(clickListener);
         listView.addHeaderView(headerView);
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
@@ -91,9 +94,18 @@ public class ContactListFragment extends EaseContactListFragment {
             inviteMessgeDao = new InviteMessgeDao(getActivity());
         }
         if(inviteMessgeDao.getUnreadMessagesCount() > 0){
+            applicationItem.setUnreadCount(inviteMessgeDao.getUnreadMessagesCount());
             applicationItem.showUnreadMsgView();
+
         }else{
             applicationItem.hideUnreadMsgView();
+        }
+        list = NewRelationsActivity.msgs;
+        if(list!=null && list.size()>0){
+            relationItem.setUnreadCount(list.size());
+            relationItem.showUnreadMsgView();
+        }else{
+            relationItem.hideUnreadMsgView();
         }
     }
     
@@ -189,15 +201,12 @@ public class ContactListFragment extends EaseContactListFragment {
                 startActivity(new Intent(getActivity(), GroupsActivity.class));
                 break;
             case R.id.chat_room_item:
-                //进入聊天室列表页面
+                //进入兴趣群列表页面
                 startActivity(new Intent(getActivity(), PublicChatRoomsActivity.class));
                 break;
-            case R.id.robot_item:
-                //进入Robot列表页面
-                startActivity(new Intent(getActivity(), RobotsActivity.class));
-                break;
-            case R.id.conference_item: // 创建音视频会议
-                ConferenceActivity.startConferenceCall(getActivity(), null);
+            case R.id.relation_item:
+                //进入我的关联列表页面
+                startActivity(new Intent(getActivity(), NewRelationsActivity.class));
                 break;
             default:
                 break;
