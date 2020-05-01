@@ -364,7 +364,7 @@ public class TodayStepService extends Service implements Handler.Callback {
             return;
         }
         mDbSaveCount = 0;
-
+        saveTodayStep(currentStep);
         saveDb(false, currentStep);
     }
 
@@ -378,7 +378,6 @@ public class TodayStepService extends Service implements Handler.Callback {
         todayStepData.setToday(getTodayDate());
         todayStepData.setDate(System.currentTimeMillis());
         todayStepData.setStep(currentStep);
-        saveTodayStep(todayStepData.toString());
         if (null != mTodayStepDBHelper) {
             if (!handler || !mTodayStepDBHelper.isExist(todayStepData)) {
                 mTodayStepDBHelper.insert(todayStepData);
@@ -389,10 +388,10 @@ public class TodayStepService extends Service implements Handler.Callback {
         }
     }
 
-    public void saveTodayStep(String data){
-        String ip = "IP地址";
+    public void saveTodayStep(int data){
+        String ip = "192.168.1.6";
         try {
-            URL url = new URL("http://" + ip + ":8080/vhome/GetLastestStep&stepInfo="+data);
+            URL url = new URL("http://" + ip + ":8080/vhome/getLastestStep&stepInfo="+data);
             HttpURLConnection connection = null;
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

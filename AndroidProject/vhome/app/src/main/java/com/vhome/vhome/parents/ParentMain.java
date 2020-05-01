@@ -201,7 +201,6 @@ public class ParentMain extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent alarmService = new Intent();
         alarmService.setClass(ParentMain.this, AlarmService.class);
         startService(alarmService);
