@@ -15,22 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
-import entity.User;
 import user.service.UserService;
 
 /**
- * Servlet implementation class AddNewRelationServlet
+ * Servlet implementation class SendRequsetOfRelation
  */
-@WebServlet("/addNewRelation")
-public class AddNewRelationServlet extends HttpServlet {
+@WebServlet("/SendRequsetOfRelation")
+public class SendRequsetOfRelation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddNewRelationServlet() {
+    public SendRequsetOfRelation() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +35,7 @@ public class AddNewRelationServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -58,16 +55,15 @@ public class AddNewRelationServlet extends HttpServlet {
 		JSONObject json;
 		try {
 			json = new JSONObject(data);
-			String receivePhone = json.getString("receivePhone");
-			String receiveName = json.getString("receiveName");
 			String sendPhone = json.getString("sendPhone");
 			String sendName = json.getString("sendName");
-			String setName = "";
+			String receivePhone = json.getString("receivePhone");
+			int type = 0;
 			UserService userService = new UserService();
-			userService.insertRelation(receivePhone, receiveName,sendPhone,sendName,setName);
+			userService.insertRelationRequest(sendPhone,sendName,receivePhone,type);
 			
-			System.out.println(sendPhone+"<-->"+receivePhone);
 			out.write("ojbk");
+			System.out.println(sendPhone+sendName);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

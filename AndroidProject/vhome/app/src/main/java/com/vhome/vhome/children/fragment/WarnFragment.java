@@ -782,7 +782,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener, Slid
         }
     }
     public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String headimg){
-        sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+        sp2 = getActivity().getSharedPreferences("childUserInfo", MODE_PRIVATE);
         editor2 = sp2.edit();
         editor2.putString("phone",phone);
         editor2.putString("id",id);

@@ -9,13 +9,22 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTabHost;
+import androidx.viewpager.widget.ViewPager;
+
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import com.vhome.vhome.parents.fragment.fragment.HotspotFragment;
@@ -24,88 +33,82 @@ import com.vhome.vhome.parents.fragment.fragment.AttentionFragment;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.fragment.RecommendFragment;
+import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
+import com.vhome.vhome.user.personal.fragment.MyPostFragment;
+import com.vhome.vhome.user.personal.fragment.dummy.TabEntity;
+import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 
-public class CommunityFragment extends BaseFragment {
-    private Map<String,TextView> textViewMap = new HashMap<>();
+public class CommunityFragment extends Fragment {
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private List<Fragment> fragments;
+    private CommonTabLayout mTablayout;
+    private NoScrollViewPager mViewPager;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_parent_community,null);
-        //获取FragmentTabHost对象
-        FragmentTabHost fragmentTabHost = view.findViewById(android.R.id.tabhost);
-        //初始化参数
-        fragmentTabHost.setup(getActivity(),
-                getChildFragmentManager(),
-                android.R.id.tabcontent
-        );
+        initId(view);
+        initListener();
+        initTab();
+        return view;
+    }
+    /**
+     * 初始化tab
+     */
+    private void initTab() {
+        fragments = getFragments();
+        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragments, getNames());
 
-        //tab1
-        TabHost.TabSpec tabSpec1 = fragmentTabHost
-                .newTabSpec("tag1")
-                .setIndicator(getTabSpaceView("tag1","热闹事"));
-        fragmentTabHost.addTab(tabSpec1,
-                HotspotFragment.class,
-                null
-        );
-        //tab2
-        TabHost.TabSpec tabSpec2 = fragmentTabHost
-                .newTabSpec("tag2")
-                .setIndicator(getTabSpaceView("tag2","收音机"));
-        fragmentTabHost.addTab(tabSpec2,
-                RecommendFragment.class,
-                null
-        );
-        //tab3
-        TabHost.TabSpec tabSpec3 = fragmentTabHost
-                .newTabSpec("tag3")
-                .setIndicator(getTabSpaceView("tag3","关注"));
-        fragmentTabHost.addTab(tabSpec3,
-                AttentionFragment.class,
-                null
-        );
-
-        fragmentTabHost.setCurrentTab(0);
-        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
-        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-        fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        mTablayout.setTabData(mTabEntities);
+        mViewPager.setAdapter(myFragmentPagerAdapter);
+    }
+    public void initListener(){
+        mTablayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onTabChanged(String tabId) {
-                switch (tabId){
-                    case "tag1":
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.choseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        break;
-                    case "tag2":
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.choseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        break;
-                    case "tag3":
-                        textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.notChoseColor));
-                        textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.choseColor));
-                        break;
-                }
+            public void onTabSelect(int position) {
+                mViewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
             }
         });
-        return view;
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTablayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+    public void initId(View view){
+        mTablayout = (CommonTabLayout) view.findViewById(R.id.uc_tablayout);
+        mViewPager = (NoScrollViewPager) view.findViewById(R.id.uc_viewpager);
+    }
+    public String[] getNames() {
+        String[] mNames = new String[]{"热闹事", "收音机", "关注"};
+        for (String str : mNames) {
+            mTabEntities.add(new TabEntity(String.valueOf(new Random().nextInt(200)), str));
+        }
+
+        return mNames;
+    }
+    public List<Fragment> getFragments() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new HotspotFragment());
+        fragments.add(new RecommendFragment());
+        fragments.add(new AttentionFragment());
+        return fragments;
     }
 
-    @Override
-    protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
-        return null;
-    }
-
-    public View getTabSpaceView(String tag, String title){
-        //加载布局文件
-        LayoutInflater layoutInflater1 = getLayoutInflater();
-        View view = layoutInflater1.inflate(R.layout.tab_space_parentc,null);
-        //Text对象
-        TextView textView = view.findViewById(R.id.tv_title);
-        textView.setText(title);
-        textViewMap.put(tag,textView);
-        return view;
-    }
 }

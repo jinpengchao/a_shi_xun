@@ -3,6 +3,7 @@ package com.vhome.vhome.parents.fragment.news;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ public class News1Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //消去activity中的label
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.news_main);
 
         //获取FragmentTabHost对象

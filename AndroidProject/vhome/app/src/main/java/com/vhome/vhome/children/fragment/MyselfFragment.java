@@ -6,6 +6,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.signature.StringSignature;
 
@@ -184,24 +189,27 @@ public class MyselfFragment extends BaseFragment {
         }.start();
     }
     private void initData(){
-        SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
-        header_phone = sp.getString("phone","");
-        String imgName = sp.getString("headImg","");
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName+".jpg";;
-        Log.e("img",imgName);
-        Glide.with(getActivity()).load(url)
-                .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getActivity()))
-                .into(blurImageView);
-        Glide.with(getActivity()).load(url)
-                .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                .placeholder(R.drawable.rc_default_portrait)
-                .bitmapTransform(new CropCircleTransformation(getActivity()))
-                .into(header);
+        SharedPreferences sp1 = getActivity().getSharedPreferences("user", MODE_PRIVATE);
+        String phone = sp1.getString("phone","");
+        String path = "/sdcard/header"+phone+"/";// sd路径
+        Bitmap bt = BitmapFactory.decodeFile(path + "header"+phone+".jpg");// 从SD卡中找头像，转换成Bitmap
+        if (bt != null) {
+            @SuppressWarnings("deprecation")
+            Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
+            header.setImageDrawable(drawable);
+        } else {
+            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+            Glide.with(getActivity())
+                    .load(url)
+                    .priority(Priority.HIGH)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .into(header);
+
+        }
     }
     public void initMyselfInfo(){
         Log.e("缓存的个人信息","old");
-        sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+        sp2 = getActivity().getSharedPreferences("childUserInfo", MODE_PRIVATE);
         String id = sp2.getString("phone","");
         String nickName = sp2.getString("nickName","");
         String sex = sp2.getString("sex","");
@@ -282,15 +290,6 @@ public class MyselfFragment extends BaseFragment {
         getCount();
         initMyselfInfo();
         initData();
-    }
-    public void deleteCache(File[] files) {
-        boolean flag;
-        for (File itemFile : files) {
-            flag = itemFile.delete();
-            if (flag == false) {
-                deleteCache(itemFile.listFiles());
-            }
-        }
     }
 
 }

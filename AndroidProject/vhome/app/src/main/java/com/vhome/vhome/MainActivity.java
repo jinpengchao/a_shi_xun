@@ -130,10 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.pwdLogin:
                 Log.e("MainActivity","Onclick");
-//                loginByPsw();
-                Intent jump1 = new Intent();
-                jump1.setClass(MainActivity.this,ChildrenMain.class);
-                startActivity(jump1);
+                loginByPsw();
                 break;
             case R.id.register:
                 Intent intent = new Intent();

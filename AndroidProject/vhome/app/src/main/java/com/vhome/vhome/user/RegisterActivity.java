@@ -186,6 +186,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }).start();
                 break;
             case R.id.registerOK:
+                Log.e("aaa","aaa");
                 //将收到的验证码和手机号提交再次核对
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
