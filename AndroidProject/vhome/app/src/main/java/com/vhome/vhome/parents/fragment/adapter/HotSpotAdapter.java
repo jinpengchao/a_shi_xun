@@ -31,6 +31,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
+import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 
@@ -103,20 +104,21 @@ public class HotSpotAdapter extends BaseAdapter {
         String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg()+".jpg";
         Log.e("hostadapter","头像"+list.get(i).getHeadimg());
 
-        DisplayImageOptions options = new DisplayImageOptions.Builder()//
-                .cacheInMemory(true)//
-                .cacheOnDisk(true)//
-                .bitmapConfig(Bitmap.Config.RGB_565)//
-                .build();
-        ImageLoader.getInstance().displayImage(user_logo,
-                holder.ivHotPerson, options);
+//        DisplayImageOptions options = new DisplayImageOptions.Builder()//
+//                .cacheInMemory(true)//
+//                .cacheOnDisk(true)//
+//                .bitmapConfig(Bitmap.Config.RGB_565)//
+//                .build();
+//        ImageLoader.getInstance().displayImage(user_logo,
+//                holder.ivHotPerson, options);
 
-//        Glide.with(context)
-//                .load(user_logo)
-//                .priority(Priority.HIGH)
-//                .error(R.mipmap.errorimg1)
-//                .signature(new StringSignature(UUID.randomUUID().toString()))
-//                .into(holder.ivHotPerson);
+        Glide.with(context)
+                .load(user_logo)
+                .priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
+                .signature(new StringSignature(UUID.randomUUID().toString()))
+                .centerCrop()
+                .into(holder.ivHotPerson);
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
         //当点击头像或名字的 时候跳转到个人页

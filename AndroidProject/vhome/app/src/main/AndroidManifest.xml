@@ -105,6 +105,7 @@
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.tools.AllToolsActivity" />
         <activity android:name="com.vhome.vhome.user.FindBackPwdActivity" />

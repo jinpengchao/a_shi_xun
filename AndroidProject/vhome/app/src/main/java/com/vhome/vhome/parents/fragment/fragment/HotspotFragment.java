@@ -64,7 +64,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
     private List<PostBean> loadList = new ArrayList<>();
     private int loadNum = 0;
     private TextView tvEmpty;
-    private int firstPosition; //滑动以后的可见的第一条数据
+    private int firstPosition ; //滑动以后的可见的第一条数据
     private int top;//滑动以后的第一条item的可见部分距离top的像素值
     private SharedPreferences sp;//偏好设置
     private SharedPreferences.Editor editor;
@@ -100,17 +100,24 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                 String data = b.getString("data");
                 Gson gson = new Gson();
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
-                //设置加载的数据list,默认首先加载5条数据
-
-                if(list.size()>5){
-                    for (int k=0;k<5;k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
+                //设置加载的数据list,默认首先加载5条数据,否则加载定位数据
+                if(0==loadNum){
+                    if(list.size()>5){
+                        for (int k=0;k<5;k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
+                    }else{
+                        for (int k=0;k<list.size();k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
                     }
-                }else{
-                    for (int k=0;k<list.size();k++){
+                }else {
+                    Log.e("加载的数据条数","加载了+"+loadNum);
+                    for (int k=0;k<loadNum;k++){
                         loadList.add(list.get(k));
-                        loadNum++;
+
                     }
                 }
 
@@ -153,6 +160,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                 //定位回到上一次的浏览位置
                 firstPosition=sp.getInt("firstPosition", 0);
                 top=sp.getInt("top", 0);
+                Log.i("定位","position:"+firstPosition+"top:"+top);
                 if(firstPosition!=0&&top!=0){
                     lvHotSpot.setSelectionFromTop(firstPosition, top);
                 }
@@ -305,27 +313,29 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
 
     //刷新数据
     public void refreshData(){
+        loadNum = 0;
         getdata();
     }
     //加载数据
     public void loadMoreData(){
-        //加载五条数据，不够五条时剩余数据全部加入
+        //加载5条数据，不够5条时剩余数据全部加入
         if(loadNum+5>=list.size()){
             for (int i =loadNum;i<list.size();i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }else {
-            for (int i =loadNum;i<loadNum+5;i++){
+            int k = loadNum;
+            for (int i =k;i<k+5;i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }
-        loadNum = loadNum+5;
         Log.e("更新数","loadNum"+loadNum);
         adapter.notifyDataSetChanged();
     }
 
     public final void getdata() {
-        loadNum = 0;
         list.clear();
         loadList.clear();
         SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), MODE_PRIVATE);
@@ -378,7 +388,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("hotspot","调用了onResume方法");
+        Log.i("hotspot","调用了onResume方法");
         getdata();
 
     }
