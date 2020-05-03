@@ -105,9 +105,9 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
         Intent get = getIntent();
         String sex = get.getStringExtra("sex");
         if(sex.equals("man")){
-            foot.setText("父   亲   步   数：");
+            foot.setText("父   亲   里   程：");
         }else{
-            foot.setText("母   亲   步   数：");
+            foot.setText("母   亲   里   程：");
         }
         String imei=null;
         if(sex.equals("man")){
@@ -245,7 +245,7 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
 
             @Override
             public void onDistanceCallback(DistanceResponse response) {
-                footSum.setText(Math.round(response.getDistance()*1000/0.6)+"步");
+                footSum.setText(Math.round(response.getDistance())+"米");
                 super.onDistanceCallback(response);
             }
 

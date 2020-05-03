@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.vhome.vhome.parents.fragment.weather.WeatherActivity"
-    android:orientation="vertical">
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/tianqi"/>
+    android:orientation="vertical"
+     android:background="#303030">
+<!--    <pl.droidsonroids.gif.GifImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/tianqi"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="280dp"

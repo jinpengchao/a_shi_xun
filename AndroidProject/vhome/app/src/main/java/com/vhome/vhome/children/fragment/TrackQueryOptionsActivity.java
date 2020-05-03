@@ -159,7 +159,9 @@ public class TrackQueryOptionsActivity extends myBaseActivity
             case R.id.no_supplement:
                 supplementMode = SupplementMode.no_supplement;
                 break;
-
+            case R.id.straight:
+                supplementMode = SupplementMode.straight;
+                break;
             case R.id.driving:
                 supplementMode = SupplementMode.driving;
                 break;

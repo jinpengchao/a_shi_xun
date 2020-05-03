@@ -9,6 +9,7 @@ import android.widget.ZoomControls;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -26,6 +27,7 @@ import com.baidu.mapapi.utils.CoordinateConverter;
 import com.baidu.trace.model.CoordType;
 import com.baidu.trace.model.TraceLocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.vhome.vhome.MyApp;
@@ -225,7 +227,8 @@ public class MapUtil {
                 .color(Color.BLUE).points(points);
 
         baiduMap.addOverlay(startOptions);
-        polylineOverlay = baiduMap.addOverlay(polylineOptions);
+        // 添加路线（轨迹）
+        drawMyRoute(points);
 
         OverlayOptions markerOptions =
                 new MarkerOptions().flat(true).anchor(0.5f, 0.5f).icon(bmArrowPoint)
@@ -234,6 +237,27 @@ public class MapUtil {
 
         animateMapStatus(points);
 
+    }
+
+    //4.画轨迹方法
+    protected void drawMyRoute(List<LatLng> points2) {
+        //添加纹理图片
+        List<BitmapDescriptor> textureList = new ArrayList<BitmapDescriptor>();
+        BitmapDescriptor mRedTexture = BitmapDescriptorFactory.fromAsset("road_arrow.png");//箭头图片
+        textureList.add(mRedTexture);
+        // 添加纹理图片对应的顺序
+        List<Integer> textureIndexs = new ArrayList<Integer>();
+        for (int i=0;i<points2.size();i++){
+            textureIndexs.add(0);
+        }
+        OverlayOptions options = new PolylineOptions()
+                .textureIndex(textureIndexs)//设置分段纹理index数组
+                .customTextureList(textureList)//设置线段的纹理，建议纹理资源长宽均为2的n次方
+                .dottedLine(true)
+                .color(Color.RED)
+                .width(15)
+                .points(points2);
+        polylineOverlay = baiduMap.addOverlay(options);
     }
 
     public void updateMapLocation(LatLng currentPoint, float direction) {
