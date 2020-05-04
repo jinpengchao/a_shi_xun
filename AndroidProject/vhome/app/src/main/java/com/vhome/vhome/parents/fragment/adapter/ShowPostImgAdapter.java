@@ -60,8 +60,9 @@ public class ShowPostImgAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
          String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgsList.get(i);
-         Log.i("showimgadapter",i+"号图片地址"+url);
+         Log.e("showimgadapter",i+"号图片地址"+url);
          /**
          * 加载图片
          */
@@ -74,6 +75,7 @@ public class ShowPostImgAdapter extends BaseAdapter {
 //                .into(viewHolder.ivimage);
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()//
+                .showImageOnLoading(R.drawable.loading)//加载中的图片
                 .cacheInMemory(true)//
                 .cacheOnDisk(true)//
                 .bitmapConfig(Bitmap.Config.RGB_565)//

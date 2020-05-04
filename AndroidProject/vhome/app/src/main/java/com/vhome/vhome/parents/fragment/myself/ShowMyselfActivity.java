@@ -89,15 +89,22 @@ public class ShowMyselfActivity extends AppCompatActivity {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 Log.i("hotspotFragment","list数据个数"+list.size());
                 //设置加载的数据list,默认首先加载5条数据
-                if(list.size()>5){
-                    for (int k=0;k<5;k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
+                if(0==loadNum){
+                    if(list.size()>5){
+                        for (int k=0;k<5;k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
+                    }else{
+                        for (int k=0;k<list.size();k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
                     }
-                }else{
-                    for (int k=0;k<list.size();k++){
+                }else {
+                    for (int k=0;k<loadNum;k++){
                         loadList.add(list.get(k));
-                        loadNum++;
+
                     }
                 }
 
@@ -338,6 +345,7 @@ public class ShowMyselfActivity extends AppCompatActivity {
 
     //刷新数据
     public void refreshData(){
+        loadNum = 0;
         getdata();
     }
     //加载数据
@@ -346,19 +354,19 @@ public class ShowMyselfActivity extends AppCompatActivity {
         if(loadNum+5>=list.size()){
             for (int i =loadNum;i<list.size();i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }else {
             for (int i =loadNum;i<loadNum+5;i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }
-        loadNum = loadNum+5;
         Log.e("更新数","loadNum"+loadNum);
         adapter.notifyDataSetChanged();
     }
 
     private void getdata() {
-        loadNum = 0;
         list.clear();
         loadList.clear();
 

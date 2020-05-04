@@ -113,17 +113,19 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                             loadNum++;
                         }
                     }
+                    adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
+                    lvHotSpot.setAdapter(adapter);
+                    lvHotSpot.setEmptyView(tvEmpty);
                 }else {
-                    Log.e("加载的数据条数","加载了+"+loadNum);
                     for (int k=0;k<loadNum;k++){
                         loadList.add(list.get(k));
 
                     }
                 }
 
-                adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
-                lvHotSpot.setAdapter(adapter);
-                lvHotSpot.setEmptyView(tvEmpty);
+//                adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
+//                lvHotSpot.setAdapter(adapter);
+//                lvHotSpot.setEmptyView(tvEmpty);
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
                     @Override
                     public void myLikeClick(int position, int status) {
