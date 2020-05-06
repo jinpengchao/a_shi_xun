@@ -192,7 +192,7 @@ public class WeatherActivity extends Activity {
         String city=preferences.getString("city","NULL");
         Toast.makeText(getApplication(),city,Toast.LENGTH_LONG).show();
         if(city.equals("NULL")){
-            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
             load("石家庄");
         }else {
             load(city);
