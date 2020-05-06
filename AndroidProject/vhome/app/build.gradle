@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
     signingConfigs {
         config {
             File strFile = new File('../../../../JksOfBaiduMap/MapKey2.jks')
@@ -12,8 +15,6 @@ android {
             keyPassword '123456'
         }
     }
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.vhome.chat"
@@ -22,7 +23,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64'
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'arm64-v8a'
         }
     }
 

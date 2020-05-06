@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity"
-    android:background="@color/backgroundColor">
+    android:background="@color/white">
     <include layout="@layout/header_add_post"/>
 
     <EditText

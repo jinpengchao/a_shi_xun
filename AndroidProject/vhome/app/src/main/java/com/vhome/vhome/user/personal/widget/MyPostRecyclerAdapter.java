@@ -105,9 +105,9 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             }
         });
         //设置gridview点击事件不响应
-        holder.gvPostShow.setClickable(false);
-        holder.gvPostShow.setPressed(false);
-        holder.gvPostShow.setEnabled(false);
+//        holder.gvPostShow.setClickable(false);
+//        holder.gvPostShow.setPressed(false);
+//        holder.gvPostShow.setEnabled(false);
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
         //设置发帖人logo.

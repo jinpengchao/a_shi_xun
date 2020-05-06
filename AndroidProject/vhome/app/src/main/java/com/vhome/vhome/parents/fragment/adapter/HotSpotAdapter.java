@@ -9,6 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +41,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
+import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 import com.vhome.vhome.user.personal.MySelfActivity;
@@ -51,6 +57,7 @@ public class HotSpotAdapter extends BaseAdapter {
     private int itemLayoutId;
     private Context context;
     private onMyLikeClick onMyLikeClick;
+    private ArrayList<String> imgsList;
 
     public interface onMyLikeClick{
         public void myLikeClick(int position,int status);
@@ -139,7 +146,6 @@ public class HotSpotAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
         }
-
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
         //当点击头像或名字的 时候跳转到个人页
@@ -184,9 +190,9 @@ public class HotSpotAdapter extends BaseAdapter {
         String imgs = null;
         imgs = list.get(i).getImgs();
         Gson gson = new Gson();
-        ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
+        imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
-        Log.i("hotspotadaper", "图片列表数据个数：" + imgsList.size());
+        Log.e("hotspotadaper", "内容：："+list.get(i).getPostContent()+"：：图片列表数据：" + imgsList.toString());
         if (imgsList.size() > 0) {
             ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList, context);
             holder.gvPostShow.setAdapter(showPostImgAdapter);
@@ -221,6 +227,7 @@ public class HotSpotAdapter extends BaseAdapter {
             public void onClick(View view) {
                 onMyLikeClick.myLikeClick(i,list.get(i).getLike_status());
                 if (1 == list.get(i).getLike_status()) {
+                    Log.i("点赞", "取消点赞成功" );
                     list.get(i).setLike_status(0);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good);
                     //点赞个数减一
@@ -228,7 +235,7 @@ public class HotSpotAdapter extends BaseAdapter {
                     list.get(i).setLikeNum(cnum);
                     finalHolder.tvHotLikenum.setText(cnum+"");
                 } else {
-                    Log.e("点赞", "修改点赞图标第个：" + i);
+                    Log.i("点赞", "修改点赞图标第个：" + i);
                     list.get(i).setLike_status(1);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
                     //点赞个数加一
@@ -246,13 +253,11 @@ public class HotSpotAdapter extends BaseAdapter {
     private void setImg(int i,ViewHolder holder) {
         if (list.get(i).getSave_status() == 1) {
             holder.ivHotSave.setImageResource(R.mipmap.post_save1);
-            Log.e("收藏", "收藏过的第个：" + i);
         }else {
             holder.ivHotSave.setImageResource(R.mipmap.post_save);
         }
         if (list.get(i).getLike_status()==1){
             holder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
-            Log.e("点赞", "点赞过的第个：" + i);
         }else {
             holder.ivHotlike.setImageResource(R.mipmap.post_img_good);
         }

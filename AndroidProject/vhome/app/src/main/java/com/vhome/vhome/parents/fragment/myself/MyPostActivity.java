@@ -98,21 +98,28 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
                     Log.i("hotspotFragment","list数据个数"+list.size());
                     //设置加载的数据list,默认首先加载5条数据
 
-                    if(list.size()>5){
-                        for (int k=0;k<5;k++){
-                            loadList.add(list.get(k));
-                            loadNum++;
+                    if(0==loadNum){
+                        if(list.size()>5){
+                            for (int k=0;k<5;k++){
+                                loadList.add(list.get(k));
+                                loadNum++;
+                            }
+                        }else{
+                            for (int k=0;k<list.size();k++){
+                                loadList.add(list.get(k));
+                                loadNum++;
+                            }
                         }
-                    }else{
-                        for (int k=0;k<list.size();k++){
+                        adapter = new HotSpotAdapter(MyPostActivity.this,loadList,R.layout.item_hotspot);
+                        lvHotSpot.setAdapter(adapter);
+                        lvHotSpot.setEmptyView(tvEmpty);
+                    }else {
+                        for (int k=0;k<loadNum;k++){
                             loadList.add(list.get(k));
-                            loadNum++;
+
                         }
                     }
 
-                    adapter = new HotSpotAdapter(MyPostActivity.this,loadList,R.layout.item_hotspot);
-                    lvHotSpot.setAdapter(adapter);
-                    lvHotSpot.setEmptyView(tvEmpty);
 //                当点击收藏点赞的时候
                     adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
                         @Override
@@ -361,6 +368,7 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
 
     //刷新数据
     public void refreshData(){
+        loadNum = 0;
         getdata();
     }
     //加载数据
@@ -369,19 +377,19 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
         if(loadNum+5>=list.size()){
             for (int i =loadNum;i<list.size();i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }else {
             for (int i =loadNum;i<loadNum+5;i++){
                 loadList.add(list.get(i));
+                loadNum++;
             }
         }
-        loadNum = loadNum+5;
         Log.e("更新数","loadNum"+loadNum);
         adapter.notifyDataSetChanged();
     }
 
     private void getdata() {
-        loadNum = 0;
         list.clear();
         loadList.clear();
         SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(), Context.MODE_PRIVATE);

@@ -125,6 +125,44 @@ public class MyApp extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+        //鹰眼轨迹初始化
+        mContext = getApplicationContext();
+//        entityName = CommonUtil.getImei(this);
+        entityName = "myTrace";
+        // 若为创建独立进程，则不初始化成员变量
+        if ("com.baidu.track:remote".equals(CommonUtil.getCurProcessName(mContext))) {
+            return;
+        }
+        //地图显示
+        SDKInitializer.initialize(mContext);
+        initNotification();
+        getScreenSize();
+        mClient = new LBSTraceClient(mContext);
+        mTrace = new Trace(serviceId, entityName);
+
+        trackConf = getSharedPreferences("track_conf", MODE_PRIVATE);
+        locRequest = new LocRequest(serviceId);
+        mClient.setOnCustomAttributeListener(new OnCustomAttributeListener() {
+            @Override
+            public Map<String, String> onTrackAttributeCallback() {
+                Map<String, String> map = new HashMap<>();
+                map.put("key1", "value1");
+                map.put("key2", "value2");
+                return map;
+            }
+
+
+            @Override
+            public Map<String, String> onTrackAttributeCallback(long l) {
+                Map<String, String> map = new HashMap<>();
+                map.put("key1", "value1");
+                map.put("key2", "value2");
+                return map;
+            }
+        });
+
+        clearTraceStatus();
         //连接环信
         MultiDex.install(this);
         super.onCreate();
@@ -148,9 +186,6 @@ public class MyApp extends Application {
             });
         }
 
-
-
-        super.onCreate();
         //连接喜马拉雅
         CommonRequest mXimalaya = CommonRequest.getInstanse();
         if(DTransferConstants.isRelease) {
@@ -169,7 +204,6 @@ public class MyApp extends Application {
         LogUtil.init(this.getPackageName(),false);
         sHandler=new Handler();
         SContext=getBaseContext();
-
 
 
         //鹰眼轨迹初始化
@@ -232,7 +266,9 @@ public class MyApp extends Application {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                appCount++;
+                if(activity instanceof ParentMain) {
+                    appCount++;
+                }
             }
 
             @Override
@@ -247,7 +283,9 @@ public class MyApp extends Application {
 
             @Override
             public void onActivityStopped(Activity activity) {
-                appCount--;
+                if(activity instanceof ParentMain) {
+                    appCount--;
+                }
             }
 
             @Override

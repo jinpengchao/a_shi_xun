@@ -106,6 +106,7 @@
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.tools.AllToolsActivity" />
         <activity android:name="com.vhome.vhome.user.FindBackPwdActivity" />
@@ -121,10 +122,10 @@
         <activity android:name="com.vhome.vhome.parents.fragment.weather.WeatherActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyCollectionsActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyPostActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyPostActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name="com.vhome.vhome.lead.ViewPageActivity"/>
         <activity android:name=".ui.SettingActivity"></activity>
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"></activity>

@@ -33,11 +33,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.vhome.vhome.MyApp;
+import com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.user.personal.widget.MyPostRecyclerAdapter;
 import com.vhome.vhome.util.ConnectionUtil;
 
@@ -90,17 +92,25 @@ public class MyPostFragment extends Fragment {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 //设置加载的数据list,默认首先加载5条数据
 
-                if(list.size()>5){
-                    for (int k=0;k<5;k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
+                if(0==loadNum){
+                    if(list.size()>5){
+                        for (int k=0;k<5;k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
+                    }else{
+                        for (int k=0;k<list.size();k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
                     }
-                }else{
-                    for (int k=0;k<list.size();k++){
+                }else {
+                    for (int k=0;k<loadNum;k++){
                         loadList.add(list.get(k));
-                        loadNum++;
+
                     }
                 }
+
                 adapter = new MyPostRecyclerAdapter(getContext(),list);
                 LinearLayoutManager manager = new LinearLayoutManager(getContext());
                 manager.setOrientation(LinearLayoutManager.VERTICAL);
