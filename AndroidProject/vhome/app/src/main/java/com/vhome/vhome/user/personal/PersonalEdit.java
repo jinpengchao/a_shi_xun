@@ -60,7 +60,7 @@ public class PersonalEdit extends Activity {
     private TextView sex;
     private TextView birth;
     private TextView area;
-
+    private ImageView back;
     private RelativeLayout rl_nickName;
     private RelativeLayout rl_signal;
     private RelativeLayout rl_gender;
@@ -104,7 +104,7 @@ public class PersonalEdit extends Activity {
         sex = (TextView) findViewById(R.id.sexs);
         birth = (TextView) findViewById(R.id.birthday);
         area = (TextView) findViewById(R.id.city_name);
-
+        back = (ImageView) findViewById(R.id.back);
         rl_nickName = (RelativeLayout) findViewById(R.id.nickname);
         rl_signal = (RelativeLayout) findViewById(R.id.signal);
         rl_gender = (RelativeLayout) findViewById(R.id.gender);
@@ -132,6 +132,7 @@ public class PersonalEdit extends Activity {
                     .priority(Priority.HIGH)
                     .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(header);
+            setPicToView(returnBitMap(url));
         }
         //Id
         String id = sharedPreferences.getString("id","undefined");
@@ -166,6 +167,13 @@ public class PersonalEdit extends Activity {
      */
 
     private void initListener() {
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         rl_nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,6 +321,7 @@ public class PersonalEdit extends Activity {
         File file = new File(path);
         if (file.exists()){
             file.delete();
+            file.mkdirs();
         }else
             file.mkdirs();// 创建文件夹
         String fileName = path + "header"+phone+".jpg";// 图片名字

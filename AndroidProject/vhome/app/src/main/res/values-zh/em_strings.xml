@@ -218,7 +218,7 @@
     <string name="accept_join_group">%s同意加入群</string>
     <string name="refuse_join_group">%s拒绝加入群</string>
     <string name="at_your_in_group">%s在群聊中@了你</string>
-    <string name="emojicon_test_name">示例</string>
+    <string name="emojicon_test_name">动态图片</string>
     <string name="all_members">所有成员</string>
     
     <string name="not_add_myself">不能添加自己</string>

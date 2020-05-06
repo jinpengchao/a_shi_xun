@@ -286,7 +286,11 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         }
         FileOutputStream b = null;
         File file = new File(path);
-        file.mkdirs();// 创建文件夹
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();
+        }else
+            file.mkdirs();// 创建文件夹
         String fileName = path + phone+".jpg";// 图片名字
         try {
             b = new FileOutputStream(fileName);
@@ -296,12 +300,12 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         } finally {
             try {
                 // 关闭流
+                file.delete();
                 b.flush();
                 b.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        file.delete();
     }
 }

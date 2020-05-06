@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -559,8 +560,10 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
 			// group member item
 			final String username = getItem(position);
-			holder.textView.setText(username);
-			EaseUserUtils.setUserNick(username, holder.textView);
+            SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+            String nickName = sharedPreferences.getString("nickName",username);
+			holder.textView.setText(nickName);
+			EaseUserUtils.setUserNick(nickName, holder.textView);
             try {
                 EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
             } catch (IOException e) {
@@ -735,8 +738,10 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
 			// group member item
 			final String username = getItem(position);
-			holder.textView.setText(username);
-			EaseUserUtils.setUserNick(username, holder.textView);
+            SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+            String nickName = sharedPreferences.getString("nickName",username);
+			holder.textView.setText(nickName);
+			EaseUserUtils.setUserNick(nickName, holder.textView);
             try {
                 EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
             } catch (IOException e) {

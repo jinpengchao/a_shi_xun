@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.easeui.domain.EaseUser;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
 import com.vhome.vhome.util.ClearWriteEditText;
@@ -25,6 +26,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.hyphenate.easeui.utils.EaseUserUtils.getUserInfo;
 
 
 public class EditNickNameActivity extends Activity {
@@ -60,12 +63,13 @@ public class EditNickNameActivity extends Activity {
                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
                SharedPreferences.Editor editor = sharedPreferences.edit();
                String new_nickname = String.valueOf(ed_name.getText());
+               String phone = sharedPreferences.getString("phone","");
                editor.putString("nickName",new_nickname);
                editor.commit();
                //更新数据库
                changeNickname(new_nickname);
-               Toast.makeText(EditNickNameActivity.this,"修改成功",Toast.LENGTH_LONG);
                finish();
+               Toast.makeText(EditNickNameActivity.this,"修改成功",Toast.LENGTH_LONG);
            }
        });
        SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);

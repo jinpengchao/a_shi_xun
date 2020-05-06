@@ -217,7 +217,11 @@ public class MyselfFragment extends BaseFragment {
         String path = "/sdcard/header"+username+"/";
         FileOutputStream b = null;
         File file = new File(path);
-        file.mkdirs();// 创建文件夹
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();// 创建文件夹
+        }else
+            file.mkdirs();// 创建文件夹
         String fileName = path + "header"+username+".jpg";// 图片名字
         try {
             b = new FileOutputStream(fileName);
@@ -227,6 +231,7 @@ public class MyselfFragment extends BaseFragment {
         } finally {
             try {
                 // 关闭流
+                file.delete();
                 b.flush();
                 b.close();
             } catch (IOException e) {
