@@ -2,6 +2,11 @@ package com.vhome.vhome.user.personal.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +27,12 @@ import com.vhome.vhome.parents.fragment.adapter.ShowPostImgAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,27 +110,36 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         holder.gvPostShow.setEnabled(false);
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
-        //设置发帖人logo
-        String user_logo = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+ list.get(i).getHeadimg()+".jpg";;
-        Log.e("hostadapter","头像"+list.get(i).getHeadimg());
-        Glide.with(context)
-                .load(user_logo)
-                .priority(Priority.HIGH)
-                .error(R.mipmap.errorimg1)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
-                .into(holder.ivHotPerson);
+        //设置发帖人logo.
+        String path = "/sdcard/"+list.get(i).getHeadimg()+"/";// sd路径
+//        //刷新本地头像
+//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
+//        try {
+//            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        Bitmap bt = BitmapFactory.decodeFile(path + list.get(i).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
+        if (bt != null) {
+            @SuppressWarnings("deprecation")
+            Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
+            (holder.ivHotPerson).setImageDrawable(drawable);
+        } else {
+            String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" +list.get(i).getHeadimg() + ".jpg";
+            Glide.with(context)
+                    .load(url)
+                    .priority(Priority.HIGH)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .into(holder.ivHotPerson);
+            try {
+                setPicToView(path,list.get(i).getHeadimg(), returnBitMap(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
-        //当点击头像或名字的 时候跳转到个人页
-        holder.ivHotPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent person = new Intent();
-                person.putExtra("personId",list.get(i).getPersonId());
-                person.setClass(context, ShowMyselfActivity.class);
-                context.startActivity(person);
-            }
-        });
+        //当点击头像或名字的 时候跳转到个人
         holder.tvHotName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,5 +269,39 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             rlPostComment = view.findViewById(R.id.rl_post_comment);
             rlPostLike = view.findViewById(R.id.rl_post_like);
         }
+    }
+    public static Bitmap returnBitMap(String url) throws IOException {
+        URL imgUrl = new URL(url);
+        Bitmap bitmap = null;
+        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+        conn.setDoInput(true);
+        conn.connect();
+        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
+        return bitmap;
+    }
+    private void setPicToView(String path ,String phone,Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        FileOutputStream b = null;
+        File file = new File(path);
+        file.mkdirs();// 创建文件夹
+        String fileName = path + phone+".jpg";// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        file.delete();
     }
 }

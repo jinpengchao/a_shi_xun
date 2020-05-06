@@ -36,7 +36,7 @@
 
                 <include layout="@layout/layout_uc_head_bg" />
 
-                <include layout="@layout/layout_uc_head_middle" />
+                <include layout="@layout/layout_uc_head_middle_myself" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -57,8 +57,8 @@
 
         <com.vhome.vhome.user.personal.widget.CircleImageView
             android:id="@+id/uc_avater"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_marginLeft="15dp"
             android:src="@drawable/rc_default_portrait"
             app:civ_border_color="@android:color/white"

@@ -355,8 +355,8 @@
     <string name="Has_refused_to">已拒绝</string>
     <string name="Are_agree_with">正在同意……</string>
     <string name="Are_refuse_with">正在拒绝……</string>    
-    <string name="direct_call">Direct</string>
-    <string name="relay_call">Relay</string>
+    <string name="direct_call">信号正常</string>
+    <string name="relay_call">网络延迟</string>
     <string name="Agree_with_failure">同意失败:</string>
     <string name="Refuse_with_failure">拒绝失败:</string>
     <string name="Is_download_voice_click_later">正在下载语音，稍后点击</string>

@@ -130,6 +130,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="66"
+                android:textColor="#ffffff"
                 android:background="@drawable/em_unread_dot"
                 android:visibility="visible" />
         </RelativeLayout>

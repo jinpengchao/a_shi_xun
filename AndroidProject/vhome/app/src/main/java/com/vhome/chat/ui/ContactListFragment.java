@@ -39,6 +39,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
+import com.vhome.vhome.parents.ParentMain;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -100,7 +101,7 @@ public class ContactListFragment extends EaseContactListFragment {
         }else{
             applicationItem.hideUnreadMsgView();
         }
-        list = NewRelationsActivity.msgs;
+        list = ParentMain.relations_request_count;
         if(list!=null && list.size()>0){
             relationItem.setUnreadCount(list.size());
             relationItem.showUnreadMsgView();

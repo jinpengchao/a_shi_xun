@@ -53,6 +53,10 @@ public class EaseUserUtils {
     public static void setUserAvatar(Context context, String username, ImageView imageView) throws IOException {
     	EaseUser user = getUserInfo(username);
         if(user != null){
+            //刷新本地头像
+            String url1 = "http://"+(new MyApp()).ip+":8080/vhome/images/"+"header"+username+".jpg";
+            setPicToView(username,returnBitMap(url1));
+
             String path = "/sdcard/header"+username+"/";// sd路径
             Bitmap bt = BitmapFactory.decodeFile(path + "header"+username+".jpg");// 从SD卡中找头像，转换成Bitmap
             if (bt != null) {
@@ -107,6 +111,7 @@ public class EaseUserUtils {
                 e.printStackTrace();
             }
         }
+        file.delete();
     }
     /**
      * set user's nickname

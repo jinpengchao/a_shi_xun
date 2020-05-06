@@ -240,13 +240,6 @@ public class HomeFragment extends BaseFragment {
             }
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        initUserInfo();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -292,9 +285,10 @@ public class HomeFragment extends BaseFragment {
                                     String sex = userInfo.getSex();
                                     String area = userInfo.getArea();
                                     String achieve = userInfo.getAcieve();
+                                    String birthday = userInfo.getBirthday();
                                     String personalWord = userInfo.getPersonalWord();
                                     String headImg = userInfo.getHeaderImg();
-                                    saveUserInfo(phone,id,nickName,sex,area,achieve,personalWord,headImg);
+                                    saveUserInfo(phone,id,nickName,sex,area,achieve,birthday,personalWord,headImg);
                                     editor.putString("test","ok");
                                     editor.commit();
                                 }
@@ -309,7 +303,7 @@ public class HomeFragment extends BaseFragment {
             }.start();
         }
     }
-    public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String achieve,String personalWord,String headimg){
+    public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String achieve,String birthday,String personalWord,String headimg){
         sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         editor2 = sp2.edit();
         editor2.putString("phone",phone);
@@ -318,8 +312,10 @@ public class HomeFragment extends BaseFragment {
         editor2.putString("sex",sex);
         editor2.putString("area",area);
         editor2.putString("achieve",achieve);
+        editor2.putString("birthday",birthday);
         editor2.putString("personalWord",personalWord);
         editor2.putString("headImg",headimg);
+        Log.e("headImggggg",headimg);
         editor2.commit();
     }
     public void getAlarm(){

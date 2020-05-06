@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.AbsListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,6 +60,7 @@ public class MyPostFragment extends Fragment {
     private SharedPreferences sp;//偏好设置
     private SharedPreferences.Editor editor;
 
+    private String personId = null;
     //============================================//
     private int mColumnCount = 1;
     private final static String PARAMS_ID = "PARAMS_ID";
@@ -69,7 +71,8 @@ public class MyPostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent idInten = getActivity().getIntent();
+        personId = idInten.getStringExtra("personId");
     }
 
     @Override
@@ -77,6 +80,7 @@ public class MyPostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_item_mypost, container, false);
         getViews();
         registerListener();
+
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -313,14 +317,12 @@ public class MyPostFragment extends Fragment {
         loadNum = 0;
         list.clear();
         loadList.clear();
-        SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), MODE_PRIVATE);
-        final String personId = sp.getString("id","");
         new Thread(){
             @Override
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetPostsServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetMyPostServlet?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
                     util.sendMsg(data,POST_STATUS,handler);
@@ -358,12 +360,16 @@ public class MyPostFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("hotspot","调用了onResume方法");
         getdata();
 
     }
 
-//    @Override
+    @Override
+    public void onStart() {
+        super.onStart();
+        getdata();
+    }
+    //    @Override
 //    public void onScrollStateChanged(AbsListView view, int scrollState) {
 //        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
 //            firstPosition=lvHotSpot.getFirstVisiblePosition();
@@ -378,6 +384,6 @@ public class MyPostFragment extends Fragment {
 //
 //    @Override
 //    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
+//
 //    }
 }

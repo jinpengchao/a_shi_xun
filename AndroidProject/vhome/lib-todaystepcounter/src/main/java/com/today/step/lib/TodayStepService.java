@@ -209,7 +209,7 @@ public class TodayStepService extends Service implements Handler.Callback {
     private synchronized void initNotification(int currentStep) {
 
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        int smallIcon = getResources().getIdentifier("icon_step_small", "mipmap", getPackageName());
+        int smallIcon = getResources().getIdentifier("em_logo_uidemo", "drawable", getPackageName());
         if (0 == smallIcon) {
             smallIcon = R.mipmap.ic_launcher;
         }
@@ -226,7 +226,7 @@ public class TodayStepService extends Service implements Handler.Callback {
         String km = getDistanceByStep(currentStep);
         String calorie = getCalorieByStep(currentStep);
         String contentText = calorie + " 千卡  " + km + " 公里";
-        int largeIcon = getResources().getIdentifier("ic_launcher", "mipmap", getPackageName());
+        int largeIcon = getResources().getIdentifier("em_logo_uidemo", "drawable", getPackageName());
         Bitmap largeIconBitmap = null;
         if (0 != largeIcon) {
             largeIconBitmap = BitmapFactory.decodeResource(getResources(), largeIcon);

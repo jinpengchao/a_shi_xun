@@ -77,7 +77,7 @@ public class ChangeUserInfoServlet extends HttpServlet {
 				String area = json.getString("data");
 				userService.updateUserInfo(phone, type, flag , area);
 			}
-			out.write("ok");
+			out.write("昵称修改成功");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

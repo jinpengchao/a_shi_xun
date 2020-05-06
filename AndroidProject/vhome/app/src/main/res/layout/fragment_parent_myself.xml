@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#f9f9f9">
     <RelativeLayout
+        android:id="@+id/title_head"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="100dp">
@@ -14,21 +15,21 @@
             android:id="@+id/f1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <com.vhome.vhome.user.personal.widget.CircleImageView
                 android:src="@drawable/rc_default_portrait"
                 android:id="@+id/parent_head"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp">
-            </ImageView>
+            </com.vhome.vhome.user.personal.widget.CircleImageView>
             <LinearLayout
                 android:layout_toRightOf="@id/parent_head"
                 android:id="@+id/name"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="25dp">
                 <TextView
                     android:id="@+id/parent_name"
                     android:textColor="#000000"

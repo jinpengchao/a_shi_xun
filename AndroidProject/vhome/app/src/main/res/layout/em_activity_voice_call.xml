@@ -94,6 +94,7 @@
             android:id="@+id/ll_voice_control"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/adaptive_15dp"
             tools:ignore="DisableBaselineAlignment">
 
             <LinearLayout
@@ -112,7 +113,7 @@
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginTop="3dp"
                     android:gravity="center"
                     android:textColor="#666167"
@@ -135,7 +136,7 @@
 
                 <TextView
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginTop="3dp"
                     android:gravity="center"
                     android:textColor="#666167"
@@ -148,45 +149,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp" >
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_hangup_call"
-                android:layout_width="fill_parent"
+                android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@drawable/em_call_hangup_bg"
-                android:gravity="center"
-                android:text="@string/hang_up"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:background="@drawable/hangup_press"
                 android:visibility="invisible" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_coming_call"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content" >
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_refuse_call"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/em_call_hangup_bg"
-                    android:gravity="center"
-                    android:text="@string/hang_up"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:background="@drawable/hangup_press" />
 
-                <Button
+                <ImageView
                     android:id="@+id/btn_answer_call"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/em_call_answer_bg"
-                    android:gravity="center"
-                    android:text="@string/answer"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/accept_press" />
+
+            </RelativeLayout>
         </FrameLayout>
     </LinearLayout>
 

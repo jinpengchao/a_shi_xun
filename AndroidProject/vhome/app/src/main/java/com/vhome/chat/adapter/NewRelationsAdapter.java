@@ -88,15 +88,16 @@ public class NewRelationsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         //做一个判断 为0运行这两个，其他不运行
-        holder.agreeBtn.setVisibility(View.GONE);
-        holder.refuseBtn.setVisibility(View.GONE);
+        holder.agreeBtn.setVisibility(View.VISIBLE);
+        holder.refuseBtn.setVisibility(View.VISIBLE);
         // set click listener
         holder.agreeBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // accept invitation
-                addRelations(position);
-                //TODO：更新数据库tbl_reuest_relation的type为1
+                if (changeType(position,1+"")){
+                    addRelations(position);
+                };
                 holder.agreeBtn.setVisibility(View.GONE);
                 holder.refuseBtn.setVisibility(View.GONE);
                 holder.message.setText(context.getResources().getString(R.string.Has_agreed_to));
@@ -105,7 +106,7 @@ public class NewRelationsAdapter extends BaseAdapter {
         holder.refuseBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO：更新数据库tbl_reuest_relation的type为-1
+                changeType(position,-1+"");
                 holder.agreeBtn.setVisibility(View.GONE);
                 holder.refuseBtn.setVisibility(View.GONE);
                 holder.message.setText(context.getResources().getString(R.string.Has_refused_to));
@@ -164,6 +165,45 @@ public class NewRelationsAdapter extends BaseAdapter {
                 }
             }
         }.start();
+    }
+    public boolean changeType(int position,String type) {
+        //准备数据
+        SharedPreferences sp1 = context.getSharedPreferences("parentUserInfo",Context.MODE_PRIVATE);
+        SharedPreferences sp2 = context.getSharedPreferences("childUserInfo",Context.MODE_PRIVATE);
+        String receivePhone = sp1.getString("phone","indefindParent");
+        String sendPhone = "";
+        if(receivePhone.equals("indefindParent")){
+            receivePhone = sp2.getString("phone","indefindChild");
+            sendPhone = list.get(position).getSendPhone();
+        }else{
+            sendPhone = list.get(position).getSendPhone();
+        }
+        String finalReceivePhone = receivePhone;
+        String data = "";
+        String finalSendPhone = sendPhone;
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/ChooseRelations?phone="+ finalReceivePhone+"&type="+type+"&sendPhone="+ finalSendPhone);
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    final String data = util.getData(connection);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+        if (type.equals(-1+"")){
+            return false;
+        }else if (type.equals(1+"")){
+            return true;
+        }else
+            return false;
     }
     private static class ViewHolder {
         ImageView avator;

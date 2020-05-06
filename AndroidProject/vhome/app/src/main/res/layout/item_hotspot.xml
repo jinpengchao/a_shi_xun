@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+        <com.vhome.vhome.user.personal.widget.CircleImageView
             android:id="@+id/iv_hot_person"
             android:layout_width="60dp"
             android:layout_height="60dp"

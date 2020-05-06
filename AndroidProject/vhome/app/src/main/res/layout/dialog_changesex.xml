@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background">
+    <LinearLayout
+        android:id="@+id/r1"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rl_man"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/male"
+                android:layout_width="@dimen/adaptive_60dp"
+                android:layout_height="@dimen/adaptive_60dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/male"
+                android:layout_marginTop="30dp"
+                ></ImageView>
+            <TextView
+                android:id="@+id/text3"
+                android:layout_below="@id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="男"
+                android:textSize="20sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="#1685ff"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/adaptive_10dp"
+                android:background="#dadade"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/text3"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_woman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:layout_below="@+id/tv_camera">
+            <ImageView
+                android:id="@+id/female"
+                android:layout_width="@dimen/adaptive_60dp"
+                android:layout_height="@dimen/adaptive_60dp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/female"
+                android:layout_marginTop="30dp"
+                ></ImageView>
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/female"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="#1685ff"/>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/adaptive_10dp"
+                android:background="#dadade"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/text4"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_below="@+id/r1">
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#1685ff"/>
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dadade"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/text5"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

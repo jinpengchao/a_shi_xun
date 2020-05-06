@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ import com.baidu.trace.model.OnTraceListener;
 import com.baidu.trace.model.PushMessage;
 import com.baidu.trace.model.StatusCodes;
 import com.baidu.trace.model.TraceLocation;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMClientListener;
 import com.hyphenate.EMContactListener;
@@ -64,8 +67,11 @@ import com.vhome.chat.Constant;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.HMSPushHelper;
 import com.vhome.chat.R;
+import com.vhome.chat.adapter.NewRelationsAdapter;
 import com.vhome.chat.db.InviteMessgeDao;
 import com.vhome.chat.db.UserDao;
+import com.vhome.chat.domain.SendPerson;
+import com.vhome.chat.ui.NewRelationsActivity;
 import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.vhome.parents.Receiver.TrackReceiver;
@@ -87,7 +93,15 @@ import com.vhome.chat.ui.GroupsActivity;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.vhome.vhome.parents.model.CurrentLocation;
+import com.vhome.vhome.util.ConnectionUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -101,13 +115,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 @SuppressLint("NewApi")
 public class ParentMain extends BaseActivity {
-
+    public static List<SendPerson> relations_request_count  = new ArrayList<>();;
+    private Handler handler;
     protected static final String TAG = "ParentMain";
     // textview for unread message count
     private TextView unreadLabel;
     // textview for unread event message
     private TextView unreadAddressLable;
-
     private Button[] mTabs;
     private HomeFragment homeFragment;
     private CommunityFragment communityFragment;
@@ -202,6 +216,19 @@ public class ParentMain extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                Bundle b = msg.getData();
+                String data = b.getString("data");
+                Gson gson = new Gson();
+                relations_request_count = gson.fromJson(data,new TypeToken<List<SendPerson>>(){}.getType());
+            }
+        };
+        getList();
+        //地图显示
+        SDKInitializer.initialize(getApplicationContext());
+
         Intent alarmService = new Intent();
         alarmService.setClass(ParentMain.this, AlarmService.class);
         startService(alarmService);
@@ -245,7 +272,6 @@ public class ParentMain extends BaseActivity {
         showExceptionDialogFromIntent(getIntent());
 
         inviteMessgeDao = new InviteMessgeDao(this);
-        UserDao userDao = new UserDao(this);
 
         if (savedInstanceState != null) {
             EMLog.d(TAG, "get fragments from saveInstanceState");
@@ -390,7 +416,44 @@ public class ParentMain extends BaseActivity {
         mTabs[index].setSelected(true);
         currentTabIndex = index;
     }
-
+    public void getList() {
+        //准备数据
+        SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
+        String receivePhone = sharedPreferences.getString("phone","");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("receivePhone",receivePhone);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String data = jsonObject.toString();
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/ReceiveResponseOfRelations");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    if(null!=data){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                util.sendMsg(data,1,handler);
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
     EMMessageListener messageListener = new EMMessageListener() {
 
         @Override
@@ -501,7 +564,6 @@ public class ParentMain extends BaseActivity {
         @Override
         public void onFriendRequestDeclined(String username) {}
     }
-
     public class MyMultiDeviceListener implements EMMultiDeviceListener {
 
         @Override
@@ -544,9 +606,10 @@ public class ParentMain extends BaseActivity {
     public void updateUnreadAddressLable() {
         runOnUiThread(new Runnable() {
             public void run() {
-                int count = getUnreadAddressCountTotal();
+                int count = getUnreadAddressCountTotal()+relations_request_count.size();
                 if (count > 0) {
                     unreadAddressLable.setVisibility(View.VISIBLE);
+                    unreadAddressLable.setText(String.valueOf(count));
                 } else {
                     unreadAddressLable.setVisibility(View.INVISIBLE);
                 }
@@ -1134,7 +1197,7 @@ public class ParentMain extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        getList();
         if (!isConflict && !isCurrentAccountRemoved) {
             updateUnreadLabel();
             updateUnreadAddressLable();

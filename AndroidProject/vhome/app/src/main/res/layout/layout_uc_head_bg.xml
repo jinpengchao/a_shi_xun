@@ -2,7 +2,7 @@
 <com.vhome.vhome.user.personal.widget.DisInterceptNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
+    android:layout_height="180dp"
     app:layout_collapseMode="parallax"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -11,17 +11,13 @@
     <LinearLayout
         android:id="@+id/user_head_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="180dp">
 
 
         <ImageView
             android:id="@+id/uc_zoomiv"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:background="@drawable/ic_bg"
-            android:scaleType="centerCrop"
-            android:tag="overScroll" />
+            android:layout_height="179dp"/>
 
     </LinearLayout>
 

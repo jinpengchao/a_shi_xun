@@ -6,9 +6,18 @@ public class ParentUserInfo {
     private String sex;
     private String area;
     private String acieve;
+    private String birthday;
     private String personalWord;
     private String headerImg;
     private int type;
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public String getAcieve() {
         return acieve;

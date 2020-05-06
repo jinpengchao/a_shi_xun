@@ -76,4 +76,8 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.queryRequset(phone);
 	}
+	public void changeRelations(String phone,String send_phone,String type) {
+		UserDao userDao = new UserDao();
+		userDao.updateRelations(phone,send_phone,type);
+	}
 }
