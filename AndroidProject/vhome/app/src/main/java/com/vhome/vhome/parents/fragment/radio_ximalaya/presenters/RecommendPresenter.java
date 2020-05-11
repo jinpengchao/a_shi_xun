@@ -37,8 +37,8 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void getRecommendList() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put(DTransferConstants.CALC_DIMENSION, "3");
-        map.put(DTransferConstants.PAGE,"2");
+        map.put(DTransferConstants.CALC_DIMENSION, "1");
+        map.put(DTransferConstants.PAGE,"1");
         CommonRequest.getRecommendDownloadList(map, new IDataCallBack<RecommendDownload>() {
             @Override
             public void onSuccess(RecommendDownload recommendDownload) {
