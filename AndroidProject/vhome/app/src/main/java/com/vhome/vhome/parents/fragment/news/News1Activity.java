@@ -69,7 +69,35 @@ public class News1Activity extends BaseActivity {
                 null);
 
         fragmentTabHost.setCurrentTab(0);
-        imageViewMap.get("tag1").setImageResource(R.drawable.toutiao);
+        imageViewMap.get("tag1").setImageResource(R.drawable.toutiao1);
+        fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if(tabId.equals("tag2")){
+                    imageViewMap.get("tag1").setImageResource(R.drawable.toutiao);
+                    imageViewMap.get("tag2").setImageResource(R.drawable.shehui1);
+                    imageViewMap.get("tag3").setImageResource(R.drawable.guonei);
+                    imageViewMap.get("tag4").setImageResource(R.drawable.guoji);
+                }else if(tabId.equals("tag3")){
+                    imageViewMap.get("tag1").setImageResource(R.drawable.toutiao);
+                    imageViewMap.get("tag2").setImageResource(R.drawable.shehui);
+                    imageViewMap.get("tag3").setImageResource(R.drawable.guonei1);
+                    imageViewMap.get("tag4").setImageResource(R.drawable.guoji);
+                }else if(tabId.equals("tag1")){
+                    imageViewMap.get("tag1").setImageResource(R.drawable.toutiao1);
+                    imageViewMap.get("tag2").setImageResource(R.drawable.shehui);
+                    imageViewMap.get("tag3").setImageResource(R.drawable.guonei);
+                    imageViewMap.get("tag4").setImageResource(R.drawable.guoji);
+                } else {
+                    imageViewMap.get("tag1").setImageResource(R.drawable.toutiao);
+                    imageViewMap.get("tag2").setImageResource(R.drawable.shehui);
+                    imageViewMap.get("tag3").setImageResource(R.drawable.guonei);
+                    imageViewMap.get("tag4").setImageResource(R.drawable.guoji1);
+                }
+            }
+        });
+
+
 
     }
 

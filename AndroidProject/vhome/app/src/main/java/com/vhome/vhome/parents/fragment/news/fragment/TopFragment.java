@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -76,15 +78,13 @@ public class TopFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.news_activity, null);
+        final View view = inflater.inflate(R.layout.news_activity, container,false);
 
         ActionBar actionBar = getActivity().getActionBar();
         if(actionBar != null){
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-
 
 
 
@@ -139,6 +139,32 @@ public class TopFragment extends BaseFragment {
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         return null;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Button button= (Button) getActivity().findViewById(R.id.find_news);
+        final EditText editText=getActivity().findViewById(R.id.news_name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNews(editText.getText().toString());
+                load();
+            }
+        });
+
+    }
+    public void findNews(String name){
+        news.clear();
+        for(NewsBean news1:news){
+            if(news1.getTitle().contains(name)){
+                news.add(news1);
+            }
+        }
+        if (news==null){
+            Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
+        }
     }
     private void load() {
         new Thread(new Runnable() {
