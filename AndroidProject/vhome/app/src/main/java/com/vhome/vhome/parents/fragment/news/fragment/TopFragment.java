@@ -37,6 +37,7 @@ import androidx.annotation.Nullable;
 
 public class TopFragment extends BaseFragment {
     private List<NewsBean> news=new ArrayList<>();
+    private List<NewsBean> news1=new ArrayList<>();
     private ListView lvStus;
     private SmartRefreshLayout srl;
     private NewsAdapter newsAdapter;
@@ -149,23 +150,25 @@ public class TopFragment extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNews(editText.getText().toString());
-                load();
+                for(NewsBean newsBean:news){
+                    if(newsBean.getTitle().contains(editText.getText().toString())){
+                        news1.add(newsBean);
+                    }
+                }
+                if (news1==null){
+                    Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
+                }else{
+                    lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+                    newsAdapter=new NewsAdapter(getActivity(),news1);
+                    lvStus.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                }
+
             }
         });
 
     }
-    public void findNews(String name){
-        news.clear();
-        for(NewsBean news1:news){
-            if(news1.getTitle().contains(name)){
-                news.add(news1);
-            }
-        }
-        if (news==null){
-            Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
-        }
-    }
+
     private void load() {
         new Thread(new Runnable() {
             @Override
