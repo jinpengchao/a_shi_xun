@@ -70,6 +70,7 @@ public class News1Activity extends BaseActivity {
 
         fragmentTabHost.setCurrentTab(0);
         imageViewMap.get("tag1").setImageResource(R.drawable.toutiao);
+
     }
 
     public View getTabSpecView(String tag, int imageResId, String title){
