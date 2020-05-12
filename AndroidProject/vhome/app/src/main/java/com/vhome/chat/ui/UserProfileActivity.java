@@ -17,6 +17,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.vhome.chat.domain.Relations;
 import com.vhome.chat.domain.SendPerson;
 import com.vhome.vhome.MyApp;
+import com.vhome.vhome.user.entity.ParentUserInfo;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.content.Context;
@@ -38,6 +39,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 
     private ImageView headAvatar;
     private TextView tvUsername;
+    private String nickName;
+    private String username;
     private ImageView gender;
     private TextView tvFriendName;
     private Button addRelation;
@@ -50,11 +53,13 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         setContentView(R.layout.em_activity_user_profile);
         initView();
         try {
-            initListener();
+            Intent intent = getIntent();
+            username = intent.getStringExtra("username");
+            initUserInfo(username);
+            initListener(username);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void initView() {
@@ -65,32 +70,74 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         addRelation = (Button) findViewById(R.id.relation);
     }
 
-    private void initListener() throws IOException {
+    private void initListener(String name) throws IOException {
 
         headAvatar.setOnClickListener(this);
         addRelation.setOnClickListener(this);
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-
+        nickName = name;
         if(username != null){
             if (username.equals(EMClient.getInstance().getCurrentUser())) {
                 tvUsername.setText(EMClient.getInstance().getCurrentUser());
-                EaseUserUtils.setUserNick(username, tvUsername);
+                EaseUserUtils.setUserNick(nickName, tvUsername);
                 EaseUserUtils.setUserAvatar(this, username, headAvatar);
             } else {
                 tvUsername.setText(username);
-                EaseUserUtils.setUserNick(username, tvUsername);
+                EaseUserUtils.setUserNick(nickName, tvUsername);
                 EaseUserUtils.setUserAvatar(this, username, headAvatar);
                 asyncFetchUserInfo(username);
             }
         }
 
     }
+    public void initUserInfo(String username){
+            JSONObject json = new JSONObject();
+            int type = 0;
+            try {
+                json.put("phone",username);
+                json.put("type",type);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            final String data = json.toString();
+            new Thread(){
+                @Override
+                public void run() {
+                    String ip = (new MyApp()).getIp();
+                    try {
+                        URL url = new URL("http://"+ip+":8080/vhome/searchUserInfo");
+                        ConnectionUtil util = new ConnectionUtil();
+                        //发送数据
+                        HttpURLConnection connection = util.sendData(url,data);
+                        //获取数据
+                        final String data = util.getData(connection);
+                        if(null!=data){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Gson gson = new Gson();
+                                    ParentUserInfo userInfo = gson.fromJson(data,ParentUserInfo.class);
+                                    String name = userInfo.getNikeName();
+                                    try {
+                                        initListener(name);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.user_head_avatar:
-                //查看大图
+                Intent i = new Intent();
                 break;
             case R.id.set_name:
                 //跳转添加备注页

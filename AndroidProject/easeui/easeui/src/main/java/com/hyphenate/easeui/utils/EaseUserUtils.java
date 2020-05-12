@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,19 +18,23 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.ui.EaseConversationListFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
 public class EaseUserUtils {
 
     static EaseUserProfileProvider userProvider;
-    
     static {
         userProvider = EaseUI.getInstance().getUserProfileProvider();
     }
@@ -53,6 +58,10 @@ public class EaseUserUtils {
     public static void setUserAvatar(Context context, String username, ImageView imageView) throws IOException {
     	EaseUser user = getUserInfo(username);
         if(user != null){
+            //刷新本地头像
+            String url1 = "http://"+(new MyApp()).ip+":8080/vhome/images/"+"header"+username+".jpg";
+            setPicToView(username,returnBitMap(url1));
+
             String path = "/sdcard/header"+username+"/";// sd路径
             Bitmap bt = BitmapFactory.decodeFile(path + "header"+username+".jpg");// 从SD卡中找头像，转换成Bitmap
             if (bt != null) {
@@ -91,7 +100,11 @@ public class EaseUserUtils {
         String path = "/sdcard/header"+username+"/";
         FileOutputStream b = null;
         File file = new File(path);
-        file.mkdirs();// 创建文件夹
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();// 创建文件夹
+        }else
+            file.mkdirs();// 创建文件夹
         String fileName = path + "header"+username+".jpg";// 图片名字
         try {
             b = new FileOutputStream(fileName);
@@ -101,6 +114,7 @@ public class EaseUserUtils {
         } finally {
             try {
                 // 关闭流
+                file.delete();
                 b.flush();
                 b.close();
             } catch (IOException e) {
@@ -115,9 +129,9 @@ public class EaseUserUtils {
         if(textView != null){
         	EaseUser user = getUserInfo(username);
         	if(user != null && user.getNickname() != null){
-        		textView.setText("用户名不着急"+user.getNickname());
+        		textView.setText(user.getNickname());
         	}else{
-        		textView.setText("马上解决了你"+username);
+        		textView.setText(username);
         	}
         }
     }

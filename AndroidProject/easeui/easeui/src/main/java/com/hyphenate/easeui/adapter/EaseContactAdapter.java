@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -99,8 +100,9 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             if (avatarOptions.getAvatarRadius() != 0)
                 avatarView.setRadius(avatarOptions.getAvatarRadius());
         }
-
-        EaseUserUtils.setUserNick(username, holder.nameView);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("parentUserInfo",Context.MODE_PRIVATE);
+        String nickName = sharedPreferences.getString("nickName",username);
+        EaseUserUtils.setUserNick(nickName, holder.nameView);
         try {
             EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
         } catch (IOException e) {

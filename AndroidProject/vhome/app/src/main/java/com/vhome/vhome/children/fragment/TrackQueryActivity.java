@@ -234,6 +234,7 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
                         historyTrackRequest.setPageIndex(++pageIndex);
                         queryHistoryTrack();
                     } else {
+                        Log.e("huaguiji","运行");
                         mapUtil.drawHistoryTrack(trackPoints, true);//画轨迹
                     }
 

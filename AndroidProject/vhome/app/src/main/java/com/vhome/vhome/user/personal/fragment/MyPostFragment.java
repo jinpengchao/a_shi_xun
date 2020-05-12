@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.AbsListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,11 +33,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.vhome.vhome.MyApp;
+import com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.user.personal.widget.MyPostRecyclerAdapter;
 import com.vhome.vhome.util.ConnectionUtil;
 
@@ -59,6 +62,7 @@ public class MyPostFragment extends Fragment {
     private SharedPreferences sp;//偏好设置
     private SharedPreferences.Editor editor;
 
+    private String personId = null;
     //============================================//
     private int mColumnCount = 1;
     private final static String PARAMS_ID = "PARAMS_ID";
@@ -69,7 +73,8 @@ public class MyPostFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent idInten = getActivity().getIntent();
+        personId = idInten.getStringExtra("personId");
     }
 
     @Override
@@ -77,6 +82,7 @@ public class MyPostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_item_mypost, container, false);
         getViews();
         registerListener();
+
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -86,17 +92,25 @@ public class MyPostFragment extends Fragment {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 //设置加载的数据list,默认首先加载5条数据
 
-                if(list.size()>5){
-                    for (int k=0;k<5;k++){
-                        loadList.add(list.get(k));
-                        loadNum++;
+                if(0==loadNum){
+                    if(list.size()>5){
+                        for (int k=0;k<5;k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
+                    }else{
+                        for (int k=0;k<list.size();k++){
+                            loadList.add(list.get(k));
+                            loadNum++;
+                        }
                     }
-                }else{
-                    for (int k=0;k<list.size();k++){
+                }else {
+                    for (int k=0;k<loadNum;k++){
                         loadList.add(list.get(k));
-                        loadNum++;
+
                     }
                 }
+
                 adapter = new MyPostRecyclerAdapter(getContext(),list);
                 LinearLayoutManager manager = new LinearLayoutManager(getContext());
                 manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -313,14 +327,12 @@ public class MyPostFragment extends Fragment {
         loadNum = 0;
         list.clear();
         loadList.clear();
-        SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(), MODE_PRIVATE);
-        final String personId = sp.getString("id","");
         new Thread(){
             @Override
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetPostsServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetMyPostServlet?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
                     util.sendMsg(data,POST_STATUS,handler);
@@ -358,12 +370,16 @@ public class MyPostFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("hotspot","调用了onResume方法");
         getdata();
 
     }
 
-//    @Override
+    @Override
+    public void onStart() {
+        super.onStart();
+        getdata();
+    }
+    //    @Override
 //    public void onScrollStateChanged(AbsListView view, int scrollState) {
 //        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
 //            firstPosition=lvHotSpot.getFirstVisiblePosition();
@@ -378,6 +394,6 @@ public class MyPostFragment extends Fragment {
 //
 //    @Override
 //    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
+//
 //    }
 }

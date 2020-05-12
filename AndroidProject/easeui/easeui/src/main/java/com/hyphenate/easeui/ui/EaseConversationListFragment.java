@@ -25,9 +25,18 @@ import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeui.MyApp;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.utils.ConnectionUtil;
 import com.hyphenate.easeui.widget.EaseConversationList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -308,5 +317,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     public void setConversationListItemClickListener(EaseConversationListItemClickListener listItemClickListener){
         this.listItemClickListener = listItemClickListener;
     }
+
+
 
 }

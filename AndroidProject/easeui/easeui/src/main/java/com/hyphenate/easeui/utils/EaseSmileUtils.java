@@ -69,7 +69,33 @@ public class EaseSmileUtils {
 	public static final String ee_33 = "[(F)]";
 	public static final String ee_34 = "[(W)]";
 	public static final String ee_35 = "[(D)]";
-	
+    public static final String ee_36 = "[(a)]";
+    public static final String ee_37 = "[8o|]";
+    public static final String ee_38 = "[8-|]";
+    public static final String ee_39 = "[+o(]";
+    public static final String ee_40 = "[<o)]";
+    public static final String ee_41 = "[|-)]";
+    public static final String ee_42 = "[*-)]";
+    public static final String ee_43 = "[:-#]";
+    public static final String ee_44 = "[:-*]";
+    public static final String ee_45 = "[^o)]";
+    public static final String ee_46 = "[8-)]";
+    public static final String ee_47 = "[(|)]";
+    public static final String ee_48 = "[(u)]";
+    public static final String ee_49 = "[(S)]";
+    public static final String ee_50 = "[(*)]";
+    public static final String ee_51 = "[(#)]";
+    public static final String ee_52 = "[(R)]";
+    public static final String ee_53 = "[({)]";
+    public static final String ee_54 = "[(})]";
+    public static final String ee_55 = "[(k)]";
+    public static final String ee_56 = "[(F)]";
+    public static final String ee_57 = "[(W)]";
+    public static final String ee_58 = "[(D)]";
+    public static final String ee_59 = "[(F)]";
+    public static final String ee_60 = "[(W)]";
+    public static final String ee_61 = "[(D)]";
+
 	private static final Factory spannableFactory = Factory
 	        .getInstance();
 	

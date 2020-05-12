@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,10 +51,10 @@ import java.util.UUID;
  *
  */
 public class VoiceCallActivity extends CallActivity implements OnClickListener {
-	private LinearLayout comingBtnContainer;
-	private Button hangupBtn;
-	private Button refuseBtn;
-	private Button answerBtn;
+	private RelativeLayout comingBtnContainer;
+	private ImageView hangupBtn;
+	private ImageView refuseBtn;
+	private ImageView answerBtn;
 	private ImageView muteImage;
 	private ImageView handsFreeImage;
 
@@ -80,10 +81,10 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 		DemoHelper.getInstance().isVoiceCalling = true;
 		callType = 0;
 
-        comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
-		refuseBtn = (Button) findViewById(R.id.btn_refuse_call);
-		answerBtn = (Button) findViewById(R.id.btn_answer_call);
-		hangupBtn = (Button) findViewById(R.id.btn_hangup_call);
+        comingBtnContainer = (RelativeLayout) findViewById(R.id.ll_coming_call);
+		refuseBtn = (ImageView) findViewById(R.id.btn_refuse_call);
+		answerBtn = (ImageView) findViewById(R.id.btn_answer_call);
+		hangupBtn = (ImageView) findViewById(R.id.btn_hangup_call);
 		muteImage = (ImageView) findViewById(R.id.iv_mute);
 		handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
 		callStateTextView = (TextView) findViewById(R.id.tv_call_state);
@@ -182,8 +183,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                             if(!isHandsfreeState)
                                 closeSpeakerOn();
                             //show relay or direct call, for testing purpose
-                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
-                                    ? R.string.direct_call : R.string.relay_call);
+//                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
+//                                    ? R.string.direct_call : R.string.relay_call);
                             chronometer.setVisibility(View.VISIBLE);
                             chronometer.setBase(SystemClock.elapsedRealtime());
                             // duration start

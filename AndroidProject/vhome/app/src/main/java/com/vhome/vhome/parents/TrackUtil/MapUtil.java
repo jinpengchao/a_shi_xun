@@ -136,8 +136,8 @@ public class MapUtil {
         }
     }
     /**
-    隐藏logo
-        */
+     隐藏logo
+     */
     private void hideLogo() {
         View child = mapView.getChildAt(1);
         //判断

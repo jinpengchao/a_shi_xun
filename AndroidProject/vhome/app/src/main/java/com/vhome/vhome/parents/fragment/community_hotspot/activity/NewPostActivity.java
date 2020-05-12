@@ -8,6 +8,7 @@ import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.adapter.AddPostImgAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.util.CompressImg;
+import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
 import com.vhome.vhome.util.ConnectionUtil;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -44,6 +45,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,58 +111,25 @@ public class NewPostActivity extends Activity {
         gvNewPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showdialog();
+                new Dialogchoosephoto(NewPostActivity.this){
+                    @Override
+                    public void useCamera() {
+                        camera();
+                    }
+                    @Override
+                    public void useGalley() {
+                        gallery();
+                    }
+                    @Override
+                    public void useCancel() {
+                    }
+
+                }.show();
             }
         });
         imgsName = new ArrayList<>();
+
     }
-
-    private void showdialog() {
-
-        View localView = LayoutInflater.from(this).inflate(
-                R.layout.dialog_add_postimg, null);
-        TextView tv_camera = (TextView) localView.findViewById(R.id.tv_camera);
-        TextView tv_gallery = (TextView) localView.findViewById(R.id.tv_gallery);
-        TextView tv_cancel = (TextView) localView.findViewById(R.id.tv_cancel);
-        dialog = new Dialog(this, R.style.DialogTheme);
-        dialog.setContentView(localView);
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-        // 设置全屏
-        WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-        lp.width = display.getWidth(); // 设置宽度
-        dialog.getWindow().setAttributes(lp);
-        dialog.show();
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-            }
-        });
-
-        tv_camera.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                // 拍照
-                camera();
-            }
-        });
-
-        tv_gallery.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                // 从系统相册选取照片
-                gallery();
-            }
-        });
-    }
-
     /**
      * 拍照
      */

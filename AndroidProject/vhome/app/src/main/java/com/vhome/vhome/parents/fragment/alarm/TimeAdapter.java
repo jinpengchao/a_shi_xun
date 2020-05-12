@@ -30,6 +30,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter;
@@ -69,7 +71,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
 
         Log.e("i=======",i+"  "+clock.getClockType());
         if (clock.getClockType() == clock_open){
-            viewHolder.aSwitch.setText("关闭");
+            viewHolder.aSwitch.openSwitch();
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.net.setTextColor(context.getResources().getColor(R.color.notChoseColor));
@@ -77,7 +79,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
             viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
         }else if (clock.getClockType() == clock_close){
-            viewHolder.aSwitch.setText("开启");
+            viewHolder.aSwitch.closeSwitch();;
             viewHolder.hour.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.minute.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.sendPersonId.setTextColor(context.getResources().getColor(R.color.colorPrimary));
@@ -105,7 +107,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 if (clock.getClockType() == clock_close) {
-                    viewHolder.aSwitch.setText("关闭");
+                    viewHolder.aSwitch.openSwitch();
                     String content = list.get(i).getContent();
 //                    clockStatus.clockType(content,clock_close,clock_open);
                     changeAlarm(content,clock_open);
@@ -118,7 +120,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                     viewHolder.from.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                     viewHolder.content.setTextColor(context.getResources().getColor(R.color.notChoseColor));
                 } else if (clock.getClockType() == clock_open){
-                    viewHolder.aSwitch.setText("开启");
+                    viewHolder.aSwitch.closeSwitch();
                     String content = list.get(i).getContent();
 //                    clockStatus.clockType(content,clock_open,clock_close);
                     changeAlarm(content,clock_close);
@@ -146,7 +148,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
         TextView sendPersonId;
         TextView from;
         TextView net;
-        Button aSwitch;
+        EaseSwitchButton aSwitch;
         LinearLayout todetail;
 
         public ViewHolder(@NonNull View itemView) {

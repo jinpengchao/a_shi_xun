@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import androidx.fragment.app.Fragment;
 
 public class ShehuiFragment extends BaseFragment {
     private List<NewsBean> news=new ArrayList<>();
+    private List<NewsBean> news1=new ArrayList<>();
     private ListView lvStus;
     private SmartRefreshLayout srl;
     private NewsAdapter newsAdapter;
@@ -139,6 +142,33 @@ public class ShehuiFragment extends BaseFragment {
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         return null;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Button button= (Button) getActivity().findViewById(R.id.find_news);
+        final EditText editText=getActivity().findViewById(R.id.news_name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(NewsBean newsBean:news){
+                    if(newsBean.getTitle().contains(editText.getText().toString())){
+                        news1.add(newsBean);
+                    }
+                }
+                if (news1==null){
+                    Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
+                }else{
+                    lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+                    newsAdapter=new NewsAdapter(getActivity(),news1);
+                    lvStus.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                }
+
+            }
+        });
+
     }
     private void load() {
         new Thread(new Runnable() {

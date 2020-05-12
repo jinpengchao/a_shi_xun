@@ -203,6 +203,7 @@ public class UserDao {
 					userInfo.setSex(rs.getString("sex"));
 					userInfo.setArea(rs.getString("area"));
 					userInfo.setAcieve(rs.getString("achieve"));
+					userInfo.setBirthday(rs.getString("birthday"));
 					userInfo.setPersonalWord(rs.getString("personalWord"));
 					userInfo.setHeaderImg(rs.getString("headimg"));
 					userInfo.setType(type);
@@ -268,6 +269,7 @@ public class UserDao {
 				userInfo.setNikeName(rs.getString("nickName"));
 				userInfo.setSex(rs.getString("sex"));
 				userInfo.setArea(rs.getString("area"));
+				userInfo.setBirthday(rs.getString("birthday"));
 				userInfo.setAcieve(rs.getString("achieve"));
 				userInfo.setPersonalWord(rs.getString("personalWord"));
 				userInfo.setHeaderImg(rs.getString("headimg"));
@@ -484,5 +486,29 @@ public class UserDao {
 			}
 		}
 		return list;
+	}
+	//修改关联信息
+	public void updateRelations(String phone,String send_phone,String type) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "update tbl_relations_request set type='"+type+"' where receive_phone='"+phone+"' and send_phone='"+send_phone+"'";
+			System.out.println(sql);
+			psmt = conn.prepareStatement(sql);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("修改成功");
+			}else {
+				System.out.println("修改失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

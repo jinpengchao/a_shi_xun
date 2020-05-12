@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -34,7 +35,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
@@ -83,7 +87,11 @@ public class MyselfFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 5:
-                    initData();
+                    try {
+                        initData();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     initMyselfInfo();
                     break;
             }
@@ -95,7 +103,11 @@ public class MyselfFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_children_myself,null);
         getViews(view);
         getCount();//获取关注和粉丝数
-        initData();
+        try {
+            initData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         initMyselfInfo();
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,10 +200,52 @@ public class MyselfFragment extends BaseFragment {
             }
         }.start();
     }
-    private void initData(){
+    public static Bitmap returnBitMap(String url) throws IOException {
+        URL imgUrl = new URL(url);
+        Bitmap bitmap = null;
+        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+        conn.setDoInput(true);
+        conn.connect();
+        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
+        return bitmap;
+    }
+    private static void setPicToView(String username, Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        String path = "/sdcard/header"+username+"/";
+        FileOutputStream b = null;
+        File file = new File(path);
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();// 创建文件夹
+        }else
+            file.mkdirs();// 创建文件夹
+        String fileName = path + "header"+username+".jpg";// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                file.delete();
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void initData() throws IOException {
         SharedPreferences sp1 = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         String phone = sp1.getString("phone","");
         String path = "/sdcard/header"+phone+"/";// sd路径
+//        //刷新本地头像
+//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+//        setPicToView(phone,returnBitMap(url1));
         Bitmap bt = BitmapFactory.decodeFile(path + "header"+phone+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
             @SuppressWarnings("deprecation")
@@ -289,7 +343,11 @@ public class MyselfFragment extends BaseFragment {
         super.onStart();
         getCount();
         initMyselfInfo();
-        initData();
+        try {
+            initData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

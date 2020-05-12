@@ -95,6 +95,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name="com.vhome.vhome.user.personal.MySelfActivity"   android:theme="@style/NoTitleTheme"/>
+        <activity android:name="com.vhome.vhome.user.personal.OthersSerlfActivity"   android:theme="@style/NoTitleTheme"/>
         <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity"></activity>
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TracingActivity" />
@@ -109,7 +110,7 @@
         <activity android:name="com.vhome.vhome.parents.fragment.tools.AllToolsActivity" />
         <activity android:name="com.vhome.vhome.user.FindBackPwdActivity" />
         <activity android:name="com.vhome.vhome.user.LoginByCodeActivity" />
-        <activity android:name="com.vhome.vhome.user.CheckPhoneActivity" />
+        <activity android:name="com.vhome.vhome.user.CheckPhoneActivity"></activity>
         <activity android:name="com.vhome.vhome.user.RegisterActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.ClockDetail" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmAlert" />
@@ -126,6 +127,25 @@
         <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" />
         <activity android:name="com.vhome.vhome.lead.ViewPageActivity"/>
         <activity android:name=".ui.SettingActivity"></activity>
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"></activity>
+        <activity
+            android:name="com.vhome.vhome.user.personal.ImageShowerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.EditNickNameActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.PersonalEdit"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="com.vhome.vhome.parents.ParentMain"
@@ -478,7 +498,7 @@
             android:process=":remote" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
+            android:value="ESou607h0sjFs7HkioFg7ykHDKR5NDWN" />
 
         <!-- VIVO推送配置 start -->
         <service

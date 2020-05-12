@@ -11,9 +11,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.StringSignature;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity;
@@ -55,25 +60,30 @@ public class ShowPostImgAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgsList.get(i);
-        Log.i("showimgadapter",i+"号图片地址"+url);
-        /**
+
+         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgsList.get(i);
+         Log.e("showimgadapter",i+"号图片地址"+url);
+         /**
          * 加载图片
          */
+
+//        Glide.with(context)
+//                .load(url)
+//                .placeholder(R.drawable.loading)
+//                .error(R.mipmap.errorimg1)
+//                .signature(new StringSignature(UUID.randomUUID().toString()))
+//                .into(viewHolder.ivimage);
+
         DisplayImageOptions options = new DisplayImageOptions.Builder()//
+                .showImageOnLoading(R.drawable.loading)//加载中的图片
                 .cacheInMemory(true)//
                 .cacheOnDisk(true)//
                 .bitmapConfig(Bitmap.Config.RGB_565)//
                 .build();
         ImageLoader.getInstance().displayImage(url,
                 viewHolder.ivimage, options);
-
-//        Glide.with(context)
-//                .load(url)
-//                .priority(Priority.HIGH)
-//                .signature(new StringSignature(UUID.randomUUID().toString()))
-//                .into(viewHolder.ivimage);
-
+        //设置默认显示图片
+//        viewHolder.ivimage.setImageResource(R.drawable.loading);
         //点击放大图片
         viewHolder.ivimage.setOnClickListener(new View.OnClickListener() {
             @Override

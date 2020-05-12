@@ -6,23 +6,24 @@
     android:orientation="vertical" >
 
     <com.vhome.chat.widget.ContactItemView
+
         android:id="@+id/application_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_new_friends_icon"
+        app:contactItemImage="@drawable/add_friends"
         app:contactItemName="@string/Application_and_notify" />
 
     <com.vhome.chat.widget.ContactItemView
         android:id="@+id/group_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_groups_icon"
+        app:contactItemImage="@drawable/qunliao"
         app:contactItemName="@string/group_chat" />
 
     <com.vhome.chat.widget.ContactItemView
         android:id="@+id/chat_room_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:contactItemImage="@drawable/em_groups_icon"
         app:contactItemName="@string/chat_room" />
 
@@ -30,6 +31,6 @@
         android:id="@+id/relation_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@drawable/em_new_friends_icon"
+        app:contactItemImage="@drawable/connect"
         app:contactItemName="@string/relations" />
 </LinearLayout>

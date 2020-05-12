@@ -32,6 +32,13 @@ public class UploadHeaderImgServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		List<String> imgs = new ArrayList<String>();
@@ -52,7 +59,7 @@ public class UploadHeaderImgServlet extends HttpServlet {
 					String name = file.getFileName();
 //					name = name + "." + file.getFileExt();// 得到文件的扩展名
 					String filename = this.getServletContext().getRealPath("/")
-							+ "images\\" + name;
+							+ "images\\"+ name;
 					System.out.println("文件地址"+filename);
 					file.saveAs(filename);
 				}
@@ -64,13 +71,5 @@ public class UploadHeaderImgServlet extends HttpServlet {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 }

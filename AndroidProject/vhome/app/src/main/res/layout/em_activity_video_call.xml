@@ -14,13 +14,14 @@
         >
         <com.hyphenate.media.EMCallSurfaceView
             android:id="@+id/opposite_surface"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <com.hyphenate.media.EMCallSurfaceView
             android:id="@+id/local_surface"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_width="105dp"
+            android:layout_height="140dp"
             android:layout_marginTop="96dp"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
@@ -88,13 +89,13 @@
             android:visibility="gone"
             />
 
-        <Button
-            android:id="@+id/btn_switch_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/switch_camera"
-            android:layout_below="@id/btn_record_video"
-            />
+<!--        <Button-->
+<!--            android:id="@+id/btn_switch_camera"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/switch_camera"-->
+<!--            android:layout_below="@id/btn_record_video"-->
+<!--            />-->
         <!--     <Button
             android:layout_marginTop="3dp"
             android:id="@+id/btn_toggle_video_stream"
@@ -104,16 +105,16 @@
             android:layout_below="@id/btn_record_video"
             /> -->
 
-        <TextView
-            android:id="@+id/tv_call_monitor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/local_surface"
-            android:layout_alignParentRight="true"
-            android:textColor="#afff"
-            android:textSize="12sp"
-            android:layout_marginBottom="6dp"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_call_monitor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_above="@+id/local_surface"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="#afff"-->
+<!--            android:textSize="12sp"-->
+<!--            android:layout_marginBottom="6dp"-->
+<!--            />-->
 
         <LinearLayout
             android:id="@+id/ll_surface_baseline"
@@ -136,11 +137,12 @@
 
                 <LinearLayout
                     android:id="@+id/ll_voice_control"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:ignore="DisableBaselineAlignment">
 
                     <LinearLayout
+                        android:layout_marginTop="@dimen/adaptive_5dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -156,14 +158,28 @@
 
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_marginTop="3dp"
                             android:gravity="center"
                             android:text="@string/mute"
                             android:textColor="#666167" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <ImageView
+                            android:id="@+id/btn_switch_camera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitCenter"
+                            android:background="@drawable/camera_switch_press"/>
+                    </LinearLayout>
 
                     <LinearLayout
+                        android:layout_marginTop="@dimen/adaptive_5dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -179,7 +195,7 @@
 
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_marginTop="3dp"
                             android:gravity="center"
                             android:text="@string/Hands_free"
@@ -192,45 +208,33 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp" >
 
-                    <Button
+                    <ImageView
                         android:id="@+id/btn_hangup_call"
-                        android:layout_width="fill_parent"
-                        android:layout_height="55dp"
-                        android:background="@drawable/em_call_hangup_bg"
-                        android:gravity="center"
-                        android:text="@string/hang_up"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/hangup_press"
+                        android:layout_gravity="center"
                         android:visibility="invisible" />
 
-                    <LinearLayout
+                    <RelativeLayout
+                        android:layout_gravity="center"
                         android:id="@+id/ll_coming_call"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content" >
 
-                        <Button
+                        <ImageView
                             android:id="@+id/btn_refuse_call"
-                            android:layout_width="wrap_content"
-                            android:layout_height="55dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/em_call_hangup_bg"
-                            android:gravity="center"
-                            android:text="@string/hang_up"
-                            android:textColor="@android:color/white"
-                            android:textSize="20sp" />
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/hangup_press" />
 
-                        <Button
+                        <ImageView
                             android:id="@+id/btn_answer_call"
-                            android:layout_width="wrap_content"
-                            android:layout_height="55dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/em_call_answer_bg"
-                            android:gravity="center"
-                            android:text="@string/answer"
-                            android:textColor="@android:color/white"
-                            android:textSize="20sp" />
-                    </LinearLayout>
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/accept_press" />
+                    </RelativeLayout>
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>

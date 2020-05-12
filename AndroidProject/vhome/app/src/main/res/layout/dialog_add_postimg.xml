@@ -1,50 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5.0dip"
-    android:layout_marginRight="5.0dip"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:background="@drawable/background">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30px"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/tv_camera"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_camera"
+            android:id="@+id/text3"
             android:layout_width="wrap_content"
-            android:layout_height="144px"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="拍照"
-            android:textSize="48px" />
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#1685ff"/>
 
-        <ImageView
-            android:layout_width="1022px"
-            android:layout_height="4px"
-            android:background="#666666" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dadade"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/text3"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/tv_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_below="@+id/tv_camera">
 
         <TextView
-            android:id="@+id/tv_gallery"
+            android:id="@+id/text4"
             android:layout_width="wrap_content"
-            android:layout_height="144px"
-            android:gravity="center"
-            android:text="从手机相册选择"
-            android:textSize="48px" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="相册"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#1685ff"/>
 
-    <TextView
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#dadade"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/text4"/>
+
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/tv_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="144px"
-        android:layout_marginTop="20px"
-        android:layout_marginLeft="30px"
-        android:layout_marginRight="30px"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:text="取消"
-        android:textSize="48px" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_below="@+id/tv_gallery">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#1685ff"/>
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dadade"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/text5"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

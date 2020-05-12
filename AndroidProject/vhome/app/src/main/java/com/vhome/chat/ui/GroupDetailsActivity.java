@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import android.text.TextUtils;
@@ -963,7 +964,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			final String username = getItem(position);
 			convertView.setVisibility(View.VISIBLE);
 			button.setVisibility(View.VISIBLE);
-			EaseUserUtils.setUserNick(username, holder.textView);
+            SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+            String nickName = sharedPreferences.getString("nickName",username);
+			EaseUserUtils.setUserNick(nickName, holder.textView);
             try {
                 EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
             } catch (IOException e) {
@@ -1068,7 +1071,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			} else {
 				// members
 				final String username = getItem(position);
-				EaseUserUtils.setUserNick(username, holder.textView);
+                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                String nickName = sharedPreferences.getString("nickName",username);
+				EaseUserUtils.setUserNick(nickName, holder.textView);
                 try {
                     EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
                 } catch (IOException e) {

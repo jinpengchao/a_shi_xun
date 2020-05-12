@@ -238,6 +238,8 @@ class ConferenceInviteActivity : BaseActivity() {
             val username = contact.first
 
             EaseUserUtils.setUserAvatar(context, username, viewHolder.headerImage!!)
+//            val sharedPreferences = getgetSharedPreferences("parentUserInfo", Context.MODE_PRIVATE)
+//            val nickName = sharedPreferences.getString("nickName", username)
             EaseUserUtils.setUserNick(username, viewHolder.nameText!!)
 
             when (contact.second) {

@@ -102,7 +102,7 @@ public class MyApp extends Application {
     /**
      * Entity标识
      */
-    public String entityName = "myTrace";
+    public String entityName = "myTrace1";
 
     public boolean isRegisterReceiver = false;
 
@@ -204,6 +204,44 @@ public class MyApp extends Application {
         LogUtil.init(this.getPackageName(),false);
         sHandler=new Handler();
         SContext=getBaseContext();
+
+
+        //鹰眼轨迹初始化
+        mContext = getApplicationContext();
+//        entityName = CommonUtil.getImei(this);
+        entityName = "myTrace1";
+        // 若为创建独立进程，则不初始化成员变量
+        if ("com.baidu.track:remote".equals(CommonUtil.getCurProcessName(mContext))) {
+            return;
+        }
+
+        initNotification();
+        getScreenSize();
+        mClient = new LBSTraceClient(mContext);
+        mTrace = new Trace(serviceId, entityName);
+
+        trackConf = getSharedPreferences("track_conf", MODE_PRIVATE);
+        locRequest = new LocRequest(serviceId);//我感觉父母端没毛病，这就没开轨迹，实时不对嗯
+        mClient.setOnCustomAttributeListener(new OnCustomAttributeListener() {
+            @Override
+            public Map<String, String> onTrackAttributeCallback() {
+                Map<String, String> map = new HashMap<>();
+                map.put("key1", "value1");
+                map.put("key2", "value2");
+                return map;
+            }
+
+
+            @Override
+            public Map<String, String> onTrackAttributeCallback(long l) {
+                Map<String, String> map = new HashMap<>();
+                map.put("key1", "value1");
+                map.put("key2", "value2");
+                return map;
+            }
+        });
+
+        clearTraceStatus();
         //图片
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.image_download_failed) //

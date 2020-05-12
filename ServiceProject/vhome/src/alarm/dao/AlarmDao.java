@@ -98,7 +98,7 @@ public class AlarmDao {
 		try {
 			conn = util.getConnection();
 			String sql = "select * from tbl_alarm where receivePersonId='"+phone+"'";
-
+			System.out.println(sql );
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while(rs.next()) {

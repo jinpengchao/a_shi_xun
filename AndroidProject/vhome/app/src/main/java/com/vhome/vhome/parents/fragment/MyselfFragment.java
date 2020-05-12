@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -35,7 +36,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
@@ -57,6 +61,7 @@ import com.vhome.vhome.parents.fragment.myself.MyNewsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.user.personal.MySelfActivity;
+import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 import com.vhome.chat.ui.SettingActivity;
 
@@ -67,8 +72,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyselfFragment extends BaseFragment {
     private ImageView blurImageView;
-    private Dialog mDialog;
-    private ImageView header;
+    private RelativeLayout title;
+    private CircleImageView header;
     private TextView nikeName;
     private TextView ids;
     private TextView areas;
@@ -85,7 +90,6 @@ public class MyselfFragment extends BaseFragment {
     private RelativeLayout tvMyPost;
     private RelativeLayout tvMyCollect;
     private RelativeLayout tvMyNews;
-    public static String header_phone;
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -173,12 +177,13 @@ public class MyselfFragment extends BaseFragment {
                 myDialog.show();
             }
         });
-        header.setOnClickListener(new View.OnClickListener() {
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra("nickName",nikeName.getText());
-                getActivity().startActivity(new Intent(getActivity(), MySelfActivity.class));
+                Intent intent = new Intent(getActivity(),MySelfActivity.class);
+                String id = sp2.getString("id","00");
+                intent.putExtra("personId",id);
+                getActivity().startActivity(intent);
             }
         });
         tvMyPost.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +220,8 @@ public class MyselfFragment extends BaseFragment {
 
     private void getViews(View view) {
         blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
-        header = (ImageView) view.findViewById(R.id.parent_head);
+        title = (RelativeLayout) view.findViewById(R.id.title_head);
+        header = (CircleImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
         ids = (TextView) view.findViewById(R.id.parent_id);
 //        areas = (TextView) view.findViewById(R.id.parent_area);
@@ -257,15 +263,27 @@ public class MyselfFragment extends BaseFragment {
         }.start();
     }
     private void initData(){
-
+        //刷新本地头像
         sp1 = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         String phone = sp1.getString("phone","");
+//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+//        try {
+//            setPicToView(phone,returnBitMap(url1));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         String path = "/sdcard/header"+phone+"/";// sd路径
         Bitmap bt = BitmapFactory.decodeFile(path + "header"+phone+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
             @SuppressWarnings("deprecation")
             Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
             header.setImageDrawable(drawable);
+            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+            Glide.with(getActivity())
+                    .load(url)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
+                    .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getActivity()))
+                    .into(blurImageView);
         } else {
             String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
             Glide.with(getActivity())
@@ -273,9 +291,47 @@ public class MyselfFragment extends BaseFragment {
                     .priority(Priority.HIGH)
                     .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(header);
-
         }
 
+    }
+    public static Bitmap returnBitMap(String url) throws IOException {
+        URL imgUrl = new URL(url);
+        Bitmap bitmap = null;
+        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+        conn.setDoInput(true);
+        conn.connect();
+        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
+        return bitmap;
+    }
+    private static void setPicToView(String username, Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        String path = "/sdcard/header"+username+"/";
+        FileOutputStream b = null;
+        File file = new File(path);
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();
+        }else
+            file.mkdirs();// 创建文件夹
+        String fileName = path + "header"+username+".jpg";// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                file.delete();
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void initMyselfInfo(){
         Log.e("缓存的个人信息","old");
@@ -290,13 +346,6 @@ public class MyselfFragment extends BaseFragment {
         String headImg = sp1.getString("headImg","");
         nikeName.setText(nickName);
         ids.setText(id);
-//        areas.setText(area);
-//        if (sex.equals("female")){
-//            sexs.setImageResource(R.mipmap.female);
-//        }else if (sex.equals("male")){
-//            sexs.setImageResource(R.mipmap.male);
-//        }else
-//            sexs.setImageResource(R.mipmap.unknown);
     }
     public void cancelNotification() {
         NotificationManager manager = (NotificationManager) this.getActivity().getApplicationContext()
@@ -368,5 +417,12 @@ public class MyselfFragment extends BaseFragment {
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCount();
+        initMyselfInfo();
+        initData();
+    }
 }
 

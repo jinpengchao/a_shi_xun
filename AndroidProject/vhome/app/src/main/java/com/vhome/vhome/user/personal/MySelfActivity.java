@@ -24,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -54,7 +57,9 @@ import com.vhome.chat.ui.SettingActivity;
 import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.vhome.parents.ParentMain;
+import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
 import com.vhome.vhome.user.LoginByCodeActivity;
+import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
@@ -69,13 +74,11 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 public class MySelfActivity extends AppCompatActivity {
-    public static String fileName;
     public static String phone;
+    public static String path;
+    public static String fileName;
     private Bitmap head;// 头像Bitmap
-    private static String path;
-    private Uri uritempFile;
     //========================
-    private ImageView mZoomIv;
     private Toolbar mToolBar;
     private ViewGroup titleContainer;
     private AppBarLayout mAppBarLayout;
@@ -85,12 +88,16 @@ public class MySelfActivity extends AppCompatActivity {
     private CircleImageView topAvater;
     private CommonTabLayout mTablayout;
     private NoScrollViewPager mViewPager;
+    private TextView nickName;
     private TextView editInfo;
+    private TextView flag;
+    private ImageView genders;
+    private ImageView zoom;
+    private TextView titleNickname;
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -99,42 +106,63 @@ public class MySelfActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             builder.detectFileUriExposure();
         }
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_myself);
         findId();
         initListener();
         initTab();
         initStatus();
+
         SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
         phone = sharedPreferences.getString("phone","");
         path = "/sdcard/header"+phone+"/";// sd路径
-        Bitmap bt = BitmapFactory.decodeFile(path + "header"+phone+".jpg");// 从SD卡中找头像，转换成Bitmap
-        if (bt != null) {
+        setImages();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setImages();
+        initListener();
+    }
+
+    /**
+     * 初始化id
+     */
+    private void setImages(){
+        Bitmap bt = BitmapFactory.decodeFile(path + "header" + phone + ".jpg");// 从SD卡中找头像，转换成Bitmap
+        Bitmap bt2 = BitmapFactory.decodeFile(path + "bg" + phone + ".jpg");// 从SD卡中找头像，转换成Bitmap
+        if (bt != null || bt2 != null) {
             @SuppressWarnings("deprecation")
             Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
+            Drawable drawable2 = new BitmapDrawable(bt2);// 转换成drawable
             mAvater.setImageDrawable(drawable);
             topAvater.setImageDrawable(drawable);
+            zoom.setImageDrawable(drawable2);
         } else {
-            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+            String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" + "header" + phone + ".jpg";
+            String url2 = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" + "bg" + phone + ".jpg";
             Glide.with(this)
                     .load(url)
                     .priority(Priority.HIGH)
+                    .placeholder(R.drawable.rc_default_portrait)
                     .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(mAvater);
             Glide.with(this)
                     .load(url)
                     .priority(Priority.HIGH)
+                    .placeholder(R.drawable.rc_default_portrait)
                     .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(topAvater);
+            Glide.with(this)
+                    .load(url2)
+                    .placeholder(R.mipmap.sss)
+                    .priority(Priority.HIGH)
+                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .into(zoom);
         }
     }
-    /**
-     * 初始化id
-     */
     private void findId() {
-        mZoomIv = (ImageView) findViewById(R.id.uc_zoomiv);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         titleContainer = (ViewGroup) findViewById(R.id.title_layout);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
@@ -146,6 +174,11 @@ public class MySelfActivity extends AppCompatActivity {
         mTablayout = (CommonTabLayout) findViewById(R.id.uc_tablayout);
         mViewPager = (NoScrollViewPager) findViewById(R.id.uc_viewpager);
         editInfo = (TextView) findViewById(R.id.frag_uc_follow_tv);
+        nickName = (TextView) findViewById(R.id.frag_uc_nickname_tv);
+        flag = (TextView) findViewById(R.id.frag_uc_interest_tv);
+        genders = (ImageView) findViewById(R.id.gender);
+        zoom = (ImageView) findViewById(R.id.uc_zoomiv);
+        titleNickname = (TextView) findViewById(R.id.title_uc_title);
     }
 
     /**
@@ -163,6 +196,44 @@ public class MySelfActivity extends AppCompatActivity {
      * 绑定事件
      */
     private void initListener() {
+        SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        String name =  sharedPreferences.getString("nickName","春天的野菜");
+        String flags =  sharedPreferences.getString("personalWord","大家好我是野菜~~");
+        nickName.setText(name);
+        titleNickname.setText(name);
+        flag.setText(flags);
+        String sex =  sharedPreferences.getString("sex","unknow");
+        if (sex.equals("male")){
+            Glide.with(this).load(R.drawable.man).into(genders);
+        }else if(sex.equals("female")){
+            Glide.with(this).load(R.drawable.woman).into(genders);
+        }else
+            Glide.with(this).load(R.drawable.unknowsex).into(genders);
+
+        zoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Dialogchoosephoto(MySelfActivity.this){
+                    @Override
+                    public void useCamera() {
+                        Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent2.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "bg"+phone+".jpg")));
+                        startActivityForResult(intent2, 2);// 采用ForResult打开
+                    }
+                    @Override
+                    public void useGalley() {
+                        Intent intent1 = new Intent(Intent.ACTION_PICK, null);
+                        intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                        startActivityForResult(intent1, 1);
+                    }
+
+                    @Override
+                    public void useCancel() {
+                    }
+                }.show();
+            }
+        });
         mMsgIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,24 +242,24 @@ public class MySelfActivity extends AppCompatActivity {
                         MySelfActivity.this,
                         ParentMain.class);
                 startActivity(intent1);
-                //应用页面跳转动画
-                overridePendingTransition(
-                        R.anim.in,//进入动画
-                        R.anim.out//出去动画
-                );
                 finish();
             }
         });
         editInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent2 = new Intent(MySelfActivity.this,PersonalEdit.class);
+                startActivity(intent2);
             }
         });
         mAvater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showdialog();
+                SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
+                String phone = sharedPreferences.getString("phone","");
+                Intent intent = new Intent(MySelfActivity.this, ImageShowerActivity.class);
+                intent.putExtra("phone",phone);
+                startActivity(intent);
             }
         });
         mSettingIv.setOnClickListener(new View.OnClickListener() {
@@ -260,7 +331,6 @@ public class MySelfActivity extends AppCompatActivity {
             //注意了，这里使用了第三方库 StatusBarUtil，目的是改变状态栏的alpha
             StatusBarUtil.setTransparentForImageView(MySelfActivity.this, null);
             //这里是重设我们的title布局的topMargin，StatusBarUtil提供了重设的方法，但是我们这里有两个布局
-            //TODO 关于为什么不把Toolbar和@layout/layout_uc_head_title放到一起，是因为需要Toolbar来占位，防止AppBarLayout折叠时将title顶出视野范围
             int statusBarHeight = getStatusBarHeight(MySelfActivity.this);
             CollapsingToolbarLayout.LayoutParams lp1 = (CollapsingToolbarLayout.LayoutParams) titleContainer.getLayoutParams();
             lp1.topMargin = statusBarHeight;
@@ -327,52 +397,14 @@ public class MySelfActivity extends AppCompatActivity {
         for (String str : mNames) {
             mTabEntities.add(new TabEntity(String.valueOf(new Random().nextInt(200)), str));
         }
-
         return mNames;
     }
-
     public List<Fragment> getFragments() {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new MyPostFragment());
         fragments.add(new MyPostFragment());
         fragments.add(new MyPostFragment());
         return fragments;
-    }
-
-    private void showdialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final AlertDialog dialog = builder.create();
-        View localView = View.inflate(this, R.layout.dialog_add_postimg, null);
-        TextView tv_camera = (TextView) localView.findViewById(R.id.tv_camera);
-        TextView tv_gallery = (TextView) localView.findViewById(R.id.tv_gallery);
-        TextView tv_cancel = (TextView) localView.findViewById(R.id.tv_cancel);
-        tv_gallery.setOnClickListener(new View.OnClickListener() {// 在相册中选取
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(Intent.ACTION_PICK, null);
-                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent1, 1);
-                dialog.dismiss();
-            }
-        });
-        tv_camera.setOnClickListener(new View.OnClickListener() {// 调用照相机
-            @Override
-            public void onClick(View v) {
-                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent2.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "header"+phone+".jpg")));
-                startActivityForResult(intent2, 2);// 采用ForResult打开
-                dialog.dismiss();
-            }
-        });
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setView(localView);
-        dialog.show();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -385,7 +417,7 @@ public class MySelfActivity extends AppCompatActivity {
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    File temp = new File(Environment.getExternalStorageDirectory() + "/header"+phone+".jpg");
+                    File temp = new File(Environment.getExternalStorageDirectory() + "/bg"+phone+".jpg");
                     cropPhoto(Uri.fromFile(temp));// 裁剪图片
                 }
 
@@ -398,11 +430,15 @@ public class MySelfActivity extends AppCompatActivity {
                         /**
                          * 上传服务器代码
                          */
-                        uploadHeaderImg();
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                uploadHeaderImg();
+                            }
+                        }.start();
                         saveHeaderImg();
                         setPicToView(head);// 保存在SD卡中
-                        mAvater.setImageBitmap(head);// 用ImageView显示出来
-                        topAvater.setImageBitmap(head);
+                        zoom.setImageBitmap(head);// 用ImageView显示出来
                     }
                 }
                 break;
@@ -423,11 +459,11 @@ public class MySelfActivity extends AppCompatActivity {
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectX", 2);
         intent.putExtra("aspectY", 1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 150);
-        intent.putExtra("outputY", 150);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 100);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 3);
     }
@@ -439,8 +475,11 @@ public class MySelfActivity extends AppCompatActivity {
         }
         FileOutputStream b = null;
         File file = new File(path);
-        file.mkdirs();// 创建文件夹
-        String fileName = path + "header"+phone+".jpg";// 图片名字
+        if (file.exists()){
+            file.delete();
+        }else
+            file.mkdirs();// 创建文件夹
+        String fileName = path + "bg"+phone+".jpg";// 图片名字
         try {
             b = new FileOutputStream(fileName);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
@@ -458,7 +497,7 @@ public class MySelfActivity extends AppCompatActivity {
     }
     public void uploadHeaderImg(){
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/uploadHeader";
-        String fileName = path + "header"+phone+".jpg";// 图片名字
+        String fileName = path + "bg"+phone+".jpg";// 图片名字
         RequestParams params = new RequestParams(url);
         params.addBodyParameter("msg","上传图片");
         params.addBodyParameter("imgs",new File(fileName));
@@ -467,15 +506,11 @@ public class MySelfActivity extends AppCompatActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.i("upLoadImg","图片上传成功！");
-                File file = new File(fileName);
-                if (file.exists()) {
-                    file.delete();
-                }
+                Toast.makeText(MySelfActivity.this, "图片上传成功", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("upLoadImg","图片上传失败！");
+                Toast.makeText(MySelfActivity.this, "图片上传失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -537,4 +572,6 @@ public class MySelfActivity extends AppCompatActivity {
             }
         }.start();
     }
+
 }
+

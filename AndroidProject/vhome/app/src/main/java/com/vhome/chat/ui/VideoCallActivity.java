@@ -70,10 +70,10 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
 
     private TextView callStateTextView;
 
-    private LinearLayout comingBtnContainer;
-    private Button refuseBtn;
-    private Button answerBtn;
-    private Button hangupBtn;
+    private RelativeLayout comingBtnContainer;
+    private ImageView refuseBtn;
+    private ImageView answerBtn;
+    private ImageView hangupBtn;
     private ImageView muteImage;
     private ImageView handsFreeImage;
     private TextView nickTextView;
@@ -114,11 +114,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         uiHandler = new Handler();
 
         callStateTextView = (TextView) findViewById(R.id.tv_call_state);
-        comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
+        comingBtnContainer = (RelativeLayout) findViewById(R.id.ll_coming_call);
         rootContainer = (RelativeLayout) findViewById(R.id.root_layout);
-        refuseBtn = (Button) findViewById(R.id.btn_refuse_call);
-        answerBtn = (Button) findViewById(R.id.btn_answer_call);
-        hangupBtn = (Button) findViewById(R.id.btn_hangup_call);
+        refuseBtn = (ImageView) findViewById(R.id.btn_refuse_call);
+        answerBtn = (ImageView) findViewById(R.id.btn_answer_call);
+        hangupBtn = (ImageView) findViewById(R.id.btn_hangup_call);
         muteImage = (ImageView) findViewById(R.id.iv_mute);
         handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
         callStateTextView = (TextView) findViewById(R.id.tv_call_state);
@@ -128,9 +128,9 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         RelativeLayout btnsContainer = (RelativeLayout) findViewById(R.id.ll_btns);
         topContainer = (LinearLayout) findViewById(R.id.ll_top_container);
         bottomContainer = (LinearLayout) findViewById(R.id.ll_bottom_container);
-        monitorTextView = (TextView) findViewById(R.id.tv_call_monitor);
+//        monitorTextView = (TextView) findViewById(R.id.tv_call_monitor);
         netwrokStatusVeiw = (TextView) findViewById(R.id.tv_network_status);
-        Button switchCameraBtn = (Button) findViewById(R.id.btn_switch_camera);
+        ImageView switchCameraBtn = (ImageView) findViewById(R.id.btn_switch_camera);
 
         refuseBtn.setOnClickListener(this);
         answerBtn.setOnClickListener(this);
@@ -185,7 +185,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             }, 300);
         } else { // incoming call
 
-            callStateTextView.setText("Ringing");
+            callStateTextView.setText("对方呼叫中……");
             if(EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.IDLE
                     || EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.DISCONNECTED) {
                 // the call has ended
@@ -388,9 +388,9 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             String s8 = getResources().getString(R.string.did_not_answer);
                             String s9 = getResources().getString(R.string.Has_been_cancelled);
                             String s10 = getResources().getString(R.string.Refused);
-                            String st12 = "service not enable";
-                            String st13 = "service arrearages";
-                            String st14 = "service forbidden";
+                            String st12 = "服务器不支持";
+                            String st13 = "服务器欠费";
+                            String st14 = "服务禁止";
 
                             if (fError == CallError.REJECTED) {
                                 callingState = CallingState.BEREFUSED;
@@ -518,7 +518,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             break;
 
         case R.id.btn_answer_call: // answer the call
-            EMLog.d(TAG, "btn_answer_call clicked");
+            EMLog.d(TAG, "同意接听");
             answerBtn.setEnabled(false);
             openSpeakerOn();
             if (ringtone != null)
@@ -540,7 +540,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             chronometer.stop();
             endCallTriggerByMe = true;
             callStateTextView.setText(getResources().getString(R.string.hanging_up));
-            EMLog.d(TAG, "btn_hangup_call");
+            EMLog.d(TAG, "已拒绝");
             handler.sendEmptyMessage(MSG_CALL_END);
             break;
 
@@ -651,13 +651,13 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 while(monitor){
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"x"+callHelper.getVideoHeight()
-                                    + "\nDelay：" + callHelper.getVideoLatency()
-                                    + "\nFramerate：" + callHelper.getVideoFrameRate()
-                                    + "\nLost：" + callHelper.getVideoLostRate()
-                                    + "\nLocalBitrate：" + callHelper.getLocalBitrate()
-                                    + "\nRemoteBitrate：" + callHelper.getRemoteBitrate()
-                                    + "\n" + recordString);
+//                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"x"+callHelper.getVideoHeight()
+//                                    + "\nDelay：" + callHelper.getVideoLatency()
+//                                    + "\nFramerate：" + callHelper.getVideoFrameRate()
+//                                    + "\nLost：" + callHelper.getVideoLostRate()
+//                                    + "\nLocalBitrate：" + callHelper.getLocalBitrate()
+//                                    + "\nRemoteBitrate：" + callHelper.getRemoteBitrate()
+//                                    + "\n" + recordString);
 
                             ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
                                     ? R.string.direct_call : R.string.relay_call);

@@ -2,6 +2,7 @@ package com.vhome.chat.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -129,7 +130,9 @@ public class BlacklistActivity extends BaseActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            EaseUserUtils.setUserNick(username, name);
+            SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+            String nickName = sharedPreferences.getString("nickName",username);
+            EaseUserUtils.setUserNick(nickName, name);
 			
 			return convertView;
 		}
