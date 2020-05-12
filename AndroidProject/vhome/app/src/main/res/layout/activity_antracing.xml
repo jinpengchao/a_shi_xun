@@ -16,7 +16,7 @@
             android:id="@+id/btn_activity_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.01"
+            android:layout_weight="0.05"
             android:gravity="center"
             android:onClick="onBack">
 
@@ -37,6 +37,11 @@
             android:text="@string/track_query_title"
             android:textColor="#ffffff"
             android:textSize="20sp"/>
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.05"
+            />
 
     </LinearLayout>
 
@@ -46,5 +51,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"/>
+    <LinearLayout
+        android:layout_alignTop="@+id/an_tracing_mapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:alpha="0.6">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:text="今日步数："
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/today_step"
+            android:layout_weight="0.8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="无"/>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -22,11 +22,12 @@
         android:clickable="true"/>
 
     <LinearLayout
-        android:layout_alignBottom="@+id/track_query_mapView"
+        android:layout_alignTop="@+id/track_query_mapView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        android:alpha="0.8">
         <TextView
             android:id="@+id/tv_foot"
             android:textSize="15sp"

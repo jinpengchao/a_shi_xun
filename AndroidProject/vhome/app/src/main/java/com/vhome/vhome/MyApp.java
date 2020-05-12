@@ -67,7 +67,8 @@ public class MyApp extends Application {
 //    public static LocationService locationService;
 
     // 39.96.24.133
-    private String ip = " 192.168.1.6";
+    //别tm有空格
+    private String ip = " 192.168.1.7";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
@@ -129,7 +130,6 @@ public class MyApp extends Application {
         //鹰眼轨迹初始化
         mContext = getApplicationContext();
 //        entityName = CommonUtil.getImei(this);
-        entityName = "myTrace";
         // 若为创建独立进程，则不初始化成员变量
         if ("com.baidu.track:remote".equals(CommonUtil.getCurProcessName(mContext))) {
             return;

@@ -8,9 +8,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.MapView;
@@ -20,6 +23,15 @@ import com.baidu.trace.api.track.LatestPointResponse;
 import com.baidu.trace.api.track.OnTrackListener;
 import com.baidu.trace.model.StatusCodes;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -30,6 +42,7 @@ import com.vhome.chat.R;
 import com.vhome.vhome.parents.TrackUtil.CommonUtil;
 import com.vhome.vhome.parents.TrackUtil.MapUtil;
 import com.vhome.vhome.parents.TrackUtil.ViewUtil;
+import com.vhome.vhome.util.ConnectionUtil;
 
 /**
  * 轨迹追踪
@@ -53,27 +66,41 @@ public class TracingActivity extends myBaseActivity{
     private MapUtil mapUtil = null;
 
     private int i=10;
-    private int k=0;
     private Timer timer;
     /**
      * 轨迹点集合
      */
-    private List<LatLng> trackPoints;
+    private List<LatLng> trackPoints = new ArrayList<LatLng>();
+
+    /**
+     *步数
+     */
+    private TimerTask task;
+    private TextView step;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        trackApp = (MyApp) getApplicationContext();
+        powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
         init();
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.obj!=null) {
+                    step.setText(msg.obj + "");
+                }
+            }
+        };
     }
 
     private void init() {
-        trackApp = (MyApp) getApplicationContext();
-        powerManager = (PowerManager) trackApp.getSystemService(Context.POWER_SERVICE);
         viewUtil = new ViewUtil();
         mapUtil = MapUtil.getInstance();
-        mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));//他这意思是这个是空
+        step = findViewById(R.id.today_step);
+        mapUtil.init((MapView) findViewById(R.id.an_tracing_mapView));
         mapUtil.setCenter(mCurrentDirection);
-        trackPoints = new ArrayList<>();
         initListener();
         //循环每隔30秒读取一次轨迹
         timer=new Timer();
@@ -102,8 +129,6 @@ public class TracingActivity extends myBaseActivity{
                 if (StatusCodes.SUCCESS != response.getStatus()) {
                     return;
                 }
-                k++;
-                Toast.makeText(TracingActivity.this,"获取定位次数"+k,Toast.LENGTH_SHORT).show();
                 LatestPoint point = response.getLatestPoint();
                 if (null == point || CommonUtil.isZeroPoint(point.getLocation().getLatitude(), point.getLocation()
                         .getLongitude())) {
@@ -124,6 +149,32 @@ public class TracingActivity extends myBaseActivity{
         };
     }
 
+    public String getTodayStep(){
+        String data = null;
+        String ip = (new MyApp()).getIp();
+        try {
+            URL url = new URL("http://"+ip+":8080/vhome/manageStep/find");
+            //?绑定参数是get请求
+            HttpURLConnection connection = null;
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            if(connection.getResponseCode() == 200){
+                InputStream in = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                data = reader.readLine();
+                Log.e("数据：",data);
+                in.close();
+                reader.close();
+                return data;
+            }else{
+                System.out.println("post错误代码： "+connection.getResponseCode());
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return data;
+    }
 
     @Override
     protected void onStart() {
@@ -154,14 +205,19 @@ public class TracingActivity extends myBaseActivity{
             @Override
             public void run() {
                 trackApp.getCurrentLocation(trackListener);
+                String step = getTodayStep();
+                Log.e("步数：","多少"+step);
+                Message message = handler.obtainMessage();
+                message.obj = step;
+                handler.sendMessage(message);
                 --i;
-                Log.e("次数",i+"");
-                if(i<=0){
-                    timer.cancel();
+                if(i==0){
+                    this.cancel();
+                }else{
+                    Log.e("次数",i+"");
                 }
             }
-        },0,1000*30);
-
+        },0,1000*10);
     }
 
     private boolean isNeedRequestPermissions(List<String> permissions) {

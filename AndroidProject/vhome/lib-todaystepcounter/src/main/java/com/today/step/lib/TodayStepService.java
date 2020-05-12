@@ -20,6 +20,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.andrjhf.lib.jlogger.JLoggerConstant;
 import com.andrjhf.lib.jlogger.JLoggerWraper;
@@ -29,6 +30,7 @@ import org.json.JSONArray;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -352,6 +354,7 @@ public class TodayStepService extends Service implements Handler.Callback {
         CURRENT_STEP = currentStep;
         updateNotification(CURRENT_STEP);
         saveStep(currentStep);
+        saveTodayStep(currentStep);
     }
 
     private void saveStep(int currentStep) {
@@ -364,7 +367,6 @@ public class TodayStepService extends Service implements Handler.Callback {
             return;
         }
         mDbSaveCount = 0;
-        saveTodayStep(currentStep);
         saveDb(false, currentStep);
     }
 
@@ -388,22 +390,30 @@ public class TodayStepService extends Service implements Handler.Callback {
         }
     }
 
-    public void saveTodayStep(int data){
-        String ip = "192.168.1.6";
-        try {
-            URL url = new URL("http://" + ip + ":8080/vhome/getLastestStep&stepInfo="+data);
-            HttpURLConnection connection = null;
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-            OutputStream os = connection.getOutputStream();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, "utf-8"));
-            bw.flush();
-            bw.close();
-            os.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    public void saveTodayStep(final int data){
+        Log.e("运行","储存数据"+data);
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = "192.168.1.7";
+                try {
+                    //HttpURLConnection输出流是写到内存缓冲区，在输入流，才是将请求发送过去
+                    URL url = new URL("http://" + ip + ":8080/vhome/manageStep/save?stepInfo="+data);
+                    HttpURLConnection connection = null;
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoOutput(true);
+                    OutputStream out = connection.getOutputStream();
+                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+                    InputStream in = connection.getInputStream();
+                    bw.flush();
+                    bw.close();
+                    in.close();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     private void cleanDb() {

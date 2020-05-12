@@ -1,5 +1,5 @@
 package com.hyphenate.easeui;
 
 public class MyApp {
-    public static String ip="192.168.1.6";
+    public static String ip="192.168.1.7";
 }

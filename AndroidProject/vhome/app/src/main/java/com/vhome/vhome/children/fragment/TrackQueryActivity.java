@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -211,7 +212,6 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
             @Override
             public void onHistoryTrackCallback(HistoryTrackResponse response) {
                 try {
-
                     int total = response.getTotal();
                     if (StatusCodes.SUCCESS != response.getStatus()) {
                         viewUtil.showToast(TrackQueryActivity.this, response.getMessage());
