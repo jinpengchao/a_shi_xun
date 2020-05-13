@@ -221,7 +221,7 @@ public class MyApp extends Application {
         mTrace = new Trace(serviceId, entityName);
 
         trackConf = getSharedPreferences("track_conf", MODE_PRIVATE);
-        locRequest = new LocRequest(serviceId);//我感觉父母端没毛病，这就没开轨迹，实时不对嗯
+        locRequest = new LocRequest(serviceId);
         mClient.setOnCustomAttributeListener(new OnCustomAttributeListener() {
             @Override
             public Map<String, String> onTrackAttributeCallback() {
