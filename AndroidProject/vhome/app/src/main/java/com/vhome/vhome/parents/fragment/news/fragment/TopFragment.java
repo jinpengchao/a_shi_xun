@@ -189,7 +189,7 @@ public class TopFragment extends BaseFragment {
             @Override
             public void run() {
                 HttpLogin httpLogin=new HttpLogin();
-                String result=httpLogin.JasonAccpt4();
+                String result=httpLogin.JasonAccpt10();
                 Bundle bundle=new Bundle();
                 bundle.putString("result1",result);
                 Message message=new Message();

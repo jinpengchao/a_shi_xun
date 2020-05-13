@@ -190,7 +190,7 @@ public class ShehuiFragment extends BaseFragment {
             @Override
             public void run() {
                 HttpLogin httpLogin=new HttpLogin();
-                String result=httpLogin.JasonAccpt5();
+                String result=httpLogin.JasonAccpt11();
                 Bundle bundle=new Bundle();
                 bundle.putString("result1",result);
                 Message message=new Message();
