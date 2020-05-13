@@ -164,6 +164,16 @@ public class GuojiFragment extends BaseFragment {
                     newsAdapter=new NewsAdapter(getActivity(),news1);
                     lvStus.setAdapter(newsAdapter);
                     newsAdapter.notifyDataSetChanged();
+                    lvStus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent=new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(news1.get(i).getUrl()));//用于
+                            //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+                            startActivity(intent);
+                        }
+                    });
                 }
 
             }
