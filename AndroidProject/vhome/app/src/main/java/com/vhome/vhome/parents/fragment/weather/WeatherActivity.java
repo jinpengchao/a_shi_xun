@@ -190,9 +190,9 @@ public class WeatherActivity extends Activity {
         weather_information.clear();
         SharedPreferences preferences=getSharedPreferences("cityInfo",Context.MODE_PRIVATE);
         String city=preferences.getString("city","NULL");
-        Toast.makeText(getApplication(),city,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplication(),city,Toast.LENGTH_LONG).show();
         if(city.equals("NULL")){
-            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
             load("石家庄");
         }else {
             load(city);
@@ -201,7 +201,15 @@ public class WeatherActivity extends Activity {
         weatherAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){
-        weather_information.clear();
+        SharedPreferences preferences=getSharedPreferences("cityInfo",Context.MODE_PRIVATE);
+        String city=preferences.getString("city","NULL");
+//        Toast.makeText(getApplication(),city,Toast.LENGTH_LONG).show();
+        if(city.equals("NULL")){
+//            Toast.makeText(getApplication(),"请打开定位进行刷新",Toast.LENGTH_LONG).show();
+            load("石家庄");
+        }else {
+            load(city);
+        }
         weatherAdapter.notifyDataSetChanged();
     }
 
