@@ -22,14 +22,14 @@ import user.service.UserService;
 /**
  * Servlet implementation class LoginByPwdServlet
  */
-@WebServlet("/pwdlogin")
-public class LoginByPwdServlet extends HttpServlet {
+@WebServlet("/registerTime")
+public class SearchRegisterTime extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginByPwdServlet() {
+    public SearchRegisterTime() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -58,19 +58,12 @@ public class LoginByPwdServlet extends HttpServlet {
 			System.out.println("客户端登录消息未获取");
 		}
 		String phone = user.getPhone();
-		String password = user.getPassword();
 		
 		UserService userService = new UserService();
-		User u = userService.selectUser(phone, password);
+		User u = userService.selectUser(phone);
 		if(u != null) {
-			int type = u.getType();
-			String p = u.getPhone();
-			String pwd = u.getPassword();
 			String registerTime = u.getRegisterTime();
 			JSONObject json = new JSONObject();
-			json.put("p", p);
-			json.put("pwd", pwd);
-			json.put("type", type);
 			json.put("registerTime", registerTime);
 			out.write(json.toString());
 		}

@@ -1,4 +1,4 @@
-package user.controller;
+package community.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,25 +11,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import community.service.AttentionService;
+import entity.AttentionBean;
 import entity.User;
 import net.sf.json.JSONObject;
 import user.service.UserService;
 
 /**
- * Servlet implementation class LoginByPwdServlet
+ * Servlet implementation class IfAttention
  */
-@WebServlet("/pwdlogin")
-public class LoginByPwdServlet extends HttpServlet {
+@WebServlet("/IfAttention")
+public class IfAttention extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginByPwdServlet() {
+    public IfAttention() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,6 +39,7 @@ public class LoginByPwdServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 
 	/**
@@ -51,29 +53,14 @@ public class LoginByPwdServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-		Gson gson = new Gson();
-		User user = null;
-		user = gson.fromJson(data, User.class);
-		if(null==user) {
-			System.out.println("客户端登录消息未获取");
-		}
-		String phone = user.getPhone();
-		String password = user.getPassword();
-		
-		UserService userService = new UserService();
-		User u = userService.selectUser(phone, password);
-		if(u != null) {
-			int type = u.getType();
-			String p = u.getPhone();
-			String pwd = u.getPassword();
-			String registerTime = u.getRegisterTime();
-			JSONObject json = new JSONObject();
-			json.put("p", p);
-			json.put("pwd", pwd);
-			json.put("type", type);
-			json.put("registerTime", registerTime);
-			out.write(json.toString());
-		}
+		String phones[] = data.split("-");
+		String myPhone = phones[0];
+		String oppositePhone = phones[1];
+		System.out.println(myPhone+oppositePhone);
+		AttentionService attention = new AttentionService();
+		int n = attention.ifAttention(myPhone, oppositePhone);
+		out.write(n+"");
+		System.out.println(n+"");
 		out.flush();
 		out.close();
 		br.close();

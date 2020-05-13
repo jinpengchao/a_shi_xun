@@ -17,6 +17,7 @@ import java.util.List;
 
 import dbutil.DBUtil;
 import entity.AttentionBean;
+import entity.ParentUserInfo;
 
 /**
  * @ClassName: AttentionDao
@@ -62,6 +63,38 @@ public class AttentionDao {
 		}
 		return n;
 	}
+	public int selectIfAttention(String myId,String oppositeId) {
+		DBUtil util = new DBUtil();
+		int n = 0;
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_myattentions where attentionPersonId='"+oppositeId+"' and personId='"+myId+"'";
+			PreparedStatement psmt = con.prepareStatement(sql);
+			psmt = con.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				n=1;
+			}else {
+				n=0;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
+	
 	
 	/**
 	 * 查询个人关注的所有人
