@@ -64,7 +64,7 @@ public class GuojiFragment extends BaseFragment {
                             newsBean.setTitle(jsonObject1.getString("title"));
                             newsBean.setDate(jsonObject1.getString("date"));
                             newsBean.setAuthor_name(jsonObject1.getString("author_name"));
-                            newsBean.setCategory(jsonObject1.getString("category"));
+                            newsBean.setCategory("国际");
                             newsBean.setUrl(jsonObject1.getString("url"));
                             newsBean.setThumbnail_pic_s(jsonObject1.getString("thumbnail_pic_s"));
                             news.add(newsBean);
@@ -185,13 +185,28 @@ public class GuojiFragment extends BaseFragment {
             }
         }).start();
     }
+    private void load1() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLogin httpLogin=new HttpLogin();
+                String result=httpLogin.JasonAccpt9();
+                Bundle bundle=new Bundle();
+                bundle.putString("result1",result);
+                Message message=new Message();
+                message.setData(bundle);
+                message.what=3;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
     public void refreshData(){
         news.clear();
         load();
         newsAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){
-        load();
+        load1();
         newsAdapter.notifyDataSetChanged();
     }
 
