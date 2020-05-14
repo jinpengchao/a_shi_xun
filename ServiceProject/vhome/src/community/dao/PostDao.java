@@ -32,7 +32,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_post where examine=?";
+			String sql = "select * from tbl_post1 where examine=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, examine);
 			ResultSet rs = ps.executeQuery();
@@ -131,7 +131,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs,examine) values(?,?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
 			ps.setString(2, post.getNickName());
@@ -140,7 +140,6 @@ public class PostDao {
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
 			ps.setString(7, post.getImgs());
-			ps.setString(8, post.getExamineString());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -184,7 +183,6 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -230,7 +228,6 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -275,7 +272,6 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
 			}
 			rs.close();
 			ps.close();
