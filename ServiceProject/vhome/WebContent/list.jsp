@@ -16,7 +16,7 @@
 		<a href="/ShowExamine?examineString=审核失败">不批准</a>&nbsp&nbsp
 	</c:forEach>
 	<br><br><br>
-	<c:forEach items="${examine1 }%>" var="p">
+	<c:forEach items="${examine1 }" var="p">
 		发帖子的人：${p.nickName } &nbsp&nbsp
 		帖子内容：${p.postContent} &nbsp&nbsp
 		${p.examineString }&nbsp&nbsp
