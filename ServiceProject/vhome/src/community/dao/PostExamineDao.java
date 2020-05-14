@@ -99,4 +99,64 @@ public class PostExamineDao {
 		
 		return n;
 	}
+	/**
+	 * 点击批准修改为审核通过
+	 *  @title:changeNameById
+	 * @Description: todo
+	 * @throws下午3:48:09
+	 * returntype:int
+	 */
+	public void changeExamineByPId(String id,String examineString) {
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "update tbl_post_copy set examine = ? where id=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, examineString);
+			ps.setString(2, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 *  @title:delPost
+	 * @Description: 按照id删除帖子
+	 * @throws上午10:50:22
+	 * returntype:int
+	 */
+	public int delPost(int id) {
+		int n = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_post_copy where id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
+	
 }

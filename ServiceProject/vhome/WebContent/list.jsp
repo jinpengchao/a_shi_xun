@@ -8,25 +8,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	jiwenbin cnm
 	<c:forEach items="${examine }" var="p">
 		发帖子的人：${p.nickName } &nbsp&nbsp
 		帖子内容：${p.postContent} &nbsp&nbsp
-		${p.examineString }&nbsp&nbsp<br><br>
-		<a href="/ShowExamine?examineString=已审核">批准</a>&nbsp&nbsp
-		<a href="/ShowExamine?examineString=审核失败">不批准</a>&nbsp&nbsp
+		<span style="color:red;">${p.examineString }</span>
+		<a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>&nbsp&nbsp
+		<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a><br><br>
 	</c:forEach>
-	<br><br><br>
+	<br>
 	<c:forEach items="${examine1 }" var="p">
 		发帖子的人：${p.nickName } &nbsp&nbsp
 		帖子内容：${p.postContent} &nbsp&nbsp
-		${p.examineString }&nbsp&nbsp
+		<span style="color:green;">${p.examineString }</span>
+		<a href="/vhome/DeleteExamine?id1=${p.id}">删除</a><br><br>
 	</c:forEach>
-	<br><br><br>
+	<br>
 	<c:forEach items="${examine2}" var="p">
 		发帖子的人：${p.nickName } &nbsp&nbsp
 		帖子内容：${p.postContent} &nbsp&nbsp
-		${p.examineString }&nbsp&nbsp
+		<span style="color:#FF0000;">${p.examineString }</span>
+		<a href="/vhome/DeleteExamine?id1=${p.id}">删除</a><br><br>
 	</c:forEach>
 </body>
 </html>

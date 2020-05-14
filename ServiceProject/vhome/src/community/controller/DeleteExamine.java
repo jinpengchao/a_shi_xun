@@ -2,32 +2,26 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
 
 import community.service.PostService;
-import entity.PostBean;
-import entity.PostExamineBean;
 
 /**
- * Servlet implementation class ShowExamine
+ * Servlet implementation class DeleteExamine
  */
-@WebServlet("/ShowExamine")
-public class ShowExamine extends HttpServlet {
+@WebServlet("/DeleteExamine")
+public class DeleteExamine extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowExamine() {
+    public DeleteExamine() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,26 +33,10 @@ public class ShowExamine extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		List<PostExamineBean> postBeans1=(new PostService()).findBeansByExamine("待审核");
-		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
-		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
-		out.print(postBeans2.get(0).getExamineString());
-		request.setAttribute("examine", postBeans1);
-		request.setAttribute("examine1", postBeans2);
-		request.setAttribute("examine2", postBeans3);
-		request.getRequestDispatcher("/list.jsp").forward(request,response); 
-		String data = null;
-		String data1 = null;
-		String data2= null;
-		Gson gson = new Gson();
-		data = gson.toJson(postBeans1);
-		data1 = gson.toJson(postBeans2);
-		data2 = gson.toJson(postBeans3);
-		out.write(data);
-		out.write(data1);
-		out.write(data2);
-		out.flush();
-		out.close();
+		String id=request.getParameter("id1");
+		int id1=Integer.parseInt(id);
+		(new PostService()).delPost1(id1);
+		response.sendRedirect("/vhome/ShowExamine");
 	}
 
 	/**
