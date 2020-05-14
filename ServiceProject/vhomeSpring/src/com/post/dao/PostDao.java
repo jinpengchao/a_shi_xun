@@ -17,15 +17,15 @@ public class PostDao {
 	private SessionFactory sessionFactory;
 	
 	public List<Post> findPostByExamine(){
-		Query query=this.sessionFactory.getCurrentSession().createQuery("select * from Post where examine=?").setParameter(0, "待审核");
+		Query query=this.sessionFactory.getCurrentSession().createQuery("from Post");
 		return query.list();
 	}
 	public List<Post> findPostByExamine1(){
-		Query query=this.sessionFactory.getCurrentSession().createQuery("select * from Post where examine=?").setParameter(0, "已审核");
+		Query query=this.sessionFactory.getCurrentSession().createQuery("from Post");
 		return query.list();
 	}
 	public List<Post> findPostByExamine2(){
-		Query query=this.sessionFactory.getCurrentSession().createQuery("select * from Post where examine=?").setParameter(0, "审核失败");
+		Query query=this.sessionFactory.getCurrentSession().createQuery("from Post");
 		return query.list();
 	}
 	public void updatePostExamine(Post post) {

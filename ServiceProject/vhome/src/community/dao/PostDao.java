@@ -21,6 +21,52 @@ import entity.PostBean;
  */
 public class PostDao {
 	/**
+	 * @author:章鹏
+	 *  @title:delPost
+	 * @Description: 根据是否审核查找帖子
+	 * @throws上午10:50:22
+	 * returntype:List<Post>
+	 */
+	public List<PostBean> findBeansByExamine(String examine){
+		List<PostBean> list = new ArrayList<PostBean>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_post where examine=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, examine);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				PostBean post = new PostBean();
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
+				list.add(post);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	/**
 	 * 通过个人id修改头像
 	 *  @title:changeImgByPId
 	 * @throws下午3:53:35
@@ -85,7 +131,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs,examine) values(?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
 			ps.setString(2, post.getNickName());
@@ -93,7 +139,8 @@ public class PostDao {
 			ps.setString(4, post.getPostContent());
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
-			ps.setString(7, post.getImgs());			
+			ps.setString(7, post.getImgs());
+			ps.setString(8, post.getExamineString());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -137,6 +184,7 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -182,6 +230,7 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -226,6 +275,7 @@ public class PostDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
 			}
 			rs.close();
 			ps.close();

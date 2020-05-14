@@ -21,7 +21,16 @@ import entity.PostBean;
  *
  */
 public class PostService {
-	
+	/**
+	 * @author:章鹏
+	 *  @title:findByExamine
+	 * @Description: 根据是否评论查找帖子
+	 * @throws上午11:03:02
+	 * returntype:int
+	 */
+	public List<PostBean> findBeansByExamine(String examineString){
+		return (new PostDao()).findBeansByExamine(examineString);
+	}
 	//通过个人id修改头像
 	public int changImgById(String logo,String personId) {
 		return (new PostDao()).changeImgByPId(logo, personId);

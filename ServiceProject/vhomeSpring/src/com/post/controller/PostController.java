@@ -13,7 +13,7 @@ import com.entity.Post;
 import com.post.service.PostService;
 
 @Controller
-@RequestMapping("/post")
+@RequestMapping("post")
 public class PostController {	
 	
 	@Resource

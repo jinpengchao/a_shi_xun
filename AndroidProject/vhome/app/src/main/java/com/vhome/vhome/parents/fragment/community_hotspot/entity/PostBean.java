@@ -10,12 +10,18 @@ public class PostBean implements Serializable {
     private String personId;
     private String time;
     private String imgs;
+    private String examine;
     private int commentNum;
     private int likeNum;
     private int save_status = 0;//标志位判断当前用户是否收藏过本帖
     private int like_status = 0;//标志位判断当前用户是否点赞过本帖
     private int attention_status = 0;//标志位判断当前用户是否关注发帖人
-
+    public String getExamine() {
+        return examine;
+    }
+    public void setExamine(String examine) {
+        this.examine = examine;
+    }
     public int getId() {
         return id;
     }
