@@ -11,7 +11,9 @@ package community.service;
 import java.util.List;
 
 import community.dao.PostDao;
+import community.dao.PostExamineDao;
 import entity.PostBean;
+import entity.PostExamineBean;
 
 /**
  * @ClassName: PostService
@@ -28,8 +30,8 @@ public class PostService {
 	 * @throws上午11:03:02
 	 * returntype:int
 	 */
-	public List<PostBean> findBeansByExamine(String examineString){
-		return (new PostDao()).findBeansByExamine(examineString);
+	public List<PostExamineBean> findBeansByExamine(String examineString){
+		return (new PostExamineDao()).findBeansByExamine(examineString);
 	}
 	//通过个人id修改头像
 	public int changImgById(String logo,String personId) {

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	jiwenbin cnm
 	<c:forEach items="${examine }" var="p">
 		发帖子的人：${p.nickName } &nbsp&nbsp
 		帖子内容：${p.postContent} &nbsp&nbsp

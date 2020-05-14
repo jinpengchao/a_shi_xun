@@ -9,19 +9,12 @@ public class PostBean {
     private String personId;
     private String time;
     private String imgs;
-    private String examineString;
     private int commentNum;
     private int likeNum;
     private int save_status = 0;//标志位判断当前用户是否收藏过本帖
     private int like_status = 0;//标志位判断当前用户是否点赞过本帖
     private int attention_status = 0;//标志位判断当前用户是否关注发帖人
 	
-	public String getExamineString() {
-		return examineString;
-	}
-	public void setExamineString(String examineString) {
-		this.examineString = examineString;
-	}
 	public String getPostContent() {
 		return postContent;
 	}
