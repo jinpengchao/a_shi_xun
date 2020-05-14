@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import community.service.PostService;
+import entity.PostBean;
 
 /**
  * Servlet implementation class UpdateExamine
@@ -37,8 +38,15 @@ public class UpdateExamine extends HttpServlet {
 		String id=request.getParameter("id");
 		out.println(examineString);
 		out.println(id);
+		
 		PostService postService=new PostService();
 		postService.changeExamineByPId(id, examineString);
+		if(examineString.equals("已审核")) {
+			int id1=Integer.parseInt(id);
+			PostBean postBean=postService.findPost(id1);
+			postService.savePost(postBean);
+		}
+		
 		response.sendRedirect("/vhome/ShowExamine");
 	}
 
