@@ -10,8 +10,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet-mapping>
-    <servlet-name>ShowExamine</servlet-name>
-    <url-pattern>/ShowExamine</url-pattern>
-  </servlet-mapping>
 </web-app>
