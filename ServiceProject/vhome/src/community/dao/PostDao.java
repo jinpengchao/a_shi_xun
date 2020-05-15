@@ -20,6 +20,7 @@ import entity.PostBean;
  *
  */
 public class PostDao {
+	
 	/**
 	 * 通过个人id修改头像
 	 *  @title:changeImgByPId
@@ -93,7 +94,7 @@ public class PostDao {
 			ps.setString(4, post.getPostContent());
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
-			ps.setString(7, post.getImgs());			
+			ps.setString(7, post.getImgs());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -258,7 +259,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "delete from tbl_post where id = ?";
+			String sql = "delete from tbl_post_copy where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			n = ps.executeUpdate();

@@ -213,6 +213,9 @@ public class GuoneiFragment extends BaseFragment {
     public void refreshData(){
         news.clear();
         load();
+        lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+        newsAdapter=new NewsAdapter(getActivity(),news);
+        lvStus.setAdapter(newsAdapter);
         newsAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){

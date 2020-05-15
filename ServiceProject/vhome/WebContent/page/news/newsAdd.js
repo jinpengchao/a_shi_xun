@@ -33,7 +33,7 @@ layui.config({
  		var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         setTimeout(function(){
             top.layer.close(index);
-			top.layer.msg("文章添加成功！");
+			top.layer.msg("帖子添加成功！");
  			layer.closeAll("iframe");
 	 		//刷新父页面
 	 		parent.location.reload();
