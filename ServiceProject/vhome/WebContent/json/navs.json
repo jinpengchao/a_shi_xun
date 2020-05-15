@@ -1,22 +1,22 @@
 [{
 	"title" : "后台首页",
 	"icon" : "icon-computer",
-	"href" : "page/main.html",
+	"href" : "page/main.jsp",
 	"spread" : false
 },{
-	"title" : "文章列表",
+	"title" : "帖子详情管理",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "page/news/newsList.jsp",
 	"spread" : false
 },{
-	"title" : "友情链接",
+	"title" : "用户信息管理",
 	"icon" : "&#xe64c;",
-	"href" : "page/links/linksList.html",
+	"href" : "page/links/linksList.jsp",
 	"spread" : false
 },{
-	"title" : "系统基本参数",
+	"title" : "用户审核",
 	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
+	"href" : "page/systemParameter/systemParameter.jsp",
 	"spread" : false
 },{
 	"title" : "其他页面",
@@ -25,15 +25,15 @@
 	"spread" : false,
 	"children" : [
 		{
-			"title" : "404页面",
+			"title" : "举报管理",
 			"icon" : "&#xe61c;",
-			"href" : "page/404.html",
+			"href" : "page/404.jsp",
 			"spread" : false
 		},
 		{
 			"title" : "登录",
 			"icon" : "&#xe609;",
-			"href" : "page/login/login.html",
+			"href" : "page/login/login.jsp",
 			"spread" : false,
 			"target" : "_blank"
 		}

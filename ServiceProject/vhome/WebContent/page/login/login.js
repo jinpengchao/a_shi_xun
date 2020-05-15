@@ -15,7 +15,7 @@ layui.config({
 	
 	//登录按钮事件
 	form.on("submit(login)",function(data){
-		window.location.href = "../../index.html";
+		window.location.href = "../../mainPage.jsp";
 		return false;
 	})
 })

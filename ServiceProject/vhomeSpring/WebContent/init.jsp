@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-<jsp:forward page="pwdlogin"></jsp:forward>
+<body style="text-align:center">
+<p style="font-size:60px">在座各位都是弟弟</p>
 </body>
 </html>

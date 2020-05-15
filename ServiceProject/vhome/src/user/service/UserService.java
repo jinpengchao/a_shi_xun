@@ -85,4 +85,11 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.updateRelations(phone,send_phone,type);
 	}
+	public void findParentInfo() {
+		//to do 查找父母信息
+	}
+	
+	public void findChildrenInfo() {
+		//to do 查找子女信息
+	}
 }
