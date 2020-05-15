@@ -2,6 +2,7 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import community.service.PostService;
 import entity.PostBean;
 import entity.PostExamineBean;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class ShowExamine
@@ -46,19 +48,18 @@ public class ShowExamine extends HttpServlet {
 		request.setAttribute("examine", postBeans1);
 		request.setAttribute("examine1", postBeans2);
 		request.setAttribute("examine2", postBeans3);
-		request.getRequestDispatcher("/list.jsp").forward(request,response); 
-		String data = null;
-		String data1 = null;
-		String data2= null;
-		Gson gson = new Gson();
-		data = gson.toJson(postBeans1);
-		data1 = gson.toJson(postBeans2);
-		data2 = gson.toJson(postBeans3);
-		out.write(data);
-		out.write(data1);
-		out.write(data2);
+		List<PostExamineBean> postExamineBeans=(new PostService()).findAll();
+		
+		//发送所有待审核、已审核、审核失败帖子数据
+		JSONObject jsonobject=new JSONObject();
+		jsonobject.put("examineString", postExamineBeans);
+		String jdata=jsonobject.toString();
+		out.write(jdata);
 		out.flush();
 		out.close();
+		System.out.println(jsonobject.toString());
+		
+//		request.getRequestDispatcher("/list.jsp").forward(request,response); 
 	}
 
 	/**

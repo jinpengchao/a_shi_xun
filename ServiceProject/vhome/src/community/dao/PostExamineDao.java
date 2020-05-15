@@ -59,6 +59,51 @@ public class PostExamineDao {
 		return list;
 	}
 	/**
+	 * @author:章鹏
+	 *  @title:delPost
+	 * @Description: 根据是否审核查找帖子
+	 * @throws上午10:50:22
+	 * returntype:List<Post>
+	 */
+	public List<PostExamineBean> findAll(){
+		List<PostExamineBean> list = new ArrayList<PostExamineBean>();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_post_copy";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				PostExamineBean post = new PostExamineBean();
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
+				list.add(post);
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	/**
 	 * 
 	 *  @title:insertPost
 	 * @Description: 插入单条帖子
