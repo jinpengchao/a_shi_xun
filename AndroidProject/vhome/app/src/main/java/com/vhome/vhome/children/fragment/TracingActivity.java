@@ -153,7 +153,7 @@ public class TracingActivity extends myBaseActivity{
         String data = null;
         String ip = (new MyApp()).getIp();
         try {
-            URL url = new URL("http://"+ip+":8080/vhome/manageStep/find");
+            URL url = new URL("http://"+ip+":8080/vhomeSpring/manageStep/find");
             //?绑定参数是get请求
             HttpURLConnection connection = null;
             connection = (HttpURLConnection) url.openConnection();

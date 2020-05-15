@@ -68,7 +68,8 @@ public class MyApp extends Application {
 
     // 39.96.24.133
     //别tm有空格
-    private String ip = " 192.168.1.7";
+    private String ip = "192.168.1.3";
+    private String ip = "192.168.0.100";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
@@ -221,7 +222,7 @@ public class MyApp extends Application {
         mTrace = new Trace(serviceId, entityName);
 
         trackConf = getSharedPreferences("track_conf", MODE_PRIVATE);
-        locRequest = new LocRequest(serviceId);//我感觉父母端没毛病，这就没开轨迹，实时不对嗯
+        locRequest = new LocRequest(serviceId);
         mClient.setOnCustomAttributeListener(new OnCustomAttributeListener() {
             @Override
             public Map<String, String> onTrackAttributeCallback() {

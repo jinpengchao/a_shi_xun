@@ -1,0 +1,13 @@
+{
+    "cmsName": "微家后台管理模版",
+    "version": "v1.0.1",
+    "homePage": "page/index.jsp",
+    "server": "windows",
+    "dataBase": "8.00.2039",
+    "maxUpload": "2M",
+    "userRights": "总管理员",
+    "description": "一套基于layui的cms网站",
+    "powerby": "copyright @2020 微家开发团队",
+    "record": "京ICP备14040xxx号-1",
+    "keywords": "layui，cms"
+}

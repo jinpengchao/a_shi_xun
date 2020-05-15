@@ -24,11 +24,16 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.pwdLogin(phone, password);
 	}
+	//用户密码登录
+	public User selectUser(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.pwdLogin(phone);
+	}
 	//用户验证码登录
-		public User loginBycode(String phone) {
-			UserDao userDao = new UserDao();
-			return userDao.codeLogin(phone);
-		}
+	public User loginBycode(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.codeLogin(phone);
+	}
 	//向用户信息表添加个人信息
 	public void insertUserInfo(String phone, String id, String nikeName, String sex, String area, String headerImg, int type) {
 		UserDao userDao = new UserDao();
@@ -79,5 +84,12 @@ public class UserService {
 	public void changeRelations(String phone,String send_phone,String type) {
 		UserDao userDao = new UserDao();
 		userDao.updateRelations(phone,send_phone,type);
+	}
+	public void findParentInfo() {
+		//to do 查找父母信息
+	}
+	
+	public void findChildrenInfo() {
+		//to do 查找子女信息
 	}
 }

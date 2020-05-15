@@ -11,7 +11,9 @@ package community.service;
 import java.util.List;
 
 import community.dao.PostDao;
+import community.dao.PostExamineDao;
 import entity.PostBean;
+import entity.PostExamineBean;
 
 /**
  * @ClassName: PostService
@@ -21,7 +23,41 @@ import entity.PostBean;
  *
  */
 public class PostService {
-	
+	/**
+	 * @author:章鹏
+	 *  @title:findByExamine
+	 * @Description: 根据是否评论查找帖子
+	 * @throws上午11:03:02
+	 * returntype:int
+	 */
+	public List<PostExamineBean> findBeansByExamine(String examineString){
+		return (new PostExamineDao()).findBeansByExamine(examineString);
+	}
+	//查找私人所有收到举报的帖子
+	public List<PostBean> findAll(){
+			return (new PostExamineDao()).findAll();
+	}
+	//根据Id删除收到举报的帖子
+	public int delPostReport(int id) {
+		return (new PostExamineDao()).delPostByReport(id);
+	}
+	//根据插入举报的帖子
+	public long insertPostReport(PostBean postBean) {
+		return (new PostExamineDao()).insertPost1(postBean);
+	}
+	//查找私人所有审核的帖子
+	public List<PostExamineBean> findAll(String personId){
+		return (new PostExamineDao()).findAllByPersonId(personId);
+	}
+	//通过id修改审核情况
+	public void changeExamineByPId(String personId,String examineString) {
+		PostExamineDao postExamineDao=new PostExamineDao();
+		postExamineDao.changeExamineByPId(personId, examineString);
+	}
+	//通过id删除已审核或审核失败内容
+	public int delPost1(int id) {
+		return (new PostExamineDao()).delPost(id);
+	}
 	//通过个人id修改头像
 	public int changImgById(String logo,String personId) {
 		return (new PostDao()).changeImgByPId(logo, personId);
@@ -39,6 +75,16 @@ public class PostService {
 	 */
 	public long savePost(PostBean post) {
 		return (new PostDao()).insertPost(post);
+	}
+	/**
+	 * 
+	 *  @title:savePost
+	 * @Description: 保存帖子的service
+	 * @throws上午10:57:22
+	 * returntype:long
+	 */
+	public long savePost1(PostExamineBean post) {
+		return (new PostExamineDao()).insertPost(post);
 	}
 	/**
 	 * 
@@ -74,6 +120,8 @@ public class PostService {
 	public int delPost(int id) {
 		return (new PostDao()).delPost(id);
 	}
-	
+	public int delPost2(int id) {
+		return (new PostDao()).delPost1(id);
+	}
 	
 }

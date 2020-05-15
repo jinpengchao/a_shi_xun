@@ -395,10 +395,10 @@ public class TodayStepService extends Service implements Handler.Callback {
         new Thread() {
             @Override
             public void run() {
-                String ip = "192.168.1.7";
+                String ip = "192.168.1.3";
                 try {
                     //HttpURLConnection输出流是写到内存缓冲区，在输入流，才是将请求发送过去
-                    URL url = new URL("http://" + ip + ":8080/vhome/manageStep/save?stepInfo="+data);
+                    URL url = new URL("http://" + ip + ":8080/vhomeSpring/manageStep/save?stepInfo="+data);
                     HttpURLConnection connection = null;
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setDoOutput(true);

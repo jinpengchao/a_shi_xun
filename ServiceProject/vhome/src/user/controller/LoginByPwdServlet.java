@@ -66,10 +66,12 @@ public class LoginByPwdServlet extends HttpServlet {
 			int type = u.getType();
 			String p = u.getPhone();
 			String pwd = u.getPassword();
+			String registerTime = u.getRegisterTime();
 			JSONObject json = new JSONObject();
 			json.put("p", p);
 			json.put("pwd", pwd);
 			json.put("type", type);
+			json.put("registerTime", registerTime);
 			out.write(json.toString());
 		}
 		out.flush();
