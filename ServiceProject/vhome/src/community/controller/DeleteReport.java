@@ -2,7 +2,6 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import community.service.PostService;
-import entity.PostBean;
 
 /**
- * Servlet implementation class PostReport
+ * Servlet implementation class DeleteReport
  */
-@WebServlet("/PostReport")
-public class PostReport extends HttpServlet {
+@WebServlet("/DeleteReport")
+public class DeleteReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostReport() {
+    public DeleteReport() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +33,11 @@ public class PostReport extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		List<PostBean> postBeans=(new PostService()).findAll();
-		request.setAttribute("report", postBeans);
-		request.getRequestDispatcher("/list1.jsp").forward(request,response); 
+		String id1=request.getParameter("id");
+		int id=Integer.parseInt(id1);
+		(new PostService()).delPostReport(id);
+		(new PostService()).delPost2(id);
+		response.sendRedirect("/vhome/PostReport");
 	}
 
 	/**

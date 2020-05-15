@@ -33,6 +33,18 @@ public class PostService {
 	public List<PostExamineBean> findBeansByExamine(String examineString){
 		return (new PostExamineDao()).findBeansByExamine(examineString);
 	}
+	//查找私人所有收到举报的帖子
+	public List<PostBean> findAll(){
+			return (new PostExamineDao()).findAll();
+	}
+	//根据Id删除收到举报的帖子
+	public int delPostReport(int id) {
+		return (new PostExamineDao()).delPostByReport(id);
+	}
+	//根据插入举报的帖子
+	public long insertPostReport(PostBean postBean) {
+		return (new PostExamineDao()).insertPost1(postBean);
+	}
 	//查找私人所有审核的帖子
 	public List<PostExamineBean> findAll(String personId){
 		return (new PostExamineDao()).findAllByPersonId(personId);

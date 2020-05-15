@@ -2,7 +2,6 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +13,16 @@ import community.service.PostService;
 import entity.PostBean;
 
 /**
- * Servlet implementation class PostReport
+ * Servlet implementation class SaveReport
  */
-@WebServlet("/PostReport")
-public class PostReport extends HttpServlet {
+@WebServlet("/SaveReport")
+public class SaveReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostReport() {
+    public SaveReport() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +34,11 @@ public class PostReport extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		List<PostBean> postBeans=(new PostService()).findAll();
-		request.setAttribute("report", postBeans);
-		request.getRequestDispatcher("/list1.jsp").forward(request,response); 
+		//接受后台发送的举报帖子的id
+		String idString=request.getParameter("postId11");
+		int id=Integer.parseInt(idString);
+		PostBean postBean=(new PostService()).findPost(id);
+		(new PostService()).insertPostReport(postBean);
 	}
 
 	/**
