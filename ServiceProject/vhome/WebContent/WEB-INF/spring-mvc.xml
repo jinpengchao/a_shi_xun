@@ -14,12 +14,8 @@
 	<context:component-scan base-package="com">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	
 	<mvc:annotation-driven/>
-	<!-- 定义JSP文件的位置 --> 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
 	<!-- 使用annotation定义事务 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
