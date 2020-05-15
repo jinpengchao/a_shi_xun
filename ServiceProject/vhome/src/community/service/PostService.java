@@ -33,9 +33,9 @@ public class PostService {
 	public List<PostExamineBean> findBeansByExamine(String examineString){
 		return (new PostExamineDao()).findBeansByExamine(examineString);
 	}
-	//查找所有审核的帖子
-	public List<PostExamineBean> findAll(){
-		return (new PostExamineDao()).findAll();
+	//查找私人所有审核的帖子
+	public List<PostExamineBean> findAll(String personId){
+		return (new PostExamineDao()).findAllByPersonId(personId);
 	}
 	//通过id修改审核情况
 	public void changeExamineByPId(String personId,String examineString) {

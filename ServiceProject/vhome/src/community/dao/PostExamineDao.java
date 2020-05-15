@@ -65,13 +65,14 @@ public class PostExamineDao {
 	 * @throws上午10:50:22
 	 * returntype:List<Post>
 	 */
-	public List<PostExamineBean> findAll(){
+	public List<PostExamineBean> findAllByPersonId(String personId){
 		List<PostExamineBean> list = new ArrayList<PostExamineBean>();
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_post_copy";
+			String sql = "select * from tbl_post_copy where personId=?";
 			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, personId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				PostExamineBean post = new PostExamineBean();

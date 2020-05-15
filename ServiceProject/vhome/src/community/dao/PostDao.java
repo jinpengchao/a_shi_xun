@@ -259,7 +259,7 @@ public class PostDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "delete from tbl_post where id = ?";
+			String sql = "delete from tbl_post_copy where id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			n = ps.executeUpdate();

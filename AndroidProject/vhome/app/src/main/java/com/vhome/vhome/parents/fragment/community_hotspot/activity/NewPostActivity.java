@@ -356,7 +356,6 @@ public class NewPostActivity extends Activity {
             p.setPersonId(sp.getString("id",""));
             p.setPostContent(postContent);
             p.setTime(time);
-            p.setExamine("待审核");
             Gson gson = new Gson();
             String imgs = gson.toJson(imgsName);
             p.setImgs(imgs);
