@@ -280,4 +280,30 @@ public class PostDao {
 		}
 		return n;
 	}
+	public int delPost1(int id) {
+		int n = 0;
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "delete from tbl_post where id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			n = ps.executeUpdate();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n;
+	}
 }

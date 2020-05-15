@@ -43,6 +43,8 @@ public class RemoveMyPost extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();
 		int postId = Integer.parseInt(request.getParameter("postId"));
+		//获取我的帖子审核的状态
+		String examineString=request.getParameter("examineString11");
 		//根据id删除帖子
 		//先查找评论回复，删除
 		List<CommentDetailBean> commentList = (new CommentService()).findComment(postId);
@@ -56,6 +58,10 @@ public class RemoveMyPost extends HttpServlet {
 		new CollectionService().delCollectionByPostId(postId);
 		//再删除帖子
 		int data = (new PostService()).delPost(postId);
+		//判断是否删除大厅中的帖子
+		if(examineString.equals("已审核")) {
+			 (new PostService()).delPost2(1);
+		}
 		out.write(data+"");
 		out.flush();
 		out.close();

@@ -57,8 +57,8 @@ public class ShowExamine extends HttpServlet {
 		request.setAttribute("examine2", postBeans3);
 		
 		//接收android端发送的数据personId,查找对应的帖子
-//		String personId=request.getParameter("personId");
-		String personId="491602";
+		String personId=request.getParameter("personId");
+//		String personId="491602";
 		List<PostExamineBean> list=(new PostService()).findAll(personId);
 		
 		//		获取当前人的所有收藏表
@@ -108,7 +108,7 @@ public class ShowExamine extends HttpServlet {
 		System.out.println(jsonobject.toString());
 		
 		//进行帖子的审核
-//		request.getRequestDispatcher("/list.jsp").forward(request,response); 
+		request.getRequestDispatcher("/list.jsp").forward(request,response); 
 	}
 
 	/**

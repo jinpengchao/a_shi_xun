@@ -108,6 +108,8 @@ public class PostService {
 	public int delPost(int id) {
 		return (new PostDao()).delPost(id);
 	}
-	
+	public int delPost2(int id) {
+		return (new PostDao()).delPost1(id);
+	}
 	
 }
