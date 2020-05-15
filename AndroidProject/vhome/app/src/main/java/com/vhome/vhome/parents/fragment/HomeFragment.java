@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment {
         getAlarm();
 
         all_bg = view.findViewById(R.id.all_bg);
-        Glide.with(getActivity()).load(R.drawable.all_bg).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(all_bg);
+        Glide.with(getActivity()).asGif().load(R.drawable.all_bg).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(all_bg);
         bg1 = view.findViewById(R.id.bg1);
         bg1.setBackgroundResource(R.mipmap.bg);
         /*

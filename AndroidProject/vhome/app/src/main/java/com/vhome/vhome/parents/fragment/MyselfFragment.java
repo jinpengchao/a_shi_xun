@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.signature.StringSignature;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +46,7 @@ import java.util.UUID;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.signature.ObjectKey;
 import com.hyphenate.EMCallBack;
 import com.vhome.chat.DemoHelper;
 import com.vhome.vhome.MainActivity;
@@ -69,6 +69,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class MyselfFragment extends BaseFragment {
     private ImageView blurImageView;
@@ -281,15 +282,14 @@ public class MyselfFragment extends BaseFragment {
             String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
             Glide.with(getActivity())
                     .load(url)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                    .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getActivity()))
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))  // 重点在这行
+                    .apply(bitmapTransform(new BlurTransformation( 25,3)))
                     .into(blurImageView);
         } else {
             String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
             Glide.with(getActivity())
                     .load(url)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(header);
         }
 

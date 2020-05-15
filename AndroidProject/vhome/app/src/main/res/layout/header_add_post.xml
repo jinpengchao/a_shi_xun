@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/rl_head"
     android:layout_height="50dp"
     android:padding="10dp"
     android:background="#069EF1">
@@ -28,6 +29,7 @@
         android:textColor="#ffffff"
         android:layout_centerVertical="true"
         android:background="@drawable/btn_publish_shape"
+        android:gravity="center"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>

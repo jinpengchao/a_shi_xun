@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.vhome.chat.R;
@@ -129,7 +128,6 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             Glide.with(context)
                     .load(url)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(holder.ivHotPerson);
             try {
                 setPicToView(path,list.get(i).getHeadimg(), returnBitMap(url));

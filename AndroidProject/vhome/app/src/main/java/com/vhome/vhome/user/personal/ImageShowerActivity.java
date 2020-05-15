@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
 
@@ -49,7 +48,6 @@ public class ImageShowerActivity extends Activity {
         Glide.with(this)
                 .load(url)
                 .priority(Priority.HIGH)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(bigImg);
 
         download.setOnClickListener(new View.OnClickListener() {

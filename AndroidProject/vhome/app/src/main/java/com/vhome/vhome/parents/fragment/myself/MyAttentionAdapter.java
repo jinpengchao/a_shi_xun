@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.util.List;
 import java.util.UUID;
@@ -72,7 +71,6 @@ public class MyAttentionAdapter extends BaseAdapter {
         Glide.with(context).load(user_logo)
                 .priority(Priority.HIGH)
                 .error(R.mipmap.errorimg1)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(viewHolder.ivPerson);
         //设置昵称
         viewHolder.tvName.setText(list.get(i).getNikeName());

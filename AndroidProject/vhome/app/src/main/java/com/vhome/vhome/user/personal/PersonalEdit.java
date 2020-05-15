@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
 import com.vhome.vhome.parents.fragment.alarm.AlarmActivity;
@@ -130,7 +129,6 @@ public class PersonalEdit extends Activity {
                     .load(url)
                     .placeholder(R.drawable.rc_default_portrait)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(header);
             setPicToView(returnBitMap(url));
         }

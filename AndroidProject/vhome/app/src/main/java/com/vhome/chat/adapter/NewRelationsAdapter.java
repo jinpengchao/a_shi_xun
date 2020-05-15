@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.vhome.chat.R;
 import com.vhome.chat.domain.Relations;
@@ -117,7 +116,6 @@ public class NewRelationsAdapter extends BaseAdapter {
                 .load(user_logo)
                 .priority(Priority.HIGH)
                 .error(R.mipmap.errorimg1)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(holder.avator);
         holder.name.setText(NewRelationsActivity.msgs.get(position).getSendName());
         return convertView;

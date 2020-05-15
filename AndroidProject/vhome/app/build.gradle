@@ -59,6 +59,35 @@ android {
         appSecret "df615af35c5b93f73c1b42a5b25a3ea9"
         SMSSDK {}
     }
+
+    configurations.all {
+        resolutionStrategy {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'androidx.core') {
+                    details.useVersion "1.1.0"
+                }
+                if (details.requested.group == 'androidx.lifecycle') {
+                    details.useVersion "2.0.0"
+                }
+                if (details.requested.group == 'androidx.versionedparcelable') {
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.fragment') {
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.appcompat') {
+                    details.useVersion "1.1.0"
+                }
+                if (details.requested.group == 'androidx.transition') {
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.exifinterface') {
+                    details.useVersion "1.0.0"
+                }
+            }
+        }
+    }
+
 }
 repositories {
     mavenCentral()
@@ -97,10 +126,10 @@ dependencies {
     //------------------------------------------------------//
     implementation 'com.youth.banner:banner:1.4.10'
     //轮播图
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     //Glide
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
-    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation 'jp.wasabeef:glide-transformations:4.0.1'
     implementation 'com.google.android.material:material:1.0.0'
     //高斯模糊图
     implementation 'org.greenrobot:eventbus:3.1.1'//eventBus
@@ -145,6 +174,8 @@ dependencies {
     implementation project(path: ':lib-todaystepcounter')
     implementation project(path: ':lib-jlogger')
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
+    implementation project(path: ':picture_library')
+    implementation project(path: ':ucrop')
 }
 
 // ADD THIS AT THE BOTTOM

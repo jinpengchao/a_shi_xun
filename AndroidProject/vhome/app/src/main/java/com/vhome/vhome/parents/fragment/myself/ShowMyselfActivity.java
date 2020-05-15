@@ -2,6 +2,8 @@ package com.vhome.vhome.parents.fragment.myself;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.signature.ObjectKey;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.children.fragment.historyAdapter.AlarmBean;
@@ -36,7 +38,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.vhome.vhome.parents.TrackUtil.Utils.getContext;
 
 public class ShowMyselfActivity extends AppCompatActivity {
@@ -149,13 +151,11 @@ public class ShowMyselfActivity extends AppCompatActivity {
                 String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
                 Log.e("img====",imgName);
                 Glide.with(ShowMyselfActivity.this).load(url)
-                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
-                        .bitmapTransform(new BlurTransformation(ShowMyselfActivity.this, 25), new CenterCrop(ShowMyselfActivity.this))
+                        .apply(bitmapTransform(new BlurTransformation( 25,3)))
                         .into(blurImageView);
                 Glide.with(ShowMyselfActivity.this).load(url)
-                        .signature(new StringSignature(UUID.randomUUID().toString()))  // 重点在这行
                         .placeholder(R.drawable.rc_default_portrait)
-                        .bitmapTransform(new CropCircleTransformation(ShowMyselfActivity.this))
+                        .apply(bitmapTransform(new BlurTransformation( 25,3)))
                         .into(header);
             }
         };
