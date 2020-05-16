@@ -19,7 +19,7 @@
 </head>
 <body class="childrenBody">
 	<div class="layui-form news_list">
-	  	<table class="layui-table">
+	  	<table border="2px;">
 		    <colgroup>
 				<col width="150">
 				<col>
