@@ -42,8 +42,8 @@
 					<th>${p.postContent} </th>
 					<th><span style="color:red;">${p.examineString }</span></th>
 					<th>${p.time}</th>
-					<td><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
-					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a></td>
+					<td><span style="margin-left: 10px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
+					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a></span></td>
 				</tr>
 				</c:forEach>
 				<c:forEach items="${examine1 }" var="p">
