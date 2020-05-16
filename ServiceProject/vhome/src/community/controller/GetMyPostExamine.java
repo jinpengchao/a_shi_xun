@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import community.service.AttentionService;
 import community.service.CollectionService;
 import community.service.CommentService;
@@ -44,8 +46,8 @@ public class GetMyPostExamine extends HttpServlet {
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		//接收android端发送的数据personId,查找对应的帖子
-		String personId=request.getParameter("personId");
-//		String personId="491602";
+//		String personId=request.getParameter("personId");
+		String personId="491602";
 		List<PostExamineBean> list=(new PostService()).findAll(personId);
 		
 		//		获取当前人的所有收藏表
@@ -84,15 +86,14 @@ public class GetMyPostExamine extends HttpServlet {
 				}
 			}
 		}
-		
+		Gson gson = new Gson();
+		String data = null;
 		//发送对应personId所有待审核、已审核、审核失败帖子数据
-		JSONObject jsonobject=new JSONObject();
-		jsonobject.put("examineString", list);
-		String jdata=jsonobject.toString();
-		out.write(jdata);
+		data = gson.toJson(list);
+		out.print(data);
+		out.write(data);
 		out.flush();
 		out.close();
-		System.out.println(jsonobject.toString());
 	}
 
 	/**

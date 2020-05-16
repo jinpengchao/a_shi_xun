@@ -14,11 +14,46 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="../layui/css/layui.css" media="all" />
+	
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+	<link rel="stylesheet" href="../../css/news.css" media="all" />
 </head>
 <body class="childrenBody">
-	<div style="text-align: center; padding:11% 0;">
-		<i class="layui-icon" style="line-height:20rem; font-size:20rem; color: #393D50;">&#xe61c;</i>
-		<p style="font-size: 20px; font-weight: 300; color: #999;">我勒个去，页面被外星人挟持了!</p>
+<div class="layui-form news_list">
+	  	<table border="2px;">
+		    <colgroup>
+				<col width="150">
+				<col>
+				<col width="20%">
+				<col width="12%">
+				<col width="9%">
+		    </colgroup>
+		    <thead>
+				<tr>
+					<th>发布人</th>
+					<th>帖子内容</th>
+					<th>帖子图片</th>
+					<th>发布时间</th>
+					<th>操作</th>
+				</tr> 
+				<c:forEach items="${report }" var="p">
+				<tr>
+					<th>${p.nickName }</th>
+					<th>${p.postContent} </th>
+					<th>
+						<img src="/imageUrl/${p.imgs }">
+					</th>
+					<th>${p.time}</th>
+					<td><span style="margin-left: 15px;"><a href="/vhome/DeleteReport?id=${p.id}">删除</a>
+					<a href="/vhome/IgnoreReport?id=${p.id}">忽略</a></span></td>
+				</tr>
+				</c:forEach>
+				
+		    </thead>
+		    <tbody class="news_content"></tbody>
+		</table>
 	</div>
+<div id="page"></div>
+<script type="text/javascript" src="../../layui/layui.js"></script>
 </body>
 </html>

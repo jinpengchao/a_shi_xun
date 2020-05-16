@@ -52,6 +52,17 @@
 				</div>
 			</a>
 		</div>
+		<div class="panel col max_panel">
+			<a href="javascript:;" data-url="/vhome/PostReport">
+				<div class="panel_icon" style="background-color:#FF4040;">
+					<i class="iconfont icon-text" data-icon="icon-text"></i>
+				</div>
+				<div style="margin-top: 40px">
+					<span></span>
+					<cite>帖子举报</cite>
+				</div>
+			</a>
+		</div>
 	</div>
 	<blockquote class="layui-elem-quote explain">
 		<p>本模板基于Layui实现，支持除LayIM外所有的Layui组件。<a href="http://layim.layui.com/" target="_blank" class="layui-btn layui-btn-mini">前往获取LayIM授权</a><a href="https://git.oschina.net/layuicms/layuicms" target="_blank" class="layui-btn layui-btn-mini layui-btn-danger">码云下载</a><a href="https://github.com/BrotherMa/layuiCMS" target="_blank" class="layui-btn layui-btn-mini layui-btn-danger">GitHub下载</a>　<span style="color:#1E9FFF;">郑重提示：网站所有数据均为静态数据，无数据库，除打开的窗口和部分小改动外所有操作刷新后无效，关闭窗口或清除缓存后，所有操作无效，请知悉</span></p>

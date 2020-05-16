@@ -2,6 +2,8 @@ package community.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +54,40 @@ public class ShowExamine extends HttpServlet {
 		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
 		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
 		out.print(postBeans2.get(0).getTime());
+		
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for(PostExamineBean p:postBeans1) {
+			try {
+				String timeString=format.format(format.parse(p.getTime()));
+				p.setTime(timeString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(PostExamineBean p:postBeans2) {
+			try {
+				String timeString=format.format(format.parse(p.getTime()));
+				p.setTime(timeString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(PostExamineBean p:postBeans3) {
+			try {
+				String timeString=format.format(format.parse(p.getTime()));
+				p.setTime(timeString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		request.setAttribute("examine", postBeans1);
 		request.setAttribute("examine1", postBeans2);
 		request.setAttribute("examine2", postBeans3);
-		
 		
 		
 		//进行帖子的审核

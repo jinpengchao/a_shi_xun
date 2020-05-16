@@ -23,6 +23,7 @@
 		    <colgroup>
 				<col width="150">
 				<col>
+				<col width="20%">
 				<col width="9%">
 				<col width="9%">
 				<col width="9%">
@@ -32,6 +33,7 @@
 				<tr>
 					<th>发布人</th>
 					<th>帖子内容</th>
+					<th>帖子图片</th>
 					<th>审核状态</th>
 					<th>发布时间</th>
 					<th>操作</th>
@@ -40,6 +42,11 @@
 				<tr>
 					<th>${p.nickName }</th>
 					<th>${p.postContent} </th>
+					<th>
+						<c:forEach items="${p.imgs }" var="i">
+							<img src="/imageUrl/b.png">
+						</c:forEach>
+					</th>
 					<th><span style="color:red;">${p.examineString }</span></th>
 					<th>${p.time}</th>
 					<td><span style="margin-left: 10px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
@@ -50,6 +57,7 @@
 				<tr>
 					<th>${p.nickName }</th>
 					<th>${p.postContent} </th>
+					<th><img src="/imageUrl/${p.imgs }"></th>
 					<th><span style="color:green;">${p.examineString }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
@@ -59,6 +67,7 @@
 				<tr>
 					<th>${p.nickName }</th>
 					<th>${p.postContent}</th>
+					<th><img src="/imageUrl/${p.imgs }"></th>
 					<th><span style="color:#FF0000;">${p.examineString }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
