@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,14 @@
 					<th>${p.nickName }</th>
 					<th>${p.postContent} </th>
 					<th>
-						<img src="/imageUrl/${p.imgs }">
+						<c:if test="${p.imgs eq ''}">
+							该帖子未上传照片
+						</c:if>
+						<c:if test="${p.imgs ne ''}">
+							<c:forEach items="${fn:split(p.imgs,',')}" var="i">
+								<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+							</c:forEach>
+						</c:if>
 					</th>
 					<th>${p.time}</th>
 					<td><span style="margin-left: 15px;"><a href="/vhome/DeleteReport?id=${p.id}">删除</a>

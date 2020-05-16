@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -43,13 +44,18 @@
 					<th>${p.nickName }</th>
 					<th>${p.postContent} </th>
 					<th>
-						<c:forEach items="${p.imgs }" var="i">
-							<img src="/imageUrl/b.png">
-						</c:forEach>
+						<c:if test="${p.imgs eq ''}">
+							该帖子未上传照片
+						</c:if>
+						<c:if test="${p.imgs ne ''}">
+							<c:forEach items="${fn:split(p.imgs,',')}" var="i">
+								<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+							</c:forEach>
+						</c:if>
 					</th>
 					<th><span style="color:red;">${p.examineString }</span></th>
 					<th>${p.time}</th>
-					<td><span style="margin-left: 10px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
+					<td><span style="margin-left: 15px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
 					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a></span></td>
 				</tr>
 				</c:forEach>
@@ -57,7 +63,16 @@
 				<tr>
 					<th>${p.nickName }</th>
 					<th>${p.postContent} </th>
-					<th><img src="/imageUrl/${p.imgs }"></th>
+					<th>
+						<c:if test="${p.imgs eq ''}">
+							该帖子未上传照片
+						</c:if>
+						<c:if test="${p.imgs ne ''}">
+							<c:forEach items="${fn:split(p.imgs,',')}" var="i">
+								<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+							</c:forEach>
+						</c:if>
+					</th>
 					<th><span style="color:green;">${p.examineString }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
@@ -67,7 +82,16 @@
 				<tr>
 					<th>${p.nickName }</th>
 					<th>${p.postContent}</th>
-					<th><img src="/imageUrl/${p.imgs }"></th>
+					<th>
+						<c:if test="${p.imgs eq ''}">
+							该帖子未上传照片
+						</c:if>
+						<c:if test="${p.imgs ne ''}">
+							<c:forEach items="${fn:split(p.imgs,',')}" var="i">
+								<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+							</c:forEach>
+						</c:if>
+					</th>
 					<th><span style="color:#FF0000;">${p.examineString }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>

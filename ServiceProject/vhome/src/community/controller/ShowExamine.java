@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,7 @@ import community.service.PostService;
 import entity.AttentionBean;
 import entity.CollectionBean;
 import entity.GoodPostBean;
+import entity.Images;
 import entity.PostBean;
 import entity.PostExamineBean;
 import net.sf.json.JSONObject;
@@ -53,7 +55,7 @@ public class ShowExamine extends HttpServlet {
 		List<PostExamineBean> postBeans1=(new PostService()).findBeansByExamine("待审核");
 		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
 		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
-		out.print(postBeans2.get(0).getTime());
+		out.print(postBeans2.get(0).getImgs());
 		
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
