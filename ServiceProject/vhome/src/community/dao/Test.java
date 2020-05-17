@@ -11,7 +11,7 @@ public class Test {
 		PostExamineDao examineDao=new PostExamineDao();
 		List<PostExamineBean> postExamineBeans=examineDao.findBeansByExamine("待审核");
 		for(PostExamineBean postExamineBean:postExamineBeans) {
-			System.out.println(postExamineBean.getExamineString());
+			System.out.println(postExamineBean.getExamine());
 		}
 	}
 

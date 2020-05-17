@@ -51,7 +51,7 @@ public class ShowExamine extends HttpServlet {
 		List<PostExamineBean> postBeans1=(new PostService()).findBeansByExamine("待审核");
 		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
 		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
-		out.print(postBeans2.get(0).getExamineString());
+		out.print(postBeans2.get(0).getExamine());
 		request.setAttribute("examine", postBeans1);
 		request.setAttribute("examine1", postBeans2);
 		request.setAttribute("examine2", postBeans3);

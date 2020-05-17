@@ -50,10 +50,8 @@ public class SavePostServlet extends HttpServlet {
 		String data = br.readLine();
 		Gson gson = new Gson();
 		post = gson.fromJson(data, PostExamineBean.class);
-	
 		PostService ps = new PostService();
 		n =(int) ps.savePost1(post);
-		System.out.println("savePostServlet的返回值"+n);
 		out.write(n+"");
 		out.flush();
 		out.close();

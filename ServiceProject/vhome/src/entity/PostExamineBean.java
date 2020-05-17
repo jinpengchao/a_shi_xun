@@ -9,18 +9,19 @@ public class PostExamineBean {
 	    private String personId;
 	    private String time;
 	    private String imgs;
-	    private String examineString;
+	    private String examine;
 	    private int commentNum;
 	    private int likeNum;
 	    private int save_status = 0;//标志位判断当前用户是否收藏过本帖
 	    private int like_status = 0;//标志位判断当前用户是否点赞过本帖
 	    private int attention_status = 0;//标志位判断当前用户是否关注发帖人
 		
-		public String getExamineString() {
-			return examineString;
+		
+		public String getExamine() {
+			return examine;
 		}
-		public void setExamineString(String examineString) {
-			this.examineString = examineString;
+		public void setExamine(String examine) {
+			this.examine = examine;
 		}
 		public String getPostContent() {
 			return postContent;
@@ -93,6 +94,13 @@ public class PostExamineBean {
 		}
 		public void setAttention_status(int attention_status) {
 			this.attention_status = attention_status;
+		}
+		@Override
+		public String toString() {
+			return "PostExamineBean [id=" + id + ", nickName=" + nickName + ", headimg=" + headimg + ", postContent="
+					+ postContent + ", personId=" + personId + ", time=" + time + ", imgs=" + imgs + ", examineString="
+					+ examine + ", commentNum=" + commentNum + ", likeNum=" + likeNum + ", save_status="
+					+ save_status + ", like_status=" + like_status + ", attention_status=" + attention_status + "]";
 		}
 	
 		

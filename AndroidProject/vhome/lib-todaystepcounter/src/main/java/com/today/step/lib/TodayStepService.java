@@ -391,7 +391,7 @@ public class TodayStepService extends Service implements Handler.Callback {
     }
 
     public void saveTodayStep(final int data){
-        Log.e("运行","储存数据"+data);
+        Log.i("运行","储存数据"+data);
         new Thread() {
             @Override
             public void run() {

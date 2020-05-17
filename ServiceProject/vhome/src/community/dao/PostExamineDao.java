@@ -123,7 +123,7 @@ public class PostExamineDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
+				post.setExamine(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -169,7 +169,7 @@ public class PostExamineDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
+				post.setExamine(rs.getString("examine"));
 				list.add(post);
 			}
 			rs.close();
@@ -211,7 +211,7 @@ public class PostExamineDao {
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
 			ps.setString(7, post.getImgs());
-			ps.setString(8, post.getExamineString());
+			ps.setString(8, post.getExamine());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {

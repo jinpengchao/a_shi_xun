@@ -39,6 +39,14 @@ public class GridImageAdapter extends
     private LayoutInflater mInflater;
     private List<LocalMedia> list = new ArrayList<>();
     private int selectMax = 9;
+    private onMyDelClick onMyDelClick;
+
+    public interface onMyDelClick{
+        public void myDelClick(int position);
+    }
+    public void setOnMyDelClick(onMyDelClick onMyDelClick){
+        this.onMyDelClick = onMyDelClick;
+    }
     /**
      * 点击添加图片跳转
      */
@@ -152,6 +160,7 @@ public class GridImageAdapter extends
                 // 这里有时会返回-1造成数据下标越界,具体可参考getAdapterPosition()源码，
                 // 通过源码分析应该是bindViewHolder()暂未绘制完成导致，知道原因的也可联系我~感谢
                 if (index != RecyclerView.NO_POSITION && list.size() > index) {
+                    onMyDelClick.myDelClick(index);
                     list.remove(index);
                     notifyItemRemoved(index);
                     notifyItemRangeChanged(index, list.size());

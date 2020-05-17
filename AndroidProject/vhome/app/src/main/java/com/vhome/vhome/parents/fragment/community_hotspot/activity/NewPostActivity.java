@@ -1,5 +1,6 @@
 package com.vhome.vhome.parents.fragment.community_hotspot.activity;
 
+import com.baidubce.util.HttpUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.animators.AnimationType;
 import com.luck.picture.lib.broadcast.BroadcastAction;
@@ -23,11 +24,13 @@ import com.vhome.vhome.parents.fragment.adapter.GridImageAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.FullyGridLayoutManager;
 import com.vhome.vhome.parents.fragment.community_hotspot.GlideEngine;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostExamineBean;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +38,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -50,7 +54,9 @@ import com.google.gson.Gson;
 
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.KeyValue;
 import org.xutils.http.RequestParams;
+import org.xutils.http.body.MultipartBody;
 import org.xutils.x;
 
 import java.io.File;
@@ -59,6 +65,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.Key;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,8 +94,9 @@ public class NewPostActivity extends Activity {
     private EditText edtPostPublish;
     private MyClickListener listener;
     private TextView tvPostCancel;
-    private static List<String> imgsName = new ArrayList<>();
-    private static ArrayList<String> datas = new ArrayList<>();
+    private static List<String> imgsName ;
+    private static List<LocalMedia> datas;
+    private static final String preExamine = "待审核";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +107,8 @@ public class NewPostActivity extends Activity {
         }
         setContentView(R.layout.activity_new_post);
 
+        imgsName = new ArrayList<>();
+        datas = new ArrayList<>();
         ActionBar actionBar = getActionBar();
         if(actionBar != null){
             actionBar.hide();
@@ -118,6 +128,15 @@ public class NewPostActivity extends Activity {
             mAdapter.setList(savedInstanceState.getParcelableArrayList("selectorList"));
         }
         mRecyclerView.setAdapter(mAdapter);
+
+        //点击图片右上角删除按钮时删除list中图片
+        mAdapter.setOnMyDelClick(new GridImageAdapter.onMyDelClick() {
+            @Override
+            public void myDelClick(int position) {
+                datas.remove(position);
+                imgsName.remove(position);
+            }
+        });
 
         mAdapter.setOnItemClickListener((v, position) -> {
             List<LocalMedia> selectList = mAdapter.getData();
@@ -227,7 +246,7 @@ public class NewPostActivity extends Activity {
                     //.imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg,Android Q使用PictureMimeType.PNG_Q
                     .isEnableCrop(false)// 是否裁剪
                     //.basicUCropConfig()//对外提供所有UCropOptions参数配制，但如果PictureSelector原本支持设置的还是会使用原有的设置
-                    .isCompress(true)// 是否压缩
+                    .isCompress(false)// 是否压缩
                     //.compressQuality(80)// 图片压缩后输出质量 0~ 100
                     .synOrAsy(true)//同步true或异步false 压缩 默认同步
                     //.queryMaxFileSize(10)// 只查多少M以内的图片、视频、音频  单位M
@@ -301,10 +320,12 @@ public class NewPostActivity extends Activity {
                 Log.i(TAG, "Android Q 特有Path:" + media.getAndroidQToPath());
                 Log.i(TAG, "宽高: " + media.getWidth() + "x" + media.getHeight());
                 Log.i(TAG, "Size: " + media.getSize());
-                datas.add(media.getCompressPath());
-                File file = new File(media.getCompressPath());
-                String fname = file.getName();
-                imgsName.add(fname);
+                Log.i(TAG,"文件名filename:"+media.getFileName());
+                Log.i(TAG,"realpath:"+media.getRealPath());
+                datas.add(media);
+                File file = new File(media.getRealPath());
+                imgsName.add(file.getName());
+                Log.d(TAG, "onResult: datas数据："+datas.toString()+":imgsName数据"+imgsName.toString());
             }
             if (mAdapterWeakReference.get() != null) {
                 mAdapterWeakReference.get().setList(result);
@@ -375,28 +396,6 @@ public class NewPostActivity extends Activity {
         mPictureParameterStyle.pictureExternalPreviewGonePreviewDelete = true;
         // 设置NavBar Color SDK Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP有效
         mPictureParameterStyle.pictureNavBarColor = Color.parseColor("#393a3e");
-//        // 自定义相册右侧文本内容设置
-//        mPictureParameterStyle.pictureRightDefaultText = "";
-//        // 自定义相册未完成文本内容
-//        mPictureParameterStyle.pictureUnCompleteText = "";
-//        // 自定义相册完成文本内容
-//        mPictureParameterStyle.pictureCompleteText = "";
-//        // 自定义相册列表不可预览文字
-//        mPictureParameterStyle.pictureUnPreviewText = "";
-//        // 自定义相册列表预览文字
-//        mPictureParameterStyle.picturePreviewText = "";
-//
-//        // 自定义相册标题字体大小
-//        mPictureParameterStyle.pictureTitleTextSize = 18;
-//        // 自定义相册右侧文字大小
-//        mPictureParameterStyle.pictureRightTextSize = 14;
-//        // 自定义相册预览文字大小
-//        mPictureParameterStyle.picturePreviewTextSize = 14;
-//        // 自定义相册完成文字大小
-//        mPictureParameterStyle.pictureCompleteTextSize = 14;
-//        // 自定义原图文字大小
-//        mPictureParameterStyle.pictureOriginalTextSize = 14;
-
         // 裁剪主题
         mCropParameterStyle = new PictureCropParameterStyle(
                 ContextCompat.getColor(getContext(), R.color.app_color_grey),
@@ -447,6 +446,9 @@ public class NewPostActivity extends Activity {
                     int position = extras.getInt(PictureConfig.EXTRA_PREVIEW_DELETE_POSITION);
                     ToastUtils.s(getContext(), "delete image index:" + position);
                     mAdapter.remove(position);
+                    datas.remove(position);
+                    imgsName.remove(position);
+                    Log.d(TAG, "onReceive: position:"+position+"datas:"+datas.toString()+"images:"+imgsName.toString());
                     mAdapter.notifyItemRemoved(position);
                 }
             }
@@ -487,6 +489,7 @@ public class NewPostActivity extends Activity {
                         int i = saveMyPost();
                         if (i==1){
                             finish();
+                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
                         }
                     }else {
                         saveMyPost();
@@ -518,12 +521,13 @@ public class NewPostActivity extends Activity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time = sdf.format(date);
 
-            PostBean p = new PostBean();
+            PostExamineBean p = new PostExamineBean();
             p.setNickName(sp.getString("nickName",""));
             p.setHeadimg(sp.getString("headImg",""));
             p.setPersonId(sp.getString("id",""));
             p.setPostContent(postContent);
             p.setTime(time);
+            p.setExamine(preExamine);
             Gson gson = new Gson();
             String imgs = gson.toJson(imgsName);
             p.setImgs(imgs);
@@ -539,15 +543,9 @@ public class NewPostActivity extends Activity {
                         //发送数据
                         HttpURLConnection connection = util.sendData(url,data);
                         //获取数据
-                        String data = util.getData(connection);
-
-                        if(null!=data){
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                        String receive = util.getData(connection);
+                        if(null!=receive){
+                            Log.d(TAG, "run: 帖子数据保存成功");
                         }
 
                     } catch (MalformedURLException e) {
@@ -561,26 +559,35 @@ public class NewPostActivity extends Activity {
         return 1;
     }
 
+    private ProgressDialog progressDialog;
+
+    /**
+     * 图片和视频的上传
+     */
     private void upLoadImg() {
         String postContent = edtPostPublish.getText().toString().trim();
         if (null==postContent||"".equals(postContent)){
-            Toast.makeText(NewPostActivity.this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
         }else {
-            String url = "http://"+(new MyApp()).getIp()+":8080/vhome/PostImgServlet";
-
+            String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/PostImgServlet";
+            progressDialog = new ProgressDialog(NewPostActivity.this);
+            progressDialog.setMessage("上传中...");
+            progressDialog.show();
             RequestParams params = new RequestParams(url);
-            params.addBodyParameter("msg","上传图片");
-            for (int i=0;i<datas.size();i++){
-                params.addBodyParameter("imgs",new File(datas.get(i)));
+            List<KeyValue> list = new ArrayList<>();
+            for (LocalMedia media : datas) {
+                list.add(new KeyValue("file", new File(media.getRealPath())));
             }
             x.Ext.init(getApplication());
+            MultipartBody body = new MultipartBody(list, "UTF-8");
+            params.setRequestBody(body);
             params.setMultipart(true);
             x.http().post(params, new Callback.CacheCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
-                    Log.i("upLoadImg","图片上传成功！");
-                    for (int i=0;i<datas.size();i++){
-                        File file = new File(datas.get(i));
+                    Log.i("upLoadImg", "图片上传成功！");
+                    for (int i = 0; i < datas.size(); i++) {
+                        File file = new File(datas.get(i).getCompressPath());
                         if (file.exists()) {
                             file.delete();
                         }
@@ -589,15 +596,19 @@ public class NewPostActivity extends Activity {
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    Log.e("upLoadImg","图片上传失败！");
+                    progressDialog.dismiss();
+                    Log.e("upLoadImg", "图片上传失败！");
                 }
 
                 @Override
                 public void onCancelled(CancelledException cex) {
 
                 }
+
                 @Override
                 public void onFinished() {
+                    Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     finish();
                 }
 
@@ -608,4 +619,5 @@ public class NewPostActivity extends Activity {
             });
         }
     }
+
 }

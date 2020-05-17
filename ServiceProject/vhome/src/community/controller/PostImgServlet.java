@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,12 +36,13 @@ public class PostImgServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<String> imgs = new ArrayList<String>();
+		
 		SmartUpload smartUpload = new SmartUpload();
 		try {
 			smartUpload.initialize(this.getServletConfig(), request, response);
 			smartUpload.upload();
 			String msg = smartUpload.getRequest().getParameter("msg");
+			System.out.println("接收到上传文件："+msg);
 			if (msg != null)
 				msg = new String(msg.getBytes("GBK"), "utf-8");
 			com.jspsmart.upload.Files files = smartUpload.getFiles();

@@ -117,4 +117,19 @@ public class PostExamineBean {
     public void setAttention_status(int attention_status) {
         this.attention_status = attention_status;
     }
+
+    @Override
+    public String toString() {
+        return "PostExamineBean{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", headimg='" + headimg + '\'' +
+                ", postContent='" + postContent + '\'' +
+                ", personId='" + personId + '\'' +
+                ", time='" + time + '\'' +
+                ", imgs='" + imgs + '\'' +
+                ", examine='" + examine + '\'' +
+                ", commentNum=" + commentNum +
+                '}';
+    }
 }
