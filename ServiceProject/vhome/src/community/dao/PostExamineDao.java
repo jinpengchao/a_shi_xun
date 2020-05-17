@@ -357,7 +357,7 @@ public class PostExamineDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
-				post.setExamineString(rs.getString("examine"));
+				post.setExamine(rs.getString("examine"));
 			}
 			rs.close();
 			ps.close();
