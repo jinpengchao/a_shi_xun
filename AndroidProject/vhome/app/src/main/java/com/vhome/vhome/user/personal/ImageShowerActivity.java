@@ -41,23 +41,30 @@ public class ImageShowerActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String phone = bundle.getString("phone");
+        int type = bundle.getInt("type");
 
         bigImg = (ImageView) findViewById(R.id.big_img);
         download = (TextView) findViewById(R.id.download_header);
+        String url = null;
+        if(type==0){
+            url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"bg"+phone+".jpg";
+        }else if(type==1){
+            url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
+        }
 
-        String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";
         Glide.with(this)
                 .load(url)
                 .priority(Priority.HIGH)
                 .signature(new StringSignature(UUID.randomUUID().toString()))
                 .into(bigImg);
 
+        String finalUrl = url;
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ImageShowerActivity.this,"保存成功",Toast.LENGTH_LONG);
                 try {
-                    setPicToView(phone,returnBitMap(url));
+                    setPicToView(phone,returnBitMap(finalUrl));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -86,6 +86,59 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
+	public User pwdLogin(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		User user = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				String registerTime = rs.getString("registerTime");
+				user.setRegisterTime(registerTime);
+			} else {
+				System.out.println("用户不存在！");
+			}
+			rs.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	public int getType(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		int type =-1;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				type = rs.getInt("type");
+				System.out.println("typetypetype！"+type);
+			} else {
+				System.out.println("用户不存在！");
+			}
+			rs.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return type;
+	}
 	//密码登录
 	public User pwdLogin(String phone,String password) {
 		DBUtil util = DBUtil.getInstance();
@@ -103,9 +156,11 @@ public class UserDao {
 				if (password.equals(pwd)) {// 判断密码是否正确5
 					user = new User();
 					int type = rs.getInt("type");
+					String registerTime = rs.getString("registerTime");
 					user.setPhone(phone);
 					user.setPassword(password);
 					user.setType(type);
+					user.setRegisterTime(registerTime);
 					System.out.println("登陆成功！");
 				} else {
 					System.out.println("密码错误！");
@@ -208,10 +263,7 @@ public class UserDao {
 					userInfo.setHeaderImg(rs.getString("headimg"));
 					userInfo.setType(type);
 					System.out.println("用户信息存储完毕--父母");
-				}else {
-					System.out.println("未查到这个人的信息--父母");
 				}
-				rs.close();
 			}
 			if(type==1) {
 				System.out.println("type=1");

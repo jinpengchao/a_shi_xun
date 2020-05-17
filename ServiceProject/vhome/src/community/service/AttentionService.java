@@ -27,6 +27,10 @@ public class AttentionService {
 		return (new AttentionDao()).insertAttention(attention);
 	}
 	
+	public int ifAttention(String myPhone,String oppositePhone) {
+		return (new AttentionDao()).selectIfAttention(myPhone,oppositePhone);
+	}
+	
 	public List<AttentionBean> findAttention(String personId){
 		return (new AttentionDao()).queryAttention(personId);
 	}

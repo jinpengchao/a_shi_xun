@@ -7,10 +7,11 @@
         android:id="@+id/title_head"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:background="#171a21"
+        android:layout_height="115dp">
         <ImageView android:id="@+id/iv_blur"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp" />
         <LinearLayout
             android:id="@+id/f1"
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_marginTop="25dp">
                 <TextView
                     android:id="@+id/parent_name"
-                    android:textColor="#000000"
+                    android:textColor="#ffffff"
                     android:textSize="15dp"
                     android:textStyle="bold"
                     android:text="春天的野草"
@@ -51,6 +52,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="5dp"
                         android:text="简介:"
+                        android:textColor="#ffffff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     </TextView>
@@ -58,6 +60,9 @@
                         android:id="@+id/parent_id"
                         android:layout_gravity="center_vertical"
                         android:textSize="15dp"
+                        android:textColor="#ffffff"
+                        android:maxLines="1"
+                        android:maxEms="8"
                         android:text="这个人很懒，没有留下文字"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
@@ -77,85 +82,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:src="@mipmap/user_detial"
+                android:layout_marginRight="@dimen/adaptive_10dp"
                 android:layout_height="wrap_content">
             </ImageView>
         </RelativeLayout>
-        <!--<LinearLayout
-            android:layout_below="@id/f2"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="成就：">
-            </TextView>
-            <TextView
-                android:textColor="#FF0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="运动达人"
-                >
-            </TextView>
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="地区：">
-            </TextView>
-            <TextView
-                android:id="@+id/parent_area"
-                android:textColor="#FF0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="黑龙江"
-                >
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_below="@id/f1"
-            android:id="@+id/f2"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="关注：">
-            </TextView>
-            <TextView
-                android:id="@+id/tv_myself_attention"
-                android:textColor="#FF0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="10"
-                >
-            </TextView>
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="粉丝：">
-            </TextView>
-            <TextView
-                android:id="@+id/tv_myself_funs"
-                android:textColor="#FF0000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="28W"
-                >
-            </TextView>
-        </LinearLayout>-->
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -166,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:layout_marginTop="@dimen/adaptive_15dp"
                 android:background="#ffffff"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -253,7 +182,7 @@
                     android:paddingTop="@dimen/adaptive_15dp"
                     android:paddingBottom="@dimen/adaptive_15dp"
                     android:layout_weight="1"
-                    android:id="@+id/my_resetpwd"
+                    android:id="@+id/kefu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rl_press"
@@ -304,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/adaptive_10dp"
                         android:textSize="15dp"
-                        android:text="我的称号">
+                        android:text="我的运动">
                     </TextView>
                     <ImageView
                         android:src="@mipmap/right"
@@ -417,7 +346,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/adaptive_10dp"
                         android:textSize="15dp"
-                        android:text="我的称号">
+                        android:text="问题反馈">
                     </TextView>
                     <ImageView
                         android:src="@mipmap/right"

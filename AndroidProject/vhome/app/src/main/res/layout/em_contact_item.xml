@@ -9,6 +9,7 @@
         android:layout_width="@dimen/adaptive_44dp"
         android:layout_height="@dimen/adaptive_62dp"
         android:paddingBottom="@dimen/adaptive_9dp"
+        android:src="@drawable/rc_default_portrait"
         android:layout_marginLeft="@dimen/adaptive_12dp"
         android:layout_marginRight="@dimen/adaptive_12dp"
         android:paddingTop="@dimen/adaptive_9dp"/>

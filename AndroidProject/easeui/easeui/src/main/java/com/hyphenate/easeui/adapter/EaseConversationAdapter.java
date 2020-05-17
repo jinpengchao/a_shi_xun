@@ -2,8 +2,11 @@ package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.MyApp;
 import com.hyphenate.easeui.R;
@@ -45,6 +49,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * conversation list adapter
@@ -62,7 +67,11 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     protected int primarySize;
     protected int secondarySize;
     protected float timeSize;
-
+    private Handler handler1;
+    private int userTypes;
+    private String nikeName;
+    private List<Integer> typeList;
+    private List<String> nikeNames;
     public EaseConversationAdapter(Context context, int resource,
                                    List<EMConversation> objects) {
         super(context, resource, objects);
@@ -91,6 +100,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        typeList = new ArrayList<>();
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ease_row_chat_history, parent, false);
         }
@@ -112,8 +123,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         // get conversation
         EMConversation conversation = getItem(position);
         // get username or group id
-        String username = conversation.conversationId();
-        
+        final String username = conversation.conversationId();
+
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
             if(EaseAtMessageHelper.get().hasAtMeMsg(groupId)){
@@ -136,9 +147,35 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-            EaseUserUtils.setUserNick(username, holder.name);
+//            userType(username);
+//            getNickName(typeList.get(i),username);
+//            final ViewHolder finalHolder = holder;
+//            handler1 = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    switch (msg.what) {
+//                        case 4:
+//                            Bundle c = msg.getData();
+//                            String data1 = c.getString("data");
+//                            userTypes = Integer.parseInt(data1);
+//                            typeList.add(userTypes);
+//                            break;
+//                        case 5:
+//                            for (int i=0;i<typeList.size();i++){
+//                                try {
+//                                    getNickName(typeList.get(i),username);
+//                                    Log.e("listsize---",typeList.get(i)+"");
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+////                            Bundle b = msg.getData();
+////                            String data = b.getString("data");
+//                            break;
+//                    }
+//                }
+//            };
+            EaseUserUtils.setUserNick(username+"哎", holder.name);
             holder.motioned.setVisibility(View.GONE);
         }
 
@@ -163,7 +200,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         }
 
         if (conversation.getAllMsgCount() != 0) {
-        	// show the content of latest message
+            // show the content of latest message
             EMMessage lastMessage = conversation.getLastMessage();
             String content = null;
             if(cvsListHelper != null){
@@ -181,7 +218,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 holder.msgState.setVisibility(View.GONE);
             }
         }
-        
+
         //set property
         holder.name.setTextColor(primaryColor);
         holder.message.setTextColor(secondaryColor);
@@ -195,7 +232,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
 
         return convertView;
     }
-    
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
@@ -205,7 +242,6 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             notiyfyByFilter = false;
         }
     }
-    
     @Override
     public Filter getFilter() {
         if (conversationFilter == null) {
@@ -213,7 +249,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         }
         return conversationFilter;
     }
-    
+
 
     public void setPrimaryColor(int primaryColor) {
         this.primaryColor = primaryColor;
@@ -268,7 +304,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 for (int i = 0; i < count; i++) {
                     final EMConversation value = mOriginalValues.get(i);
                     String username = value.conversationId();
-                    
+
                     EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
                     if(group != null){
                         username = group.getGroupName();
@@ -283,10 +319,10 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                     if (username.startsWith(prefixString)) {
                         newValues.add(value);
                     } else{
-                          final String[] words = username.split(" ");
-                            final int wordCount = words.length;
+                        final String[] words = username.split(" ");
+                        final int wordCount = words.length;
 
-                            // Start at index 0, in case valueText starts with space(s)
+                        // Start at index 0, in case valueText starts with space(s)
                         for (String word : words) {
                             if (word.startsWith(prefixString)) {
                                 newValues.add(value);
@@ -322,7 +358,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     public void setCvsListHelper(EaseConversationListHelper cvsListHelper){
         this.cvsListHelper = cvsListHelper;
     }
-    
+
     private static class ViewHolder {
         /** who you chat with */
         TextView name;
@@ -340,5 +376,59 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         RelativeLayout list_itease_layout;
         TextView motioned;
     }
-}
+    public void userType(String username)  {
+        //准备数据
+        final String data = username;
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).ip;
+                try {
+                    URL url = new URL("http://" + ip + ":8080/vhome/ReturnType");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url, data);
+                    //获取数据
+                    String data = util.getData(connection);
+                    util.sendMsg(data,4,handler1);
+                    Log.e("conver_adapter_type","userTypes"+data);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void getNickName(int type, final String username) throws JSONException {
+        //准备数据
+        JSONObject json = new JSONObject();
+        json.put("phone", username);
+        json.put("type", type);
+        final String data = json.toString();
 
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).ip;
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/searchUserInfo");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    JSONObject jsonObject = new JSONObject(data);
+                    String nickName = jsonObject.getString("nikeName");
+                    Log.e("listsize---nickName",nickName);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+}

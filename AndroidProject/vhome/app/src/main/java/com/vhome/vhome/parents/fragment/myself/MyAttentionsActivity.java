@@ -10,6 +10,7 @@ import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivi
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.user.entity.ParentUserInfo;
+import com.vhome.vhome.user.personal.OthersSerlfActivity;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.content.Context;
@@ -134,7 +135,7 @@ public class MyAttentionsActivity extends AppCompatActivity implements AbsListVi
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent person = new Intent();
                         person.putExtra("personId",list.get(i).getId());
-                        person.setClass(MyAttentionsActivity.this, ShowMyselfActivity.class);
+                        person.setClass(MyAttentionsActivity.this, OthersSerlfActivity.class);
                         startActivity(person);
                     }
                 });

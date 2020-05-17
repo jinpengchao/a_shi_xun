@@ -3,6 +3,9 @@ package com.hyphenate.easeui.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -17,16 +20,27 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.easeui.MyApp;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.utils.CharacterParser;
+import com.hyphenate.easeui.utils.ConnectionUtil;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.EMLog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hyphenate.easeui.utils.CharacterParser.getSortKey;
 
 public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements SectionIndexer{
     private static final String TAG = "ContactAdapter";
@@ -39,6 +53,8 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
     private int res;
     private MyFilter myFilter;
     private boolean notiyfyByFilter;
+    private Handler handler1;
+    private int userTypes;
 
     public EaseContactAdapter(Context context, int resource, List<EaseUser> objects) {
         super(context, resource, objects);
@@ -48,15 +64,15 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         copyUserList.addAll(objects);
         layoutInflater = LayoutInflater.from(context);
     }
-    
+
     private static class ViewHolder {
         ImageView avatar;
         TextView nameView;
         TextView headerView;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
             if(res == 0)
@@ -71,12 +87,12 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             holder = (ViewHolder) convertView.getTag();
         }
         //按名称首字母分类
-        EaseUser user = getItem(position);
+
+        final EaseUser user = getItem(position);
         if(user == null)
             Log.d("ContactAdapter", position + "");
         String username = user.getUsername();
         String header = user.getInitialLetter();
-        
         if (position == 0 || header != null && !header.equals(getItem(position - 1).getInitialLetter())) {
             if (TextUtils.isEmpty(header)) {
                 holder.headerView.setVisibility(View.GONE);
@@ -100,9 +116,36 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             if (avatarOptions.getAvatarRadius() != 0)
                 avatarView.setRadius(avatarOptions.getAvatarRadius());
         }
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("parentUserInfo",Context.MODE_PRIVATE);
-        String nickName = sharedPreferences.getString("nickName",username);
-        EaseUserUtils.setUserNick(nickName, holder.nameView);
+
+//        userType(username);
+//        try {
+//            getNickName(userTypes,username);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        notifyDataSetChanged();
+//        handler1 = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                switch (msg.what) {
+//                    case 4:
+//                        Bundle c = msg.getData();
+//                        String data1 = c.getString("data");
+//                        userTypes = Integer.parseInt(data1);
+//                        break;
+//                    case 5:
+//                        Bundle b = msg.getData();
+//                        String data = b.getString("data");
+//                        Log.e("data", data);
+//                        EaseUserUtils.setUserNick(data, holder.nameView);
+//                        String header = getSortKey(CharacterParser.getInstance().getSelling(data));
+//
+//                        break;
+//                }
+//            }
+//        };
+        EaseUserUtils.setUserNick(username, holder.nameView);
         try {
             EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
         } catch (IOException e) {
@@ -118,15 +161,15 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             holder.headerView.setBackground(initialLetterBg);
         if(initialLetterColor != 0)
             holder.headerView.setTextColor(initialLetterColor);
-        
+
         return convertView;
     }
-    
+
     @Override
     public EaseUser getItem(int position) {
         return super.getItem(position);
     }
-    
+
     @Override
     public int getCount() {
         return super.getCount();
@@ -141,7 +184,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
     public int getSectionForPosition(int position) {
         return sectionOfPosition.get(position);
     }
-    
+
     @Override
     public Object[] getSections() {
         positionOfSection = new SparseIntArray();
@@ -163,7 +206,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         }
         return list.toArray(new String[list.size()]);
     }
-    
+
     @Override
     public Filter getFilter() {
         if(myFilter==null){
@@ -171,10 +214,10 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         }
         return myFilter;
     }
-    
+
     protected class  MyFilter extends Filter{
         List<EaseUser> mOriginalList = null;
-        
+
         public MyFilter(List<EaseUser> myList) {
             this.mOriginalList = myList;
         }
@@ -187,7 +230,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             }
             EMLog.d(TAG, "contacts original size: " + mOriginalList.size());
             EMLog.d(TAG, "contacts copy size: " + copyUserList.size());
-            
+
             if(prefix==null || prefix.length()==0){
                 results.values = copyUserList;
                 results.count = copyUserList.size();
@@ -202,15 +245,15 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                 for(int i=0;i<count;i++){
                     final EaseUser user = mOriginalList.get(i);
                     String username = user.getUsername();
-                    
+
                     if(username.startsWith(prefixString)){
                         newValues.add(user);
                     }
                     else{
-                         final String[] words = username.split(" ");
-                         final int wordCount = words.length;
-    
-                         // Start at index 0, in case valueText starts with space(s)
+                        final String[] words = username.split(" ");
+                        final int wordCount = words.length;
+
+                        // Start at index 0, in case valueText starts with space(s)
                         for (String word : words) {
                             if (word.startsWith(prefixString)) {
                                 newValues.add(user);
@@ -228,7 +271,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
 
         @Override
         protected synchronized void publishResults(CharSequence constraint,
-                FilterResults results) {
+                                                   FilterResults results) {
             userList.clear();
             userList.addAll((List<EaseUser>)results.values);
             EMLog.d(TAG, "publish contacts filter results size: " + results.count);
@@ -241,8 +284,8 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             }
         }
     }
-    
-    
+
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
@@ -251,7 +294,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             copyUserList.addAll(userList);
         }
     }
-    
+
     protected int primaryColor;
     protected int primarySize;
     protected Drawable initialLetterBg;
@@ -277,5 +320,58 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         this.initialLetterColor = initialLetterColor;
         return this;
     }
-    
+    public void userType(String username)  {
+        //准备数据
+        final String data = username;
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).ip;
+                try {
+                    URL url = new URL("http://" + ip + ":8080/vhome/ReturnType");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url, data);
+                    //获取数据
+                    String data = util.getData(connection);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void getNickName(int type,String username) throws JSONException {
+        //准备数据
+        JSONObject json = new JSONObject();
+        json.put("phone", username);
+        json.put("type", type);
+        final String data = json.toString();
+
+        new Thread() {
+            @Override
+            public void run() {
+                String ip = (new MyApp()).ip;
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/searchUserInfo");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    //获取数据
+                    final String data = util.getData(connection);
+                    JSONObject jsonObject = new JSONObject(data);
+                    String nickName = jsonObject.getString("nikeName");
+                    Log.e("nikeName",nickName);
+                    util.sendMsg(nickName,5,handler1);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 }

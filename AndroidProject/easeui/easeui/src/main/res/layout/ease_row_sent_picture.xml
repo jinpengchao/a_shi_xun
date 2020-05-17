@@ -29,10 +29,15 @@
             android:scaleType="fitXY" />
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_chat_activity"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
             android:background="@drawable/ease_chatto_bg"
             android:layout_toLeftOf="@id/iv_userhead" >
 
@@ -44,10 +49,10 @@
                 />
         </RelativeLayout>	
         <LinearLayout
+            android:layout_marginTop="17dp"
             android:id="@+id/ll_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/bubble"
             android:gravity="center"
             android:orientation="vertical" >
@@ -84,7 +89,8 @@
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="2dp"
             android:layout_toLeftOf="@id/bubble"
             android:text="@string/text_ack_msg"
             android:textSize="12sp"

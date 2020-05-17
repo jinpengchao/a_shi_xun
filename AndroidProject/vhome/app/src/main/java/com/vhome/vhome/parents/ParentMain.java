@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
 import com.baidu.trace.api.entity.OnEntityListener;
 import com.baidu.trace.api.fence.FenceAlarmPushInfo;
 import com.baidu.trace.api.fence.MonitoredAction;
@@ -85,7 +86,10 @@ import com.vhome.vhome.util.ConnectionUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -99,6 +103,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import static com.vhome.vhome.parents.HttpLinked.connection;
 
 @SuppressLint("NewApi")
 public class ParentMain extends BaseActivity {
@@ -181,7 +187,7 @@ public class ParentMain extends BaseActivity {
     //定时器
     private Timer timer;
     private int sumTime = 25;
-
+    private String city;//获取城市名字
     /**
      * 构造广播监听类，监听 SDK key 验证以及网络异常广播
      */
@@ -849,9 +855,15 @@ public class ParentMain extends BaseActivity {
                         return;
                     }
 
-                    //当前经纬度
-                    CurrentLocation.locTime = point.getLocTime();
-                    Log.e("纠偏之后的纬度",""+CurrentLocation.latitude);
+                    LatLng currentLatLng = mapUtil.convertTrace2Map(point.getLocation());//进行地图坐标转换
+                    if (null == currentLatLng) {
+                        return;
+                    }
+                    Log.e("纠偏之后的纬度",""+currentLatLng.latitude);
+                    if(currentLatLng.latitude!=0&&currentLatLng.longitude!=0) {
+                        download(currentLatLng.latitude, currentLatLng.longitude //经纬度
+                                , "A7:2F:D7:BC:E8:0C:79:00:26:4C:80:0C:A5:77:91:F1:42:78:F9:90;com.vhome.chat");//安全码
+                    }
                 } catch (Exception x) {
 
                 }
@@ -873,8 +885,15 @@ public class ParentMain extends BaseActivity {
                         location.getLongitude())) {
                     return;
                 }
+                LatLng currentLatLng = mapUtil.convertTraceLocation2Map(location);//进行地图坐标转换
                 CurrentLocation.locTime = CommonUtil.toTimeStamp(location.getTime());
+                CurrentLocation.latitude = currentLatLng.latitude;
+                CurrentLocation.longitude = currentLatLng.longitude;
                 Log.e("实时的经度",""+CurrentLocation.longitude);
+                if(CurrentLocation.latitude!=0&&CurrentLocation.longitude!=0) {
+                    download(CurrentLocation.latitude, CurrentLocation.longitude //经纬度
+                            , "A7:2F:D7:BC:E8:0C:79:00:26:4C:80:0C:A5:77:91:F1:42:78:F9:90;com.vhome.chat");//安全码
+                }
             }
         };
         //鹰眼轨迹服务
@@ -1057,6 +1076,59 @@ public class ParentMain extends BaseActivity {
         }
     }
 
+    public void download(final Double latitude, final Double longitude, final String mCode) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //URL
+                    String url_s = "http://api.map.baidu.com/geocoder" +
+                            "?output=json&pois=1&ak=WPj4N17RL69xM8VCwtVLawXdk9DRuwBO&location=" +
+                            latitude + "," + longitude +
+                            "&mcode=" + mCode;
+                    HttpURLConnection conn = connection(url_s);
+                    //这里才真正获取到了数据
+                    InputStream inputStream = conn.getInputStream();
+                    InputStreamReader input = new InputStreamReader(inputStream);
+                    BufferedReader buffer = new BufferedReader(input);
+                    if (conn.getResponseCode() == 200) {  //200意味着返回的是"OK"
+                        String inputLine;
+                        StringBuffer resultData = new StringBuffer();  //StringBuffer字符串拼接很快
+                        while ((inputLine = buffer.readLine()) != null) {
+                            resultData.append(inputLine);
+                        }
+                        String text = resultData.toString();
+                        if(!text.contains("<!DOCTYPE html>")) {
+                            parseJson(text);
+                        }else{
+                            Log.e("ERROR","网络错误");
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //解析返回的json串获取地址(问题：设置成只获取城市)
+    private String parseJson(String text) {
+        try {
+            //这里的text就是上边获取到的数据，一个String.
+            JSONObject jsonObject = new JSONObject(text);
+            JSONObject result = jsonObject.getJSONObject("result");
+            JSONObject addressMore = result.getJSONObject("addressComponent");
+            city = addressMore.getString("city");
+            Log.e("地点",city);
+            SharedPreferences sp = getSharedPreferences("cityInfo",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("city",city);
+            editor.apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /**
      * 注册广播（电源锁、GPS状态）
      */

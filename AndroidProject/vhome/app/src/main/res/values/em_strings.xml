@@ -5,7 +5,8 @@
     <string name="app_name">微家</string>
     <string name="userName">用户名</string>
     <string name="change_user_btn">切换账号</string>
-
+    <string name="tip_eval">请对我的服务做出评价</string>
+    <string name="chat_row_satisfaction_content">请对我的服务做出评价</string>
     <string name="appbar_overscroll_behavior">com.vhome.vhome.user.personal.util.behavior.AppBarLayoutOverScrollViewBehavior</string>
     <string name="appbar_circleimageview_behavior">com.vhome.vhome.user.personal.util.behavior.CircleImageInUsercBehavior</string>
 

@@ -145,6 +145,8 @@ dependencies {
     implementation project(path: ':lib-todaystepcounter')
     implementation project(path: ':lib-jlogger')
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
+    implementation project(path: ':mydatapicker')
+    implementation project(path: ':mywheelview')
 }
 
 // ADD THIS AT THE BOTTOM

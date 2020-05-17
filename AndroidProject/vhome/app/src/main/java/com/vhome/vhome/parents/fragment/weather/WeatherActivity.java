@@ -100,7 +100,7 @@ public class WeatherActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         //设置默认的天气
-        load("石家庄");
+        load("定州");
 
 
         editText=(EditText)findViewById(R.id.city_name);

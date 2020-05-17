@@ -154,6 +154,7 @@ public class HotspotFragment extends Fragment implements AbsListView.OnScrollLis
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent simple = new Intent();
                         simple.putExtra("post",list.get(i));
+                        simple.putExtra("personId",list.get(i).getPersonId());
                         simple.setClass(getContext(), CommentActivity.class);
                         startActivity(simple);
                     }

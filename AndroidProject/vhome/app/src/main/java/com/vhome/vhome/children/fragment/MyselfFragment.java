@@ -61,6 +61,9 @@ import com.vhome.vhome.parents.fragment.myself.MyNewsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.user.entity.EventBean;
+import com.vhome.vhome.user.personal.MySelfActivity;
+import com.vhome.vhome.user.personal.PersonalEdit;
+import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 import com.vhome.chat.ui.SettingActivity;
 
@@ -71,7 +74,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyselfFragment extends BaseFragment {
     private ImageView blurImageView;
-    private ImageView header;
+    private CircleImageView header;
     private TextView nikeName;
     private TextView ids;
     private ImageView sexs;
@@ -81,7 +84,6 @@ public class MyselfFragment extends BaseFragment {
     private Button myLogout;
     private Dialog myDialog;
     private String TAG = "MyselfFragment";
-    public static String header_phone;
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -102,7 +104,6 @@ public class MyselfFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_children_myself,null);
         getViews(view);
-        getCount();//获取关注和粉丝数
         try {
             initData();
         } catch (IOException e) {
@@ -150,9 +151,8 @@ public class MyselfFragment extends BaseFragment {
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra("nickName",nikeName.getText());
-//                getActivity().startActivity(new Intent(getActivity(), PersonalActivity.class));
+                Intent intent2 = new Intent(getActivity(), ChildEdit.class);
+                startActivity(intent2);
             }
         });
         return view;
@@ -165,79 +165,13 @@ public class MyselfFragment extends BaseFragment {
 
     private void getViews(View view) {
         blurImageView = (ImageView) view.findViewById(R.id.iv_blur);
-        header = (ImageView) view.findViewById(R.id.parent_head);
+        header = (CircleImageView) view.findViewById(R.id.parent_head);
         nikeName = (TextView) view.findViewById(R.id.parent_name);
         ids = (TextView) view.findViewById(R.id.parent_id);
         sexs = (ImageView) view.findViewById(R.id.parent_sex);
         settings = view.findViewById(R.id.settings);
         myLogout = view.findViewById(R.id.my_logout);
         myResetPwd = view.findViewById(R.id.my_resetpwd);
-    }
-    /**
-     * 获取关注数和粉丝数
-     */
-    private void getCount() {
-        new Thread(){
-            @Override
-            public void run() {
-                SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
-                String personId = sp.getString("id","");
-                try {
-                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/GetCountServlet?personId="+personId);
-                    ConnectionUtil util = new ConnectionUtil();
-                    String receive = util.getData(url);
-                    if (null!=receive&&!"".equals(receive)){
-                        Log.i(TAG, "run: 获得数量成功！");
-                        util.sendMsg(receive,5,handler);
-                    }else {
-                        Log.e(TAG, "run: 获取关注和粉丝数量失败" );
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    public static Bitmap returnBitMap(String url) throws IOException {
-        URL imgUrl = new URL(url);
-        Bitmap bitmap = null;
-        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
-        conn.setDoInput(true);
-        conn.connect();
-        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
-        return bitmap;
-    }
-    private static void setPicToView(String username, Bitmap mBitmap) {
-        String sdStatus = Environment.getExternalStorageState();
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-            return;
-        }
-        String path = "/sdcard/header"+username+"/";
-        FileOutputStream b = null;
-        File file = new File(path);
-        if (file.exists()){
-            file.delete();
-            file.mkdirs();// 创建文件夹
-        }else
-            file.mkdirs();// 创建文件夹
-        String fileName = path + "header"+username+".jpg";// 图片名字
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭流
-                file.delete();
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
     private void initData() throws IOException {
         SharedPreferences sp1 = getActivity().getSharedPreferences("user", MODE_PRIVATE);
@@ -285,7 +219,7 @@ public class MyselfFragment extends BaseFragment {
     public void Logout() {
         final Intent intent = new Intent();
         SharedPreferences sp = getActivity().getSharedPreferences("user",MODE_PRIVATE);
-        SharedPreferences sp1 = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        SharedPreferences sp1 = getActivity().getSharedPreferences("childUserInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         SharedPreferences.Editor editor1 = sp1.edit();
         editor.clear();
@@ -294,8 +228,6 @@ public class MyselfFragment extends BaseFragment {
         editor.commit();
         Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_LONG).show();
         easeLogout();
-        Intent intent2 = new Intent(getActivity(), AlarmService.class);
-        getActivity().stopService(intent2);// 关闭闹钟服务
     }
     //环信退出登录
     void easeLogout() {
@@ -341,7 +273,6 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getCount();
         initMyselfInfo();
         try {
             initData();

@@ -48,7 +48,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.vhome.chat.Constant;
 import com.vhome.chat.DemoHelper;
+import com.vhome.chat.ui.ChatActivity;
 import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
@@ -61,6 +65,8 @@ import com.vhome.vhome.parents.fragment.myself.MyNewsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyPostActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.user.personal.MySelfActivity;
+import com.vhome.vhome.user.personal.MyTitle;
+import com.vhome.vhome.user.personal.NewLeaveMessageActivity;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 import com.vhome.chat.ui.SettingActivity;
@@ -78,79 +84,53 @@ public class MyselfFragment extends BaseFragment {
     private TextView ids;
     private TextView areas;
     private ImageView sexs;
+    private RelativeLayout toKefu;
     private SharedPreferences sp1;
     private SharedPreferences sp2;
     private RelativeLayout settings;
-    private RelativeLayout myResetPwd;
+//    private RelativeLayout myResetPwd;
     private Button myLogout;
     private Dialog myDialog;
-    private TextView tvAttention;
-    private TextView tvFuns;
-    private String TAG = "MyselfFragment";
     private RelativeLayout tvMyPost;
     private RelativeLayout tvMyCollect;
     private RelativeLayout tvMyNews;
-    public Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 5:
-                    initData();
-                    initMyselfInfo();
-                    Bundle bundle = msg.getData();
-                    String receive = bundle.getString("data");
-                    JSONObject jsonObject = null;
-                    try {
-                        jsonObject = new JSONObject(receive);
-                        int attentionNum = jsonObject.getInt("attentionNum");
-                        int funsNum = jsonObject.getInt("funsNum");
-//                        tvAttention.setText(attentionNum+"");
-//                        tvFuns.setText(funsNum+"");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
-        }
-    };
+    private RelativeLayout leave;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_myself,null);
         getViews(view);
-        getCount();//获取关注和粉丝数
         initData();
         initMyselfInfo();
-        //点击关注的人的时候,显示关注人的列表
-//        tvAttention.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), MyAttentionsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        //点击粉丝的时候，显示粉丝列表
-//        tvFuns.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), MyFunsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        toKefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = "kefuzhanghao";
+                if (username.equals(EMClient.getInstance().getCurrentUser()))
+                    Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+                else {
+                    // start chat acitivity
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    // it's single chat
+                    intent.putExtra(Constant.EXTRA_USER_ID, username);
+                    startActivity(intent);
+                }
+            }
+        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), MyTitle.class));
             }
         });
-        myResetPwd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getActivity().startActivity(new Intent(getActivity(), ResetPasswordActivity.class));
-            }
-        });
+//        myResetPwd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                getActivity().startActivity(new Intent(getActivity(), ResetPasswordActivity.class));
+//            }
+//        });
         myLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +190,14 @@ public class MyselfFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), NewLeaveMessageActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -228,39 +216,14 @@ public class MyselfFragment extends BaseFragment {
 //        sexs = (ImageView) view.findViewById(R.id.parent_sex);
         settings = view.findViewById(R.id.settings);
         myLogout = view.findViewById(R.id.my_logout);
-        myResetPwd = view.findViewById(R.id.my_resetpwd);
+//        myResetPwd = view.findViewById(R.id.my_resetpwd);
 //        tvAttention = view.findViewById(R.id.tv_myself_attention);
 //        tvFuns = view.findViewById(R.id.tv_myself_funs);
         tvMyCollect = view.findViewById(R.id.tv_myself_mycollect);
         tvMyNews = view.findViewById(R.id.tv_myself_mynews);
         tvMyPost = view.findViewById(R.id.tv_myself_mypost);
-    }
-    /**
-     * 获取关注数和粉丝数
-     */
-    private void getCount() {
-        new Thread(){
-            @Override
-            public void run() {
-                SharedPreferences sp = getActivity().getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
-                String personId = sp.getString("id","");
-                try {
-                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/GetCountServlet?personId="+personId);
-                    ConnectionUtil util = new ConnectionUtil();
-                    String receive = util.getData(url);
-                    if (null!=receive&&!"".equals(receive)){
-                        Log.i(TAG, "run: 获得数量成功！");
-                        util.sendMsg(receive,5,handler);
-                    }else {
-                        Log.e(TAG, "run: 获取关注和粉丝数量失败" );
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        toKefu = view.findViewById(R.id.kefu);
+        leave = view.findViewById(R.id.help);
     }
     private void initData(){
         //刷新本地头像
@@ -345,7 +308,7 @@ public class MyselfFragment extends BaseFragment {
         String personalWord = sp2.getString("personalWord","");
         String headImg = sp1.getString("headImg","");
         nikeName.setText(nickName);
-        ids.setText(id);
+        ids.setText(personalWord);
     }
     public void cancelNotification() {
         NotificationManager manager = (NotificationManager) this.getActivity().getApplicationContext()
@@ -412,7 +375,6 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getCount();
         initMyselfInfo();
         initData();
     }
@@ -420,7 +382,6 @@ public class MyselfFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getCount();
         initMyselfInfo();
         initData();
     }

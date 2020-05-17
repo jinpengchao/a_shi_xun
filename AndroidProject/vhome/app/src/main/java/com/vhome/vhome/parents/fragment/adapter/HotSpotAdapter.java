@@ -121,12 +121,12 @@ public class HotSpotAdapter extends BaseAdapter {
         //设置发帖人logo
         //刷新本地头像
         String path = "/sdcard/"+list.get(i).getHeadimg()+"/";// sd路径
-//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
-//        try {
-//            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
+        try {
+            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Bitmap bt = BitmapFactory.decodeFile(path + list.get(i).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
 
@@ -140,11 +140,6 @@ public class HotSpotAdapter extends BaseAdapter {
                     .priority(Priority.HIGH)
                     .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(holder.ivHotPerson);
-            try {
-                setPicToView(path,list.get(i).getHeadimg(), returnBitMap(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(i).getNickName());
@@ -162,15 +157,6 @@ public class HotSpotAdapter extends BaseAdapter {
                 }else {
                     person.setClass(context, OthersSerlfActivity.class);
                 }
-                context.startActivity(person);
-            }
-        });
-        holder.tvHotName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent person = new Intent();
-                person.putExtra("personId",list.get(i).getPersonId());
-                person.setClass(context, ShowMyselfActivity.class);
                 context.startActivity(person);
             }
         });
