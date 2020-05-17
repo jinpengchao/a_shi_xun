@@ -31,13 +31,12 @@
 			</a>
 		</div>
 		<div class="panel col">
-			<a href="javascript:;" data-url="page/news/newsList.jsp">
+			<a href="javascript:;" data-url="/vhome/ShowExamine">
 				<div class="panel_icon" style="background-color:#F7B824;">
 					<i class="iconfont icon-wenben" data-icon="icon-wenben"></i>
 				</div>
-				<div class="panel_word waitNews">
-					<span></span>
-					<cite>待审核文章</cite>
+				<div style="margin-top: 40px">
+					<cite>帖子审核情况</cite>
 				</div>
 			</a>
 		</div>
@@ -48,8 +47,19 @@
 				</div>
 				<div class="panel_word allNews">
 					<span></span>
-					<em>文章总数</em>
-					<cite>文章列表</cite>
+					<em>帖子总数</em>
+					<cite>帖子列表</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col max_panel">
+			<a href="javascript:;" data-url="/vhome/PostReport">
+				<div class="panel_icon" style="background-color:#FF4040;">
+					<i class="iconfont icon-text" data-icon="icon-text"></i>
+				</div>
+				<div style="margin-top: 40px">
+					<span></span>
+					<cite>帖子举报</cite>
 				</div>
 			</a>
 		</div>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import community.service.PostService;
 import entity.PostBean;
+import entity.PostExamineBean;
 
 /**
  * Servlet implementation class UpdateExamine
@@ -43,7 +44,8 @@ public class UpdateExamine extends HttpServlet {
 		postService.changeExamineByPId(id, examineString);
 		if(examineString.equals("已审核")) {
 			int id1=Integer.parseInt(id);
-			PostBean postBean=postService.findPost(id1);
+			PostExamineBean postExamineBean=postService.findPostExamine(id1);
+			PostBean postBean=postService.deleteExamine(postExamineBean);
 			postService.savePost(postBean);
 		}
 		

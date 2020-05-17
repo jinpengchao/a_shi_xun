@@ -45,6 +45,13 @@ public class PostService {
 	public long insertPostReport(PostBean postBean) {
 		return (new PostExamineDao()).insertPost1(postBean);
 	}
+	//通过id查找审核帖子
+	public PostExamineBean findPostExamine(int id) {
+		return (new PostExamineDao()).queryPosts(id);
+	}
+	public PostBean deleteExamine(PostExamineBean postExamineBean) {
+		return (new PostExamineDao()).deleteExamine(postExamineBean);
+	}
 	//查找私人所有审核的帖子
 	public List<PostExamineBean> findAll(String personId){
 		return (new PostExamineDao()).findAllByPersonId(personId);

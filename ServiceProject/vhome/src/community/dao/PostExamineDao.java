@@ -198,6 +198,15 @@ public class PostExamineDao {
 	 * returntype:long
 	 */
 	public long insertPost(PostExamineBean post) {
+		String dateString=post.getImgs();
+		String dataString2="";
+		//生成图片字符串,插进数据库时删除[""]
+		for(int i=0;i<dateString.length();i++) {
+			if(i!=0&&i!=1&&i!=dateString.length()-1&&i!=dateString.length()-2) {
+				dataString2+=dateString.charAt(i);
+			}
+		}
+		post.setImgs(dataString2);
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
@@ -323,5 +332,66 @@ public class PostExamineDao {
 			}
 		}
 		return n;
+	}
+	/**
+	 * 通过id查询单个帖子
+	 *  @title:queryPosts
+	 * @Description: todo
+	 * @throws下午7:20:56
+	 * returntype:PostBean
+	 */
+	public PostExamineBean queryPosts(int id){
+		PostExamineBean post = new PostExamineBean();
+		DBUtil util = new DBUtil();
+		try {
+			Connection con = util.getConnection();
+			String sql = "select * from tbl_post_copy where id = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				post.setId(rs.getInt("id"));
+				post.setNickName(rs.getString("nickName"));
+				post.setHeadimg(rs.getString("headimg"));
+				post.setPostContent(rs.getString("content"));
+				post.setPersonId(rs.getString("personId"));
+				post.setTime(rs.getString("time"));
+				post.setImgs(rs.getString("imgs"));
+				post.setExamineString(rs.getString("examine"));
+			}
+			rs.close();
+			ps.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return post;
+	}
+	/**
+	 * 去掉审核信息
+	 *  @title:queryPosts
+	 * @Description: todo
+	 * @throws下午7:20:56
+	 * returntype:PostBean
+	 */
+	public PostBean deleteExamine(PostExamineBean postExamineBean) {
+		PostBean post=new PostBean();
+		post.setNickName(postExamineBean.getNickName());
+		post.setHeadimg(postExamineBean.getHeadimg());
+		post.setPostContent(postExamineBean.getPostContent());
+		post.setPersonId(postExamineBean.getPersonId());
+		post.setTime(postExamineBean.getTime());
+		post.setImgs(postExamineBean.getImgs());
+		return post;
 	}
 }
