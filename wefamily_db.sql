@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
@@ -37,7 +37,6 @@ INSERT INTO `tbl_alarm` VALUES ('5', '15:43', '2424000', '199906060', '哈哈哈
 INSERT INTO `tbl_alarm` VALUES ('6', '05:00', '792997', '222222', '1111111', '0');
 INSERT INTO `tbl_alarm` VALUES ('7', '15:08', '792997', '222222', '2121213123123123123123123', '0');
 INSERT INTO `tbl_alarm` VALUES ('8', '13:06', '792997', '195412', '1231231231231231231', '0');
-INSERT INTO `tbl_alarm` VALUES ('15', '05:00', '242424000', '222222', '啊飒飒 阿斯顿', '0');
 INSERT INTO `tbl_alarm` VALUES ('16', '07:30', '9654782', '195412', '今天有活动，超市大减价', '0');
 INSERT INTO `tbl_alarm` VALUES ('26', '5:00', '1111111', '99663438', '888', '1');
 INSERT INTO `tbl_alarm` VALUES ('32', '22:48', '15194980385', '15230867500', '嗯', '1');
@@ -362,9 +361,9 @@ CREATE TABLE `tbl_post` (
   `content` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL,
   `personId` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
   `time` datetime DEFAULT NULL,
-  `imgs` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `imgs` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
@@ -404,6 +403,50 @@ CREATE TABLE `tbl_posts` (
 -- ----------------------------
 -- Records of tbl_posts
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tbl_post_copy`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_post_copy`;
+CREATE TABLE `tbl_post_copy` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
+  `time` datetime DEFAULT NULL,
+  `imgs` varchar(1000) DEFAULT NULL,
+  `examine` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_post_copy
+-- ----------------------------
+INSERT INTO `tbl_post_copy` VALUES ('183', 'mon', 'header15227856991', '加图删一个', '852000', '2020-05-17 14:51:55', '[\"200856152244627_2.jpg\"]', '待审核');
+INSERT INTO `tbl_post_copy` VALUES ('184', 'mon', 'header15227856991', '拍照', '852000', '2020-05-17 14:52:31', '[\"IMG_20200517_14521749.jpg\"]', '待审核');
+INSERT INTO `tbl_post_copy` VALUES ('186', 'mon', 'header15227856991', '删一个视频', '852000', '2020-05-17 14:54:17', '[\"OIP.2xOrqtuh-c3BS4RVlKwQfQHaNK_pid\\u003dApi\\u0026dpr\\u003d2.jpg\"]', '待审核');
+INSERT INTO `tbl_post_copy` VALUES ('187', 'mon', 'header15227856991', '拉去', '852000', '2020-05-17 16:00:31', 'd48fd9371a76177881af003aaf912bc5.jpg\",\"764f9ec150b5801a314f1c98b10cd29e.mp4', '待审核');
+
+-- ----------------------------
+-- Table structure for `tbl_post_report`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_post_report`;
+CREATE TABLE `tbl_post_report` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
+  `time` datetime DEFAULT NULL,
+  `imgs` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_post_report
+-- ----------------------------
+INSERT INTO `tbl_post_report` VALUES ('154', '屎', 'header15230867500', '上', '491602', '2020-04-27 21:18:29', '[\"temp_photo1587992315661.jpg\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_relations_request`

@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -138,7 +137,6 @@ public class HotSpotAdapter extends BaseAdapter {
             Glide.with(context)
                     .load(url)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(holder.ivHotPerson);
         }
 //        holder.ivHotPerson.setImageResource();

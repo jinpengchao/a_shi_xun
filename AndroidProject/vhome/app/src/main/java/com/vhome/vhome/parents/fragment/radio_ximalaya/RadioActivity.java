@@ -11,6 +11,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.adapter.IndicatorAdapter;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.adapter.MainContentAdapter;

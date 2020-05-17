@@ -4,6 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-5.6.4-all" />
@@ -18,11 +19,12 @@
             <option value="$PROJECT_DIR$/lib-todaystepcounter" />
             <option value="$PROJECT_DIR$/mydatapicker" />
             <option value="$PROJECT_DIR$/mywheelview" />
+            <option value="$PROJECT_DIR$/picture_library" />
             <option value="$PROJECT_DIR$/tabLayoutLibrary" />
+            <option value="$PROJECT_DIR$/ucrop" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>

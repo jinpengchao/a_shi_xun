@@ -212,7 +212,6 @@ public class TrackQueryActivity extends myBaseActivity implements View.OnClickLi
             @Override
             public void onHistoryTrackCallback(HistoryTrackResponse response) {
                 try {
-
                     int total = response.getTotal();
                     if (StatusCodes.SUCCESS != response.getStatus()) {
                         viewUtil.showToast(TrackQueryActivity.this, response.getMessage());

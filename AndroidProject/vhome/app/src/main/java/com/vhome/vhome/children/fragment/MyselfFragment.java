@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.signature.StringSignature;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -190,7 +189,6 @@ public class MyselfFragment extends BaseFragment {
             Glide.with(getActivity())
                     .load(url)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
                     .into(header);
 
         }

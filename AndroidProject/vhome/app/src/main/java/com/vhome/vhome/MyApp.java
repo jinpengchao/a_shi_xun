@@ -67,6 +67,7 @@ public class MyApp extends Application {
 //    public static LocationService locationService;
 
     // 39.96.24.133
+	//别tm有空格
     private String ip = "192.168.0.105";
     private String pathInfo = "parentUserInfo";
 
@@ -129,7 +130,6 @@ public class MyApp extends Application {
         //鹰眼轨迹初始化
         mContext = getApplicationContext();
 //        entityName = CommonUtil.getImei(this);
-        entityName = "myTrace";
         // 若为创建独立进程，则不初始化成员变量
         if ("com.baidu.track:remote".equals(CommonUtil.getCurProcessName(mContext))) {
             return;
@@ -221,7 +221,7 @@ public class MyApp extends Application {
         mTrace = new Trace(serviceId, entityName);
 
         trackConf = getSharedPreferences("track_conf", MODE_PRIVATE);
-        locRequest = new LocRequest(serviceId);//我感觉父母端没毛病，这就没开轨迹，实时不对嗯
+        locRequest = new LocRequest(serviceId);
         mClient.setOnCustomAttributeListener(new OnCustomAttributeListener() {
             @Override
             public Map<String, String> onTrackAttributeCallback() {

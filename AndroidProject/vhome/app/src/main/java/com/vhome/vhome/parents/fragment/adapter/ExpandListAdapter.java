@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.signature.StringSignature;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.bumptech.glide.signature.ObjectKey;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
@@ -90,8 +90,8 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         //加载logo
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+commentBeanList.get(i).getHeadimg()+".jpg";
         Glide.with(context).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .signature(new StringSignature(UUID.randomUUID().toString()))
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .signature(new ObjectKey(UUID.randomUUID().toString()))
                 .centerCrop()
                 .into(groupHolder.commentLogo);
         groupHolder.tv_name.setText(commentBeanList.get(i).getNickName());//设置用户昵称

@@ -83,6 +83,12 @@ import com.hyphenate.util.EMLog;
 import com.vhome.vhome.parents.model.CurrentLocation;
 import com.vhome.vhome.util.ConnectionUtil;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -197,11 +203,11 @@ public class ParentMain extends BaseActivity {
             String s = intent.getAction();
 
             if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-                viewUtil.showToast(ParentMain.this,"AK验证失败，地图功能无法正常使用");
+                Log.e("地图：","AK验证失败，地图功能无法正常使用");
             } else if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK)) {
-                viewUtil.showToast(ParentMain.this,"AK验证成功");
+                Log.e("地图：","AK验证成功");
             } else if (s.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
-                viewUtil.showToast(ParentMain.this,"网络错误");
+                Log.e("地图：","网络错误");
             }
         }
     }
@@ -856,6 +862,7 @@ public class ParentMain extends BaseActivity {
                     }
 
                     LatLng currentLatLng = mapUtil.convertTrace2Map(point.getLocation());//进行地图坐标转换
+
                     if (null == currentLatLng) {
                         return;
                     }
@@ -886,6 +893,7 @@ public class ParentMain extends BaseActivity {
                     return;
                 }
                 LatLng currentLatLng = mapUtil.convertTraceLocation2Map(location);//进行地图坐标转换
+
                 CurrentLocation.locTime = CommonUtil.toTimeStamp(location.getTime());
                 CurrentLocation.latitude = currentLatLng.latitude;
                 CurrentLocation.longitude = currentLatLng.longitude;
@@ -1067,6 +1075,60 @@ public class ParentMain extends BaseActivity {
             }
         };
 
+    }
+
+    public void download(final Double latitude, final Double longitude, final String mCode) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //URL
+                    String url_s = "http://api.map.baidu.com/geocoder" +
+                            "?output=json&pois=1&ak=WPj4N17RL69xM8VCwtVLawXdk9DRuwBO&location=" +
+                            latitude + "," + longitude +
+                            "&mcode=" + mCode;
+                    HttpURLConnection conn = connection(url_s);
+                    //这里才真正获取到了数据
+                    InputStream inputStream = conn.getInputStream();
+                    InputStreamReader input = new InputStreamReader(inputStream);
+                    BufferedReader buffer = new BufferedReader(input);
+                    if (conn.getResponseCode() == 200) {  //200意味着返回的是"OK"
+                        String inputLine;
+                        StringBuffer resultData = new StringBuffer();  //StringBuffer字符串拼接很快
+                        while ((inputLine = buffer.readLine()) != null) {
+                            resultData.append(inputLine);
+                        }
+                        String text = resultData.toString();
+                        if(!text.contains("<!DOCTYPE html>")) {
+                            parseJson(text);
+                        }else{
+                            Log.e("ERROR","网络错误");
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //解析返回的json串获取地址(问题：设置成只获取城市)
+    private String parseJson(String text) {
+        try {
+            //这里的text就是上边获取到的数据，一个String.
+            JSONObject jsonObject = new JSONObject(text);
+            JSONObject result = jsonObject.getJSONObject("result");
+            JSONObject addressMore = result.getJSONObject("addressComponent");
+            city = addressMore.getString("city");
+            Log.e("地点",city);
+            SharedPreferences sp = getSharedPreferences("cityInfo",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("city",city);
+            editor.apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     static class RealTimeHandler extends Handler {

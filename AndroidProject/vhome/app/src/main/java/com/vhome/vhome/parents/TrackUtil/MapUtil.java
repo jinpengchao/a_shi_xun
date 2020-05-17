@@ -222,10 +222,6 @@ public class MapUtil {
             baiduMap.addOverlay(endOptions);
         }
 
-        // 添加路线（轨迹）
-        OverlayOptions polylineOptions = new PolylineOptions().width(10)
-                .color(Color.BLUE).points(points);
-
         baiduMap.addOverlay(startOptions);
         // 添加路线（轨迹）
         drawMyRoute(points);

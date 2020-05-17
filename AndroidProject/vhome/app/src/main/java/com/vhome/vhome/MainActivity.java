@@ -109,9 +109,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (isChecked) {
                     //如果选中，显示密码
                     etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    Intent jump0 = new Intent();
-                    jump0.setClass(MainActivity.this,ParentMain.class);
-                    startActivity(jump0);
+//                    Intent jump0 = new Intent();
+//                    jump0.setClass(MainActivity.this,ChildrenMain.class);
+//                    startActivity(jump0);
                 } else {
                     //否则隐藏密码
                     etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());

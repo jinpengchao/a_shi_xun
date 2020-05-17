@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ import androidx.annotation.Nullable;
 
 public class TopFragment extends BaseFragment {
     private List<NewsBean> news=new ArrayList<>();
+    private List<NewsBean> news1=new ArrayList<>();
     private ListView lvStus;
     private SmartRefreshLayout srl;
     private NewsAdapter newsAdapter;
@@ -60,7 +63,7 @@ public class TopFragment extends BaseFragment {
                             newsBean.setTitle(jsonObject1.getString("title"));
                             newsBean.setDate(jsonObject1.getString("date"));
                             newsBean.setAuthor_name(jsonObject1.getString("author_name"));
-                            newsBean.setCategory(jsonObject1.getString("category"));
+                            newsBean.setCategory("头条");
                             newsBean.setUrl(jsonObject1.getString("url"));
                             newsBean.setThumbnail_pic_s(jsonObject1.getString("thumbnail_pic_s"));
                             news.add(newsBean);
@@ -76,15 +79,13 @@ public class TopFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.news_activity, null);
+        final View view = inflater.inflate(R.layout.news_activity, container,false);
 
         ActionBar actionBar = getActivity().getActionBar();
         if(actionBar != null){
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-
 
 
 
@@ -140,6 +141,44 @@ public class TopFragment extends BaseFragment {
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         return null;
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Button button= (Button) getActivity().findViewById(R.id.find_news);
+        final EditText editText=getActivity().findViewById(R.id.news_name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(NewsBean newsBean:news){
+                    if(newsBean.getTitle().contains(editText.getText().toString())){
+                        news1.add(newsBean);
+                    }
+                }
+                if (news1==null){
+                    Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
+                }else{
+                    lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+                    newsAdapter=new NewsAdapter(getActivity(),news1);
+                    lvStus.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                    lvStus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent=new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(news1.get(i).getUrl()));//用于
+                            //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+            }
+        });
+
+    }
+
     private void load() {
         new Thread(new Runnable() {
             @Override
@@ -155,14 +194,31 @@ public class TopFragment extends BaseFragment {
             }
         }).start();
     }
-
+    private void load1() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLogin httpLogin=new HttpLogin();
+                String result=httpLogin.JasonAccpt10();
+                Bundle bundle=new Bundle();
+                bundle.putString("result1",result);
+                Message message=new Message();
+                message.setData(bundle);
+                message.what=3;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
     public void refreshData(){
         news.clear();
         load();
+        lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+        newsAdapter=new NewsAdapter(getActivity(),news);
+        lvStus.setAdapter(newsAdapter);
         newsAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){
-        load();
+        load1();
         newsAdapter.notifyDataSetChanged();
     }
 

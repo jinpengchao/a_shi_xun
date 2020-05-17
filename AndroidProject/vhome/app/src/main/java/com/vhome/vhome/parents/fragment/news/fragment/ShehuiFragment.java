@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ import androidx.fragment.app.Fragment;
 
 public class ShehuiFragment extends BaseFragment {
     private List<NewsBean> news=new ArrayList<>();
+    private List<NewsBean> news1=new ArrayList<>();
     private ListView lvStus;
     private SmartRefreshLayout srl;
     private NewsAdapter newsAdapter;
@@ -61,7 +64,7 @@ public class ShehuiFragment extends BaseFragment {
                             newsBean.setTitle(jsonObject1.getString("title"));
                             newsBean.setDate(jsonObject1.getString("date"));
                             newsBean.setAuthor_name(jsonObject1.getString("author_name"));
-                            newsBean.setCategory(jsonObject1.getString("category"));
+                            newsBean.setCategory("社会");
                             newsBean.setUrl(jsonObject1.getString("url"));
                             newsBean.setThumbnail_pic_s(jsonObject1.getString("thumbnail_pic_s"));
                             news.add(newsBean);
@@ -140,6 +143,43 @@ public class ShehuiFragment extends BaseFragment {
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         return null;
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Button button= (Button) getActivity().findViewById(R.id.find_news);
+        final EditText editText=getActivity().findViewById(R.id.news_name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(NewsBean newsBean:news){
+                    if(newsBean.getTitle().contains(editText.getText().toString())){
+                        news1.add(newsBean);
+                    }
+                }
+                if (news1==null){
+                    Toast.makeText(getActivity(),"查询失败，无该新闻", Toast.LENGTH_SHORT).show();
+                }else{
+                    lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+                    newsAdapter=new NewsAdapter(getActivity(),news1);
+                    lvStus.setAdapter(newsAdapter);
+                    newsAdapter.notifyDataSetChanged();
+                    lvStus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent=new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(news1.get(i).getUrl()));//用于
+                            //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+            }
+        });
+
+    }
     private void load() {
         new Thread(new Runnable() {
             @Override
@@ -155,9 +195,27 @@ public class ShehuiFragment extends BaseFragment {
             }
         }).start();
     }
+    private void load1() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpLogin httpLogin=new HttpLogin();
+                String result=httpLogin.JasonAccpt11();
+                Bundle bundle=new Bundle();
+                bundle.putString("result1",result);
+                Message message=new Message();
+                message.setData(bundle);
+                message.what=3;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
     public void refreshData(){
         news.clear();
         load();
+        lvStus= (ListView)getActivity().findViewById(R.id.lv_data);
+        newsAdapter=new NewsAdapter(getActivity(),news);
+        lvStus.setAdapter(newsAdapter);
         newsAdapter.notifyDataSetChanged();
     }
     public void loadMoreData(){

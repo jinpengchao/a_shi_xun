@@ -56,7 +56,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -314,7 +313,6 @@ public class CommentActivity extends Activity {
         Glide.with(CommentActivity.this)
                 .load(url).priority(Priority.HIGH)
                 .error(R.mipmap.errorimg1)
-                .signature(new StringSignature(UUID.randomUUID().toString()))//重新加载
                 .centerCrop().into(ivHotPerson);
         tvHotName.setText(post.getNickName());//设置发帖人昵称
         tvHotContent.setText(post.getPostContent());//设置帖子内容

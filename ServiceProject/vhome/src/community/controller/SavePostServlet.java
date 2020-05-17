@@ -19,6 +19,7 @@ import com.jspsmart.upload.SmartUploadException;
 
 import community.service.PostService;
 import entity.PostBean;
+import entity.PostExamineBean;
 
 /**
  * Servlet implementation class SavePostServlet
@@ -42,17 +43,15 @@ public class SavePostServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
 		int n = 0;
-		PostBean post = null;
+		PostExamineBean post = null;
 		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
 		Gson gson = new Gson();
-		post = gson.fromJson(data, PostBean.class);
-	
+		post = gson.fromJson(data, PostExamineBean.class);
 		PostService ps = new PostService();
-		n =(int) ps.savePost(post);
-		System.out.println("savePostServlet的返回值"+n);
+		n =(int) ps.savePost1(post);
 		out.write(n+"");
 		out.flush();
 		out.close();
