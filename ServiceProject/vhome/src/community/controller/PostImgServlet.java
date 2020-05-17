@@ -41,10 +41,6 @@ public class PostImgServlet extends HttpServlet {
 		try {
 			smartUpload.initialize(this.getServletConfig(), request, response);
 			smartUpload.upload();
-			String msg = smartUpload.getRequest().getParameter("msg");
-			System.out.println("接收到上传文件："+msg);
-			if (msg != null)
-				msg = new String(msg.getBytes("GBK"), "utf-8");
 			com.jspsmart.upload.Files files = smartUpload.getFiles();
 			for (int i = 0; i < files.getCount(); i++) {
 				com.jspsmart.upload.File file = files.getFile(i);
