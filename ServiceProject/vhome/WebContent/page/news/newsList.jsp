@@ -53,7 +53,7 @@
 							</c:forEach>
 						</c:if>
 					</th>
-					<th><span style="color:red;">${p.examineString }</span></th>
+					<th><span style="color:red;">${p.examine }</span></th>
 					<th>${p.time}</th>
 					<td><span style="margin-left: 15px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
 					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a></span></td>
@@ -73,7 +73,7 @@
 							</c:forEach>
 						</c:if>
 					</th>
-					<th><span style="color:green;">${p.examineString }</span></th>
+					<th><span style="color:green;">${p.examine }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
 					</tr>
@@ -92,7 +92,7 @@
 							</c:forEach>
 						</c:if>
 					</th>
-					<th><span style="color:#FF0000;">${p.examineString }</span></th>
+					<th><span style="color:#FF0000;">${p.examine }</span></th>
 					<th>${p.time}</th>
 					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
 					</tr>

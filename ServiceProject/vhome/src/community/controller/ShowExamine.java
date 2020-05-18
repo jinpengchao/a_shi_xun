@@ -90,7 +90,6 @@ public class ShowExamine extends HttpServlet {
 		request.setAttribute("examine1", postBeans2);
 		request.setAttribute("examine2", postBeans3);
 		
-		
 		//进行帖子的审核
 		request.getRequestDispatcher("/page/news/newsList.jsp").forward(request,response); 
 	}
