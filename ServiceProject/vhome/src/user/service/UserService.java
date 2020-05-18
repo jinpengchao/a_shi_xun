@@ -29,6 +29,11 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.pwdLogin(phone);
 	}
+	//用户密码登录
+	public int getUserType(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.getType(phone);
+	}
 	//用户验证码登录
 	public User loginBycode(String phone) {
 		UserDao userDao = new UserDao();

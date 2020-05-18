@@ -139,6 +139,29 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:paddingLeft="@dimen/adaptive_5dp"
+                android:id="@+id/icon_age"
+                android:src="@drawable/age"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:layout_height="16dp">
+            </ImageView>
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_toRightOf="@id/icon_age"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:text="50 周岁"
+                android:textColor="#aa333333"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/adaptive_5dp"
                 android:id="@+id/icon_fatie"
                 android:layout_marginLeft="13dp"
                 android:src="@mipmap/lv6_true"

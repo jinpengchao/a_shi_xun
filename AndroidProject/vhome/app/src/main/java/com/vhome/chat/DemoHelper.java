@@ -334,7 +334,6 @@ public class DemoHelper {
 
     	// set profile provider if you want easeUI to handle avatar and nickname
         easeUI.setUserProfileProvider(new EaseUserProfileProvider() {
-            
             @Override
             public EaseUser getUser(String username) {
                 return getUserInfo(username);

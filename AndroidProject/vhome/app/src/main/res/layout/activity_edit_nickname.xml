@@ -44,7 +44,7 @@
         android:id="@+id/nickname"
         android:layout_marginTop="@dimen/adaptive_10dp"
         android:layout_below="@id/rl1"
-        android:background="@drawable/selector_stroke_roundcir"
+        android:background="@drawable/selector_stroke_roundcir_attention"
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/adaptive_20dp"
         android:layout_marginRight="@dimen/adaptive_20dp"

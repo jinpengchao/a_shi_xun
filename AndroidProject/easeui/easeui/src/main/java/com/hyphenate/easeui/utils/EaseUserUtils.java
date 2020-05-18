@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,8 +76,6 @@ public class EaseUserUtils {
                         .priority(Priority.HIGH)
                         .signature(new StringSignature(UUID.randomUUID().toString()))
                         .into(imageView);
-
-                setPicToView(username,returnBitMap(url));
             }
         }else{
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
@@ -135,5 +134,5 @@ public class EaseUserUtils {
         	}
         }
     }
-    
+
 }

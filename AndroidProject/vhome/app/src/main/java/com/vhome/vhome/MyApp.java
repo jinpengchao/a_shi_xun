@@ -67,8 +67,8 @@ public class MyApp extends Application {
 //    public static LocationService locationService;
 
     // 39.96.24.133
-    //别tm有空格
-    private String ip = "192.168.124.29";
+	//别tm有空格
+    private String ip = "192.168.0.105";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;

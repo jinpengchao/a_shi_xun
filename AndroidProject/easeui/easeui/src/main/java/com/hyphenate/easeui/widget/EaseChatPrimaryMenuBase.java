@@ -42,7 +42,7 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout{
     public void setChatPrimaryMenuListener(EaseChatPrimaryMenuListener listener){
         this.listener = listener;
     }
-    
+
     /**
      * emoji icon input event
      * @param emojiContent

@@ -43,7 +43,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     private String username;
     private ImageView gender;
     private TextView tvFriendName;
-    private Button addRelation;
+    private TextView addRelation;
 
 
 
@@ -67,7 +67,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         tvUsername = (TextView) findViewById(R.id.user_username);
         gender = (ImageView) findViewById(R.id.user_gender);
         tvFriendName = (TextView) findViewById(R.id.friends_name);
-        addRelation = (Button) findViewById(R.id.relation);
+        addRelation = (TextView) findViewById(R.id.relation);
     }
 
     private void initListener(String name) throws IOException {
@@ -145,9 +145,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
             case R.id.relation:
                 sendRequest();
                 Log.e("发送成功","ok");
-                break;
-            case R.id.conversation:
-                //跳转聊天页
                 break;
             default:
                 break;

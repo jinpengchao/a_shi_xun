@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,7 @@ import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.vhome.chat.Constant;
 import com.vhome.chat.DemoHelper;
 import com.vhome.chat.DemoModel;
@@ -294,10 +296,17 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     public void onAvatarClick(String username) {
-        //handling when user click avatar
-        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-        intent.putExtra("username", username);
-        startActivity(intent);
+        if(username.equals("kefuzhanghao")){
+            Log.e("客服头像","客服小薇");
+        }else if(EMClient.getInstance().getCurrentUser().equals(username)){
+            Log.e("自己头像","不可查看");
+        }else {
+            //handling when user click avatar
+            Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+
     }
     
     @Override

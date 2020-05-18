@@ -2,6 +2,7 @@ package com.vhome.vhome.user.personal;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -23,9 +24,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
-import com.vhome.vhome.parents.fragment.alarm.AlarmActivity;
 import com.vhome.vhome.user.personal.util.DialogChangesex;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
+import com.vhome.vhome.user.personal.util.JsonUtil;
+import com.vhome.vhome.user.personal.util.Utils;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
@@ -42,9 +44,16 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 
 import androidx.appcompat.app.AppCompatActivity;
+import fule.com.mydatapicker.DatePickerDialog;
+import fule.com.mydatapicker.DateUtil;
+import fule.com.mywheelview.bean.AddressDetailsEntity;
+import fule.com.mywheelview.bean.AddressModel;
+import fule.com.mywheelview.weight.wheel.ChooseAddressWheel;
+import fule.com.mywheelview.weight.wheel.OnAddressChangeListener;
 
 public class PersonalEdit extends Activity {
     public static String path;
@@ -60,6 +69,10 @@ public class PersonalEdit extends Activity {
     private TextView birth;
     private TextView area;
     private ImageView back;
+
+    private ChooseAddressWheel chooseAddressWheel;
+    private String address;
+    private Dialog dateDialog;
     private RelativeLayout rl_nickName;
     private RelativeLayout rl_signal;
     private RelativeLayout rl_gender;
@@ -73,6 +86,8 @@ public class PersonalEdit extends Activity {
         phone = sharedPreferences.getString("phone","");
         path = "/sdcard/header"+phone+"/";// sd路径
         findId();
+        initWheel();
+        initData();
         try {
             initInfo();
         } catch (IOException e) {
@@ -91,6 +106,36 @@ public class PersonalEdit extends Activity {
         }
     }
 
+    private void initWheel() {
+        chooseAddressWheel = new ChooseAddressWheel(this);
+        chooseAddressWheel.setOnAddressChangeListener(new OnAddressChangeListener() {
+            @Override
+            public void onAddressChange(String province, String city, String district) {
+                address = (province + "，" + city + "，" + district);
+                area.setText(address);
+                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("area",address);
+                editor.commit();
+                changeInfo(address,"area",0);
+                onResume();
+                Toast.makeText(PersonalEdit.this,"地区修改成功~",Toast.LENGTH_LONG);
+            }
+        });
+
+    }
+    private void initData() {
+        String address = Utils.readAssert(this, "address.txt");
+        AddressModel model = JsonUtil.parseJson(address, AddressModel.class);
+        if (model != null) {
+            AddressDetailsEntity data = model.Result;
+            if (data == null) return;
+            if (data.ProvinceItems != null && data.ProvinceItems.Province != null) {
+                chooseAddressWheel.setProvince(data.ProvinceItems.Province);
+                chooseAddressWheel.defaultValue(data.Province, data.City, data.Area);
+            }
+        }
+    }
     /**
      * 初始化id
      */
@@ -111,6 +156,7 @@ public class PersonalEdit extends Activity {
         rl_city = (RelativeLayout) findViewById(R.id.city);
 
     }
+
     private void initInfo() throws IOException {
         SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
         //头像
@@ -165,7 +211,28 @@ public class PersonalEdit extends Activity {
      */
 
     private void initListener() {
-
+        rl_signal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(PersonalEdit.this, EditFlagActivity.class);
+                startActivity(intent);
+            }
+        });
+        rl_birth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                String b = sharedPreferences.getString("birthday","");
+                showDateDialog(DateUtil.getDateForString(b));
+            }
+        });
+        rl_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAddressWheel.show(v);
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,8 +260,9 @@ public class PersonalEdit extends Activity {
                         String sex = "male";
                         editor.putString("sex",sex);
                         editor.commit();
-                        changeSex("male");
+                        changeInfo("male","sex",0);
                         onResume();
+                        Toast.makeText(PersonalEdit.this,"修改成功~",Toast.LENGTH_LONG);
                     }
 
                     @Override
@@ -204,8 +272,9 @@ public class PersonalEdit extends Activity {
                         String sex = "female";
                         editor.putString("sex",sex);
                         editor.commit();
-                        changeSex("female");
+                        changeInfo("female","sex",0);
                         onResume();
+                        Toast.makeText(PersonalEdit.this,"修改成功~",Toast.LENGTH_LONG);
                     }
 
                     @Override
@@ -415,15 +484,15 @@ public class PersonalEdit extends Activity {
             }
         }.start();
     }
-    public void changeSex(String sex){
+    public void changeInfo(String sex,String flag,int type){
         SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
         String phone = sp.getString("phone","");
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("phone",phone);
-            jsonObject.put("flag","sex");
+            jsonObject.put("flag",flag);
             jsonObject.put("data",sex);
-            jsonObject.put("type",0);
+            jsonObject.put("type",type);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -456,6 +525,40 @@ public class PersonalEdit extends Activity {
             }
         }.start();
     }
-    
+    /**
+     * 显示日期
+     * @param date
+     */
+    private void showDateDialog(List<Integer> date) {
+        DatePickerDialog.Builder builder = new DatePickerDialog.Builder(this);
+        builder.setOnDateSelectedListener(new DatePickerDialog.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(int[] dates) {
+                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String newBirth = String.format("%d-%s-%s", dates[0], dates[1] > 9 ? dates[1] : ("0" + dates[1]), dates[2] > 9 ? dates[2] : ("0" + dates[2]));
+                birth.setText(newBirth);
+                editor.putString("birthday",newBirth);
+                editor.commit();
+                changeInfo(newBirth,"birthday",0);
+                onResume();
+                Toast.makeText(PersonalEdit.this,"生日修改成功~",Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        })
+                .setSelectYear(date.get(0) - 1)
+                .setSelectMonth(date.get(1) - 1)
+                .setSelectDay(date.get(2) - 1);
+        builder.setMaxYear(DateUtil.getYear());
+        builder.setMaxMonth(DateUtil.getDateForString(DateUtil.getToday()).get(1));
+        builder.setMaxDay(DateUtil.getDateForString(DateUtil.getToday()).get(2));
+        dateDialog = builder.create();
+        dateDialog.show();
+    }
+
 }
 
