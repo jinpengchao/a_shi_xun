@@ -29,6 +29,7 @@
                     android:textColor="#ffffff"
                     android:visibility="visible"
                     tools:visibility="visible" />
+
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="vertical" android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -62,10 +63,14 @@
                                 android:textSize="16sp"
                                 android:textColor="@android:color/darker_gray"/>
                         </LinearLayout>
-
-
-
-
+                        <ImageView
+                            android:id="@+id/icon_jubao"
+                            android:src="@drawable/jubao"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="@dimen/adaptive_15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </ImageView>
                     </RelativeLayout>
                     <TextView
                         android:id="@+id/tv_hot_content"

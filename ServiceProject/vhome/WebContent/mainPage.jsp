@@ -100,6 +100,7 @@
 			    		<a href="javascript:;" class="mobileAddTab" data-url="page/user/changePwd.jsp"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><span>设置</span></a>
 			    	</li>
 			    	<li class="layui-nav-item" mobile>
+			    	
 			    		<a href="page/login/login.jsp" class="signOut"><i class="iconfont icon-loginout"></i>退出</a>
 			    	</li>
 					<li class="layui-nav-item lockcms" pc>
@@ -107,8 +108,8 @@
 					</li>
 					<li class="layui-nav-item" pc>
 						<a href="javascript:;">
-							<img src="images/face.jpg" class="layui-circle" width="35" height="35">
-							<cite>管理员昵称</cite>
+							<img src="images/${sessionScope.headerImage }" class="layui-circle" width="35" height="35">
+							<cite>${sessionScope.nickName }</cite>
 						</a>
 						<dl class="layui-nav-child">
 							<dd><a href="javascript:;" data-url="page/user/userInfo.jsp"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><span>个人资料</span></a></dd>
@@ -122,8 +123,8 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像" ><img src="images/face.jpg"></a>
-				<p>你好！<span class="userName">管理员昵称</span>,欢迎登录</p>
+				<a class="img" title="我的头像" ><img src="images/${sessionScope.headerImage }"></a>
+				<p><span class="userName">管理员【${sessionScope.nickName }】你好！</span>，欢迎登陆</p>
 			</div>
 			<div class="navBar layui-side-scroll"></div>
 		</div>

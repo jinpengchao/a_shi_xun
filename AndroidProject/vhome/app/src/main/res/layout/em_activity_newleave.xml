@@ -7,7 +7,7 @@
         android:id="@+id/rl_new_leave_title"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#b6000000">
+        android:background="#000000">
         <RelativeLayout
             android:id="@+id/rl_back"
             android:layout_width="39dp"
@@ -67,9 +67,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="145dp"
+                        android:layout_marginTop="140dp"
                         android:gravity="center"
-                        android:text="感谢您的留言！我们将在第一时间对\n您进行答复，请耐心等待！"
+                        android:text="感谢您的反馈！我们将在第一时间对\n您进行答复，请耐心等待！"
                         android:textColor="#4c4c4c"
                         android:textSize="14sp" />
                 </RelativeLayout>
@@ -150,51 +150,9 @@
                     android:textColor="#4c4c4c"
                     android:textSize="16sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_phone"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical|right"
-                    android:singleLine="true"
-                    android:background="@null"
-                    android:hint="必填"
-                    android:textColorHint="#979797"
-                    android:textColor="#4c4c4c"
-                    android:textSize="16sp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="#979797"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_email"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#00ffffff"
-                android:orientation="horizontal"
-                android:layout_below="@+id/rl_phone"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="@dimen/adaptive_25dp">
-
-                <TextView
-                    android:id="@+id/lable_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="邮箱"
-                    android:textColor="#4c4c4c"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -220,7 +178,7 @@
                 android:layout_height="50dp"
                 android:background="#00ffffff"
                 android:orientation="horizontal"
-                android:layout_below="@+id/rl_email"
+                android:layout_below="@+id/rl_phone"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp">
 
@@ -304,7 +262,7 @@
         android:id="@+id/rl_new_leave_send"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#b6000000"
+        android:background="#000000"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         >

@@ -147,7 +147,6 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-26'
     implementation 'com.github.mtotschnig:StickyListHeaders:2.7.1'
-    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
@@ -178,6 +177,7 @@ dependencies {
     implementation project(path: ':mywheelview')
     implementation project(path: ':picture_library')
     implementation project(path: ':ucrop')
+    implementation files('libs\\ActiveAndroid-master.jar')
 }
 
 // ADD THIS AT THE BOTTOM

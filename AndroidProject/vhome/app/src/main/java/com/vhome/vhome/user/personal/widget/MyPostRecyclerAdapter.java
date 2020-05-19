@@ -78,7 +78,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //创建ViewHolder，返回每一项的布局
-        inflater = LayoutInflater.from(context).inflate(R.layout.item_hotspot,parent,false);
+        inflater = LayoutInflater.from(context).inflate(R.layout.item_my_hotspot,parent,false);
         MyViewHolder myViewHolder = new MyViewHolder(inflater);
         return myViewHolder;
     }
@@ -103,21 +103,13 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
                 return true;
             }
         });
-        //设置gridview点击事件不响应
-//        holder.gvPostShow.setClickable(false);
-//        holder.gvPostShow.setPressed(false);
-//        holder.gvPostShow.setEnabled(false);
+
+
         //通过判断是否收藏点赞，设置收藏图标
         setImg(i,holder);
         //设置发帖人logo.
         String path = "/sdcard/"+list.get(i).getHeadimg()+"/";// sd路径
-//        //刷新本地头像
-//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
-//        try {
-//            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         Bitmap bt = BitmapFactory.decodeFile(path + list.get(i).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
             @SuppressWarnings("deprecation")
