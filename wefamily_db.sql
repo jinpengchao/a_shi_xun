@@ -1,17 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-﻿# Host: localhost  (Version 5.5.6-rc)
-# Date: 2020-05-18 14:17:56
-# Generator: MySQL-Front 6.1  (Build 1.26)
-
-
-#
-# Structure for table "tbl_alarm"
-#
-
-Date: 2020-05-19 17:33:15
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -332,6 +318,7 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('kefuzhanghao', '000000', '客服小�
 -- ----------------------------
 -- Table structure for `tbl_post`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -394,6 +381,17 @@ CREATE TABLE `tbl_questions` (
   `theme` varchar(20) CHARACTER SET utf8 NOT NULL,
   `content` varchar(200) CHARACTER SET utf8 NOT NULL,
   `status` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tbl_questions
+-- ----------------------------
+INSERT INTO `tbl_questions` VALUES ('1', '姬文斌', '13300000000', '关于获奖资金分配问题', '我自愿退出分配奖金，希望大家同意，跪下磕头了给你们', '1');
+INSERT INTO `tbl_questions` VALUES ('2', '姬豆豆', '15200000000', '关于自觉问题', '姬文斌十一点起，十一点睡，该治治了', '1');
+INSERT INTO `tbl_questions` VALUES ('3', '姬小生', '15500000000', '关于哈哈', '靳文斌', '0');
+INSERT INTO `tbl_questions` VALUES ('4', '姬妹妹', '15202020220', '管你呢', '嗯嗯嗯嗯呃', '0');
+  
 DROP TABLE IF EXISTS `tbl_post_copy`;
 CREATE TABLE `tbl_post_copy` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -429,13 +427,6 @@ CREATE TABLE `tbl_post_report` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- ----------------------------
--- Records of tbl_questions
--- ----------------------------
-INSERT INTO `tbl_questions` VALUES ('1', '姬文斌', '13300000000', '关于获奖资金分配问题', '我自愿退出分配奖金，希望大家同意，跪下磕头了给你们', '1');
-INSERT INTO `tbl_questions` VALUES ('2', '姬豆豆', '15200000000', '关于自觉问题', '姬文斌十一点起，十一点睡，该治治了', '1');
-INSERT INTO `tbl_questions` VALUES ('3', '姬小生', '15500000000', '关于哈哈', '靳文斌', '0');
-INSERT INTO `tbl_questions` VALUES ('4', '姬妹妹', '15202020220', '管你呢', '嗯嗯嗯嗯呃', '0');
 #
 # Data for table "tbl_post_report"
 #
@@ -589,3 +580,5 @@ CREATE TABLE `tbl_walkpath` (
 # Data for table "tbl_walkpath"
 #
 
+
+ 
