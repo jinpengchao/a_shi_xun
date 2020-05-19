@@ -1,14 +1,13 @@
 /*
 Navicat MySQL Data Transfer
+﻿# Host: localhost  (Version 5.5.6-rc)
+# Date: 2020-05-18 14:17:56
+# Generator: MySQL-Front 6.1  (Build 1.26)
 
-Source Server         : localhost_3306
-Source Server Version : 50506
-Source Host           : localhost:3306
-Source Database       : wefamily_db
 
-Target Server Type    : MYSQL
-Target Server Version : 50506
-File Encoding         : 65001
+#
+# Structure for table "tbl_alarm"
+#
 
 Date: 2020-05-19 17:33:15
 */
@@ -81,6 +80,7 @@ CREATE TABLE `tbl_answers` (
 -- ----------------------------
 -- Table structure for `tbl_child_userinfo`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_child_userinfo`;
 CREATE TABLE `tbl_child_userinfo` (
   `phone` varchar(20) NOT NULL DEFAULT '',
@@ -92,14 +92,16 @@ CREATE TABLE `tbl_child_userinfo` (
   PRIMARY KEY (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_child_userinfo
--- ----------------------------
-INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '308462', '子女子女子女子女测测测测', 'female', '天国', 'header15194980385');
+#
+# Data for table "tbl_child_userinfo"
+#
 
--- ----------------------------
--- Table structure for `tbl_comment`
--- ----------------------------
+INSERT INTO `tbl_child_userinfo` VALUES ('15194980385','308462','尿','female','天国','header18032168790.jpg');
+
+#
+# Structure for table "tbl_comment"
+#
+
 DROP TABLE IF EXISTS `tbl_comment`;
 CREATE TABLE `tbl_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -165,18 +167,18 @@ CREATE TABLE `tbl_connect` (
   `sendName` varchar(30) NOT NULL,
   `setName` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_connect
--- ----------------------------
-INSERT INTO `tbl_connect` VALUES ('33', '15230867500', '屎', '15194980385', '尿', '');
-INSERT INTO `tbl_connect` VALUES ('34', '15230867500', '滚滚滚滚', '15230867500', '滚滚滚滚', '');
-INSERT INTO `tbl_connect` VALUES ('35', '15230867500', '？睡觉睡觉大家', '15194980385', '改', '');
+#
+# Data for table "tbl_connect"
+#
 
--- ----------------------------
--- Table structure for `tbl_goodcomment`
--- ----------------------------
+INSERT INTO `tbl_connect` VALUES (22,'15194980385','尿','15230867500','屎','');
+
+#
+# Structure for table "tbl_goodcomment"
+#
+
 DROP TABLE IF EXISTS `tbl_goodcomment`;
 CREATE TABLE `tbl_goodcomment` (
   `commantId` int(30) NOT NULL,
@@ -186,13 +188,15 @@ CREATE TABLE `tbl_goodcomment` (
   PRIMARY KEY (`commantId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_goodcomment
--- ----------------------------
+#
+# Data for table "tbl_goodcomment"
+#
 
--- ----------------------------
--- Table structure for `tbl_goodpost`
--- ----------------------------
+
+#
+# Structure for table "tbl_goodpost"
+#
+
 DROP TABLE IF EXISTS `tbl_goodpost`;
 CREATE TABLE `tbl_goodpost` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -201,81 +205,18 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_goodpost
--- ----------------------------
-INSERT INTO `tbl_goodpost` VALUES ('1', '64', '909874', '609387', '2019-12-11 14:21:54');
-INSERT INTO `tbl_goodpost` VALUES ('2', '62', '909874', '609387', '2019-12-11 14:46:57');
-INSERT INTO `tbl_goodpost` VALUES ('3', '66', '909874', '909874', '2019-12-11 17:53:51');
-INSERT INTO `tbl_goodpost` VALUES ('4', '65', '909874', '909874', '2019-12-11 17:53:52');
-INSERT INTO `tbl_goodpost` VALUES ('6', '63', '909874', '609387', '2019-12-12 17:25:09');
-INSERT INTO `tbl_goodpost` VALUES ('7', '61', '909874', '609387', '2019-12-12 17:25:10');
-INSERT INTO `tbl_goodpost` VALUES ('8', '60', '909874', '609387', '2019-12-12 17:25:11');
-INSERT INTO `tbl_goodpost` VALUES ('9', '58', '909874', '1', '2019-12-12 17:25:15');
-INSERT INTO `tbl_goodpost` VALUES ('10', '67', '909874', '909874', '2019-12-12 17:25:42');
-INSERT INTO `tbl_goodpost` VALUES ('11', '59', '909874', '609387', '2019-12-12 19:05:43');
-INSERT INTO `tbl_goodpost` VALUES ('13', '66', '909874', '909874', '2019-12-13 13:06:18');
-INSERT INTO `tbl_goodpost` VALUES ('14', '67', '249984', '909874', '2019-12-13 14:28:23');
-INSERT INTO `tbl_goodpost` VALUES ('15', '65', '249984', '909874', '2019-12-13 14:28:24');
-INSERT INTO `tbl_goodpost` VALUES ('16', '68', '909874', '249984', '2019-12-14 10:58:03');
-INSERT INTO `tbl_goodpost` VALUES ('17', '76', '165196', '165196', '2019-12-15 12:59:45');
-INSERT INTO `tbl_goodpost` VALUES ('18', '75', '414223', '165196', '2019-12-15 13:27:57');
-INSERT INTO `tbl_goodpost` VALUES ('19', '77', '414223', '414223', '2019-12-15 13:28:16');
-INSERT INTO `tbl_goodpost` VALUES ('20', '78', '917106', '414223', '2019-12-16 01:22:42');
-INSERT INTO `tbl_goodpost` VALUES ('21', '82', '909874', '909874', '2019-12-16 17:12:02');
-INSERT INTO `tbl_goodpost` VALUES ('22', '83', '909874', '275686', '2019-12-16 19:04:24');
-INSERT INTO `tbl_goodpost` VALUES ('23', '92', '275686', '275686', '2019-12-17 10:31:11');
-INSERT INTO `tbl_goodpost` VALUES ('24', '90', '99663438', '909874', '2019-12-17 16:36:30');
-INSERT INTO `tbl_goodpost` VALUES ('25', '88', '99663438', '275686', '2019-12-17 16:36:31');
-INSERT INTO `tbl_goodpost` VALUES ('26', '65', '99663438', '909874', '2019-12-17 16:36:34');
-INSERT INTO `tbl_goodpost` VALUES ('27', '62', '99663438', '609387', '2019-12-17 16:36:36');
-INSERT INTO `tbl_goodpost` VALUES ('28', '92', '99663438', '275686', '2019-12-17 16:36:43');
-INSERT INTO `tbl_goodpost` VALUES ('29', '87', '909874', '275686', '2019-12-18 11:08:00');
-INSERT INTO `tbl_goodpost` VALUES ('30', '88', '909874', '275686', '2019-12-18 11:08:01');
-INSERT INTO `tbl_goodpost` VALUES ('31', '96', '909874', '909874', '2019-12-18 14:02:15');
-INSERT INTO `tbl_goodpost` VALUES ('32', '96', '909874', '909874', '2019-12-18 14:31:42');
-INSERT INTO `tbl_goodpost` VALUES ('33', '101', '180321', '909874', '2019-12-18 16:56:40');
-INSERT INTO `tbl_goodpost` VALUES ('35', '68', '909874', '249984', '2019-12-18 17:31:30');
-INSERT INTO `tbl_goodpost` VALUES ('36', '102', '180321', '180321', '2019-12-18 17:37:14');
-INSERT INTO `tbl_goodpost` VALUES ('37', '103', '909874', '909874', '2019-12-18 18:04:54');
-INSERT INTO `tbl_goodpost` VALUES ('38', '101', '180321', '909874', '2019-12-18 19:04:03');
-INSERT INTO `tbl_goodpost` VALUES ('40', '103', '180321', '909874', '2019-12-18 19:04:27');
-INSERT INTO `tbl_goodpost` VALUES ('41', '101', '180321', '909874', '2019-12-18 19:04:28');
-INSERT INTO `tbl_goodpost` VALUES ('42', '105', '275686', '275686', '2019-12-18 19:58:35');
-INSERT INTO `tbl_goodpost` VALUES ('43', '106', '180321', '180321', '2019-12-18 22:49:59');
-INSERT INTO `tbl_goodpost` VALUES ('44', '108', '180321', '180321', '2019-12-19 10:37:54');
-INSERT INTO `tbl_goodpost` VALUES ('56', '109', '180321', '180321', '2020-04-08 09:55:17');
-INSERT INTO `tbl_goodpost` VALUES ('57', '118', '', '180321', '2020-04-13 19:51:41');
-INSERT INTO `tbl_goodpost` VALUES ('58', '119', '', '', '2020-04-13 20:44:56');
-INSERT INTO `tbl_goodpost` VALUES ('59', '121', '', '', '2020-04-14 15:56:03');
-INSERT INTO `tbl_goodpost` VALUES ('60', '123', '', '180321', '2020-04-14 20:57:22');
-INSERT INTO `tbl_goodpost` VALUES ('61', '122', '', '', '2020-04-14 20:58:34');
-INSERT INTO `tbl_goodpost` VALUES ('62', '123', '293876', '180321', '2020-04-14 21:05:37');
-INSERT INTO `tbl_goodpost` VALUES ('63', '122', '293876', '', '2020-04-14 21:05:38');
-INSERT INTO `tbl_goodpost` VALUES ('64', '120', '293876', '', '2020-04-14 21:05:49');
-INSERT INTO `tbl_goodpost` VALUES ('65', '124', '293876', '293876', '2020-04-14 21:06:28');
-INSERT INTO `tbl_goodpost` VALUES ('66', '125', '638880', '638880', '2020-04-15 10:42:00');
-INSERT INTO `tbl_goodpost` VALUES ('68', '126', '491602', '', '2020-04-19 16:28:59');
-INSERT INTO `tbl_goodpost` VALUES ('69', '127', '491602', '491602', '2020-04-19 16:29:15');
-INSERT INTO `tbl_goodpost` VALUES ('71', '129', '491602', '', '2020-04-24 20:37:29');
-INSERT INTO `tbl_goodpost` VALUES ('72', '128', '491602', '', '2020-04-24 20:37:32');
-INSERT INTO `tbl_goodpost` VALUES ('73', '125', '491602', '638880', '2020-04-24 20:37:35');
-INSERT INTO `tbl_goodpost` VALUES ('74', '157', '491602', '491602', '2020-04-29 13:38:47');
-INSERT INTO `tbl_goodpost` VALUES ('75', '156', '491602', '491602', '2020-04-29 13:38:51');
-INSERT INTO `tbl_goodpost` VALUES ('76', '151', '491602', '491602', '2020-04-29 13:38:54');
-INSERT INTO `tbl_goodpost` VALUES ('77', '148', '491602', '491602', '2020-04-29 13:38:57');
-INSERT INTO `tbl_goodpost` VALUES ('78', '153', '491602', '491602', '2020-04-29 13:39:01');
-INSERT INTO `tbl_goodpost` VALUES ('79', '154', '491602', '491602', '2020-04-30 14:11:41');
-INSERT INTO `tbl_goodpost` VALUES ('81', '155', '491602', '491602', '2020-04-30 14:11:43');
-INSERT INTO `tbl_goodpost` VALUES ('82', '145', '852000', '852000', '2020-05-06 22:14:12');
-INSERT INTO `tbl_goodpost` VALUES ('83', '166', '491602', '852000', '2020-05-07 08:17:17');
-INSERT INTO `tbl_goodpost` VALUES ('91', '167', '491602', '852000', '2020-05-11 17:52:34');
+#
+# Data for table "tbl_goodpost"
+#
 
--- ----------------------------
--- Table structure for `tbl_healthhouse`
--- ----------------------------
+INSERT INTO `tbl_goodpost` VALUES (1,64,'909874','609387','2019-12-11 14:21:54'),(2,62,'909874','609387','2019-12-11 14:46:57'),(3,66,'909874','909874','2019-12-11 17:53:51'),(4,65,'909874','909874','2019-12-11 17:53:52'),(6,63,'909874','609387','2019-12-12 17:25:09'),(7,61,'909874','609387','2019-12-12 17:25:10'),(8,60,'909874','609387','2019-12-12 17:25:11'),(9,58,'909874','1','2019-12-12 17:25:15'),(10,67,'909874','909874','2019-12-12 17:25:42'),(11,59,'909874','609387','2019-12-12 19:05:43'),(13,66,'909874','909874','2019-12-13 13:06:18'),(14,67,'249984','909874','2019-12-13 14:28:23'),(15,65,'249984','909874','2019-12-13 14:28:24'),(16,68,'909874','249984','2019-12-14 10:58:03'),(17,76,'165196','165196','2019-12-15 12:59:45'),(18,75,'414223','165196','2019-12-15 13:27:57'),(19,77,'414223','414223','2019-12-15 13:28:16'),(20,78,'917106','414223','2019-12-16 01:22:42'),(21,82,'909874','909874','2019-12-16 17:12:02'),(22,83,'909874','275686','2019-12-16 19:04:24'),(23,92,'275686','275686','2019-12-17 10:31:11'),(24,90,'99663438','909874','2019-12-17 16:36:30'),(25,88,'99663438','275686','2019-12-17 16:36:31'),(26,65,'99663438','909874','2019-12-17 16:36:34'),(27,62,'99663438','609387','2019-12-17 16:36:36'),(28,92,'99663438','275686','2019-12-17 16:36:43'),(29,87,'909874','275686','2019-12-18 11:08:00'),(30,88,'909874','275686','2019-12-18 11:08:01'),(31,96,'909874','909874','2019-12-18 14:02:15'),(32,96,'909874','909874','2019-12-18 14:31:42'),(33,101,'180321','909874','2019-12-18 16:56:40'),(35,68,'909874','249984','2019-12-18 17:31:30'),(36,102,'180321','180321','2019-12-18 17:37:14'),(37,103,'909874','909874','2019-12-18 18:04:54'),(38,101,'180321','909874','2019-12-18 19:04:03'),(40,103,'180321','909874','2019-12-18 19:04:27'),(41,101,'180321','909874','2019-12-18 19:04:28'),(42,105,'275686','275686','2019-12-18 19:58:35'),(43,106,'180321','180321','2019-12-18 22:49:59'),(44,108,'180321','180321','2019-12-19 10:37:54'),(56,109,'180321','180321','2020-04-08 09:55:17'),(57,118,'','180321','2020-04-13 19:51:41'),(58,119,'','','2020-04-13 20:44:56'),(59,121,'','','2020-04-14 15:56:03'),(60,123,'','180321','2020-04-14 20:57:22'),(61,122,'','','2020-04-14 20:58:34'),(62,123,'293876','180321','2020-04-14 21:05:37'),(63,122,'293876','','2020-04-14 21:05:38'),(64,120,'293876','','2020-04-14 21:05:49'),(65,124,'293876','293876','2020-04-14 21:06:28'),(66,125,'638880','638880','2020-04-15 10:42:00'),(68,126,'491602','','2020-04-19 16:28:59'),(69,127,'491602','491602','2020-04-19 16:29:15'),(71,129,'491602','','2020-04-24 20:37:29'),(72,128,'491602','','2020-04-24 20:37:32'),(73,125,'491602','638880','2020-04-24 20:37:35'),(74,157,'491602','491602','2020-04-29 13:38:47'),(75,156,'491602','491602','2020-04-29 13:38:51'),(76,151,'491602','491602','2020-04-29 13:38:54'),(77,148,'491602','491602','2020-04-29 13:38:57'),(78,153,'491602','491602','2020-04-29 13:39:01');
+
+#
+# Structure for table "tbl_healthhouse"
+#
+
 DROP TABLE IF EXISTS `tbl_healthhouse`;
 CREATE TABLE `tbl_healthhouse` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -287,13 +228,15 @@ CREATE TABLE `tbl_healthhouse` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_healthhouse
--- ----------------------------
+#
+# Data for table "tbl_healthhouse"
+#
 
--- ----------------------------
--- Table structure for `tbl_myachievement`
--- ----------------------------
+
+#
+# Structure for table "tbl_myachievement"
+#
+
 DROP TABLE IF EXISTS `tbl_myachievement`;
 CREATE TABLE `tbl_myachievement` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -302,13 +245,15 @@ CREATE TABLE `tbl_myachievement` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_myachievement
--- ----------------------------
+#
+# Data for table "tbl_myachievement"
+#
 
--- ----------------------------
--- Table structure for `tbl_myattentions`
--- ----------------------------
+
+#
+# Structure for table "tbl_myattentions"
+#
+
 DROP TABLE IF EXISTS `tbl_myattentions`;
 CREATE TABLE `tbl_myattentions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -321,11 +266,7 @@ CREATE TABLE `tbl_myattentions` (
 -- Records of tbl_myattentions
 -- ----------------------------
 INSERT INTO `tbl_myattentions` VALUES ('47', '852000', '491602');
-INSERT INTO `tbl_myattentions` VALUES ('48', '852000', '');
 
--- ----------------------------
--- Table structure for `tbl_mycollection`
--- ----------------------------
 DROP TABLE IF EXISTS `tbl_mycollection`;
 CREATE TABLE `tbl_mycollection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -333,17 +274,18 @@ CREATE TABLE `tbl_mycollection` (
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_mycollection
--- ----------------------------
-INSERT INTO `tbl_mycollection` VALUES ('131', '491602', '165', '2020-05-10 22:25:45');
-INSERT INTO `tbl_mycollection` VALUES ('133', '491602', '167', '2020-05-11 17:52:24');
+#
+# Data for table "tbl_mycollection"
+#
 
--- ----------------------------
--- Table structure for `tbl_news`
--- ----------------------------
+INSERT INTO `tbl_mycollection` VALUES (85,'1',58,'2019-12-08 09:32:55'),(86,'1',51,'2019-12-08 09:32:59'),(87,'609387',60,'2019-12-09 15:49:16'),(88,'609387',59,'2019-12-09 15:49:23'),(89,'609387',61,'2019-12-09 16:01:46'),(90,'909874',65,'2019-12-10 08:56:42'),(91,'909874',54,'2019-12-12 17:25:16'),(92,'909874',58,'2019-12-12 17:25:17'),(93,'909874',67,'2019-12-13 19:48:24'),(102,'414223',79,'2019-12-16 06:41:37'),(103,'909874',82,'2019-12-16 17:12:04'),(107,'99663438',66,'2019-12-17 16:36:05'),(108,'99663438',65,'2019-12-17 16:36:06'),(109,'99663438',62,'2019-12-17 16:36:09'),(110,'180321',105,'2019-12-19 08:22:15'),(111,'180321',106,'2019-12-19 10:05:51'),(112,'180321',105,'2019-12-19 10:05:52'),(113,'180321',108,'2019-12-19 10:37:55'),(116,'293876',122,'2020-04-14 21:05:46'),(117,'293876',123,'2020-04-14 21:05:46'),(118,'293876',124,'2020-04-14 21:06:29'),(119,'',117,'2020-04-24 12:21:26'),(122,'491602',128,'2020-04-24 20:38:40'),(123,'491602',127,'2020-04-24 20:38:41');
+
+#
+# Structure for table "tbl_news"
+#
+
 DROP TABLE IF EXISTS `tbl_news`;
 CREATE TABLE `tbl_news` (
   `id` varchar(30) NOT NULL,
@@ -355,13 +297,15 @@ CREATE TABLE `tbl_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_news
--- ----------------------------
+#
+# Data for table "tbl_news"
+#
 
--- ----------------------------
--- Table structure for `tbl_parent_userinfo`
--- ----------------------------
+
+#
+# Structure for table "tbl_parent_userinfo"
+#
+
 DROP TABLE IF EXISTS `tbl_parent_userinfo`;
 CREATE TABLE `tbl_parent_userinfo` (
   `phone` varchar(20) NOT NULL,
@@ -371,7 +315,7 @@ CREATE TABLE `tbl_parent_userinfo` (
   `area` varchar(50) DEFAULT NULL,
   `birthday` varchar(50) DEFAULT NULL,
   `achieve` int(11) DEFAULT NULL,
-  `personalWord` varchar(255) DEFAULT NULL,
+  `personalWord` varchar(50) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`phone`),
   UNIQUE KEY `id` (`id`) USING BTREE
@@ -391,10 +335,10 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('kefuzhanghao', '000000', '客服小�
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
-  `nickName` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `headimg` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `content` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `personId` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
   `time` datetime DEFAULT NULL,
   `imgs` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -435,9 +379,9 @@ CREATE TABLE `tbl_posts` (
   PRIMARY KEY (`num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_posts
--- ----------------------------
+#
+# Structure for table "tbl_post_copy"
+#
 
 -- ----------------------------
 -- Table structure for `tbl_questions`
@@ -450,6 +394,38 @@ CREATE TABLE `tbl_questions` (
   `theme` varchar(20) CHARACTER SET utf8 NOT NULL,
   `content` varchar(200) CHARACTER SET utf8 NOT NULL,
   `status` int(1) NOT NULL,
+DROP TABLE IF EXISTS `tbl_post_copy`;
+CREATE TABLE `tbl_post_copy` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
+  `time` datetime DEFAULT NULL,
+  `imgs` varchar(1000) DEFAULT NULL,
+  `examine` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tbl_post_copy"
+#
+
+INSERT INTO `tbl_post_copy` VALUES (183,'mon','header15227856991','加图删一个','852000','2020-05-17 14:51:55','200856152244627_2.jpg','已审核'),(184,'mon','header15227856991','拍照','852000','2020-05-17 14:52:31','IMG_20200517_14521749.jpg','已审核'),(186,'mon','header15227856991','删一个视频','852000','2020-05-17 14:54:17','OIP.2xOrqtuh-c3BS4RVlKwQfQHaNK_pid\\u003dApi\\u0026dpr\\u003d2.jpg','审核失败'),(187,'mon','header15227856991','拉去','852000','2020-05-17 16:00:31','d48fd9371a76177881af003aaf912bc5.jpg\",\"764f9ec150b5801a314f1c98b10cd29e.mp4','已审核');
+
+#
+# Structure for table "tbl_post_report"
+#
+
+DROP TABLE IF EXISTS `tbl_post_report`;
+CREATE TABLE `tbl_post_report` (
+  `id` int(30) NOT NULL AUTO_INCREMENT,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
+  `time` datetime DEFAULT NULL,
+  `imgs` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -460,34 +436,52 @@ INSERT INTO `tbl_questions` VALUES ('1', '姬文斌', '13300000000', '关于获�
 INSERT INTO `tbl_questions` VALUES ('2', '姬豆豆', '15200000000', '关于自觉问题', '姬文斌十一点起，十一点睡，该治治了', '1');
 INSERT INTO `tbl_questions` VALUES ('3', '姬小生', '15500000000', '关于哈哈', '靳文斌', '0');
 INSERT INTO `tbl_questions` VALUES ('4', '姬妹妹', '15202020220', '管你呢', '嗯嗯嗯嗯呃', '0');
+#
+# Data for table "tbl_post_report"
+#
 
--- ----------------------------
--- Table structure for `tbl_relations_request`
--- ----------------------------
+INSERT INTO `tbl_post_report` VALUES (154,'屎','header15230867500','上','491602','2020-04-27 21:18:29','[\"temp_photo1587992315661.jpg\"]');
+
+#
+# Structure for table "tbl_posts"
+#
+
+DROP TABLE IF EXISTS `tbl_posts`;
+CREATE TABLE `tbl_posts` (
+  `num` int(11) NOT NULL DEFAULT '0',
+  `id` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tbl_posts"
+#
+
+
+#
+# Structure for table "tbl_relations_request"
+#
+
 DROP TABLE IF EXISTS `tbl_relations_request`;
 CREATE TABLE `tbl_relations_request` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_phone` varchar(11) NOT NULL,
   `send_name` varchar(20) CHARACTER SET utf8 NOT NULL,
   `receive_phone` varchar(11) NOT NULL,
-  `type` varchar(2) NOT NULL,
+  `type` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of tbl_relations_request
--- ----------------------------
-INSERT INTO `tbl_relations_request` VALUES ('2', '15194980385', '尿', '15230867500', '1');
-INSERT INTO `tbl_relations_request` VALUES ('3', '123456789', '尿', '15230867500', '1');
-INSERT INTO `tbl_relations_request` VALUES ('4', '15230867500', '屎', '15194980385', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('5', '555555', '5', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('6', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
-INSERT INTO `tbl_relations_request` VALUES ('7', '15230867500', '滚滚滚滚', '15230867500', '1');
-INSERT INTO `tbl_relations_request` VALUES ('8', '15194980385', '改', '15230867500', '1');
+#
+# Data for table "tbl_relations_request"
+#
 
--- ----------------------------
--- Table structure for `tbl_remind`
--- ----------------------------
+INSERT INTO `tbl_relations_request` VALUES (2,'15194980385','尿','15230867500',0),(3,'15194980385','尿','15230867500',0),(4,'15230867500','屎','15194980385',0);
+
+#
+# Structure for table "tbl_remind"
+#
+
 DROP TABLE IF EXISTS `tbl_remind`;
 CREATE TABLE `tbl_remind` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -496,16 +490,16 @@ CREATE TABLE `tbl_remind` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_remind
--- ----------------------------
-INSERT INTO `tbl_remind` VALUES ('1', 'hahah', '242424000');
-INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
-INSERT INTO `tbl_remind` VALUES ('12', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '15194980385');
+#
+# Data for table "tbl_remind"
+#
 
--- ----------------------------
--- Table structure for `tbl_reply_comment`
--- ----------------------------
+INSERT INTO `tbl_remind` VALUES (1,'hahah','242424000'),(2,'55555','242424000'),(3,'爸，我给你买了好酒，你记得去取啊','15194980385'),(12,'超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq','15194980385');
+
+#
+# Structure for table "tbl_reply_comment"
+#
+
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -517,7 +511,17 @@ CREATE TABLE `tbl_reply_comment` (
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tbl_reply_comment"
+#
+
+INSERT INTO `tbl_reply_comment` VALUES (6,14,'弗瑞','header6330654.jpg','275686',0,'天','2019-12-16 18:55:01'),(7,22,'嘻嘻哈哈','header18032168790.jpg','180321',0,'我是你妈妈','2020-04-08 09:55:03'),(8,25,'','','',0,'腹股沟管','2020-04-13 20:15:22'),(9,27,'','','',0,'宝宝vv','2020-04-14 11:34:57'),(10,38,'屎','header15230867500','491602',0,'？？','2020-04-24 21:03:23'),(11,38,'屎','header15230867500','491602',0,'哈哈','2020-04-24 21:03:30');
+
+#
+# Structure for table "tbl_step"
+#
 
 -- ----------------------------
 -- Records of tbl_reply_comment
@@ -541,13 +545,15 @@ CREATE TABLE `tbl_step` (
   PRIMARY KEY (`parentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_step
--- ----------------------------
+#
+# Data for table "tbl_step"
+#
 
--- ----------------------------
--- Table structure for `tbl_user`
--- ----------------------------
+
+#
+# Structure for table "tbl_user"
+#
+
 DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE `tbl_user` (
   `phone` varchar(20) NOT NULL,
@@ -561,18 +567,16 @@ CREATE TABLE `tbl_user` (
   UNIQUE KEY `id` (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_user
--- ----------------------------
-INSERT INTO `tbl_user` VALUES ('13513171332', '123456', '2020-04-28 21:56:36', '254870', '', '', '0');
-INSERT INTO `tbl_user` VALUES ('15194980385', '123456', '2019-12-03 15:29:25', '658943', '', '', '1');
-INSERT INTO `tbl_user` VALUES ('15227856991', '654321', '2020-02-15 16:03:24', '852000', null, null, '0');
-INSERT INTO `tbl_user` VALUES ('15230867500', '123456', '2019-10-15 16:03:24', '491602', '', '', '0');
-INSERT INTO `tbl_user` VALUES ('kefuzhanghao', 'wanjpc123', '0000-00-00 00:00:00', '000000', null, null, '0');
+#
+# Data for table "tbl_user"
+#
 
--- ----------------------------
--- Table structure for `tbl_walkpath`
--- ----------------------------
+INSERT INTO `tbl_user` VALUES ('13513171332','123456','2020-04-28 21:56:36','254870','','',0),('15194980385','123456','2019-12-03 15:29:25','658943','','',1),('15227856991','654321','2020-04-24 23:36:34','852000',NULL,NULL,0),('15230867500','123456','2020-04-15 16:03:24','491602','','',0);
+
+#
+# Structure for table "tbl_walkpath"
+#
+
 DROP TABLE IF EXISTS `tbl_walkpath`;
 CREATE TABLE `tbl_walkpath` (
   `id` varchar(30) NOT NULL DEFAULT '',
@@ -581,6 +585,7 @@ CREATE TABLE `tbl_walkpath` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_walkpath
--- ----------------------------
+#
+# Data for table "tbl_walkpath"
+#
+
