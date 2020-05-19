@@ -67,11 +67,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     protected int primarySize;
     protected int secondarySize;
     protected float timeSize;
-    private Handler handler1;
-    private int userTypes;
-    private String nikeName;
-    private List<Integer> typeList;
-    private List<String> nikeNames;
+
     public EaseConversationAdapter(Context context, int resource,
                                    List<EMConversation> objects) {
         super(context, resource, objects);
@@ -100,8 +96,6 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        typeList = new ArrayList<>();
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ease_row_chat_history, parent, false);
         }
@@ -147,35 +141,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            userType(username);
-//            getNickName(typeList.get(i),username);
-//            final ViewHolder finalHolder = holder;
-//            handler1 = new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    switch (msg.what) {
-//                        case 4:
-//                            Bundle c = msg.getData();
-//                            String data1 = c.getString("data");
-//                            userTypes = Integer.parseInt(data1);
-//                            typeList.add(userTypes);
-//                            break;
-//                        case 5:
-//                            for (int i=0;i<typeList.size();i++){
-//                                try {
-//                                    getNickName(typeList.get(i),username);
-//                                    Log.e("listsize---",typeList.get(i)+"");
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-////                            Bundle b = msg.getData();
-////                            String data = b.getString("data");
-//                            break;
-//                    }
-//                }
-//            };
-            EaseUserUtils.setUserNick(username+"哎", holder.name);
+
+            EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
         }
 
@@ -375,60 +342,5 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         /** layout */
         RelativeLayout list_itease_layout;
         TextView motioned;
-    }
-    public void userType(String username)  {
-        //准备数据
-        final String data = username;
-        new Thread() {
-            @Override
-            public void run() {
-                String ip = (new MyApp()).ip;
-                try {
-                    URL url = new URL("http://" + ip + ":8080/vhome/ReturnType");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url, data);
-                    //获取数据
-                    String data = util.getData(connection);
-                    util.sendMsg(data,4,handler1);
-                    Log.e("conver_adapter_type","userTypes"+data);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    public void getNickName(int type, final String username) throws JSONException {
-        //准备数据
-        JSONObject json = new JSONObject();
-        json.put("phone", username);
-        json.put("type", type);
-        final String data = json.toString();
-
-        new Thread() {
-            @Override
-            public void run() {
-                String ip = (new MyApp()).ip;
-                try {
-                    URL url = new URL("http://"+ip+":8080/vhome/searchUserInfo");
-                    ConnectionUtil util = new ConnectionUtil();
-                    //发送数据
-                    HttpURLConnection connection = util.sendData(url,data);
-                    //获取数据
-                    final String data = util.getData(connection);
-                    JSONObject jsonObject = new JSONObject(data);
-                    String nickName = jsonObject.getString("nikeName");
-                    Log.e("listsize---nickName",nickName);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 }

@@ -120,12 +120,6 @@ public class HotSpotAdapter extends BaseAdapter {
         //设置发帖人logo
         //刷新本地头像
         String path = "/sdcard/"+list.get(i).getHeadimg()+"/";// sd路径
-        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
-        try {
-            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Bitmap bt = BitmapFactory.decodeFile(path + list.get(i).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
 
@@ -261,43 +255,5 @@ public class HotSpotAdapter extends BaseAdapter {
         RelativeLayout rlPostSave;
         RelativeLayout rlPostComment;
         RelativeLayout rlPostLike;
-    }
-    public static Bitmap returnBitMap(String url) throws IOException {
-        URL imgUrl = new URL(url);
-        Bitmap bitmap = null;
-        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
-        conn.setDoInput(true);
-        conn.connect();
-        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
-        return bitmap;
-    }
-    private void setPicToView(String path ,String phone,Bitmap mBitmap) {
-        String sdStatus = Environment.getExternalStorageState();
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-            return;
-        }
-        FileOutputStream b = null;
-        File file = new File(path);
-        if (file.exists()){
-            file.delete();
-            file.mkdirs();
-        }else
-            file.mkdirs();// 创建文件夹
-        String fileName = path +phone+".jpg";// 图片名字
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭流
-                file.delete();
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

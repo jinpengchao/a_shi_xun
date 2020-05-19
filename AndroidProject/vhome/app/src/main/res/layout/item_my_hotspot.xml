@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability = "blocksDescendants"
@@ -10,46 +11,43 @@
     android:paddingTop="@dimen/adaptive_20dp"
     android:layout_marginBottom="@dimen/adaptive_20dp">
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <com.vhome.vhome.user.personal.widget.CircleImageView
             android:id="@+id/iv_hot_person"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/loading_1"/>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_toLeftOf="@id/exam"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_hot_person"
-            android:layout_marginLeft="15dp">
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_hot_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textSize="16sp"/>
-            <ImageView
-                android:id="@+id/post_lv"
-                android:src="@mipmap/lv4_true"
-                android:layout_toRightOf="@id/tv_hot_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="6dp"
-                android:textSize="16sp"/>
             <TextView
-                android:layout_below="@id/tv_hot_name"
                 android:id="@+id/tv_hot_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textColor="@android:color/darker_gray"/>
-        </RelativeLayout>
-
-
-
-
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/exam"
+            android:src="@drawable/examsuccess"
+            android:layout_alignParentEnd="true"
+            android:layout_width="80dp"
+            android:visibility="visible"
+            android:layout_height="30dp">
+        </ImageView>
     </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_hot_content"
         android:layout_width="match_parent"

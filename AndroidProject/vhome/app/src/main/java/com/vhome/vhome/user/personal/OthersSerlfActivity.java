@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -178,7 +179,7 @@ public class OthersSerlfActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(url2)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))  // 重点在这行
                     .into(zoom);
             Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
             mAvater.setImageDrawable(drawable);
@@ -196,12 +197,6 @@ public class OthersSerlfActivity extends AppCompatActivity {
                     .priority(Priority.HIGH)
                     .placeholder(R.drawable.rc_default_portrait)
                     .into(topAvater);
-
-            Glide.with(this)
-                    .load(url2)
-                    .placeholder(R.mipmap.sss)
-                    .priority(Priority.HIGH)
-                    .into(zoom);
         }
     }
     private void findId() {

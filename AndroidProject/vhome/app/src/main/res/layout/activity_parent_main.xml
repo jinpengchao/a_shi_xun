@@ -130,7 +130,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="66"
                 android:textColor="#ffffff"
                 android:gravity="center"
                 android:background="@drawable/em_unread_dot"
@@ -156,6 +155,16 @@
                 android:text="我的"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="12sp" />
+            <TextView
+                android:id="@+id/unread_msggg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/em_unread_dot"
+                android:visibility="visible" />
         </RelativeLayout>
     </LinearLayout>
     <com.baidu.mapapi.map.MapView

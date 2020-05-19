@@ -22,15 +22,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
-import com.vhome.vhome.user.personal.EditFlagActivity;
-import com.vhome.vhome.user.personal.EditNickNameActivity;
 import com.vhome.vhome.user.personal.util.DialogChangesex;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
-import com.vhome.vhome.user.personal.util.JsonUtil;
-import com.vhome.vhome.user.personal.util.Utils;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
@@ -129,7 +125,7 @@ public class ChildEdit extends Activity {
                     .load(url)
                     .placeholder(R.drawable.rc_default_portrait)
                     .priority(Priority.HIGH)
-                    .signature(new StringSignature(UUID.randomUUID().toString()))
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))  // 重点在这行
                     .into(header);
             setPicToView(returnBitMap(url));
         }

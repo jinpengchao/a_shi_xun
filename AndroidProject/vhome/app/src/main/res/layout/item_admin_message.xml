@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability = "blocksDescendants"
+    android:background="#ffffff"
+    android:paddingLeft="@dimen/adaptive_20dp"
+    android:paddingBottom="@dimen/adaptive_20dp"
+    android:paddingRight="@dimen/adaptive_20dp"
+    android:paddingTop="@dimen/adaptive_20dp"
+    android:layout_marginBottom="@dimen/adaptive_20dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/unread_msg_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ease_unread_dot"
+            android:visibility="visible"
+            android:textSize="12sp" />
+        <com.vhome.vhome.user.personal.widget.CircleImageView
+            android:id="@+id/iv_hot_person"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/em_logo_uidemo"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_hot_person"
+            android:layout_marginLeft="15dp">
+            <TextView
+                android:text="微家官方"
+                android:textColor="@color/blue_btn_normal"
+                android:id="@+id/tv_hot_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="16sp"/>
+            <TextView
+                android:text="欢迎光临微家大家庭，点击查看使用规则~"
+                android:id="@+id/tv_hot_content"
+                android:layout_below="@id/tv_hot_name"
+                android:maxLength="19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

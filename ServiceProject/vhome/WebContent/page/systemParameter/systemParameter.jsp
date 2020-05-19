@@ -105,6 +105,5 @@
 		</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="systemParameter.js"></script>
 </body>
 </html>

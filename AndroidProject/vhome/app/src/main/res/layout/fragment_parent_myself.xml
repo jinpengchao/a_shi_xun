@@ -109,6 +109,14 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rl_press"
                     >
+                    <TextView
+                        android:id="@+id/unread_msg_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/msg1"
+                        android:background="@drawable/ease_unread_dot"
+                        android:visibility="visible"
+                        android:textSize="12sp" />
                     <ImageView
                         android:layout_marginTop="2dp"
                         android:id="@+id/msg1"

@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -80,8 +81,11 @@ public class MyPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_item_mypost, container, false);
+
         getViews();
         registerListener();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        String ids = sharedPreferences.getString("id","null");
 
         handler = new Handler(){
             @Override
@@ -349,6 +353,7 @@ public class MyPostFragment extends Fragment {
         sp=getActivity().getPreferences(MODE_PRIVATE);
         editor=sp.edit();
         recyclerView = view.findViewById(R.id.lv_hot_spot);
+
     }
 
     private void registerListener() {

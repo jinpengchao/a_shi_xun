@@ -14,7 +14,7 @@ layui.config({
 	}).resize();
 	
 	//登录按钮事件
-	form.on("submit(login)",function(data){
+	form.on("submit(login_INVALID)",function(data){
 		window.location.href = "../../mainPage.jsp";
 		return false;
 	})

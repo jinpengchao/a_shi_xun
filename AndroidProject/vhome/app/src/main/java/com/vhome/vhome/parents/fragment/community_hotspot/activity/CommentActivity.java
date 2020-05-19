@@ -161,6 +161,11 @@ public class CommentActivity extends Activity {
         getCommentData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fillPost();
+    }
     //评论与恢复的长按删除
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
@@ -311,9 +316,9 @@ public class CommentActivity extends Activity {
         //设置头像
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg()+".jpg";;
         Glide.with(CommentActivity.this)
-                .load(url).priority(Priority.HIGH)
-                .error(R.mipmap.errorimg1)
-                .centerCrop().into(ivHotPerson);
+                .load(url)
+                .priority(Priority.HIGH)
+                .into(ivHotPerson);
         tvHotName.setText(post.getNickName());//设置发帖人昵称
         tvHotContent.setText(post.getPostContent());//设置帖子内容
         //设置时间

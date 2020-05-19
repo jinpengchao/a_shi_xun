@@ -246,7 +246,7 @@ public class MyselfFragment extends BaseFragment {
             Glide.with(getActivity())
                     .load(url)
                     .signature(new ObjectKey(UUID.randomUUID().toString()))  // 重点在这行
-                    .apply(bitmapTransform(new BlurTransformation( 25,3)))
+                    .apply(bitmapTransform(new BlurTransformation(25,3)))
                     .into(blurImageView);
         } else {
             String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+"header"+phone+".jpg";

@@ -2,6 +2,7 @@ package com.vhome.vhome.user.personal;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,9 +17,15 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.vhome.chat.R;
 import com.vhome.chat.ui.BaseActivity;
+import com.vhome.vhome.MyApp;
+import com.vhome.vhome.user.entity.NewTicketBody;
 import com.vhome.vhome.user.personal.widget.AlertDialogFragment;
+import com.vhome.vhome.util.ConnectionUtil;
 
-import java.util.prefs.Preferences;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,8 +48,7 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
     private RelativeLayout rlEmail;
     private RelativeLayout rlTheme;
     private EditText itemName;
-    private EditText itemPhone;
-    private EditText itemEmail;
+    private TextView itemPhone;
     private EditText itemTheme;
     private RelativeLayout detailLayout;
     private TextView detailText;
@@ -65,8 +71,6 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
         rlName = findViewById(R.id.rl_name);
         itemPhone = findViewById(R.id.et_phone);
         rlPhone = findViewById(R.id.rl_phone);
-        itemEmail = findViewById(R.id.et_email);
-        rlEmail = findViewById(R.id.rl_email);
         itemTheme = findViewById(R.id.et_theme);
         rlTheme = findViewById(R.id.rl_theme);
         detailLayout = findViewById(R.id.rl_detail_content);
@@ -81,30 +85,15 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
         itemName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    itemPhone.requestFocus();
+                    itemTheme.requestFocus();
                         return true;
                     }
                         return false;
                 }
             });
-        itemPhone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    itemEmail.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-        itemEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    itemTheme.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
+        SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        String phone = sharedPreferences.getString("phone","");
+        itemPhone.setText(phone);
         itemTheme.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
@@ -123,18 +112,6 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 itemName.requestFocus();
-            }
-        });
-        rlPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemPhone.requestFocus();
-            }
-        });
-        rlEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemEmail.requestFocus();
             }
         });
         rlTheme.setOnClickListener(new View.OnClickListener() {
@@ -171,9 +148,6 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
         if (itemPhone.getText().toString().length() == 0) {
             return true;
         }
-        if (itemEmail.getText().toString().length() == 0) {
-            return true;
-        }
         return itemTheme.getText().toString().length() == 0;
     }
 
@@ -187,59 +161,69 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
         }
         progressDialog.show();
 
-
-//        NewTicketBody ticketBody = new NewTicketBody();
-//        ticketBody.setContent(contentText.getText().toString());
-//        ticketBody.setSubject(itemTheme.getText().toString());
-//        NewTicketBody.CreatorBean creatorBean = new NewTicketBody.CreatorBean();
-//        creatorBean.setEmail(itemEmail.getText().toString());
-//        creatorBean.setName(itemName.getText().toString());
-//        creatorBean.setPhone(itemPhone.getText().toString());
-//        ticketBody.setCreator(creatorBean);
-//
-//        String target = Preferences.getInstance().getCustomerAccount();
-//        String tenantId = Preferences.getInstance().getTenantId();
-//        String projectId = Preferences.getInstance().getProjectId();
-//        Gson gson = new Gson();
-//        ChatClient.getInstance().leaveMsgManager().createLeaveMsg(gson.toJson(ticketBody).toString(), projectId, target, new ValueCallBack<String>() {
-//
-//            @Override
-//            public void onSuccess(final String value) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        closeDialog();
-//                        //发送成功后的操作
-//                        sendLayout.setVisibility(View.GONE);
-//                        contentText.setVisibility(View.GONE);
-//                        successLayout.setVisibility(View.VISIBLE);
-//                        itemName.setKeyListener(null);
-//                        itemPhone.setKeyListener(null);
-//                        itemEmail.setKeyListener(null);
-//                        itemTheme.setKeyListener(null);
-//                        detailLayout.setVisibility(View.VISIBLE);
-//                        detailText.setText(contentText.getText().toString());
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onError(int code, final String error) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        closeDialog();
-//                        Log.e(TAG, "error:" + error);
-//                        if (!NewLeaveMessageActivity.this.isFinishing()) {
-//                            showAlertDialog();
-//                        }
-//                    }
-//                });
-//            }
-//
-//        });
+        sendLeave();
     }
+    public void sendLeave() {
+        //准备数据
+        NewTicketBody ticketBody = new NewTicketBody();
+        ticketBody.setContent(contentText.getText().toString());
+        ticketBody.setSubject(itemTheme.getText().toString());
+        ticketBody.setCreatorName(itemName.getText().toString());
+        ticketBody.setCreatorPhone(itemPhone.getText().toString());
 
+        Gson gson = new Gson();
+        final String data = gson.toJson(ticketBody);
+        new Thread(){
+            @Override
+            public void run() {
+                String ip = (new MyApp()).getIp();
+                try {
+                    URL url = new URL("http://"+ip+":8080/vhome/SaveQuestions");
+                    ConnectionUtil util = new ConnectionUtil();
+                    //发送数据
+                    HttpURLConnection connection = util.sendData(url,data);
+                    final String data = util.getData(connection);
+
+                    try {
+                        sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (data!=null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeDialog();
+                                sendLayout.setVisibility(View.GONE);
+                                contentText.setVisibility(View.GONE);
+                                successLayout.setVisibility(View.VISIBLE);
+                                itemName.setKeyListener(null);
+                                itemPhone.setKeyListener(null);
+                                itemTheme.setKeyListener(null);
+                                detailLayout.setVisibility(View.VISIBLE);
+                                detailText.setText(contentText.getText().toString());
+                            }
+                        });
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeDialog();
+                                if (!NewLeaveMessageActivity.this.isFinishing()) {
+                                    showAlertDialog();
+                                }
+                            }
+                        });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
     private void showAlertDialog() {
         FragmentTransaction mFragTransaction = getSupportFragmentManager().beginTransaction();
         String fragmentTag = "dialogFragment";
