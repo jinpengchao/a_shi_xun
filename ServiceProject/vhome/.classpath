@@ -9,25 +9,19 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.0.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsmartcom_zh_CN.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/workerspace/cakessh/WebContent/WEB-INF/lib/jstl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="E:/workerspace/cakessh/WebContent/WEB-INF/lib/standard.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Tomcat Server"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/commons-fileupload-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/ezmorph-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/jsmartcom_zh_CN.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/mysql-connector-java-5.1.46.jar"/>
+	<classpathentry kind="lib" path="C:/Users/hp/Desktop/java包/2/standard.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
