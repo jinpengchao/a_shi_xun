@@ -48,6 +48,9 @@
 						<c:if test="${p.imgs ne ''}">
 							<c:forEach items="${fn:split(p.imgs,',')}" var="i">
 								<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+								<c:if test="${fn:endsWith(p.imgs,'.mp4')}">
+									<embed src="video/${i}" width="300" height="300" autostart=false loop=false>
+								</c:if>
 							</c:forEach>
 						</c:if>
 					</th>

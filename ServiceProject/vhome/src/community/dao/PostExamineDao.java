@@ -202,7 +202,7 @@ public class PostExamineDao {
 		String dataString2="";
 		//生成图片字符串,插进数据库时删除[""]
 		for(int i=0;i<dateString.length();i++) {
-			if(i!=0&&i!=1&&i!=dateString.length()-1&&i!=dateString.length()-2) {
+			if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
 				dataString2+=dateString.charAt(i);
 			}
 		}
