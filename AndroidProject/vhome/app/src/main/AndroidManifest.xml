@@ -120,17 +120,54 @@
         <activity android:name="com.vhome.vhome.children.fragment.WarnFragment" />
         <activity android:name="com.vhome.vhome.parents.fragment.news.NewsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.weather.WeatherActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity" />
+
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyCollectionsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyPostActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity" android:theme="@style/NoTitleTheme"/>
+        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity" android:theme="@style/NoTitleTheme"/>
         <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" />
         <activity android:name="com.vhome.vhome.lead.ViewPageActivity"/>
         <activity android:name=".ui.SettingActivity"></activity>
-        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"></activity>
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"  android:theme="@style/NoTitleTheme"></activity>
+        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity"  android:theme="@style/NoTitleTheme"/>
+        <activity
+            android:name="com.vhome.vhome.WelcomeNewUser"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.vhome.vhome.user.personal.ImageShowerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.children.fragment.EditChildNick"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.children.fragment.ChildEdit"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.NewLeaveMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.MyTitle"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.EditFlagActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
@@ -156,7 +193,7 @@
             android:windowSoftInputMode="adjustPan" />
         <!-- 开屏页 -->
         <activity
-            android:name="com.vhome.vhome.WelcomeActivity"
+            android:name=".ui.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide">
             <intent-filter>
@@ -463,7 +500,6 @@
             </intent-filter>
         </receiver>
         <!-- huawei push end -->
-
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

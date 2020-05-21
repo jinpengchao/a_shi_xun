@@ -19,23 +19,29 @@
 	"href" : "page/systemParameter/systemParameter.jsp",
 	"spread" : false
 },{
-	"title" : "其他页面",
+	"title" : "举报管理",
+	"icon" : "&#xe61c;",
+	"href" : "page/404.jsp",
+	"spread" : false
+},{
+	"title" : "问题反馈",
 	"icon" : "&#xe630;",
 	"href" : "",
 	"spread" : false,
 	"children" : [
 		{
-			"title" : "举报管理",
-			"icon" : "&#xe61c;",
-			"href" : "page/404.jsp",
+			"title" : "未处理",
+			"icon" : "&#xe609;",
+			"href" : "/vhome/ShowQuestions?questions_status=0",
 			"spread" : false
+			
 		},
 		{
-			"title" : "登录",
-			"icon" : "&#xe609;",
-			"href" : "page/login/login.jsp",
-			"spread" : false,
-			"target" : "_blank"
+			"title" : "已处理",
+			"icon" : "&#xe61c;",
+			"href" : "/vhome/ShowQuestions?questions_status=1",
+			"spread" : false
 		}
 	]
-}]
+}
+]

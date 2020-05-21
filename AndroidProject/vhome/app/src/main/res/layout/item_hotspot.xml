@@ -78,7 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline8"
-        tools:text="内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test" />
+        tools:text="内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test" />
 
     <cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup
         android:id="@+id/nineGrid"

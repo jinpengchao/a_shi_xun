@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="/page/login/login.jsp"></jsp:forward>
+<%
+	response.sendRedirect("page/login/login.jsp");
+%>
 </body>
 </html>

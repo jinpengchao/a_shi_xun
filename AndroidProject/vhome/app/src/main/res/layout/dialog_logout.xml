@@ -17,6 +17,16 @@
         android:textSize="20dp"
         android:textColor="#000"
         />
+    <TextView
+        android:id="@+id/warn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="   (退出后，您的个人信息不会丢失)   "
+        android:textSize="15dp"
+        android:textColor="#979797"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

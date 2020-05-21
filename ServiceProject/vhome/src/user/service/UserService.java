@@ -4,6 +4,7 @@ import entity.User;
 
 import java.util.List;
 
+import entity.NewTicketBody;
 import entity.ParentUserInfo;
 import entity.SendPerson;
 import user.dao.UserDao;
@@ -29,6 +30,11 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.pwdLogin(phone);
 	}
+	//用户密码登录
+	public int getUserType(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.getType(phone);
+	}
 	//用户验证码登录
 	public User loginBycode(String phone) {
 		UserDao userDao = new UserDao();
@@ -39,6 +45,21 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.addUserInfo(phone, id, nikeName, sex, area, headerImg, type);
 	}
+	
+	public void insertQuestions(String name, String phone,String content,String subject,int status) {
+		UserDao userDao = new UserDao();
+		userDao.saveQuestion(name, phone,content,subject,status);
+	}
+	public void insertAnsewer(String phone, String content) {
+		UserDao userDao = new UserDao();
+		userDao.saveAnswers(phone,content);
+	}
+	public List<NewTicketBody> selectQuestions(int status) {
+		UserDao userDao = new UserDao();
+		return userDao.findAllQuestuins(status);
+	}
+	
+	
 	//查询用户信息
 	public ParentUserInfo selectUserInfo(String phone, int type) {
 		UserDao userDao = new UserDao();
@@ -88,7 +109,7 @@ public class UserService {
 	public void findParentInfo() {
 		//to do 查找父母信息
 	}
-	
+
 	public void findChildrenInfo() {
 		//to do 查找子女信息
 	}

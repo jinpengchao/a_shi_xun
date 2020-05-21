@@ -174,11 +174,6 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                     .signature(new ObjectKey(UUID.randomUUID().toString()))
                     .priority(Priority.HIGH)
                     .into(holder.ivHotPerson);
-            try {
-                setPicToView(path,list.get(position).getHeadimg(), returnBitMap(url));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(position).getNickName());
@@ -377,42 +372,18 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
 
 
 
-    public static Bitmap returnBitMap(String url) throws IOException {
-        URL imgUrl = new URL(url);
-        Bitmap bitmap = null;
-        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
-        conn.setDoInput(true);
-        conn.connect();
-        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
-        return bitmap;
-    }
-    private void setPicToView(String path ,String phone,Bitmap mBitmap) {
-        String sdStatus = Environment.getExternalStorageState();
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-            return;
-        }
-        FileOutputStream b = null;
-        File file = new File(path);
-        if (file.exists()){
-            file.delete();
-            file.mkdirs();
-        }else
-            file.mkdirs();// 创建文件夹
-        String fileName = path +phone+".jpg";// 图片名字
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭流
-                file.delete();
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    private class ViewHolder {
+        CircleImageView ivHotPerson;
+        TextView tvHotName;
+        TextView tvHotContent;
+        TextView tvHotTime;
+        ImageView ivHotSave;
+        TextView tvHotComnum;
+        ImageView ivHotlike;
+        TextView tvHotLikenum;
+        GridView gvPostShow;
+        RelativeLayout rlPostSave;
+        RelativeLayout rlPostComment;
+        RelativeLayout rlPostLike;
     }
 }

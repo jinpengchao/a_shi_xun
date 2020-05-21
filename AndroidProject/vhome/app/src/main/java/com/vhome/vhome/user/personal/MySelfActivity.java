@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -46,7 +47,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -57,6 +60,8 @@ import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.vhome.parents.ParentMain;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
+import com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity;
+import com.vhome.vhome.parents.fragment.myself.MyFunsActivity;
 import com.vhome.vhome.user.LoginByCodeActivity;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
@@ -93,10 +98,37 @@ public class MySelfActivity extends AppCompatActivity {
     private ImageView genders;
     private ImageView zoom;
     private TextView titleNickname;
-
+    private TextView tvFuns;
+    private TextView tvAttention;
+    private TextView ages;
+    private TextView joinDate;
+    private TextView loc;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
+
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 5:
+                    initMyselfInfo();
+                    Bundle bundle = msg.getData();
+                    String receive = bundle.getString("data");
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(receive);
+                        int attentionNum = jsonObject.getInt("attentionNum");
+                        int funsNum = jsonObject.getInt("funsNum");
+                        tvAttention.setText(attentionNum+"");
+                        tvFuns.setText(funsNum+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -111,7 +143,8 @@ public class MySelfActivity extends AppCompatActivity {
         initListener();
         initTab();
         initStatus();
-
+        getCount();
+        initMyselfInfo();
         SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
         phone = sharedPreferences.getString("phone","");
         path = "/sdcard/header"+phone+"/";// sd路径
@@ -123,6 +156,8 @@ public class MySelfActivity extends AppCompatActivity {
         super.onResume();
         setImages();
         initListener();
+        initMyselfInfo();
+        getCount();
     }
 
     /**
@@ -130,17 +165,19 @@ public class MySelfActivity extends AppCompatActivity {
      */
     private void setImages(){
         Bitmap bt = BitmapFactory.decodeFile(path + "header" + phone + ".jpg");// 从SD卡中找头像，转换成Bitmap
-        Bitmap bt2 = BitmapFactory.decodeFile(path + "bg" + phone + ".jpg");// 从SD卡中找头像，转换成Bitmap
-        if (bt != null || bt2 != null) {
+        if (bt != null) {
             @SuppressWarnings("deprecation")
             Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
-            Drawable drawable2 = new BitmapDrawable(bt2);// 转换成drawable
+            String url2 = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" + "bg" + phone + ".jpg";
+            Glide.with(this)
+                    .load(url2)
+                    .priority(Priority.HIGH)
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))  // 重点在这行
+                    .into(zoom);
             mAvater.setImageDrawable(drawable);
             topAvater.setImageDrawable(drawable);
-            zoom.setImageDrawable(drawable2);
         } else {
             String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" + "header" + phone + ".jpg";
-            String url2 = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" + "bg" + phone + ".jpg";
             Glide.with(this)
                     .load(url)
                     .priority(Priority.HIGH)
@@ -151,11 +188,6 @@ public class MySelfActivity extends AppCompatActivity {
                     .priority(Priority.HIGH)
                     .placeholder(R.drawable.rc_default_portrait)
                     .into(topAvater);
-            Glide.with(this)
-                    .load(url2)
-                    .placeholder(R.mipmap.sss)
-                    .priority(Priority.HIGH)
-                    .into(zoom);
         }
     }
     private void findId() {
@@ -175,6 +207,11 @@ public class MySelfActivity extends AppCompatActivity {
         genders = (ImageView) findViewById(R.id.gender);
         zoom = (ImageView) findViewById(R.id.uc_zoomiv);
         titleNickname = (TextView) findViewById(R.id.title_uc_title);
+        tvFuns = (TextView) findViewById(R.id.fans);
+        tvAttention = (TextView) findViewById(R.id.attentions);
+        ages = (TextView) findViewById(R.id.age);
+        joinDate = (TextView) findViewById(R.id.date);
+        loc = (TextView) findViewById(R.id.location);
     }
 
     /**
@@ -193,8 +230,11 @@ public class MySelfActivity extends AppCompatActivity {
      */
     private void initListener() {
         SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
-        String name =  sharedPreferences.getString("nickName","春天的野菜");
-        String flags =  sharedPreferences.getString("personalWord","大家好我是野菜~~");
+        SharedPreferences sharedPreferences1 = getSharedPreferences("user",MODE_PRIVATE);
+        String name =  sharedPreferences.getString("nickName","");
+        String flags =  sharedPreferences.getString("personalWord","这个人很懒，没有留下个性签名");
+
+
         nickName.setText(name);
         titleNickname.setText(name);
         flag.setText(flags);
@@ -205,7 +245,29 @@ public class MySelfActivity extends AppCompatActivity {
             Glide.with(this).load(R.drawable.woman).into(genders);
         }else
             Glide.with(this).load(R.drawable.unknowsex).into(genders);
-
+        //计算年龄
+        String birth =  sharedPreferences.getString("birthday","");
+        String y[] = birth.split("-");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        int year = Integer.parseInt(y[0]);
+        Date date = new Date();
+        int now = Integer.parseInt(sdf.format(date));
+        int age = now - year;
+        ages.setText(age+" 周岁");
+        //计算加入日期
+        String registerTime = sharedPreferences1.getString("registerTime","");
+        String t[] = registerTime.split("-");
+        String joinY = t[0];
+        String joinM = t[1];;
+        for (int i=1;i<10;i++){
+            if(joinM.equals("0"+i)){
+                joinM = i+"";
+            }
+        }
+        joinDate.setText(joinY+"年"+joinM+"月 加入");
+        //设置地区
+        String city = sharedPreferences.getString("area","");
+        loc.setText(city);
         zoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,6 +317,7 @@ public class MySelfActivity extends AppCompatActivity {
                 String phone = sharedPreferences.getString("phone","");
                 Intent intent = new Intent(MySelfActivity.this, ImageShowerActivity.class);
                 intent.putExtra("phone",phone);
+                intent.putExtra("type",1);
                 startActivity(intent);
             }
         });
@@ -265,7 +328,24 @@ public class MySelfActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //点击关注的人的时候,显示关注人的列表
+        tvAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MySelfActivity.this, MyAttentionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        //点击粉丝的时候，显示粉丝列表
+        tvFuns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MySelfActivity.this, MyFunsActivity.class);
+                startActivity(intent);
+            }
+        });
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -559,6 +639,43 @@ public class MySelfActivity extends AppCompatActivity {
                                 editor.commit();
                             }
                         });
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void initMyselfInfo(){
+        Log.e("缓存的个人信息","old");
+        SharedPreferences sp2 = getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+
+        String id = sp2.getString("phone","");
+        String nickName = sp2.getString("nickName","");
+        String sex = sp2.getString("sex","");
+        String area = sp2.getString("area","");
+        String achieve = sp2.getString("achieve","");
+    }
+    /**
+     * 获取关注数和粉丝数
+     */
+    private void getCount() {
+        new Thread(){
+            @Override
+            public void run() {
+                SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+                String personId = sp.getString("id","");
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/GetCountServlet?personId="+personId);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String receive = util.getData(url);
+                    if (null!=receive&&!"".equals(receive)){
+                        Log.i("数量", "run: 获得数量成功！");
+                        util.sendMsg(receive,5,handler);
+                    }else {
+                        Log.e("数量", "run: 获取关注和粉丝数量失败" );
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

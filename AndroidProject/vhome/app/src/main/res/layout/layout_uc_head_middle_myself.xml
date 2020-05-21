@@ -82,9 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="2dp"
-                android:maxLines="2"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="music、dance、drive、fly~O(∩_∩)O~"
                 android:textColor="#aa333333"
                 android:textSize="13sp" />
@@ -129,6 +129,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="2020年4月 加入"
+                android:textColor="#aa333333"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/adaptive_5dp"
+                android:id="@+id/icon_age"
+                android:src="@drawable/age"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:layout_height="16dp">
+            </ImageView>
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_toRightOf="@id/icon_age"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:text="50 周岁"
                 android:textColor="#aa333333"
                 android:textSize="13sp" />
         </RelativeLayout>

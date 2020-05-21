@@ -63,13 +63,15 @@ public class EditNickNameActivity extends Activity {
                SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
                SharedPreferences.Editor editor = sharedPreferences.edit();
                String new_nickname = String.valueOf(ed_name.getText());
-               String phone = sharedPreferences.getString("phone","");
-               editor.putString("nickName",new_nickname);
-               editor.commit();
-               //更新数据库
-               changeNickname(new_nickname);
-               finish();
-               Toast.makeText(EditNickNameActivity.this,"修改成功",Toast.LENGTH_LONG);
+               if(new_nickname.length() == 0){
+                   Toast.makeText(EditNickNameActivity.this,"名称不可为空",Toast.LENGTH_LONG);
+               }else {
+                   editor.putString("nickName",new_nickname);
+                   editor.commit();
+                   //更新数据库
+                   changeNickname(new_nickname);
+                   finish();
+               }
            }
        });
        SharedPreferences sharedPreferences = getSharedPreferences("parentUserInfo",MODE_PRIVATE);

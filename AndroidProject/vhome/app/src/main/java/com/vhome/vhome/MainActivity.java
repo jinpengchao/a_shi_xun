@@ -7,6 +7,7 @@ import com.vhome.chat.DemoHelper;
 import com.vhome.chat.R;
 import com.vhome.chat.db.DemoDBManager;
 import com.vhome.vhome.children.ChildrenMain;
+import com.vhome.vhome.children.fragment.ChildEdit;
 import com.vhome.vhome.parents.ParentMain;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseActivity;
 import com.vhome.vhome.user.FindBackPwdActivity;
@@ -17,6 +18,11 @@ import com.vhome.vhome.util.ClearWriteEditText;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,6 +56,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import androidx.core.app.NotificationCompat;
+
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     //环信登录相关↓
@@ -69,6 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private Toast mToast;
+    private NotificationManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +100,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             String p = sp.getString("phone", "");
             String pwd = sp.getString("pwd", "");
             int type = sp.getInt("type", 0);
-            isLogin(p, pwd, type);
+            String registerTime = sp.getString("registerTime", "");
+            isLogin(p, pwd, type,registerTime);
         }
         togglePwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -130,6 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.pwdLogin:
                 Log.e("MainActivity","Onclick");
+                Tongzhi();
                 loginByPsw();
                 break;
             case R.id.register:
@@ -172,19 +183,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
-    public void isLogin(String phone,String pwd,int type){
+    public void isLogin(String phone,String pwd,int type,String registerTime){
         //存储登录状态
         editor = sp.edit();
         if(sp.getString("phone","")==""){
             editor.putString("phone",phone);
             editor.putString("pwd",pwd);
             editor.putInt("type",type);
+            editor.putString("registerTime",registerTime);
             editor.commit();
         }if(sp.getString("phone","")!=""){
             if(sp.getString("phone",null)!=phone){
                 editor.putString("phone",phone);
                 editor.putString("pwd",pwd);
                 editor.putInt("type",type);
+                editor.putString("registerTime",registerTime);
                 editor.commit();
             }else if(sp.getInt("type",0)==0){
                 Intent intent = new Intent();
@@ -262,11 +275,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                     JSONObject json = new JSONObject(data);
                                     String p1 = json.getString("p");
                                     String pwd1 = json.getString("pwd");
+                                    String register1 = json.getString("registerTime");
                                     int type1 = json.getInt("type");
-                                    isLogin(p1,pwd1,type1);
+                                    isLogin(p1,pwd1,type1,register1);
                                     pwdLogin.setText("请稍候...");
-                                    //易信注册登录
+                                    //环信注册登录
                                     login(null);
+                                    // 获取通知服务对象NotificationManager
+
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -337,7 +354,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             public void onSuccess() {
                 Log.d(TAG, "login: onSuccess");
 
-
                 // ** manually load all local groups and conversation
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
@@ -386,4 +402,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void serviceCheck(View v) {
         startActivity(new Intent(this, ServiceCheckActivity.class));
     }
+    private void Tongzhi() {
+        //获取系统提供的通知管理服务
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //判断是否为8.0以上系统，是的话新建一个通道
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            //创建一个通道 一参：id  二参：name 三参：统通知的优先级
+            @SuppressLint("WrongConstant") NotificationChannel channel = new NotificationChannel("chId", "聊天信息", NotificationManager.IMPORTANCE_MAX);
+            manager.createNotificationChannel(channel);//创建
+            channel.setVibrationPattern(new long[]{0});//通道来控制震动
+            tong();
+
+        }else {
+            tong();
+        }
+    }
+    private void tong() {
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);//获取管理类的实例
+        Intent intent=new Intent(this, WelcomeNewUser.class);
+        //PendingIntent点击通知后跳转，一参：context 二参：一般为0 三参：intent对象 四参：一般为0
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
+        Notification builder = new NotificationCompat.Builder(this, "chId")
+                .setContentTitle("欢迎加入微家大家庭！")//标题
+                .setContentText("您有一份微家使用说明书，请点击查看！")//内容
+                .setSmallIcon(R.drawable.em_logo_uidemo)//图片
+                .setContentIntent(pendingIntent)//点击通知跳转
+                .setAutoCancel(true)//完成跳转自动取消通知
+                .build();
+        manager.notify(1, builder);//让通知显示出来
+    }
+
 }

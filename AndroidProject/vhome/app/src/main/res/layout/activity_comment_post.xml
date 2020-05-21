@@ -14,18 +14,19 @@
                 android:id="@+id/ll_comment_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:id="@+id/tv_attention"
                     style="@style/TextTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="70dp"
+                    android:gravity="center"
+                    android:layout_height="0dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/attention_add_shape"
                     android:padding="7dp"
                     android:text="+关注"
+                    android:textColor="#ffffff"
                     android:visibility="visible"
                     tools:visibility="visible" />
 
@@ -38,7 +39,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <ImageView
+                        <com.vhome.vhome.user.personal.widget.CircleImageView
                             android:id="@+id/iv_hot_person"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -62,10 +63,14 @@
                                 android:textSize="16sp"
                                 android:textColor="@android:color/darker_gray"/>
                         </LinearLayout>
-
-
-
-
+                        <ImageView
+                            android:id="@+id/icon_jubao"
+                            android:src="@drawable/jubao"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginLeft="@dimen/adaptive_15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </ImageView>
                     </RelativeLayout>
                     <TextView
                         android:id="@+id/tv_hot_content"
@@ -78,7 +83,7 @@
                         android:id="@+id/gv_post_show"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="15dp"
                         android:horizontalSpacing="5dp"
                         android:verticalSpacing="5dp"
                         android:numColumns="3"

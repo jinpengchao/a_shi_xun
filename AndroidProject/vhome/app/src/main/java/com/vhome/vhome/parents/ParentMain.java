@@ -92,7 +92,10 @@ import java.net.HttpURLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -190,8 +193,7 @@ public class ParentMain extends BaseActivity {
     //定时器
     private Timer timer;
     private int sumTime = 25;
-    private String city;//获取地址信息进行获取天气参数之用
-
+    private String city;//获取城市名字
     /**
      * 构造广播监听类，监听 SDK key 验证以及网络异常广播
      */
@@ -859,7 +861,8 @@ public class ParentMain extends BaseActivity {
                         return;
                     }
 
-                    LatLng currentLatLng = mapUtil.convertTrace2Map(point.getLocation());
+                    LatLng currentLatLng = mapUtil.convertTrace2Map(point.getLocation());//进行地图坐标转换
+
                     if (null == currentLatLng) {
                         return;
                     }
@@ -889,7 +892,8 @@ public class ParentMain extends BaseActivity {
                         location.getLongitude())) {
                     return;
                 }
-                LatLng currentLatLng = mapUtil.convertTraceLocation2Map(location);
+                LatLng currentLatLng = mapUtil.convertTraceLocation2Map(location);//进行地图坐标转换
+
                 CurrentLocation.locTime = CommonUtil.toTimeStamp(location.getTime());
                 CurrentLocation.latitude = currentLatLng.latitude;
                 CurrentLocation.longitude = currentLatLng.longitude;
@@ -1073,6 +1077,13 @@ public class ParentMain extends BaseActivity {
 
     }
 
+    static class RealTimeHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    }
+
     public void download(final Double latitude, final Double longitude, final String mCode) {
         new Thread(new Runnable() {
             @Override
@@ -1126,14 +1137,6 @@ public class ParentMain extends BaseActivity {
         }
         return null;
     }
-
-    static class RealTimeHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    }
-
     /**
      * 注册广播（电源锁、GPS状态）
      */

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.vhome.vhome.user.personal.widget.DisInterceptNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/middle_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -48,25 +49,28 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/frag_uc_msg_tv"
+                    android:id="@+id/sixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/selector_stroke_roundcir"
+                    android:background="@drawable/selector_stroke_roundcir_attention"
                     android:gravity="center"
-                    android:text="私信+"
+                    android:text="私信"
                     android:textColor="@color/colorBlack33" />
-
                 <TextView
                     android:id="@+id/frag_uc_follow_tv"
-                    android:layout_width="wrap_content"
+                    style="@style/TextTheme"
+                    android:layout_width="70dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/selector_stroke_roundredcir"
-                    android:gravity="center"
-                    android:text="关注+"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/attention_add_shape"
+                    android:padding="7dp"
+                    android:text="+关注"
+                    android:textColor="#ffffff"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 
@@ -129,6 +133,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="2020年4月 加入"
+                android:textColor="#aa333333"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/adaptive_5dp"
+                android:id="@+id/icon_age"
+                android:src="@drawable/age"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:layout_height="16dp">
+            </ImageView>
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_toRightOf="@id/icon_age"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/adaptive_13dp"
+                android:text="50 周岁"
                 android:textColor="#aa333333"
                 android:textSize="13sp" />
         </RelativeLayout>

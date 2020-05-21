@@ -70,7 +70,7 @@ public class EaseChatInputMenu extends LinearLayout {
 
          // extend menu
          chatExtendMenu = (EaseChatExtendMenu) findViewById(R.id.extend_menu);
-        
+
 
     }
 
@@ -160,7 +160,7 @@ public class EaseChatInputMenu extends LinearLayout {
 
     /**
      * register menu item
-     * 
+     *
      * @param name
      *            resource id of item name
      * @param drawableRes

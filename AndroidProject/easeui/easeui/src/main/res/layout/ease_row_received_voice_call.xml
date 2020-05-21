@@ -28,6 +28,7 @@
             android:scaleType="fitXY" />
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
                 android:textSize="15sp"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:textColor="#ff000000" />
+                android:textColor="#000000"/>
         </RelativeLayout>
 
          <TextView

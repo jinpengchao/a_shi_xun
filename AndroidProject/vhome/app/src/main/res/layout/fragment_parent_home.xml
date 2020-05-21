@@ -22,6 +22,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+<!--            <com.vhome.vhome.user.personal.widget.CircleImageView-->
+<!--                android:id="@+id/button_add"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:src="@mipmap/header"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_height="wrap_content" />-->
+<!--            <TextView-->
+<!--                android:layout_below="@id/button_add"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:text="胖虎"-->
+<!--                android:textSize="15dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--            </TextView>-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout1"-->
+<!--                android:layout_toLeftOf="@id/button_add"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginRight="@dimen/adaptive_30dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout2"-->
+<!--                android:layout_toRightOf="@id/button_add"-->
+<!--                android:layout_marginLeft="@dimen/adaptive_30dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+<!--            </LinearLayout>-->
             <TextView
                 android:text="2017年11月11日"
                 android:id="@+id/yang_li_calendar"

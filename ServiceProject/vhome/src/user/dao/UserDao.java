@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbutil.DBUtil;
+import entity.NewTicketBody;
 import entity.ParentUserInfo;
 import entity.PostBean;
 import entity.SendPerson;
@@ -112,6 +113,32 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return user;
+	}
+	public int getType(String phone) {
+		DBUtil util = DBUtil.getInstance();
+		int type =-1;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where phone='"+phone+"'";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				type = rs.getInt("type");
+				System.out.println("typetypetype！"+type);
+			} else {
+				System.out.println("用户不存在！");
+			}
+			rs.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return type;
 	}
 	//密码登录
 	public User pwdLogin(String phone,String password) {
@@ -237,10 +264,7 @@ public class UserDao {
 					userInfo.setHeaderImg(rs.getString("headimg"));
 					userInfo.setType(type);
 					System.out.println("用户信息存储完毕--父母");
-				}else {
-					System.out.println("未查到这个人的信息--父母");
 				}
-				rs.close();
 			}
 			if(type==1) {
 				System.out.println("type=1");
@@ -531,6 +555,89 @@ public class UserDao {
 				System.out.println("修改成功");
 			}else {
 				System.out.println("修改失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void saveQuestion(String name, String phone,String content,String subject,int status) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "insert into tbl_questions values(?,?,?,?,?,?)";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, 0);
+			psmt.setString(2, name);
+			psmt.setString(3, phone);
+			psmt.setString(4, subject);
+			psmt.setString(5, content);
+			psmt.setInt(6, status);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("发送反馈成功");
+			}else {
+				System.out.println("发送反馈失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<NewTicketBody> findAllQuestuins(int status) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<NewTicketBody> questionsList = new ArrayList<>();
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_questions where status=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, status);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				NewTicketBody ticketBody = new NewTicketBody();
+				ticketBody.setCreatorName(rs.getString("name"));
+				ticketBody.setCreatorPhone(rs.getString("phone"));
+				ticketBody.setSubject(rs.getString("theme"));
+				ticketBody.setContent(rs.getString("content"));;
+				questionsList.add(ticketBody);
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return questionsList;
+	}
+	public void saveAnswers(String phone,String content) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "insert into tbl_answers values(?,?,?)";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, 0);
+			psmt.setString(2, phone);
+			psmt.setString(3, content);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("发送回复成功");
+			}else {
+				System.out.println("发送回复失败");
 			}
 			psmt.close();
 			util.closeConnection();

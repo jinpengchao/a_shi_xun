@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 public class DBUtil {
 	private final String DRIVER = "com.mysql.jdbc.Driver";
-	private final String CONN_STR = "jdbc:mysql://localhost:3306/wefamily_db??autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
+	private final String CONN_STR = "jdbc:mysql://localhost:3306/wefamily_db?autoReconnect=true&useUnicode=true&characterEncoding=utf-8";
 	private final String USER = "root";
 	private final String PWD = "";
 	private static DBUtil util;

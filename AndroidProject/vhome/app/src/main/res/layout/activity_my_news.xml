@@ -1,28 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentTabHost
-    android:id="@android:id/tabhost"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/tracing_mapView"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        />
-    <RelativeLayout
+    android:layout_height="match_parent"
+    android:background="@color/common_bg" >
+
+    <LinearLayout
+        android:id="@+id/main_bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-        </TabWidget>
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/bottom_bar_normal_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
+        <RelativeLayout
+            android:id="@+id/btn_container_address_list"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_below="@android:id/tabs">
-        </FrameLayout>
-    </RelativeLayout>
-</androidx.fragment.app.FragmentTabHost>
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/btn_address_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignEnd="@+id/unread_clock_number"
+                android:layout_marginEnd="-9dp"
+                android:background="@drawable/em_main_bottom_item_bg"
+                android:gravity="center"
+                android:onClick="onTabClicked"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="帖子消息"
+                android:textColor="@color/em_main_botton_text_color"
+                android:textSize="@dimen/adaptive_20dp" />
+            <TextView
+                android:id="@+id/unread_address_number"
+                android:layout_width="@dimen/adaptive_20dp"
+                android:layout_height="@dimen/adaptive_20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:background="@drawable/em_unread_dot"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_container_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/btn_setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/em_main_bottom_item_bg"
+                android:onClick="onTabClicked"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="官方邮件"
+                android:gravity="center"
+                android:textColor="@color/em_main_botton_text_color"
+                android:textSize="@dimen/adaptive_20dp" />
+
+            <TextView
+                android:id="@+id/unread_msggg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/em_unread_dot"
+                android:textColor="#ffffff"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_bottom" />
+
+</RelativeLayout>

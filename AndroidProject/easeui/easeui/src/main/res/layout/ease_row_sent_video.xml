@@ -29,6 +29,11 @@
             android:scaleType="fitXY" />
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="15dp"
             android:id="@+id/bubble"
             android:layout_width="130dp"
             android:layout_height="145dp"
@@ -105,6 +110,7 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_marginTop="20dp"
             android:id="@+id/msg_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,11 +121,13 @@
             android:visibility="gone" />
 
         <TextView
+            android:layout_marginTop="20dp"
             android:id="@+id/tv_ack"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:autoSizeMaxTextSize="20dp"
+            android:layout_marginRight="2dp"
             android:layout_toLeftOf="@id/bubble"
             android:text="@string/text_ack_msg"
             android:textSize="12sp"

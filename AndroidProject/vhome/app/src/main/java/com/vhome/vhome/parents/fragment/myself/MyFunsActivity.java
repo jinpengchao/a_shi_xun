@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.user.entity.ParentUserInfo;
+import com.vhome.vhome.user.personal.OthersSerlfActivity;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.content.Context;
@@ -109,7 +110,7 @@ public class MyFunsActivity extends AppCompatActivity implements AbsListView.OnS
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent person = new Intent();
                         person.putExtra("personId",list.get(i).getId());
-                        person.setClass(MyFunsActivity.this, ShowMyselfActivity.class);
+                        person.setClass(MyFunsActivity.this, OthersSerlfActivity.class);
                         startActivity(person);
                     }
                 });

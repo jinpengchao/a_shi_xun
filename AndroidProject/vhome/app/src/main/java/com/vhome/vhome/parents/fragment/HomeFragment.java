@@ -1,5 +1,7 @@
 package com.vhome.vhome.parents.fragment;
 
+import android.animation.AnimatorInflater;
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +37,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.children.fragment.historyAdapter.AlarmBean;
@@ -44,9 +50,11 @@ import com.vhome.vhome.parents.fragment.news.NewsActivity;
 import com.vhome.vhome.parents.fragment.radio_ximalaya.base.BaseFragment;
 import com.vhome.vhome.parents.fragment.weather.WeatherActivity;
 import com.vhome.vhome.user.entity.ParentUserInfo;
+import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.superrtc.ContextUtils.getApplicationContext;
 
 
 public class HomeFragment extends BaseFragment {
@@ -58,9 +66,14 @@ public class HomeFragment extends BaseFragment {
     private ImageView weather;
     private ImageView news;
     private ImageView all_bg;
+
+    protected EaseChatInputMenu inputMenu;
     public static int size;
     private SharedPreferences sp2;
     private SharedPreferences.Editor editor2;
+//    private CircleImageView addHeader;
+//    private LinearLayout mLinearLayout1;
+//    private LinearLayout mLinearLayout2;
     private Handler handler,handler2=new Handler(){
         @Override
         public void handleMessage(Message msg){
@@ -91,7 +104,7 @@ public class HomeFragment extends BaseFragment {
 //                        }else {
 //                            Glide.with(getActivity()).load(R.drawable.yin).into(gif_weather);
 //                        }
-                        today_weather.setText(week + "  " + weather + "  " + temp);
+//                        today_weather.setText(week + "  " + weather + "  " + temp);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -110,6 +123,51 @@ public class HomeFragment extends BaseFragment {
         Glide.with(getActivity()).asGif().load(R.drawable.all_bg).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(all_bg);
         bg1 = view.findViewById(R.id.bg1);
         bg1.setBackgroundResource(R.mipmap.bg);
+
+//        addHeader= (CircleImageView) view.findViewById(R.id.button_add);
+//        mLinearLayout1= (LinearLayout) view.findViewById(R.id.linearLayout1);
+//        mLinearLayout2= (LinearLayout) view.findViewById(R.id.linearLayout2);
+//        LayoutTransition transition =new LayoutTransition();
+//        transition.getDuration(2000);//时间
+//        //APPEARING添加view的动画
+//        transition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(getApplicationContext(),R.animator.animator_scale));
+//        transition.setAnimator(LayoutTransition.CHANGE_APPEARING,transition.getAnimator(LayoutTransition.CHANGE_APPEARING));//CHANGE_APPEARING消失动画
+//        transition.setAnimator(LayoutTransition.DISAPPEARING,transition.getAnimator(LayoutTransition.DISAPPEARING));//DISAPPEARING移除view的动画
+//        transition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING,transition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING));
+//        mLinearLayout1.setLayoutTransition(transition);//把动画加到按钮上
+//        mLinearLayout2.setLayoutTransition(transition);//把动画加到按钮上
+//        addHeader.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CircleImageView btn1=new CircleImageView(getActivity());
+//                CircleImageView btn2=new CircleImageView(getActivity());
+//                ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                btn1.setLayoutParams(params);
+//                btn1.setImageResource(R.mipmap.voice_icon);
+//                btn1.setScaleX(0f);
+//                btn1.setScaleY(0f);
+//                btn2.setLayoutParams(params);
+//                btn2.setImageResource(R.mipmap.video_icon);
+//                btn2.setScaleX(0f);
+//                btn2.setScaleY(0f);
+//                mLinearLayout1.addView(btn1);
+//                mLinearLayout2.addView(btn2);
+//
+//                btn1.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
+//                btn2.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mLinearLayout2.removeView(v);
+//                    }
+//                });
+//
+//            }
+//        });
         /*
          * 功能：设置时间
          * 作者：靳朋朝
@@ -121,7 +179,7 @@ public class HomeFragment extends BaseFragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("today_weather",MODE_PRIVATE);
         String w  = sharedPreferences.getString("weather","");
         Date date = new Date();
-//        load("石家庄");
+        load("石家庄");
 
         yin_li_calendar.setText(getDate(date)[1]);
         handler = new Handler() {
@@ -183,7 +241,6 @@ public class HomeFragment extends BaseFragment {
         });
         return view;
     }
-
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         return null;
@@ -315,7 +372,6 @@ public class HomeFragment extends BaseFragment {
         editor2.putString("birthday",birthday);
         editor2.putString("personalWord",personalWord);
         editor2.putString("headImg",headimg);
-        Log.e("headImggggg",headimg);
         editor2.commit();
     }
     public void getAlarm(){
