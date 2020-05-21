@@ -23,8 +23,8 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void goToMainActivity() {
-//        startActivity(new Intent(mContext, MainActivity.class));
-        startActivity(new Intent(mContext, ViewPageActivity.class));
+        startActivity(new Intent(mContext, MainActivity.class));
+//        startActivity(new Intent(mContext, ViewPageActivity.class));
         finish();
     }
 }

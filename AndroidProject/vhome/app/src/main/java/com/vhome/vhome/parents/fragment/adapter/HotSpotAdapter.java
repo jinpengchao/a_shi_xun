@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,123 +40,158 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
+import com.vhome.vhome.parents.fragment.community_hotspot.entity.MyMedia;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import com.vhome.vhome.parents.fragment.community_hotspot.util.GetVideoThumbnail;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 import com.vhome.vhome.user.personal.MySelfActivity;
 import com.vhome.vhome.user.personal.OthersSerlfActivity;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 
-public class HotSpotAdapter extends BaseAdapter {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.OnClick;
+import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
+
+public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHolder> {
+    private static final String TAG = "HotSpotAdapter";
     private List<PostBean> list;
     private int itemLayoutId;
     private Context context;
     private onMyLikeClick onMyLikeClick;
-    private ArrayList<String> imgsList;
+    private ArrayList<MyMedia> medias;
+    private final static Pattern IMG_URL = Pattern
+            .compile(".*?(gif|jpeg|png|jpg|bmp)");
+    private GetVideoThumbnail getVideoThumbnail = new GetVideoThumbnail();
+    private OnItemClickListener onItemClickListener = null;
+    private OnItemLongClickListener onItemLongClickListener = null;
+
+    public interface OnItemClickListener{
+        void onItemClick(int positon);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemLongClickListener{
+        void onItemLongClick(int position);
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
 
     public interface onMyLikeClick{
-        public void myLikeClick(int position,int status);
-        public void myCollectClick(int position,int status);
+        void myLikeClick(int position,int status);
+        void myCollectClick(int position,int status);
     }
     public void setOnMyLikeClick(onMyLikeClick onMyLikeClick){
         this.onMyLikeClick = onMyLikeClick;
     }
+    public HotSpotAdapter(){
 
-    public HotSpotAdapter(Context context, List<PostBean> list, int itemLayoutId) {
+    }
+    public HotSpotAdapter(Context context, List<PostBean> list) {
         this.context = context;
         this.list = list;
-        this.itemLayoutId = itemLayoutId;
     }
 
-
-    @Override
-    public int getCount() {
-        return list.size();
+    /**
+     * 判断一个url是否为图片url
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isImgUrl(String url) {
+        if (url == null || url.trim().length() == 0)
+            return false;
+        return IMG_URL.matcher(url).matches();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return list.get(i);
-    }
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        CircleImageView ivHotPerson;
+        TextView tvHotName;
+        TextView tvHotContent;
+        TextView tvHotTime;
+        ImageView ivHotSave;
+        TextView tvSave;
+        ImageView ivHotComment;
+        TextView tvHotComnum;
+        ImageView ivHotlike;
+        TextView tvHotLikenum;
+        NineGridViewGroup nineGridViewGroup;
+        public ViewHolder(@NonNull View view) {
+            super(view);
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-    
-    @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
-        if (null == view) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(itemLayoutId, null);
-            holder = new ViewHolder();
-            holder.ivHotPerson = view.findViewById(R.id.iv_hot_person);
-            holder.tvHotName = view.findViewById(R.id.tv_hot_name);
-            holder.tvHotContent = view.findViewById(R.id.tv_hot_content);
-            holder.tvHotTime = view.findViewById(R.id.tv_hot_time);
-            holder.ivHotSave = view.findViewById(R.id.iv_hot_save);
-            holder.tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
-            holder.ivHotlike = view.findViewById(R.id.iv_hot_like);
-            holder.tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
-            holder.gvPostShow = view.findViewById(R.id.gv_post_show);
-            holder.rlPostSave = view.findViewById(R.id.rl_post_save);
-            holder.rlPostComment = view.findViewById(R.id.rl_post_comment);
-            holder.rlPostLike = view.findViewById(R.id.rl_post_like);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
+            ivHotPerson = view.findViewById(R.id.iv_hot_person);
+            tvHotName = view.findViewById(R.id.tv_hot_name);
+            tvHotContent = view.findViewById(R.id.tv_hot_content);
+            tvHotTime = view.findViewById(R.id.tv_hot_time);
+            ivHotSave = view.findViewById(R.id.iv_hot_save);
+            tvSave = view.findViewById(R.id.tv_save);
+            ivHotComment = view.findViewById(R.id.iv_hot_comment);
+            tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
+            ivHotlike = view.findViewById(R.id.iv_hot_like);
+            tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
+            nineGridViewGroup = view.findViewById(R.id.nineGrid);
+
         }
-        //设置gridview点击事件不响应
-//        holder.gvPostShow.setClickable(false);
-//        holder.gvPostShow.setPressed(false);
-//        holder.gvPostShow.setEnabled(false);
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_hotspot, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        medias = new ArrayList<>();
         //通过判断是否收藏点赞，设置收藏图标
-        setImg(i,holder);
+        setImg(position,holder);
         //设置发帖人logo
         //刷新本地头像
-        String path = "/sdcard/"+list.get(i).getHeadimg()+"/";// sd路径
-//        String url1 = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+list.get(i).getHeadimg()+".jpg";
-//        try {
-//            setPicToView(path,list.get(i).getHeadimg(),returnBitMap(url1));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        Bitmap bt = BitmapFactory.decodeFile(path + list.get(i).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
+        String path = "/sdcard/"+list.get(position).getHeadimg()+"/";// sd路径
+        Bitmap bt = BitmapFactory.decodeFile(path + list.get(position).getHeadimg()+".jpg");// 从SD卡中找头像，转换成Bitmap
         if (bt != null) {
 
             @SuppressWarnings("deprecation")
             Drawable drawable = new BitmapDrawable(bt);// 转换成drawable
             (holder.ivHotPerson).setImageDrawable(drawable);
         } else {
-            String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" +list.get(i).getHeadimg() + ".jpg";
+            String url = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/" +list.get(position).getHeadimg() + ".jpg";
             Glide.with(context)
                     .load(url)
+                    .signature(new ObjectKey(UUID.randomUUID().toString()))
                     .priority(Priority.HIGH)
                     .into(holder.ivHotPerson);
             try {
-                setPicToView(path,list.get(i).getHeadimg(), returnBitMap(url));
+                setPicToView(path,list.get(position).getHeadimg(), returnBitMap(url));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 //        holder.ivHotPerson.setImageResource();
-        holder.tvHotName.setText(list.get(i).getNickName());
+        holder.tvHotName.setText(list.get(position).getNickName());
         //当点击头像或名字的 时候跳转到个人页
         holder.ivHotPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent person = new Intent();
-                person.putExtra("personId",list.get(i).getPersonId());
-                person.putExtra("headImg",list.get(i).getHeadimg());
+                person.putExtra("personId",list.get(position).getPersonId());
+                person.putExtra("headImg",list.get(position).getHeadimg());
                 SharedPreferences sharedPreferences = context.getSharedPreferences("parentUserInfo",Context.MODE_PRIVATE);
                 String id = sharedPreferences.getString("id","");
-                if(id.equals(list.get(i).getPersonId())){
+                if(id.equals(list.get(position).getPersonId())){
                     person.setClass(context, MySelfActivity.class);
                 }else {
                     person.setClass(context, OthersSerlfActivity.class);
@@ -167,14 +203,14 @@ public class HotSpotAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent person = new Intent();
-                person.putExtra("personId",list.get(i).getPersonId());
+                person.putExtra("personId",list.get(position).getPersonId());
                 person.setClass(context, ShowMyselfActivity.class);
                 context.startActivity(person);
             }
         });
-        holder.tvHotContent.setText(list.get(i).getPostContent());
+        holder.tvHotContent.setText(list.get(position).getPostContent());
         //修改时间格式
-        String time = list.get(i).getTime();
+        String time = list.get(position).getTime();
         Date date = null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
@@ -184,35 +220,69 @@ public class HotSpotAdapter extends BaseAdapter {
 
         String now = new SimpleDateFormat("MM-dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
-        //加载说说图片
-        String imgs = null;
-        imgs = list.get(i).getImgs();
+        /**
+         * 添加说说图片数据
+         */
+        String imgs = list.get(position).getImgs();
         Gson gson = new Gson();
-        imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
+        List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
-        Log.e("hotspotadaper", "内容：："+list.get(i).getPostContent()+"：：图片列表数据：" + imgsList.toString());
-        if (imgsList.size() > 0) {
-            ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList, context);
-            holder.gvPostShow.setAdapter(showPostImgAdapter);
-            showPostImgAdapter.notifyDataSetChanged();
-        } else {
-            holder.gvPostShow.setVisibility(View.GONE);
+        for (String url:imgsList) {
+            String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+url;
+            boolean isPic = isImgUrl(url);
+            if (true==isPic){//当是图片url时，只添加图片
+                medias.add(new MyMedia(pUrl));
+                Log.d(TAG,"图片的url："+pUrl);
+            }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
+                String picPath = getVideoThumbnail.bitmapToStringPath(context,bitmap);
+                medias.add(new MyMedia("file:"+picPath,pUrl));
+            }
         }
+        // 为满足九宫格适配器数据要求，需要构造对应的List
+        // 没有数据就没有九宫格
+        if (medias != null && medias.size() > 0) {
+            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+            for (MyMedia myMedia : medias) {
+                String thumbnailUrl = myMedia.getImageUrl();
+                String bigImageUrl = thumbnailUrl;
+                String videoUrl = myMedia.getVideoUrl();
+                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+            }
+            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl());
+            holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
+        }
+
         //设置评论人数和点赞人数
-        holder.tvHotLikenum.setText(list.get(i).getLikeNum() + "");
-        holder.tvHotComnum.setText(list.get(i).getCommentNum() + "");
+        holder.tvHotLikenum.setText(list.get(position).getLikeNum() + "");
+        holder.tvHotComnum.setText(list.get(position).getCommentNum() + "");
 
         //点击收藏的时候,收藏成功改变图标颜色
         final ViewHolder finalHolder = holder;
-        holder.rlPostSave.setOnClickListener(new View.OnClickListener() {
+        holder.ivHotSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onMyLikeClick.myCollectClick(i,list.get(i).getSave_status());
-                if (1 == list.get(i).getSave_status()) {
-                    list.get(i).setSave_status(0);
+                onMyLikeClick.myCollectClick(position,list.get(position).getSave_status());
+                if (1 == list.get(position).getSave_status()) {
+                    list.get(position).setSave_status(0);
                     finalHolder.ivHotSave.setImageResource(R.mipmap.post_save);
                 } else {
-                    list.get(i).setSave_status(1);
+                    list.get(position).setSave_status(1);
+                    finalHolder.ivHotSave.setImageResource(R.mipmap.post_save1);
+//                    addPostCollection(i);
+                }
+            }
+        });
+        holder.tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyLikeClick.myCollectClick(position,list.get(position).getSave_status());
+                if (1 == list.get(position).getSave_status()) {
+                    list.get(position).setSave_status(0);
+                    finalHolder.ivHotSave.setImageResource(R.mipmap.post_save);
+                } else {
+                    list.get(position).setSave_status(1);
                     finalHolder.ivHotSave.setImageResource(R.mipmap.post_save1);
 //                    addPostCollection(i);
                 }
@@ -220,33 +290,77 @@ public class HotSpotAdapter extends BaseAdapter {
         });
 
 //        当点击喜欢的时候，添加到点赞表并改变图标。
-        holder.rlPostLike.setOnClickListener(new View.OnClickListener() {
+        holder.ivHotlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onMyLikeClick.myLikeClick(i,list.get(i).getLike_status());
-                if (1 == list.get(i).getLike_status()) {
+                onMyLikeClick.myLikeClick(position,list.get(position).getLike_status());
+                if (1 == list.get(position).getLike_status()) {
                     Log.i("点赞", "取消点赞成功" );
-                    list.get(i).setLike_status(0);
+                    list.get(position).setLike_status(0);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good);
                     //点赞个数减一
                     int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())-1;
-                    list.get(i).setLikeNum(cnum);
+                    list.get(position).setLikeNum(cnum);
                     finalHolder.tvHotLikenum.setText(cnum+"");
                 } else {
-                    Log.i("点赞", "修改点赞图标第个：" + i);
-                    list.get(i).setLike_status(1);
+                    Log.i("点赞", "修改点赞图标第个：" + position);
+                    list.get(position).setLike_status(1);
                     finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
                     //点赞个数加一
                     int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())+1;
-                    list.get(i).setLikeNum(cnum);
+                    list.get(position).setLikeNum(cnum);
                     finalHolder.tvHotLikenum.setText(cnum+"");
                 }
             }
         });
-        return view;
+        holder.tvHotLikenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMyLikeClick.myLikeClick(position,list.get(position).getLike_status());
+                if (1 == list.get(position).getLike_status()) {
+                    Log.i("点赞", "取消点赞成功" );
+                    list.get(position).setLike_status(0);
+                    finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good);
+                    //点赞个数减一
+                    int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())-1;
+                    list.get(position).setLikeNum(cnum);
+                    finalHolder.tvHotLikenum.setText(cnum+"");
+                } else {
+                    Log.i("点赞", "修改点赞图标第个：" + position);
+                    list.get(position).setLike_status(1);
+                    finalHolder.ivHotlike.setImageResource(R.mipmap.post_img_good1);
+                    //点赞个数加一
+                    int cnum = Integer.parseInt(finalHolder.tvHotLikenum.getText().toString().trim())+1;
+                    list.get(position).setLikeNum(cnum);
+                    finalHolder.tvHotLikenum.setText(cnum+"");
+                }
+            }
+        });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener!=null){
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemLongClickListener!=null){
+                    onItemLongClickListener.onItemLongClick(position);
+                }
+                return true;
+            }
+        });
     }
 
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
 
     private void setImg(int i,ViewHolder holder) {
         if (list.get(i).getSave_status() == 1) {
@@ -262,20 +376,7 @@ public class HotSpotAdapter extends BaseAdapter {
     }
 
 
-    private class ViewHolder {
-        CircleImageView ivHotPerson;
-        TextView tvHotName;
-        TextView tvHotContent;
-        TextView tvHotTime;
-        ImageView ivHotSave;
-        TextView tvHotComnum;
-        ImageView ivHotlike;
-        TextView tvHotLikenum;
-        GridView gvPostShow;
-        RelativeLayout rlPostSave;
-        RelativeLayout rlPostComment;
-        RelativeLayout rlPostLike;
-    }
+
     public static Bitmap returnBitMap(String url) throws IOException {
         URL imgUrl = new URL(url);
         Bitmap bitmap = null;

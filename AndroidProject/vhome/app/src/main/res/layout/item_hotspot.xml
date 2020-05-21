@@ -1,141 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability = "blocksDescendants"
-    android:background="#ffffff"
-    android:paddingLeft="@dimen/adaptive_20dp"
-    android:paddingBottom="@dimen/adaptive_20dp"
-    android:paddingRight="@dimen/adaptive_20dp"
-    android:paddingTop="@dimen/adaptive_20dp"
-    android:layout_marginBottom="@dimen/adaptive_20dp">
-    <RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_base_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.vhome.vhome.user.personal.widget.CircleImageView
             android:id="@+id/iv_hot_person"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/loading_1"/>
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_default_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_hot_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:textColor="#6b8747"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_hot_person"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="姓名" />
+
+        <TextView
+            android:id="@+id/tv_hot_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_hot_person"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_hot_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/tv_hot_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@android:color/darker_gray"/>
-        </LinearLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_hot_person"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            tools:ignore="SmallSp"
+            tools:text="2015-12-31 12:30" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="73dp" />
 
-
-    </RelativeLayout>
     <TextView
         android:id="@+id/tv_hot_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"/>
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:singleLine="false"
+        android:textColor="#505050"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline8"
+        tools:text="内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test内容Test" />
 
-    <com.vhome.vhome.parents.fragment.community_hotspot.MyGridView
-        android:id="@+id/gv_post_show"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:numColumns="3"
-        android:columnWidth="100dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"/>
-    <RelativeLayout
-        android:layout_marginTop="20dp"
+    <cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup
+        android:id="@+id/nineGrid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="0dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hot_content" />
 
-        <RelativeLayout
-            android:id="@+id/rl_post_save"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.103797466" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bottom_tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nineGrid">
+
+
+        <ImageView
+            android:id="@+id/iv_hot_save"
+            android:layout_width="@dimen/adaptive_25dp"
+            android:layout_height="@dimen/adaptive_25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/post_save" />
+
+        <TextView
+            android:id="@+id/tv_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true">
+            android:layout_marginStart="8dp"
+            android:textColor="#ff606060"
+            android:text="收藏"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_hot_save"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="收藏" />
 
-            <ImageView
-                android:id="@+id/iv_hot_save"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/post_save" />
+        <ImageView
+            android:id="@+id/iv_hot_comment"
+            android:layout_width="@dimen/adaptive_25dp"
+            android:layout_height="@dimen/adaptive_25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/post_comment" />
 
-            <TextView
-                android:id="@+id/tv_hot_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="收藏"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/iv_hot_save"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_hot_comnum"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="20"
+            android:textColor="#ff606060"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/iv_hot_comment"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="20" />
 
-        <RelativeLayout
-            android:id="@+id/rl_post_comment"
+        <ImageView
+            android:id="@+id/iv_hot_like"
+            android:layout_width="@dimen/adaptive_25dp"
+            android:layout_height="@dimen/adaptive_25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/post_img_good" />
+
+        <TextView
+            android:id="@+id/tv_hot_likenum"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="20"
+            android:textColor="#ff606060"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/iv_hot_like"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerInParent="true">
-            <ImageView
-                android:id="@+id/iv_hot_comment"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/post_comment" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
 
-            <TextView
-                android:id="@+id/tv_hot_comnum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_hot_comment"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_post_like"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentRight="true">
-           <ImageView
-               android:id="@+id/iv_hot_like"
-               android:layout_width="20dp"
-               android:layout_height="20dp"
-               android:src="@mipmap/post_img_good" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TextView
-                android:id="@+id/tv_hot_likenum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_hot_like"
-                android:layout_marginLeft="10dp"
-                android:text="20"
-                android:textSize="16sp" />
-        </RelativeLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05109489" />
 
-
-    </RelativeLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

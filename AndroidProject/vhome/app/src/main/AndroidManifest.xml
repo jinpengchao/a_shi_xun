@@ -82,7 +82,8 @@
         android:icon="@drawable/em_logo_uidemo"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:label="微家">
+        android:label="微家"
+        tools:replace="android:label">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <provider
@@ -147,15 +148,15 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
 
-<!--        <activity-->
-<!--            android:name="com.vhome.vhome.parents.ParentMain"-->
-<!--            android:launchMode="singleTask"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/horizontal_slide"-->
-<!--            android:windowSoftInputMode="adjustPan" />-->
-        <!-- 开屏页 -->
         <activity
             android:name="com.vhome.vhome.parents.ParentMain"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 开屏页 -->
+        <activity
+            android:name="com.vhome.vhome.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide">
             <intent-filter>

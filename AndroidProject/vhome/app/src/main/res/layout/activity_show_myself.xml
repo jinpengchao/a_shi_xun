@@ -203,10 +203,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <com.vhome.vhome.parents.fragment.myself.view.UnScrollListView
-                        android:id="@+id/lv_hot_spot"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:divider="#00000000"
+                        android:dividerHeight="10dp"/>
                     <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
