@@ -198,15 +198,6 @@ public class PostExamineDao {
 	 * returntype:long
 	 */
 	public long insertPost(PostExamineBean post) {
-		String dateString=post.getImgs();
-		String dataString2="";
-		//生成图片字符串,插进数据库时删除[""]
-		for(int i=0;i<dateString.length();i++) {
-			if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
-				dataString2+=dateString.charAt(i);
-			}
-		}
-		post.setImgs(dataString2);
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
