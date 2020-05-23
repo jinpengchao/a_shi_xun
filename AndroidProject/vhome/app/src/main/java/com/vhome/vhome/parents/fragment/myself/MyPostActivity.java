@@ -3,6 +3,9 @@ package com.vhome.vhome.parents.fragment.myself;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter;
@@ -10,6 +13,7 @@ import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivi
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import com.vhome.vhome.parents.fragment.fragment.SpacesItemDecoration;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
@@ -45,9 +49,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyPostActivity extends Activity implements AbsListView.OnScrollListener{
+public class MyPostActivity extends Activity{
     private String TAG = "MyPostActivity";
-    private ListView lvHotSpot;
+    private RecyclerView recyclerView;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
     private int POST_STATUS = 1;
@@ -59,16 +63,37 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
     private TextView tvEmpty;
     private int firstPosition; //滑动以后的可见的第一条数据
     private int top;//滑动以后的第一条item的可见部分距离top的像素值
-    private SharedPreferences sp;//偏好设置
-    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_post);
         getViews();
-        lvHotSpot.setOnScrollListener(this);
 
+        //布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        int pix = 10;
+        recyclerView.addItemDecoration(new SpacesItemDecoration(pix));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (recyclerView.getLayoutManager() != null) {
+                    LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    View topView = mLayoutManager.getChildAt(0); //获取第一个可视的item
+                    if (topView != null) {
+                        top = topView.getTop();
+                        firstPosition = mLayoutManager.getPosition(topView);
+                    }
+                    Log.i(TAG, "onScrollStateChanged: topView=" + topView
+                            + "  top=" + top
+                            + "  firstposition=" + firstPosition);
+                }
+            }
+        });
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -110,9 +135,8 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
                                 loadNum++;
                             }
                         }
-                        adapter = new HotSpotAdapter(MyPostActivity.this,loadList,R.layout.item_hotspot);
-                        lvHotSpot.setAdapter(adapter);
-                        lvHotSpot.setEmptyView(tvEmpty);
+                        adapter = new HotSpotAdapter(MyPostActivity.this,loadList);
+                        recyclerView.setAdapter(adapter);
                     }else {
                         for (int k=0;k<loadNum;k++){
                             loadList.add(list.get(k));
@@ -144,19 +168,19 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
                             }
                         }
                     });
-                    lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    adapter.setOnItemClickListener(new HotSpotAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        public void onItemClick(int positon) {
                             Intent simple = new Intent();
-                            simple.putExtra("post",list.get(i));
+                            simple.putExtra("post",list.get(positon));
                             simple.setClass(MyPostActivity.this, CommentActivity.class);
                             startActivity(simple);
                         }
                     });
                     //长按删除帖子
-                    lvHotSpot.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    adapter.setOnItemLongClickListener(new HotSpotAdapter.OnItemLongClickListener() {
                         @Override
-                        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        public void onItemLongClick(int position) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MyPostActivity.this);
                             builder.setTitle("删除提示：");
                             builder.setMessage("确定要删除本条帖子吗？");
@@ -169,7 +193,6 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
                             builder.setNegativeButton("取消",null);
                             AlertDialog dialog = builder.create();
                             dialog.show();
-                            return true;
                         }
                     });
 
@@ -183,11 +206,14 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
                 }
                 adapter.notifyDataSetChanged();
                 //定位回到上一次的浏览位置
-                firstPosition=sp.getInt("firstPosition", 0);
-                top=sp.getInt("top", 0);
-                if(firstPosition!=0&&top!=0){
-                    lvHotSpot.setSelectionFromTop(firstPosition, top);
-                }
+//                firstPosition=sp.getInt("firstPosition", 0);
+//                top=sp.getInt("top", 0);
+//                int position = linearLayoutManager.findFirstVisibleItemPosition();
+//                View view = recyclerView.getChildAt(position);
+//                if (view != null) {
+//                    int top = view.getTop();
+//                }
+                linearLayoutManager.scrollToPositionWithOffset(firstPosition,top);
 
             }
         };
@@ -413,9 +439,7 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
     }
 
     private void getViews() {
-        sp=getPreferences(MODE_PRIVATE);
-        editor=sp.edit();
-        lvHotSpot = findViewById(R.id.lv_hot_spot);
+        recyclerView = findViewById(R.id.recyclerView);
         srl = findViewById(R.id.srl);
         tvEmpty = findViewById(R.id.tv_empty);
     }
@@ -427,23 +451,6 @@ public class MyPostActivity extends Activity implements AbsListView.OnScrollList
         super.onStart();
         Log.e("Mypost","调用了onStart方法");
         getdata();
-    }
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
-            firstPosition=lvHotSpot.getFirstVisiblePosition();
-        }
-        View v=lvHotSpot.getChildAt(0);
-        top=v.getTop();
-
-        editor.putInt("firstPosition", firstPosition);
-        editor.putInt("top", top);
-        editor.commit();
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
     }
 
 }

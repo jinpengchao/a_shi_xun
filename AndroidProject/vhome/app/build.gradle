@@ -89,6 +89,9 @@ android {
                 if (details.requested.group == 'androidx.exifinterface') {
                     details.useVersion "1.0.0"
                 }
+                if (details.requested.group == 'androidx.media') {
+                    details.useVersion "1.0.0"
+                }
             }
         }
     }
@@ -185,6 +188,7 @@ dependencies {
     implementation project(path: ':picture_library')
     implementation project(path: ':ucrop')
     implementation files('libs\\ActiveAndroid-master.jar')
+    implementation project(path: ':ninegridview')
 }
 
 // ADD THIS AT THE BOTTOM

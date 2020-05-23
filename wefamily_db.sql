@@ -76,6 +76,15 @@ INSERT INTO `tbl_admin_message` VALUES ('37', '您的问题反馈已被回复，
 -- ----------------------------
 -- Table structure for `tbl_alarm`
 -- ----------------------------
+﻿# Host: localhost  (Version 5.5.6-rc)
+# Date: 2020-05-21 17:36:23
+# Generator: MySQL-Front 6.1  (Build 1.26)
+
+
+#
+# Structure for table "tbl_alarm"
+#
+
 DROP TABLE IF EXISTS `tbl_alarm`;
 CREATE TABLE `tbl_alarm` (
   `alarmId` int(30) NOT NULL AUTO_INCREMENT,
@@ -151,14 +160,16 @@ CREATE TABLE `tbl_child_userinfo` (
   PRIMARY KEY (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_child_userinfo
--- ----------------------------
-INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '308462', '子女子女子女子女测测测测', 'female', '天国', 'header15194980385');
+#
+# Data for table "tbl_child_userinfo"
+#
 
--- ----------------------------
--- Table structure for `tbl_comment`
--- ----------------------------
+INSERT INTO `tbl_child_userinfo` VALUES ('15194980385','308462','尿','female','天国','header18032168790.jpg');
+
+#
+# Structure for table "tbl_comment"
+#
+
 DROP TABLE IF EXISTS `tbl_comment`;
 CREATE TABLE `tbl_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -225,18 +236,18 @@ CREATE TABLE `tbl_connect` (
   `sendName` varchar(30) NOT NULL,
   `setName` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_connect
--- ----------------------------
-INSERT INTO `tbl_connect` VALUES ('33', '15230867500', '屎', '15194980385', '尿', '');
-INSERT INTO `tbl_connect` VALUES ('34', '15230867500', '滚滚滚滚', '15230867500', '滚滚滚滚', '');
-INSERT INTO `tbl_connect` VALUES ('35', '15230867500', '？睡觉睡觉大家', '15194980385', '改', '');
+#
+# Data for table "tbl_connect"
+#
 
--- ----------------------------
--- Table structure for `tbl_goodcomment`
--- ----------------------------
+INSERT INTO `tbl_connect` VALUES (22,'15194980385','尿','15230867500','屎','');
+
+#
+# Structure for table "tbl_goodcomment"
+#
+
 DROP TABLE IF EXISTS `tbl_goodcomment`;
 CREATE TABLE `tbl_goodcomment` (
   `commantId` int(30) NOT NULL,
@@ -246,13 +257,15 @@ CREATE TABLE `tbl_goodcomment` (
   PRIMARY KEY (`commantId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_goodcomment
--- ----------------------------
+#
+# Data for table "tbl_goodcomment"
+#
 
--- ----------------------------
--- Table structure for `tbl_goodpost`
--- ----------------------------
+
+#
+# Structure for table "tbl_goodpost"
+#
+
 DROP TABLE IF EXISTS `tbl_goodpost`;
 CREATE TABLE `tbl_goodpost` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -340,6 +353,7 @@ INSERT INTO `tbl_goodpost` VALUES ('95', '199', '491602', '491602', '2020-05-23 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_healthhouse`;
 CREATE TABLE `tbl_healthhouse` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -351,13 +365,15 @@ CREATE TABLE `tbl_healthhouse` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_healthhouse
--- ----------------------------
+#
+# Data for table "tbl_healthhouse"
+#
 
--- ----------------------------
--- Table structure for `tbl_myachievement`
--- ----------------------------
+
+#
+# Structure for table "tbl_myachievement"
+#
+
 DROP TABLE IF EXISTS `tbl_myachievement`;
 CREATE TABLE `tbl_myachievement` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -366,13 +382,15 @@ CREATE TABLE `tbl_myachievement` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_myachievement
--- ----------------------------
+#
+# Data for table "tbl_myachievement"
+#
 
--- ----------------------------
--- Table structure for `tbl_myattentions`
--- ----------------------------
+
+#
+# Structure for table "tbl_myattentions"
+#
+
 DROP TABLE IF EXISTS `tbl_myattentions`;
 CREATE TABLE `tbl_myattentions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -386,9 +404,7 @@ CREATE TABLE `tbl_myattentions` (
 -- ----------------------------
 INSERT INTO `tbl_myattentions` VALUES ('47', '852000', '491602');
 
--- ----------------------------
--- Table structure for `tbl_mycollection`
--- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_mycollection`;
 CREATE TABLE `tbl_mycollection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -405,9 +421,7 @@ INSERT INTO `tbl_mycollection` VALUES ('131', '491602', '165', '2020-05-10 22:25
 INSERT INTO `tbl_mycollection` VALUES ('133', '491602', '167', '2020-05-11 17:52:24');
 INSERT INTO `tbl_mycollection` VALUES ('134', '491602', '199', '2020-05-23 17:21:15');
 
--- ----------------------------
--- Table structure for `tbl_news`
--- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_news`;
 CREATE TABLE `tbl_news` (
   `id` varchar(30) NOT NULL,
@@ -419,13 +433,15 @@ CREATE TABLE `tbl_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_news
--- ----------------------------
+#
+# Data for table "tbl_news"
+#
 
--- ----------------------------
--- Table structure for `tbl_parent_userinfo`
--- ----------------------------
+
+#
+# Structure for table "tbl_parent_userinfo"
+#
+
 DROP TABLE IF EXISTS `tbl_parent_userinfo`;
 CREATE TABLE `tbl_parent_userinfo` (
   `phone` varchar(20) NOT NULL,
@@ -435,7 +451,7 @@ CREATE TABLE `tbl_parent_userinfo` (
   `area` varchar(50) DEFAULT NULL,
   `birthday` varchar(50) DEFAULT NULL,
   `achieve` int(11) DEFAULT NULL,
-  `personalWord` varchar(255) DEFAULT NULL,
+  `personalWord` varchar(50) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`phone`),
   UNIQUE KEY `id` (`id`) USING BTREE
@@ -455,10 +471,10 @@ INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'f
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
-  `nickName` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `headimg` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `content` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `personId` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `nickName` varchar(30) DEFAULT NULL,
+  `headimg` varchar(50) DEFAULT NULL,
+  `content` varchar(500) DEFAULT NULL,
+  `personId` varchar(30) NOT NULL,
   `time` datetime DEFAULT NULL,
   `imgs` varchar(2048) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -491,6 +507,7 @@ CREATE TABLE `tbl_posts` (
 -- ----------------------------
 -- Records of tbl_posts
 -- ----------------------------
+
 
 -- ----------------------------
 -- Table structure for `tbl_post_copy`
@@ -539,6 +556,7 @@ INSERT INTO `tbl_post_copy` VALUES ('209', 'sun', 'header15230867500', '少食�
 -- ----------------------------
 -- Table structure for `tbl_post_report`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_post_report`;
 CREATE TABLE `tbl_post_report` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -551,10 +569,27 @@ CREATE TABLE `tbl_post_report` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_post_report
--- ----------------------------
-INSERT INTO `tbl_post_report` VALUES ('154', '屎', 'header15230867500', '上', '491602', '2020-04-27 21:18:29', 'temp_photo1587992315661.jpg');
+
+#
+# Data for table "tbl_post_report"
+#
+
+INSERT INTO `tbl_post_report` VALUES (154,'屎','header15230867500','上','491602','2020-04-27 21:18:29','[\"temp_photo1587992315661.jpg\"]');
+
+#
+# Structure for table "tbl_posts"
+#
+
+DROP TABLE IF EXISTS `tbl_posts`;
+CREATE TABLE `tbl_posts` (
+  `num` int(11) NOT NULL DEFAULT '0',
+  `id` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tbl_posts"
+#
 
 -- ----------------------------
 -- Table structure for `tbl_questions`
@@ -592,16 +627,13 @@ INSERT INTO `tbl_questions` VALUES ('18', 'QW ', '13513171332', '', 'QWE ', '请
 INSERT INTO `tbl_questions` VALUES ('19', '11', '13513171332', '13065ffa4e8b884daa9', '11', '12', '1');
 INSERT INTO `tbl_questions` VALUES ('20', '1', '15230867500', '1104a8979228f292c09', '1', 'xxx处有bug', '1');
 
--- ----------------------------
--- Table structure for `tbl_relations_request`
--- ----------------------------
 DROP TABLE IF EXISTS `tbl_relations_request`;
 CREATE TABLE `tbl_relations_request` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_phone` varchar(11) NOT NULL,
   `send_name` varchar(20) CHARACTER SET utf8 NOT NULL,
   `receive_phone` varchar(11) NOT NULL,
-  `type` varchar(2) NOT NULL,
+  `type` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
@@ -636,6 +668,7 @@ INSERT INTO `tbl_relations_request` VALUES ('25', '15194980385', '子女子女�
 -- ----------------------------
 -- Table structure for `tbl_remind`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_remind`;
 CREATE TABLE `tbl_remind` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -644,16 +677,16 @@ CREATE TABLE `tbl_remind` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_remind
--- ----------------------------
-INSERT INTO `tbl_remind` VALUES ('1', 'hahah', '242424000');
-INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
-INSERT INTO `tbl_remind` VALUES ('12', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '15194980385');
+#
+# Data for table "tbl_remind"
+#
 
--- ----------------------------
--- Table structure for `tbl_reply_comment`
--- ----------------------------
+INSERT INTO `tbl_remind` VALUES (1,'hahah','242424000'),(2,'55555','242424000'),(3,'爸，我给你买了好酒，你记得去取啊','15194980385'),(12,'超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq','15194980385');
+
+#
+# Structure for table "tbl_reply_comment"
+#
+
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -665,7 +698,17 @@ CREATE TABLE `tbl_reply_comment` (
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "tbl_reply_comment"
+#
+
+INSERT INTO `tbl_reply_comment` VALUES (6,14,'弗瑞','header6330654.jpg','275686',0,'天','2019-12-16 18:55:01'),(7,22,'嘻嘻哈哈','header18032168790.jpg','180321',0,'我是你妈妈','2020-04-08 09:55:03'),(8,25,'','','',0,'腹股沟管','2020-04-13 20:15:22'),(9,27,'','','',0,'宝宝vv','2020-04-14 11:34:57'),(10,38,'屎','header15230867500','491602',0,'？？','2020-04-24 21:03:23'),(11,38,'屎','header15230867500','491602',0,'哈哈','2020-04-24 21:03:30');
+
+#
+# Structure for table "tbl_step"
+#
 
 -- ----------------------------
 -- Records of tbl_reply_comment
@@ -682,13 +725,15 @@ CREATE TABLE `tbl_step` (
   PRIMARY KEY (`parentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_step
--- ----------------------------
+#
+# Data for table "tbl_step"
+#
 
--- ----------------------------
--- Table structure for `tbl_user`
--- ----------------------------
+
+#
+# Structure for table "tbl_user"
+#
+
 DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE `tbl_user` (
   `phone` varchar(20) NOT NULL,
@@ -714,6 +759,7 @@ INSERT INTO `tbl_user` VALUES ('kefuxw', 'wanjpc123', '0000-00-00 00:00:00', '00
 -- ----------------------------
 -- Table structure for `tbl_walkpath`
 -- ----------------------------
+
 DROP TABLE IF EXISTS `tbl_walkpath`;
 CREATE TABLE `tbl_walkpath` (
   `id` varchar(30) NOT NULL DEFAULT '',
@@ -722,6 +768,3 @@ CREATE TABLE `tbl_walkpath` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_walkpath
--- ----------------------------

@@ -39,6 +39,19 @@ public class PostReport extends HttpServlet {
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		List<PostBean> postBeans=(new PostService()).findAll();
+		
+		for(PostBean post:postBeans) {
+			String dateString=post.getImgs();
+			String dataString2="";
+			//生成图片字符串,插进数据库时删除[""]
+			for(int i=0;i<dateString.length();i++) {
+				if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
+					dataString2+=dateString.charAt(i);
+				}
+			}
+    		post.setImgs(dataString2);
+		}
+		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(PostBean p:postBeans) {
 			try {

@@ -2,6 +2,9 @@ package com.vhome.vhome.parents.fragment.myself;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter;
@@ -42,9 +45,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyCollectionsActivity extends Activity implements AbsListView.OnScrollListener{
+public class MyCollectionsActivity extends Activity{
     private String TAG = "MyCollectionsActivity";
-    private ListView lvHotSpot;
+    private RecyclerView recyclerView;
     private Handler handler;
     private List<PostBean> list = new ArrayList<>();
     private int POST_STATUS = 1;
@@ -63,8 +66,29 @@ public class MyCollectionsActivity extends Activity implements AbsListView.OnScr
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_my_post);
         getViews();
-        lvHotSpot.setOnScrollListener(this);
 
+        //布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (recyclerView.getLayoutManager() != null) {
+                    LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    View topView = mLayoutManager.getChildAt(0); //获取第一个可视的item
+                    if (topView != null) {
+                        top = topView.getTop();
+                        firstPosition = mLayoutManager.getPosition(topView);
+                    }
+                    Log.i(TAG, "onScrollStateChanged: topView=" + topView
+                            + "  top=" + top
+                            + "  firstposition=" + firstPosition);
+                }
+            }
+        });
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -105,10 +129,8 @@ public class MyCollectionsActivity extends Activity implements AbsListView.OnScr
                     }
                 }
 
-                adapter = new HotSpotAdapter(MyCollectionsActivity.this,loadList,R.layout.item_hotspot);
-                lvHotSpot.setAdapter(adapter);
-                tvEmpty.setText("还没有收藏哦~");
-                lvHotSpot.setEmptyView(tvEmpty);
+                adapter = new HotSpotAdapter(MyCollectionsActivity.this,loadList);
+                recyclerView.setAdapter(adapter);
 //                当点击收藏点赞的时候
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
                     @Override
@@ -133,22 +155,25 @@ public class MyCollectionsActivity extends Activity implements AbsListView.OnScr
                         }
                     }
                 });
-                lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                adapter.setOnItemClickListener(new HotSpotAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemClick(int positon) {
                         Intent simple = new Intent();
-                        simple.putExtra("post",list.get(i));
+                        simple.putExtra("post",list.get(positon));
                         simple.setClass(MyCollectionsActivity.this, CommentActivity.class);
                         startActivity(simple);
                     }
                 });
                 adapter.notifyDataSetChanged();
                 //定位回到上一次的浏览位置
-                firstPosition=sp.getInt("firstPosition", 0);
-                top=sp.getInt("top", 0);
-                if(firstPosition!=0&&top!=0){
-                    lvHotSpot.setSelectionFromTop(firstPosition, top);
-                }
+//                firstPosition=sp.getInt("firstPosition", 0);
+//                top=sp.getInt("top", 0);
+//                int position = linearLayoutManager.findFirstVisibleItemPosition();
+//                View view = recyclerView.getChildAt(position);
+//                if (view != null) {
+//                    int top = view.getTop();
+//                }
+                linearLayoutManager.scrollToPositionWithOffset(firstPosition,top);
             }
         };
     }
@@ -339,9 +364,7 @@ public class MyCollectionsActivity extends Activity implements AbsListView.OnScr
     }
 
     private void getViews() {
-        sp=getPreferences(MODE_PRIVATE);
-        editor=sp.edit();
-        lvHotSpot = findViewById(R.id.lv_hot_spot);
+        recyclerView = findViewById(R.id.recyclerView);
         srl = findViewById(R.id.srl);
         tvEmpty = findViewById(R.id.tv_empty);
     }
@@ -354,21 +377,5 @@ public class MyCollectionsActivity extends Activity implements AbsListView.OnScr
         Log.e("MyCollections","调用了onStart方法");
         getdata();
     }
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if(scrollState== AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
-            firstPosition=lvHotSpot.getFirstVisiblePosition();
-        }
-        View v=lvHotSpot.getChildAt(0);
-        top=v.getTop();
 
-        editor.putInt("firstPosition", firstPosition);
-        editor.putInt("top", top);
-        editor.commit();
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-    }
 }

@@ -288,11 +288,18 @@ public class UserDao {
 				rs1.close();
 			}
 			psmt.close();
-			util.closeConnection();
+//			util.closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return userInfo;
 	}
@@ -571,11 +578,18 @@ public class UserDao {
 				System.out.println("修改失败");
 			}
 			psmt.close();
-			util.closeConnection();
+//			util.closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public void updateReadable(int id) {
@@ -628,7 +642,6 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-
 			try {
 				util.closeConnection();
 			} catch (SQLException e) {

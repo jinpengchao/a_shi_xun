@@ -55,8 +55,8 @@
         android:textSize="18sp"
         android:layout_marginTop="20dp"/>
 
-    <com.vhome.vhome.parents.fragment.community_hotspot.MyGridView
-        android:id="@+id/gv_post_show"
+    <cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup
+        android:id="@+id/nineGrid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -95,7 +95,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_post_comment"
+            android:id="@+id/rl_posts_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -104,7 +104,7 @@
                 android:id="@+id/iv_hot_comment"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@mipmap/post_comment" />
+                android:src="@mipmap/posts_comment" />
 
             <TextView
                 android:id="@+id/tv_hot_comnum"

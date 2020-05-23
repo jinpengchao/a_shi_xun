@@ -3,22 +3,22 @@ package com.vhome.vhome.parents.fragment.community_hotspot.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.vhome.vhome.MainActivity;
+import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
+
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.adapter.ExpandListAdapter;
-import com.vhome.vhome.parents.fragment.adapter.ShowPostImgAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
+import com.vhome.vhome.parents.fragment.community_hotspot.entity.MyMedia;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
-import com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity;
+import com.vhome.vhome.parents.fragment.community_hotspot.util.GetVideoThumbnail;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
-import com.vhome.vhome.user.personal.MySelfActivity;
-import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
-import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
@@ -26,15 +26,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -47,9 +44,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,9 +55,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Comment;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -72,9 +64,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-import static com.vhome.vhome.user.personal.OthersSerlfActivity.personIds;
+import static com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter.isImgUrl;
 
 public class CommentActivity extends Activity {
     private static final String TAG = "CommentActivity";
@@ -85,8 +76,7 @@ public class CommentActivity extends Activity {
     private MyClickListener listener;
     private List<CommentDetailBean> commentList;
     private PostBean post;
-    private String personId;
-    private CircleImageView ivHotPerson;
+    private ImageView ivHotPerson;
     private TextView tvHotName;
     private TextView tvHotContent;
     private TextView tvHotTime;
@@ -94,17 +84,19 @@ public class CommentActivity extends Activity {
     private TextView tvHotComnum;
     private ImageView ivHotlike;
     private TextView tvHotLikenum;
-    private GridView gvPostShow;
+    private NineGridViewGroup nineGridViewGroup;
     private RelativeLayout rlPostSave;
     private RelativeLayout rlPostLike;
-    private ShowPostImgAdapter showPostImgAdapter;
     private ArrayList<String> imgs = new ArrayList<>();
     private Gson gson = new Gson();
     private ExpandListAdapter adapter;
     private BottomSheetDialog dialog;
+    private TextView tvAttention;
     private int DEL_COMMENT = 2;
     private int DEL_REPLY = 3;
     private int SAVE_COMMENT = 4;
+    private ArrayList<MyMedia> medias;
+    private GetVideoThumbnail getVideoThumbnail = new GetVideoThumbnail();
 
     Handler handler = new Handler(){
         @Override
@@ -147,10 +139,10 @@ public class CommentActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_comment_post);
+        medias = new ArrayList<>();
         //获取帖子数据
         Intent postIntent = getIntent();
         post = (PostBean) postIntent.getSerializableExtra("post");
-        personId = postIntent.getStringExtra("personId");
         Log.e(TAG, "onCreate: post内容"+post.getHeadimg() );
         getViews();
         registerListener();
@@ -159,14 +151,10 @@ public class CommentActivity extends Activity {
         //填充数据
         fillPost();
         getCommentData();
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fillPost();
-    }
-    //评论与恢复的长按删除
+    //评论与回复的长按删除
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -316,9 +304,9 @@ public class CommentActivity extends Activity {
         //设置头像
         String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+post.getHeadimg()+".jpg";;
         Glide.with(CommentActivity.this)
-                .load(url)
-                .priority(Priority.HIGH)
-                .into(ivHotPerson);
+                .load(url).priority(Priority.HIGH)
+                .error(R.mipmap.errorimg1)
+                .centerCrop().into(ivHotPerson);
         tvHotName.setText(post.getNickName());//设置发帖人昵称
         tvHotContent.setText(post.getPostContent());//设置帖子内容
         //设置时间
@@ -335,8 +323,30 @@ public class CommentActivity extends Activity {
         //显示图片
         String imgsData = "[\""+post.getImgs()+"\"]";
         imgs = gson.fromJson(imgsData,new TypeToken<List<String>>(){}.getType());
-        showPostImgAdapter = new ShowPostImgAdapter(imgs,CommentActivity.this);
-        gvPostShow.setAdapter(showPostImgAdapter);
+        if(post.getImgs()!=null&&!"".equals(post.getImgs())){
+            for (String name:imgs) {
+                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
+                boolean isPic = isImgUrl(name);
+                if (true==isPic){//当是图片url时，只添加图片
+                    medias.add(new MyMedia(pUrl));
+                    Log.d(TAG,"图片的url："+pUrl);
+                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
+                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(CommentActivity.this,bitmap);
+                    String picPath = getVideoThumbnail.bitmapToStringPath(CommentActivity.this,vBitmap,name);
+                    medias.add(new MyMedia(picPath,pUrl));
+                }
+            }
+            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+            for (MyMedia myMedia : medias) {
+                String thumbnailUrl = myMedia.getImageUrl();
+                String bigImageUrl = thumbnailUrl;
+                String videoUrl = myMedia.getVideoUrl();
+                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+            }
+            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+            nineGridViewGroup.setAdapter(nineGridViewAdapter);
+        }
         tvHotComnum.setText(post.getCommentNum()+"");//显示评论数
         tvHotLikenum.setText(post.getLikeNum()+"");//显示点赞数
 //        initExpandableListView(commentList);//初始化评论和回复
@@ -485,6 +495,20 @@ public class CommentActivity extends Activity {
         SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
         String myId = sp.getString("id","");
         Log.e(TAG,"postpersonId:"+post.getPersonId()+"..个人id"+myId);
+        if(post.getPersonId().equals(myId)){
+            tvAttention.setVisibility(View.GONE );
+        }else {
+            if(post.getAttention_status()==1){
+                tvAttention.setText("已关注");
+                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+            }else {
+                tvAttention.setText("+关注");
+                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
+            }
+        }
+
     }
 
     /**
@@ -522,9 +546,10 @@ public class CommentActivity extends Activity {
         tvHotComnum = findViewById(R.id.tv_hot_comnum);
         ivHotlike = findViewById(R.id.iv_hot_like);
         tvHotLikenum = findViewById(R.id.tv_hot_likenum);
-        gvPostShow = findViewById(R.id.gv_post_show);
+        nineGridViewGroup = findViewById(R.id.nineGrid);
         rlPostSave = findViewById(R.id.rl_post_save);
         rlPostLike = findViewById(R.id.rl_post_like);
+        tvAttention = findViewById(R.id.tv_attention);
     }
 
     private void registerListener() {
@@ -534,6 +559,7 @@ public class CommentActivity extends Activity {
         rlPostLike.setOnClickListener(listener);
         ivHotPerson.setOnClickListener(listener);
         tvHotName.setOnClickListener(listener);
+        tvAttention.setOnClickListener(listener);
     }
     class MyClickListener implements View.OnClickListener{
         @Override
@@ -578,6 +604,34 @@ public class CommentActivity extends Activity {
                 case R.id.iv_hot_person:
 
                 case R.id.tv_hot_name:
+                    Intent person = new Intent();
+                    person.putExtra("personId",post.getPersonId());
+                    person.setClass(CommentActivity.this, ShowMyselfActivity.class);
+                    startActivity(person);
+                    break;
+                case R.id.tv_attention:
+                    //添加关注
+                    if (post.getAttention_status()==1){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
+                        builder.setTitle("温馨提示：");
+                        builder.setMessage("确定要取消关注吗？");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                tvAttention.setText("+关注");
+                                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+                                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
+                                post.setAttention_status(0);
+                                delAttention();
+                                Log.i(TAG, "onClick: 已经取消关注");
+                            }
+                        });
+                        builder.setNegativeButton("取消",null);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }else if (post.getAttention_status()==0){
+                        addAttention();
+                    }
                     break;
             }
         }
@@ -660,6 +714,44 @@ public class CommentActivity extends Activity {
                         Log.e(TAG, "run: 删除收藏数据出错" );
                     }else {
                         Log.i(TAG, "run: 删除收藏数据成功");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 添加关注
+     */
+    private void addAttention() {
+        //准备数据
+        AttentionBean attention = new AttentionBean();
+        attention.setAttentionPersonId(post.getPersonId());
+        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
+        attention.setPersonId(sp.getString("id",""));
+//        修改UI
+        tvAttention.setText("已关注");
+        GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
+        myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
+        post.setAttention_status(1);
+        new Thread(){
+            @Override
+            public void run() {
+                Gson gson = new Gson();
+                String attentionData = gson.toJson(attention);
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveAttentionServlet");
+                    ConnectionUtil util = new ConnectionUtil();
+                    HttpURLConnection connection = util.sendData(url,attentionData);
+                    String receive = util.getData(connection);
+                    if (null!=receive&&!"".equals(receive)){
+                        Log.i(TAG,"添加关注成功"+attentionData);
+                    }else {
+                        Log.e(TAG,"添加关注出错");
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

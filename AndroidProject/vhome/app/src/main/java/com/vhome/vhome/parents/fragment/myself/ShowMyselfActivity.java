@@ -1,5 +1,6 @@
 package com.vhome.vhome.parents.fragment.myself;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,9 @@ import com.vhome.vhome.parents.fragment.myself.view.MyScrollView;
 import com.vhome.vhome.parents.fragment.myself.view.UnScrollListView;
 import com.vhome.vhome.user.entity.ParentUserInfo;
 import com.vhome.vhome.util.ConnectionUtil;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -58,7 +62,7 @@ import static com.vhome.vhome.parents.TrackUtil.Utils.getContext;
 public class ShowMyselfActivity extends AppCompatActivity {
     private String TAG = "ShowMyselfActivity";
     private MyScrollView myScrollView;
-    private UnScrollListView lvHotSpot;
+    private RecyclerView recyclerView;
     private ImageView blurImageView;
     private ImageView header;
     private TextView nikeName;
@@ -74,6 +78,8 @@ public class ShowMyselfActivity extends AppCompatActivity {
     private TextView tvEmpty;
     private String personId = null;
     private String phone = "";
+    private int firstPosition; //滑动以后的可见的第一条数据
+    private int top;//滑动以后的第一条item的可见部分距离top的像素值
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +88,28 @@ public class ShowMyselfActivity extends AppCompatActivity {
         Intent idInten = getIntent();
         personId = idInten.getStringExtra("personId");
         getViews();
+        //布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (recyclerView.getLayoutManager() != null) {
+                    LinearLayoutManager mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    View topView = mLayoutManager.getChildAt(0); //获取第一个可视的item
+                    if (topView != null) {
+                        top = topView.getTop();
+                        firstPosition = mLayoutManager.getPosition(topView);
+                    }
+                    Log.i(TAG, "onScrollStateChanged: topView=" + topView
+                            + "  top=" + top
+                            + "  firstposition=" + firstPosition);
+                }
+            }
+        });
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -110,9 +138,8 @@ public class ShowMyselfActivity extends AppCompatActivity {
                     }
                 }
 
-                adapter = new HotSpotAdapter(ShowMyselfActivity.this,loadList,R.layout.item_hotspot);
-                lvHotSpot.setAdapter(adapter);
-                lvHotSpot.setEmptyView(tvEmpty);
+                adapter = new HotSpotAdapter(ShowMyselfActivity.this,loadList);
+                recyclerView.setAdapter(adapter);
 //                当点击收藏点赞的时候
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
                     @Override
@@ -137,16 +164,25 @@ public class ShowMyselfActivity extends AppCompatActivity {
                         }
                     }
                 });
-                lvHotSpot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                adapter.setOnItemClickListener(new HotSpotAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemClick(int positon) {
                         Intent simple = new Intent();
-                        simple.putExtra("post",list.get(i));
+                        simple.putExtra("post",list.get(positon));
                         simple.setClass(ShowMyselfActivity.this, CommentActivity.class);
                         startActivity(simple);
                     }
                 });
                 adapter.notifyDataSetChanged();
+                //定位回到上一次的浏览位置
+//                firstPosition=sp.getInt("firstPosition", 0);
+//                top=sp.getInt("top", 0);
+//                int position = linearLayoutManager.findFirstVisibleItemPosition();
+//                View view = recyclerView.getChildAt(position);
+//                if (view != null) {
+//                    int top = view.getTop();
+//                }
+                linearLayoutManager.scrollToPositionWithOffset(firstPosition,top);
                 String imgName = "header"+phone+".jpg";
                 String url = "http://"+(new MyApp()).getIp()+":8080/vhome/images/"+imgName;
                 Log.e("img====",imgName);
@@ -389,7 +425,7 @@ public class ShowMyselfActivity extends AppCompatActivity {
     }
 
     private void getViews() {
-        lvHotSpot = findViewById(R.id.lv_hot_spot);
+        recyclerView = findViewById(R.id.recyclerView);
         tvEmpty = findViewById(R.id.tv_empty);
         myScrollView = findViewById(R.id.show_scroll_view);
         blurImageView = (ImageView) findViewById(R.id.iv_blur);

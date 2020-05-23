@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.activeandroid.ActiveAndroid;
 import com.baidu.mapapi.SDKInitializer;
@@ -27,6 +28,8 @@ import com.baidu.trace.model.BaseRequest;
 import com.baidu.trace.model.OnCustomAttributeListener;
 import com.baidu.trace.model.ProcessOption;
 import com.baidu.trace.model.TransportMode;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -49,6 +52,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.multidex.MultiDex;
 import cn.jpush.android.api.JPushInterface;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 import com.vhome.vhome.parents.TrackUtil.CommonUtil;
 import com.vhome.vhome.parents.TrackUtil.NetUtil;
@@ -307,6 +311,32 @@ public class MyApp extends Application {
 
             }
         });
+        //九宫格加载图片
+        setImageLoader();
+    }
+
+    private void setImageLoader() {
+        NineGridViewGroup.setImageLoader(new GlideImageLoader());
+    }
+
+    private class GlideImageLoader implements NineGridViewGroup.ImageLoader {
+        GlideImageLoader() {
+        }
+
+        @Override
+        public void onDisplayImage(Context context, ImageView imageView, String url) {
+            Glide.with(context)
+                    .load(url)
+                    .placeholder(R.drawable.ic_default_color)   // 图片未加载时的占位图或背景色
+                    .error(R.drawable.ic_default_color)         // 图片加载失败时显示的图或背景色
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)   // 开启本地缓存
+                    .into(imageView);
+        }
+
+        @Override
+        public Bitmap getCacheImage(String url) {
+            return null;
+        }
     }
 
     /**

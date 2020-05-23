@@ -82,7 +82,8 @@
         android:icon="@drawable/em_logo_uidemo"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:label="微家">
+        android:label="微家"
+        tools:replace="android:label">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <provider
