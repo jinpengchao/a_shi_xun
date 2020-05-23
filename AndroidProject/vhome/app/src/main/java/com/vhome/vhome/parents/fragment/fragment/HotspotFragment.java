@@ -81,6 +81,8 @@ public class HotspotFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        int pix = 10;
+        recyclerView.addItemDecoration(new SpacesItemDecoration(pix));
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

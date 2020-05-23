@@ -13,6 +13,7 @@ import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivi
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.GoodPostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import com.vhome.vhome.parents.fragment.fragment.SpacesItemDecoration;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
@@ -73,6 +74,8 @@ public class MyPostActivity extends Activity{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        int pix = 10;
+        recyclerView.addItemDecoration(new SpacesItemDecoration(pix));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

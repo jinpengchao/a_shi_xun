@@ -55,8 +55,8 @@
         android:textSize="18sp"
         android:layout_marginTop="20dp"/>
 
-    <com.vhome.vhome.parents.fragment.community_hotspot.MyGridView
-        android:id="@+id/gv_post_show"
+    <cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup
+        android:id="@+id/nineGrid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"

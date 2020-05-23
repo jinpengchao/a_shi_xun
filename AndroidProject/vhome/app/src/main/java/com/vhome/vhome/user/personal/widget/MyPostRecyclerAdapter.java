@@ -22,8 +22,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.vhome.chat.R;
 import com.vhome.vhome.MyApp;
-import com.vhome.vhome.parents.fragment.adapter.ShowPostImgAdapter;
+import com.vhome.vhome.parents.fragment.community_hotspot.entity.MyMedia;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
+import com.vhome.vhome.parents.fragment.community_hotspot.util.GetVideoThumbnail;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 
 import java.io.File;
@@ -37,10 +38,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
+import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
+import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
+
+import static com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter.isImgUrl;
 
 public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAdapter.MyViewHolder> {
     private List<PostBean> list;
@@ -48,6 +52,8 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
     private onMyLikeClick onMyLikeClick;
     private View inflater;
     private OnItemClickListener listener;
+    private ArrayList<MyMedia> medias;
+    private GetVideoThumbnail getVideoThumbnail = new GetVideoThumbnail();
     public interface onMyLikeClick{
         public void myLikeClick(int position,int status);
         public void myCollectClick(int position,int status);
@@ -85,6 +91,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int i) {
+        medias = new ArrayList<>();
         //点击事件
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,17 +160,32 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         holder.tvHotTime.setText(now);
         //加载说说图片
         String imgs = null;
-        imgs = list.get(i).getImgs();
+        imgs = "[\""+list.get(i).getImgs()+"\"]";
         Gson gson = new Gson();
         ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
-        Log.i("hotspotadaper", "图片列表数据个数：" + imgsList.size());
-        if (imgsList.size() > 0) {
-            ShowPostImgAdapter showPostImgAdapter = new ShowPostImgAdapter(imgsList, context);
-            holder.gvPostShow.setAdapter(showPostImgAdapter);
-            showPostImgAdapter.notifyDataSetChanged();
-        } else {
-            holder.gvPostShow.setVisibility(View.GONE);
+        if(list.get(i).getImgs()!=null&&!"".equals(list.get(i).getImgs())){
+            for (String name:imgsList) {
+                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
+                boolean isPic = isImgUrl(name);
+                if (true==isPic){//当是图片url时，只添加图片
+                    medias.add(new MyMedia(pUrl));
+                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
+                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
+                    String picPath = getVideoThumbnail.bitmapToStringPath(context,vBitmap,name);
+                    medias.add(new MyMedia(picPath,pUrl));
+                }
+            }
+            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+            for (MyMedia myMedia : medias) {
+                String thumbnailUrl = myMedia.getImageUrl();
+                String bigImageUrl = thumbnailUrl;
+                String videoUrl = myMedia.getVideoUrl();
+                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+            }
+            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+            holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
         //设置评论人数和点赞人数
         holder.tvHotLikenum.setText(list.get(i).getLikeNum() + "");
@@ -240,7 +262,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         TextView tvHotComnum;
         ImageView ivHotlike;
         TextView tvHotLikenum;
-        GridView gvPostShow;
+        NineGridViewGroup nineGridViewGroup;
         RelativeLayout rlPostSave;
         RelativeLayout rlPostComment;
         RelativeLayout rlPostLike;
@@ -254,7 +276,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             tvHotComnum = view.findViewById(R.id.tv_hot_comnum);
             ivHotlike = view.findViewById(R.id.iv_hot_like);
             tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
-            gvPostShow = view.findViewById(R.id.gv_post_show);
+            nineGridViewGroup = view.findViewById(R.id.nineGrid);
             rlPostSave = view.findViewById(R.id.rl_post_save);
             rlPostComment = view.findViewById(R.id.rl_posts_comment);
             rlPostLike = view.findViewById(R.id.rl_post_like);

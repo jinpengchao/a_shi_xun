@@ -7,11 +7,9 @@ import cn.edu.heuet.littlecurl.ninegridview.base.NineGridViewAdapter;
 import cn.edu.heuet.littlecurl.ninegridview.bean.NineGridItem;
 import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
-import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.adapter.ExpandListAdapter;
-import com.vhome.vhome.parents.fragment.adapter.ShowPostImgAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CommentDetailBean;
@@ -20,7 +18,6 @@ import com.vhome.vhome.parents.fragment.community_hotspot.entity.MyMedia;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.util.GetVideoThumbnail;
-import com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
 import com.vhome.vhome.util.ConnectionUtil;
 
@@ -32,7 +29,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,9 +44,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +64,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import static com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter.isImgUrl;
 
@@ -94,7 +87,6 @@ public class CommentActivity extends Activity {
     private NineGridViewGroup nineGridViewGroup;
     private RelativeLayout rlPostSave;
     private RelativeLayout rlPostLike;
-    private ShowPostImgAdapter showPostImgAdapter;
     private ArrayList<String> imgs = new ArrayList<>();
     private Gson gson = new Gson();
     private ExpandListAdapter adapter;
