@@ -72,7 +72,7 @@ public class MyApp extends Application {
 
     // 39.96.24.133
 	//别tm有空格
-    private String ip = "192.168.31.142";
+    private String ip = "192.168.124.29";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;

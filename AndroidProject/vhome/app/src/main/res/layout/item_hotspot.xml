@@ -141,7 +141,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/post_comment" />
+            app:srcCompat="@mipmap/posts_comment" />
 
         <TextView
             android:id="@+id/tv_hot_comnum"

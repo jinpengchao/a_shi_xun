@@ -256,7 +256,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             tvHotLikenum = view.findViewById(R.id.tv_hot_likenum);
             gvPostShow = view.findViewById(R.id.gv_post_show);
             rlPostSave = view.findViewById(R.id.rl_post_save);
-            rlPostComment = view.findViewById(R.id.rl_post_comment);
+            rlPostComment = view.findViewById(R.id.rl_posts_comment);
             rlPostLike = view.findViewById(R.id.rl_post_like);
         }
     }

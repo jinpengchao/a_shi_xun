@@ -158,6 +158,8 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
         medias = new ArrayList<>();
         //通过判断是否收藏点赞，设置收藏图标
         setImg(position,holder);
+        //设置评论图标
+        holder.ivHotComment.setImageResource(R.mipmap.posts_comment);
         //设置发帖人logo
         //刷新本地头像
         String path = "/sdcard/"+list.get(position).getHeadimg()+"/";// sd路径
@@ -174,6 +176,11 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                     .signature(new ObjectKey(UUID.randomUUID().toString()))
                     .priority(Priority.HIGH)
                     .into(holder.ivHotPerson);
+            try {
+                setPicToView(path,list.get(position).getHeadimg(), returnBitMap(url));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 //        holder.ivHotPerson.setImageResource();
         holder.tvHotName.setText(list.get(position).getNickName());
@@ -218,25 +225,27 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
         /**
          * 添加说说图片数据
          */
-        String imgs = list.get(position).getImgs();
+        Log.d(TAG, "onBindViewHolder: 图片数据："+list.get(position).getImgs()+"::内容："+list.get(position).getPostContent());
+        String imgs = "[\""+list.get(position).getImgs()+"\"]";
         Gson gson = new Gson();
         List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
-        for (String url:imgsList) {
-            String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+url;
-            boolean isPic = isImgUrl(url);
-            if (true==isPic){//当是图片url时，只添加图片
-                medias.add(new MyMedia(pUrl));
-                Log.d(TAG,"图片的url："+pUrl);
-            }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
-                Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-                String picPath = getVideoThumbnail.bitmapToStringPath(context,bitmap);
-                medias.add(new MyMedia("file:"+picPath,pUrl));
+        Log.d(TAG, "onBindViewHolder: imgsList数据个数："+imgsList.size());
+        if(list.get(position).getImgs()!=null&&!"".equals(list.get(position).getImgs())){
+            for (String url:imgsList) {
+                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+url;
+                boolean isPic = isImgUrl(url);
+                if (true==isPic){//当是图片url时，只添加图片
+                    medias.add(new MyMedia(pUrl));
+                    Log.d(TAG,"图片的url："+pUrl);
+                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
+                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
+                    String picPath = getVideoThumbnail.bitmapToStringPath(context,vBitmap,url);
+                    Log.d(TAG, "onBindViewHolder: 视频展示图路径："+picPath);
+                    medias.add(new MyMedia(picPath,pUrl));
+                }
             }
-        }
-        // 为满足九宫格适配器数据要求，需要构造对应的List
-        // 没有数据就没有九宫格
-        if (medias != null && medias.size() > 0) {
             ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
             for (MyMedia myMedia : medias) {
                 String thumbnailUrl = myMedia.getImageUrl();
@@ -245,9 +254,10 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                 nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
             }
             NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl());
+            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl()+"::内容："+list.get(position).getPostContent());
             holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
+        // 为满足九宫格适配器数据要求，需要构造对应的List
 
         //设置评论人数和点赞人数
         holder.tvHotLikenum.setText(list.get(position).getLikeNum() + "");
@@ -372,18 +382,42 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
 
 
 
-    private class ViewHolder {
-        CircleImageView ivHotPerson;
-        TextView tvHotName;
-        TextView tvHotContent;
-        TextView tvHotTime;
-        ImageView ivHotSave;
-        TextView tvHotComnum;
-        ImageView ivHotlike;
-        TextView tvHotLikenum;
-        GridView gvPostShow;
-        RelativeLayout rlPostSave;
-        RelativeLayout rlPostComment;
-        RelativeLayout rlPostLike;
+    public static Bitmap returnBitMap(String url) throws IOException {
+        URL imgUrl = new URL(url);
+        Bitmap bitmap = null;
+        final HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+        conn.setDoInput(true);
+        conn.connect();
+        bitmap = BitmapFactory.decodeStream(conn.getInputStream());
+        return bitmap;
+    }
+    private void setPicToView(String path ,String phone,Bitmap mBitmap) {
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
+        }
+        FileOutputStream b = null;
+        File file = new File(path);
+        if (file.exists()){
+            file.delete();
+            file.mkdirs();
+        }else
+            file.mkdirs();// 创建文件夹
+        String fileName = path +phone+".jpg";// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                file.delete();
+                b.flush();
+                b.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

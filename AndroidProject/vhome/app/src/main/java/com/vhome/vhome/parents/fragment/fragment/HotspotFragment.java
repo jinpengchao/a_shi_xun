@@ -127,8 +127,8 @@ public class HotspotFragment extends Fragment {
                 list = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());
                 //设置加载的数据list,默认首先加载5条数据,否则加载定位数据
                 if(0==loadNum){
-                    if(list.size()>5){
-                        for (int k=0;k<5;k++){
+                    if(list.size()>10){
+                        for (int k=0;k<10;k++){
                             loadList.add(list.get(k));
                             loadNum++;
                         }
@@ -147,9 +147,6 @@ public class HotspotFragment extends Fragment {
                     }
                 }
 
-//                adapter = new HotSpotAdapter(getContext(),loadList,R.layout.item_hotspot);
-//                lvHotSpot.setAdapter(adapter);
-//                lvHotSpot.setEmptyView(tvEmpty);
                 adapter.setOnMyLikeClick(new HotSpotAdapter.onMyLikeClick() {
                     @Override
                     public void myLikeClick(int position, int status) {
@@ -183,14 +180,6 @@ public class HotspotFragment extends Fragment {
                     }
                 });
                 adapter.notifyDataSetChanged();
-                //定位回到上一次的浏览位置
-//                firstPosition=sp.getInt("firstPosition", 0);
-//                top=sp.getInt("top", 0);
-//                int position = linearLayoutManager.findFirstVisibleItemPosition();
-//                View view = recyclerView.getChildAt(position);
-//                if (view != null) {
-//                    int top = view.getTop();
-//                }
                 linearLayoutManager.scrollToPositionWithOffset(firstPosition,top);
 
             }
@@ -349,14 +338,14 @@ public class HotspotFragment extends Fragment {
     //加载数据
     public void loadMoreData(){
         //加载5条数据，不够5条时剩余数据全部加入
-        if(loadNum+5>=list.size()){
+        if(loadNum+10>=list.size()){
             for (int i =loadNum;i<list.size();i++){
                 loadList.add(list.get(i));
                 loadNum++;
             }
         }else {
             int k = loadNum;
-            for (int i =k;i<k+5;i++){
+            for (int i =k;i<k+10;i++){
                 loadList.add(list.get(i));
                 loadNum++;
             }

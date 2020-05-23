@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.Serializable;
 import java.util.List;
@@ -63,5 +65,17 @@ public class NineGridViewAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(R.drawable.ic_default_color);
         return imageView;
+
+
     }
+//public LinearLayout generateImageView(Context context) {
+//    NineGridItemWrapperView layout = new NineGridItemWrapperView(context);
+//    layout.setOrientation(LinearLayout.VERTICAL); //
+//    layout.setBackgroundColor(0xff00ffff);
+//    LinearLayout.LayoutParams LP_MM = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//    layout.setLayoutParams(LP_MM);
+//    return layout;
+//
+//
+//}
 }

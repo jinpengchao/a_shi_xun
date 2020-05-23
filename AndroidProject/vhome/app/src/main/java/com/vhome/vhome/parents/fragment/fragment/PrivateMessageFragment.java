@@ -59,34 +59,7 @@ public class PrivateMessageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_admin_message,null);
-        getViews();
 
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                Bundle b = msg.getData();
-                String data = b.getString("data");
-                Gson gson = new Gson();
-                adminMessageList.clear();
-                adminMessageList = gson.fromJson(data,new TypeToken<List<PostBean>>(){}.getType());;
-
-                adapter = new HotSpotAdapter(getContext(),adminMessageList,R.layout.item_hotspot);
-                lvAdminMessage.setAdapter(adapter);
-
-                lvAdminMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent simple = new Intent();
-                        simple.putExtra("post",adminMessageList.get(i));
-                        simple.putExtra("personId",adminMessageList.get(i).getPersonId());
-                        simple.setClass(getContext(), CommentActivity.class);
-                        startActivity(simple);
-                    }
-                });
-                adapter.notifyDataSetChanged();
-            }
-        };
-//        getdata();
         return view;
     }
 

@@ -73,12 +73,14 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             holder.photoView.setVisibility(View.INVISIBLE);
             holder.gsyVideoPlayer.setVisibility(View.VISIBLE);
             holder.gsyVideoPlayer.setPlayTag(TAG);
+            //点击播放视频
             holder.gsyVideoPlayer.setUpLazy(
                     nineGridItemList.get(position).getVideoUrl(),
                     true,
                     null,
                     null,
                     "");
+//            holder.gsyVideoPlayer.startAfterPrepared();
             // 隐藏title
             holder.gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);
             // 隐藏返回键

@@ -287,11 +287,18 @@ public class UserDao {
 				rs1.close();
 			}
 			psmt.close();
-			util.closeConnection();
+//			util.closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return userInfo;
 	}
@@ -557,11 +564,18 @@ public class UserDao {
 				System.out.println("修改失败");
 			}
 			psmt.close();
-			util.closeConnection();
+//			util.closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public void saveQuestion(String name, String phone,String content,String subject,int status) {
@@ -585,11 +599,18 @@ public class UserDao {
 				System.out.println("发送反馈失败");
 			}
 			psmt.close();
-			util.closeConnection();
+//			util.closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				util.closeConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	public List<NewTicketBody> findAllQuestuins(int status) {
