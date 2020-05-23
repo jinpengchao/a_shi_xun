@@ -53,7 +53,7 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300">
+									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
 								</c:if>
 							</c:forEach>
 						</c:if>
@@ -78,7 +78,7 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300">
+									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
 								</c:if>
 							</c:forEach>
 						</c:if>
@@ -102,7 +102,7 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300">
+									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
 								</c:if>
 							</c:forEach>
 						</c:if>
