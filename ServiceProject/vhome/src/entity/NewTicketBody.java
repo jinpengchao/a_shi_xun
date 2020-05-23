@@ -1,15 +1,30 @@
 package entity;
 
 public class NewTicketBody {
-
+	private int id;
     private String creatorName;
     private String creatorPhone;
-
+    private String registrationId;
     private String content;
     private String subject;
+  
+	public String getRegistrationId() {
+		return registrationId;
+	}
 
+	public void setRegistrationId(String registrationId) {
+		this.registrationId = registrationId;
+	}
 
-    public String getSubject() {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getSubject() {
         return subject;
     }
 

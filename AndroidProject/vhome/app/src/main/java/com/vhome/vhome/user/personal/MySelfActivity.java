@@ -64,6 +64,7 @@ import com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity;
 import com.vhome.vhome.parents.fragment.myself.MyFunsActivity;
 import com.vhome.vhome.user.LoginByCodeActivity;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
+import com.vhome.vhome.user.personal.util.ToastUtil;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
@@ -582,11 +583,11 @@ public class MySelfActivity extends AppCompatActivity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(MySelfActivity.this, "图片上传成功", Toast.LENGTH_SHORT).show();
+                ToastUtil.showImageToas(getApplicationContext(),"背景图片上传成功");
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(MySelfActivity.this, "图片上传失败", Toast.LENGTH_SHORT).show();
+                ToastUtil.showImageToas(getApplicationContext(),"背景图片上传失败");
             }
 
             @Override

@@ -53,10 +53,6 @@ import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 public class MyNewsActivity extends AppCompatActivity {
 
     protected static final String TAG = "MainActivity";
-    // textview for unread message count
-    private TextView unreadAddressLable1;
-    // textview for unread event message
-    private TextView unreadAddressLable2;
     private Button[] mTabs;
     private MessageFragment messageFragment;
     private PrivateMessageFragment adminMessageFragment;
@@ -92,21 +88,21 @@ public class MyNewsActivity extends AppCompatActivity {
 
         initView();
         if (savedInstanceState != null) {
-            messageFragment = (MessageFragment) getSupportFragmentManager().getFragment(savedInstanceState, MessageFragment.class.getSimpleName());
             adminMessageFragment = (PrivateMessageFragment) getSupportFragmentManager().getFragment(savedInstanceState, PrivateMessageFragment.class.getSimpleName());
-            fragments = new Fragment[]{messageFragment, adminMessageFragment};
+            messageFragment = (MessageFragment) getSupportFragmentManager().getFragment(savedInstanceState, MessageFragment.class.getSimpleName());
+            fragments = new Fragment[]{adminMessageFragment,messageFragment};
             getSupportFragmentManager().beginTransaction()
-                    .show(messageFragment)
-                    .hide(adminMessageFragment)
+                    .show(adminMessageFragment)
+                    .hide(messageFragment)
                     .commit();
         } else {
             messageFragment = new MessageFragment();
             adminMessageFragment = new PrivateMessageFragment();
-            fragments = new Fragment[]{messageFragment, adminMessageFragment};
+            fragments = new Fragment[]{adminMessageFragment,messageFragment};
 
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, messageFragment)
-                    .add(R.id.fragment_container, adminMessageFragment).hide(adminMessageFragment)
-                    .show(messageFragment)
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, adminMessageFragment)
+                    .add(R.id.fragment_container, messageFragment).hide(messageFragment)
+                    .show(adminMessageFragment)
                     .commit();
         }
 
@@ -116,10 +112,6 @@ public class MyNewsActivity extends AppCompatActivity {
      * init views
      */
     private void initView() {
-        unreadAddressLable1 = (TextView) findViewById(R.id.unread_address_number);
-        unreadAddressLable2 = (TextView) findViewById(R.id.unread_msggg_number);
-        unreadAddressLable1.setVisibility(View.VISIBLE);
-        unreadAddressLable2.setVisibility(View.VISIBLE);
         mTabs = new Button[2];
         mTabs[0] = (Button) findViewById(R.id.btn_address_list);
         mTabs[1] = (Button) findViewById(R.id.btn_setting);
@@ -154,13 +146,6 @@ public class MyNewsActivity extends AppCompatActivity {
         mTabs[index].setSelected(true);
         currentTabIndex = index;
     }
-
-    public int getUnreadAddressCountTotal() {
-        int unreadAddressCountTotal = 0;
-//        unreadAddressCountTotal = inviteMessgeDao.getUnreadMessagesCount();
-        return unreadAddressCountTotal;
-    }
-
 
 
 

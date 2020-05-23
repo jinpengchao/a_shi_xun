@@ -165,12 +165,14 @@ public class NewLeaveMessageActivity extends BaseActivity implements View.OnClic
     }
     public void sendLeave() {
         //准备数据
+        SharedPreferences sharedPreferences = getSharedPreferences("registrationID",MODE_PRIVATE);
+        String registrationID = sharedPreferences.getString("id","");
         NewTicketBody ticketBody = new NewTicketBody();
         ticketBody.setContent(contentText.getText().toString());
         ticketBody.setSubject(itemTheme.getText().toString());
         ticketBody.setCreatorName(itemName.getText().toString());
         ticketBody.setCreatorPhone(itemPhone.getText().toString());
-
+        ticketBody.setRegistrationId(registrationID);
         Gson gson = new Gson();
         final String data = gson.toJson(ticketBody);
         new Thread(){

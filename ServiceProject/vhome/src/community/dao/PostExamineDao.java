@@ -156,7 +156,7 @@ public class PostExamineDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "select * from tbl_post_copy where personId=?";
+			String sql = "select * from tbl_post_copy where personId=? order by time desc";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, personId);
 			ResultSet rs = ps.executeQuery();

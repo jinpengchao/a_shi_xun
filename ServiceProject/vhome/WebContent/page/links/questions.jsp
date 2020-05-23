@@ -46,12 +46,12 @@
 					
 					<c:if test="${questions_status == 0 }">
 						<td><span style="margin-left: 15px;">
-							<a href="page/links/answer.jsp?currentphone=${questions.creatorPhone}">回复</a>
+							<a href="page/links/answer.jsp?currentphone=${questions.creatorPhone}&currentname=${questions.creatorName}&currentid=${questions.id}&currentregisrationID=${questions.registrationId}">回复</a>
 							<a href="/vhome/IgnoreReport?id=${p.id}">忽略</a></span></td>
 					</c:if>
 					<c:if test="${questions_status == 1 }">
 						<td><span style="margin-left: 15px;">
-							<a href="page/links/answer.jsp">查看回复内容</a></span></td>
+							<a href="/vhome/ShowAnswers?currentid=${questions.id}">查看回复内容</a></span></td>
 					</c:if>
 					
 				</tr>

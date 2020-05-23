@@ -35,6 +35,7 @@
         android:textSize="16sp"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/addPost"
         android:layout_width="50dp"
         android:layout_height="50dp"

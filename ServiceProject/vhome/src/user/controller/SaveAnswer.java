@@ -3,7 +3,9 @@ package user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.NewTicketBody;
+import jpushutil.JpushClientUtil;
 import user.service.UserService;
 
 /**
@@ -32,8 +36,24 @@ public class SaveAnswer extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  		// TODO Auto-generated method stub
-  		response.getWriter().append("Served at: ").append(request.getContextPath());
+    	
+  		request.setCharacterEncoding("utf-8");
+  		response.setContentType("text/text;charset=utf-8");
+  		UserService us = new UserService();
+  	
+		String phone = request.getParameter("phone");
+		String content = request.getParameter("content");
+		String i = request.getParameter("id");
+		String registrationID =  request.getParameter("registrationID");
+		if (JpushClientUtil.sendToRegistrationId(registrationID, "",
+				"微家官方", "您的反馈已被回复，点击查看", "") == 1) {
+			System.out.println("success");
+		}
+		int id = Integer.parseInt(i);
+		us.insertAnsewer(id,phone, content,registrationID);
+		us.insertAdminMessage(id,phone,content);
+		us.changeQuestionsType(id);
+    	
   	}
 
   	/**
@@ -41,16 +61,6 @@ public class SaveAnswer extends HttpServlet {
   	 */
   	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   		doGet(request, response);
-  		request.setCharacterEncoding("utf-8");
-  		response.setContentType("text/text;charset=utf-8");
-  		UserService us = new UserService();
-		String phone = request.getParameter("phone");
-		String content = request.getParameter("content");
-		
-		us.insertAnsewer(phone, content);
-		PrintWriter out = response.getWriter();
-		String data = "ok";
-		out.print(data);
   	}
 
   }

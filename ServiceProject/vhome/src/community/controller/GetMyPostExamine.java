@@ -46,8 +46,7 @@ public class GetMyPostExamine extends HttpServlet {
 		response.setContentType("text/text;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		//接收android端发送的数据personId,查找对应的帖子
-//		String personId=request.getParameter("personId");
-		String personId="491602";
+		String personId=request.getParameter("personId");
 		List<PostExamineBean> list=(new PostService()).findAll(personId);
 		
 		//		获取当前人的所有收藏表
@@ -90,7 +89,6 @@ public class GetMyPostExamine extends HttpServlet {
 		String data = null;
 		//发送对应personId所有待审核、已审核、审核失败帖子数据
 		data = gson.toJson(list);
-		out.print(data);
 		out.write(data);
 		out.flush();
 		out.close();

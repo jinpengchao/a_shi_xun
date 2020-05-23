@@ -27,6 +27,7 @@ import com.vhome.vhome.MyApp;
 import com.vhome.vhome.user.personal.util.DialogChangesex;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
 import com.vhome.vhome.user.personal.util.JsonUtil;
+import com.vhome.vhome.user.personal.util.ToastUtil;
 import com.vhome.vhome.user.personal.util.Utils;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
@@ -119,7 +120,6 @@ public class PersonalEdit extends Activity {
                 editor.commit();
                 changeInfo(address,"area",0);
                 onResume();
-                Toast.makeText(PersonalEdit.this,"地区修改成功~",Toast.LENGTH_LONG);
             }
         });
 
@@ -237,6 +237,7 @@ public class PersonalEdit extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
+                ToastUtil.showImageToas(getApplicationContext(),"个人资料已更新");
             }
         });
         rl_nickName.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +263,6 @@ public class PersonalEdit extends Activity {
                         editor.commit();
                         changeInfo("male","sex",0);
                         onResume();
-                        Toast.makeText(PersonalEdit.this,"修改成功~",Toast.LENGTH_LONG);
                     }
 
                     @Override
@@ -274,7 +274,6 @@ public class PersonalEdit extends Activity {
                         editor.commit();
                         changeInfo("female","sex",0);
                         onResume();
-                        Toast.makeText(PersonalEdit.this,"修改成功~",Toast.LENGTH_LONG);
                     }
 
                     @Override
@@ -418,11 +417,11 @@ public class PersonalEdit extends Activity {
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Toast.makeText(PersonalEdit.this, "头像上传成功", Toast.LENGTH_SHORT).show();
+                ToastUtil.showImageToas(getApplicationContext(),"头像上传成功");
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(PersonalEdit.this, "头像上传失败", Toast.LENGTH_SHORT).show();
+                ToastUtil.showImageToas(getApplicationContext(),"头像上传失败");
             }
 
             @Override
@@ -542,7 +541,6 @@ public class PersonalEdit extends Activity {
                 editor.commit();
                 changeInfo(newBirth,"birthday",0);
                 onResume();
-                Toast.makeText(PersonalEdit.this,"生日修改成功~",Toast.LENGTH_LONG);
             }
 
             @Override

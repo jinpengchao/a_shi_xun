@@ -336,7 +336,7 @@ public class MyPostFragment extends Fragment {
             public void run() {
                 String ip = (new MyApp()).getIp();
                 try {
-                    URL url = new URL("http://"+ip+":8080/vhome/GetMyPostServlet?personId="+personId);
+                    URL url = new URL("http://"+ip+":8080/vhome/GetMyPostExamine?personId="+personId);
                     ConnectionUtil util = new ConnectionUtil();
                     String data = util.getData(url);
                     util.sendMsg(data,POST_STATUS,handler);

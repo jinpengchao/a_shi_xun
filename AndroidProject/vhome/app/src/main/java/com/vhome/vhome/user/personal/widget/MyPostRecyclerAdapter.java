@@ -153,7 +153,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         holder.tvHotTime.setText(now);
         //加载说说图片
         String imgs = null;
-        imgs = list.get(i).getImgs();
+        imgs = "[\""+list.get(i).getImgs()+"\"]";
         Gson gson = new Gson();
         ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
@@ -209,6 +209,12 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
                 }
             }
         });
+        if("已审核".equals(list.get(i).getExamine())){
+            holder.ivExam.setImageResource(R.drawable.examsuccess);
+        }else if("审核失败".equals(list.get(i).getExamine())){
+            holder.ivExam.setImageResource(R.drawable.examfailed);
+        }else
+            holder.ivExam.setImageResource(R.drawable.examing);
     }
 
     @Override
@@ -244,6 +250,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         RelativeLayout rlPostSave;
         RelativeLayout rlPostComment;
         RelativeLayout rlPostLike;
+        ImageView ivExam;
         public MyViewHolder(View view) {
             super(view);
             ivHotPerson = view.findViewById(R.id.iv_hot_person);
@@ -258,6 +265,7 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
             rlPostSave = view.findViewById(R.id.rl_post_save);
             rlPostComment = view.findViewById(R.id.rl_post_comment);
             rlPostLike = view.findViewById(R.id.rl_post_like);
+            ivExam = view.findViewById(R.id.exam);
         }
     }
     public static Bitmap returnBitMap(String url) throws IOException {

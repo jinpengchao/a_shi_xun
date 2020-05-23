@@ -333,7 +333,7 @@ public class CommentActivity extends Activity {
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         tvHotTime.setText(now);
         //显示图片
-        String imgsData = post.getImgs();
+        String imgsData = "[\""+post.getImgs()+"\"]";
         imgs = gson.fromJson(imgsData,new TypeToken<List<String>>(){}.getType());
         showPostImgAdapter = new ShowPostImgAdapter(imgs,CommentActivity.this);
         gvPostShow.setAdapter(showPostImgAdapter);

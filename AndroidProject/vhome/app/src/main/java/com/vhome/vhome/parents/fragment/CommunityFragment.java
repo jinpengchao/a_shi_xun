@@ -2,10 +2,13 @@ package com.vhome.vhome.parents.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -38,11 +41,12 @@ import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.dummy.TabEntity;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends Fragment{
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private CommonTabLayout mTablayout;
     private NoScrollViewPager mViewPager;
+    private ImageView addPost;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +67,14 @@ public class CommunityFragment extends Fragment {
         mViewPager.setAdapter(myFragmentPagerAdapter);
     }
     public void initListener(){
+        addPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intenet  = new Intent();
+                intenet.setClass(getActivity(), NewPostActivity.class);
+                startActivity(intenet);
+            }
+        });
         mTablayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
@@ -94,6 +106,7 @@ public class CommunityFragment extends Fragment {
     public void initId(View view){
         mTablayout = (CommonTabLayout) view.findViewById(R.id.uc_tablayout);
         mViewPager = (NoScrollViewPager) view.findViewById(R.id.uc_viewpager);
+        addPost = view.findViewById(R.id.add_spot);
     }
     public String[] getNames() {
         String[] mNames = new String[]{"热闹事", "收音机", "关注"};
@@ -110,5 +123,6 @@ public class CommunityFragment extends Fragment {
         fragments.add(new AttentionFragment());
         return fragments;
     }
+
 
 }

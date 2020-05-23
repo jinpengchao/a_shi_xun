@@ -47,17 +47,17 @@ import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
+import com.vhome.vhome.user.entity.AdminMessage;
 import com.vhome.vhome.user.personal.MySelfActivity;
 import com.vhome.vhome.user.personal.OthersSerlfActivity;
 import com.vhome.vhome.user.personal.widget.CircleImageView;
 
 public class AdminMessageAdapter extends BaseAdapter {
-    private List<PostBean> list;
+    private List<AdminMessage> list;
     private int itemLayoutId;
     private Context context;
-    private ArrayList<String> imgsList;
 
-    public AdminMessageAdapter(Context context, List<PostBean> list, int itemLayoutId) {
+    public AdminMessageAdapter(Context context, List<AdminMessage> list, int itemLayoutId) {
         this.context = context;
         this.list = list;
         this.itemLayoutId = itemLayoutId;
@@ -86,31 +86,23 @@ public class AdminMessageAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(itemLayoutId, null);
             holder = new ViewHolder();
-            holder.ivHotPerson = view.findViewById(R.id.iv_hot_person);
-            holder.tvHotName = view.findViewById(R.id.tv_hot_name);
-            holder.tvHotContent = view.findViewById(R.id.tv_hot_content);
-            holder.unreadPoint = view.findViewById(R.id.unread_msg_number);
+            holder.content = view.findViewById(R.id.tv_hot_content);
+            holder.unread = view.findViewById(R.id.unread_msg_number);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.tvHotName.setText(list.get(i).getNickName());
-        holder.tvHotContent.setText(list.get(i).getPostContent());
-        String time = list.get(i).getTime();
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        holder.content.setText(list.get(i).getContent());
+        if(list.get(i).getReadable()==0){
+            holder.unread.setVisibility(View.VISIBLE);
+        }else
+            holder.unread.setVisibility(View.INVISIBLE);
         return view;
 
     }
 
     private class ViewHolder {
-        CircleImageView ivHotPerson;
-        TextView tvHotName;
-        TextView tvHotContent;
-        TextView unreadPoint;
+        TextView content;
+        TextView unread;
     }
 }

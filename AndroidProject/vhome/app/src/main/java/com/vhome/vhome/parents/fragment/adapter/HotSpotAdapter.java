@@ -166,7 +166,8 @@ public class HotSpotAdapter extends BaseAdapter {
         holder.tvHotTime.setText(now);
         //加载说说图片
         String imgs = null;
-        imgs = list.get(i).getImgs();
+        imgs = "[\""+list.get(i).getImgs()+"\"]";
+
         Gson gson = new Gson();
         imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());

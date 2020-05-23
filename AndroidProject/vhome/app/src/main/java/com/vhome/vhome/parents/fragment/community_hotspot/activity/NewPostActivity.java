@@ -25,6 +25,7 @@ import com.vhome.vhome.parents.fragment.community_hotspot.FullyGridLayoutManager
 import com.vhome.vhome.parents.fragment.community_hotspot.GlideEngine;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostExamineBean;
+import com.vhome.vhome.user.personal.util.ToastUtil;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.Manifest;
@@ -489,7 +490,7 @@ public class NewPostActivity extends Activity {
                         int i = saveMyPost();
                         if (i==1){
                             finish();
-                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
+                            ToastUtil.showImageToas(getApplicationContext(),"发表成功，正在审核！");
                         }
                     }else {
                         saveMyPost();

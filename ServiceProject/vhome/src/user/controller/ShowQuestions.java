@@ -51,21 +51,6 @@ public class ShowQuestions extends HttpServlet {
 		questionsList=u.selectQuestions(status);
 		request.setAttribute("all_questions", questionsList);
 		request.setAttribute("questions_status", status);
-//		//转化为JSON传
-//		JSONArray array = new JSONArray();
-//		for(int i =0;i<questionsList.size();i++) {
-//			JSONObject jsonObject=new JSONObject();
-//			jsonObject.put("name",questionsList.get(i).getCreatorName());
-//			jsonObject.put("phone",questionsList.get(i).getCreatorPhone());
-//			jsonObject.put("subject",questionsList.get(i).getSubject());
-//			jsonObject.put("content",questionsList.get(i).getContent());
-//			array.add(jsonObject); 
-//		}
-//		File file = new File(this.getServletContext().getRealPath("/")+"json\\linksList.json");
-//		System.out.println(this.getServletContext().getRealPath("/")+"json\\linksList.json");
-//        PrintStream ps = new PrintStream(new FileOutputStream(file));
-//        ps.println(array.toString());// 往文件里写入字符串
-//        ps.close();
 		request.getRequestDispatcher("/page/links/questions.jsp").forward(request,response); 
 	}
 

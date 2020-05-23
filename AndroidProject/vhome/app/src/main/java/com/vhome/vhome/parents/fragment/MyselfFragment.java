@@ -108,7 +108,7 @@ public class MyselfFragment extends BaseFragment {
         toKefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = "kefuzhanghao";
+                String username = "kefuxw";
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
                 else {

@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9f9f9">
+    android:background="#efefef">
     <RelativeLayout
         android:id="@+id/title_head"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="#171a21"
+        android:layout_margin="@dimen/adaptive_10dp"
+
+        android:background="@drawable/my_head_bg"
         android:layout_height="115dp">
         <ImageView android:id="@+id/iv_blur"
             android:layout_width="match_parent"
@@ -96,8 +98,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:background="#ffffff"
+                android:background="@drawable/my_middle_bg"
                 android:orientation="horizontal"
+                android:layout_margin="@dimen/adaptive_10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <RelativeLayout
@@ -215,6 +218,8 @@
             <LinearLayout
                 android:layout_marginTop="@dimen/adaptive_15dp"
                 android:orientation="vertical"
+                android:layout_margin="@dimen/adaptive_10dp"
+                android:background="@drawable/my_middle_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <RelativeLayout
@@ -251,6 +256,7 @@
                         android:layout_centerVertical="true"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginBottom="10dp">
                     </ImageView>
                 </RelativeLayout>
@@ -289,6 +295,7 @@
                         android:layout_centerVertical="true"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginBottom="10dp">
                     </ImageView>
                 </RelativeLayout>
@@ -326,6 +333,7 @@
                         android:layout_centerVertical="true"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_marginRight="8dp"
                         android:layout_marginBottom="10dp">
                     </ImageView>
                 </RelativeLayout>
@@ -363,7 +371,8 @@
                         android:layout_centerVertical="true"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="8dp">
                     </ImageView>
                 </RelativeLayout>
             </LinearLayout>

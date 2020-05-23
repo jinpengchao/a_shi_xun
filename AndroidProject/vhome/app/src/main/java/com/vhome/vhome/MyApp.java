@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.multidex.MultiDex;
+import cn.jpush.android.api.JPushInterface;
 
 import com.vhome.vhome.parents.TrackUtil.CommonUtil;
 import com.vhome.vhome.parents.TrackUtil.NetUtil;
@@ -68,7 +69,7 @@ public class MyApp extends Application {
 
     // 39.96.24.133
 	//别tm有空格
-    private String ip = "192.168.31.142";
+    private String ip = "192.168.0.102";
     private String pathInfo = "parentUserInfo";
 
     private static Handler sHandler=null;
@@ -127,6 +128,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         //鹰眼轨迹初始化
         mContext = getApplicationContext();
 //        entityName = CommonUtil.getImei(this);
@@ -163,6 +165,13 @@ public class MyApp extends Application {
         });
 
         clearTraceStatus();
+        //连接JPush
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("registrationID",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("id",JPushInterface.getRegistrationID(this));
+        editor.commit();
         //连接环信
         MultiDex.install(this);
         super.onCreate();

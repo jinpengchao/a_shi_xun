@@ -40,7 +40,7 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/exam"
-            android:src="@drawable/examsuccess"
+            android:src="@drawable/examing"
             android:layout_alignParentEnd="true"
             android:layout_width="80dp"
             android:visibility="visible"

@@ -4,10 +4,18 @@ public class NewTicketBody {
 
     private String creatorName;
     private String creatorPhone;
-
+    private String registrationId;
     private String content;
     private String subject;
 
+
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
+    }
 
     public String getSubject() {
         return subject;

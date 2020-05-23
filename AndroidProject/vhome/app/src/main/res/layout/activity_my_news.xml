@@ -4,14 +4,16 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg" >
+    android:background="#efefef" >
 
     <LinearLayout
         android:id="@+id/main_bottom"
+        android:layout_marginLeft="@dimen/adaptive_50dp"
+        android:layout_marginRight="@dimen/adaptive_50dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/adaptive_50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/bottom_bar_normal_bg"
+        android:background="#efefef"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         tools:ignore="DisableBaselineAlignment">
@@ -24,16 +26,13 @@
             <Button
                 android:id="@+id/btn_address_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/adaptive_50dp"
                 android:layout_alignEnd="@+id/unread_clock_number"
-                android:layout_marginEnd="-9dp"
-                android:background="@drawable/em_main_bottom_item_bg"
+                android:background="@drawable/em_main_bottom_item_bg2"
                 android:gravity="center"
                 android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="帖子消息"
+                android:text="官方邮件"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="@dimen/adaptive_20dp" />
             <TextView
@@ -57,24 +56,24 @@
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/adaptive_50dp"
                 android:background="@drawable/em_main_bottom_item_bg"
                 android:onClick="onTabClicked"
                 android:paddingBottom="2dip"
                 android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="官方邮件"
+                android:text="帖子消息"
                 android:gravity="center"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="@dimen/adaptive_20dp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/unread_msggg_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/em_unread_dot"
+                android:src="@drawable/em_unread_dot"
                 android:textColor="#ffffff"
                 android:visibility="visible" />
         </RelativeLayout>

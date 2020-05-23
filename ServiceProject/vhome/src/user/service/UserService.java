@@ -4,6 +4,7 @@ import entity.User;
 
 import java.util.List;
 
+import entity.AdminMessage;
 import entity.NewTicketBody;
 import entity.ParentUserInfo;
 import entity.SendPerson;
@@ -46,13 +47,21 @@ public class UserService {
 		userDao.addUserInfo(phone, id, nikeName, sex, area, headerImg, type);
 	}
 	
-	public void insertQuestions(String name, String phone,String content,String subject,int status) {
+	public void insertQuestions(String name, String phone,String registationID,String content,String subject,int status) {
 		UserDao userDao = new UserDao();
-		userDao.saveQuestion(name, phone,content,subject,status);
+		userDao.saveQuestion(name, phone,registationID,content,subject,status);
 	}
-	public void insertAnsewer(String phone, String content) {
+	public void insertAnsewer(int id,String phone, String content,String registrationID) {
 		UserDao userDao = new UserDao();
-		userDao.saveAnswers(phone,content);
+		userDao.saveAnswers(id,phone,content,registrationID);
+	}
+	public void insertAdminMessage(int id,String phone,String content) {
+		UserDao userDao = new UserDao();
+		userDao.saveMessage(id,phone,content);
+	}
+	public void changeQuestionsType(int id) {
+		UserDao userDao = new UserDao();
+		userDao.updateQuestions(id);
 	}
 	public List<NewTicketBody> selectQuestions(int status) {
 		UserDao userDao = new UserDao();
@@ -105,6 +114,18 @@ public class UserService {
 	public void changeRelations(String phone,String send_phone,String type) {
 		UserDao userDao = new UserDao();
 		userDao.updateRelations(phone,send_phone,type);
+	}
+	public List<AdminMessage> findAllAdminMessage(String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.selectAllAdminMessage(phone);
+	}
+	public void changeAdminMessageReadable(int id) {
+		UserDao userDao = new UserDao();
+		userDao.updateReadable(id);
+	}
+	public String selectContentAndroidandHTML(String postId) {
+		UserDao userDao = new UserDao();
+		return userDao.getContentAndroidandHTML(postId);
 	}
 	public void findParentInfo() {
 		//to do 查找父母信息

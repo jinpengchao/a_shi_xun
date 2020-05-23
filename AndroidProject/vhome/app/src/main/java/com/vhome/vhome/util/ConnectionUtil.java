@@ -95,5 +95,4 @@ public class ConnectionUtil {
         msg.what = tag;
         handler.sendMessage(msg);
     }
-
 }

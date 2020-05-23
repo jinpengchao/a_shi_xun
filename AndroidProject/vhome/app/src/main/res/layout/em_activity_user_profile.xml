@@ -142,7 +142,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/attention_add_shape"
             android:padding="7dp"
-            android:text="+关注"
+            android:text="申请添加关联"
             android:textColor="#ffffff"
             android:visibility="visible"
             tools:visibility="visible" />

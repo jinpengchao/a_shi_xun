@@ -23,13 +23,16 @@
 </head>
 <body class="childrenBody">
 	<form action="/vhome/SaveAnswer" method="post">
-        <h2>您正在回复用户：${param.currentphone }</h2>
-		<input type="hidden" id="phone" name="phone" value="${param.currentphone }">
-	
+		<h2>您正在回复用户：${param.currentname }，联系电话：${param.currentphone }</h2>
+		<input type="hidden" id="phone" name="phone"
+			value="${param.currentphone }"> <input type="hidden" id="id"
+			name="id" value="${param.currentid }"> <input type="hidden"
+			id="status" name="status" value="0"><input type="hidden"
+			id="registrationID" name="registrationID" value="${param.currentregisrationID }">
 		<textarea id="content" name="content" placeholder="输入内容以回复用户"
 			rows="20" cols="100"></textarea>
 		<input type="submit" value="发送">
-		<a href="javascript:history.go(-1)">返回</a>
+		<input type="button" onclick="javascript:history.back(-1);" value="返回">
 	</form>
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>

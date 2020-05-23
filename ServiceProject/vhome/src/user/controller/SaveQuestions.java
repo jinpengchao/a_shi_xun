@@ -59,9 +59,10 @@ public class SaveQuestions extends HttpServlet {
 			String phone = json.getString("creatorPhone");
 			String content = json.getString("content");
 			String subject = json.getString("subject");
+			String registationID = json.getString("registrationId");
 			int status = 0;
 			UserService userService = new UserService();
-			userService.insertQuestions(name, phone,content,subject,status);
+			userService.insertQuestions(name, phone,registationID,content,subject,status);
 			out.write("ojbk");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
