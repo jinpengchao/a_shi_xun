@@ -41,18 +41,6 @@
 			</a>
 		</div>
 		<div class="panel col max_panel">
-			<a href="javascript:;" data-url="page/news/newsList.jsp">
-				<div class="panel_icon" style="background-color:#2F4056;">
-					<i class="iconfont icon-text" data-icon="icon-text"></i>
-				</div>
-				<div class="panel_word allNews">
-					<span></span>
-					<em>帖子总数</em>
-					<cite>帖子列表</cite>
-				</div>
-			</a>
-		</div>
-		<div class="panel col max_panel">
 			<a href="javascript:;" data-url="/vhome/PostReport">
 				<div class="panel_icon" style="background-color:#FF4040;">
 					<i class="iconfont icon-text" data-icon="icon-text"></i>

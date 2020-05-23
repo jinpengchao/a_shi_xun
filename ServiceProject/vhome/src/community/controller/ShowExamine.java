@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,42 @@ public class ShowExamine extends HttpServlet {
 		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
 		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
 		out.print(postBeans2.get(0).getImgs());
+		
+		for(PostExamineBean post:postBeans1) {
+			String dateString=post.getImgs();
+			String dataString2="";
+			//生成图片字符串,插进数据库时删除[""]
+			for(int i=0;i<dateString.length();i++) {
+				if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
+					dataString2+=dateString.charAt(i);
+				}
+			}
+    		post.setImgs(dataString2);
+		}
+		for(PostExamineBean post:postBeans2) {
+			String dateString=post.getImgs();
+			String dataString2="";
+			//生成图片字符串,插进数据库时删除[""]
+			for(int i=0;i<dateString.length();i++) {
+				if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
+					dataString2+=dateString.charAt(i);
+				}
+			}
+    		post.setImgs(dataString2);
+		} 
+		for(PostExamineBean post:postBeans3) {
+			String dateString=post.getImgs();
+			String dataString2="";
+			//生成图片字符串,插进数据库时删除[""]
+			for(int i=0;i<dateString.length();i++) {
+				if(!String.valueOf(dateString.charAt(i)).equals("\"")&&!String.valueOf(dateString.charAt(i)).equals("[")&&!String.valueOf(dateString.charAt(i)).equals("]")) {
+					dataString2+=dateString.charAt(i);
+				}
+			}
+    		post.setImgs(dataString2);
+		}
+		
+		
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(PostExamineBean p:postBeans1) {
