@@ -68,7 +68,7 @@ public class PrivateMessageFragment extends Fragment implements AbsListView.OnSc
     private SharedPreferences.Editor editor;
     private Gson gson = new Gson();
     private int loadNum = 0;
-    private String content="啊哦~数据走丢了";
+    private String content="啊哦~数据走丢了o(╥﹏╥)o";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

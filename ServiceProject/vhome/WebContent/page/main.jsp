@@ -51,6 +51,17 @@
 				</div>
 			</a>
 		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="https://kefu.easemob.com/mo/agent/webapp/chat">
+				<div class="panel_icon" style="background-color:#9c9c9;">
+					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
+				</div>
+				<div class="panel_word userAll">
+					<span></span>
+					<cite>客服系统</cite>
+				</div>
+			</a>
+		</div>
 	</div>
 	<blockquote class="layui-elem-quote explain">
 		<p>本模板基于Layui实现，支持除LayIM外所有的Layui组件。<a href="http://layim.layui.com/" target="_blank" class="layui-btn layui-btn-mini">前往获取LayIM授权</a><a href="https://git.oschina.net/layuicms/layuicms" target="_blank" class="layui-btn layui-btn-mini layui-btn-danger">码云下载</a><a href="https://github.com/BrotherMa/layuiCMS" target="_blank" class="layui-btn layui-btn-mini layui-btn-danger">GitHub下载</a>　<span style="color:#1E9FFF;">郑重提示：网站所有数据均为静态数据，无数据库，除打开的窗口和部分小改动外所有操作刷新后无效，关闭窗口或清除缓存后，所有操作无效，请知悉</span></p>
@@ -60,23 +71,51 @@
 		<div class="sysNotice col">
 			<blockquote class="layui-elem-quote title">更新日志</blockquote>
 			<div class="layui-elem-quote layui-quote-nm">
-				<h3># v1.0.1（优化） - 2017-06-25</h3>
-				<p>* 修改刚进入页面无任何操作时按回车键提示“请输入解锁密码！”</p>
-				<p>* 优化关闭弹窗按钮的提示信息位置问题【可能是因为加载速度的原因，造成这个问题，所以将提示信息做了一个延时】</p>
-				<p>* “个人资料”提供修改功能</p>
-				<p>* 顶部天气信息自动判断位置【忘记之前是怎么想的做成北京的了，可能是我在大首都吧，哈哈。。。】</p>
-				<p>* 优化“用户列表”无法查询到新添加的用户【竟然是因为我把key值写错了，该死。。。】</p>
-				<p>* 将左侧菜单做成json方式调用，而不是js调用，方便开发使用。同时添加了参数配置和非窗口模式打开的判断，【如登录页面】</p>
-				<p>* 优化部分页面样式问题</p>
-				<p>* 优化添加窗时如果导航不存在图标无法添加成功</p>
+				<p style="color:#f00;"># v1.0.0 - 2020-05-25</p>
+				<p>* 姬文斌-完成用户全局搜索的功能</p>
 				<br />
-				<p># v1.0.1（新增） - 2017-07-05</p>
-				<p>* 增加“用户列表”批量删除功能【可能当时忘记添加了吧。。。】</p>
-				<p style="color:#f00;">* 顶部窗口导航添加“关闭其他”、“关闭全部”功能，同时修改菜单窗口过多的展示效果【在此感谢larryCMS给予的启发】</p>
-				<p>* 添加可隐藏左侧菜单功能【之前考虑没必要添加，但是很多朋友要求加上，那就加上吧，嘿嘿。。。】</p>
-				<p>* 增加换肤功能【之前就想添加的，但是一直没有找到好的方式（好吧，其实是我忘记了），此方法相对简单，不是普遍适用，只简单的做个功能，如果实际用到建议单独写一套样式，将边框颜色、按钮颜色等统一调整，此处为保证代码的简洁性，只做简单的功能，不做赘述，另外“自定义”颜色中未做校验，所以要写入正确的色值。如“#f00”】</p>
-				<p style="color:#f00;">* 增加登录页面【背景视频仅作样式参考，实际使用中请自行更换为其他视频或图片，否则造成的任何问题使用者本人承担。】</p>
-				<p>* 新增打开窗口的动画效果</p>
+				<p style="color:#f00;"># v1.0.0 - 2020-05-24</p>
+				<p>* 章鹏-网页上帖子审核的功能完全实现完毕</p>
+				<p>* 靳朋朝-实现了帖子审核消息的安卓端与后台的交互</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-22</p>
+				<p>* 章鹏-在安卓端能够上传视频之后，开始研究网页显示视频的问题</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-21</p>
+				<p>* 姬文斌-开始编写用户搜索页面</p>
+				<p>* 章鹏-接收帖子举报模块完成</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-20</p>
+				<p>* 姬文斌-开始编写用户搜索页面</p>
+				<p>* 章鹏-在安卓端能够上传视频之后，开始研究网页显示视频的问题</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-19</p>
+				<p>* 靳朋朝-后台完成回复和处理用户发来的反馈的功能，并添加了JPush工具类，实现为用户发送一条处理情况通知</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-17</p>
+				<p>* 章鹏-开始编写接收帖子举报消息模块</p>
+				<p>* 靳朋朝-开始添加后台接收用户反馈消息的模块</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-16</p>
+				<p>* 章鹏-完成Debug安卓端发送数据和后台获取数据的不一致导致的数据冲突问题</p>
+				<p>* 姬文斌-开始编写用户搜索页面</p>
+				<p>* 靳朋朝-添加了管理员进入后台的账号功能（含登录注册）</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-13</p>
+				<p>* 章鹏-完成帖子内容在后台显示</p>
+				<p>* 姬文斌-完成用户信息分页功能</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0 - 2020-05-12</p>
+				<p>* 姬文斌-完成在后台显示全部用户信息</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0（编码后台） - 2020-05-11</p>
+				<p>* 姬文斌-修改html文件为jsp文件，使之成为可运行的java-web程序</p>
+				<p>* 章鹏-开始添加帖子审核模块</p>
+				<p>* 姬文斌-开始添加用户管理模块</p>
+				<br />
+				<p style="color:#f00;"># v1.0.0（创建后台） - 2020-05-10</p>
+				<p>* 姬文斌-创建后台页面</p>
+				<p>* 姬文斌-更改后台参数</p>
 			</div>
 		</div>
 		<div class="sysNotice col">
@@ -89,15 +128,15 @@
 				<tbody>
 					<tr>
 						<td>当前版本</td>
-						<td class="version"></td>
+						<td>v1.0.0</td>
 					</tr>
 					<tr>
-						<td>开发作者</td>
-						<td class="author"></td>
+						<td>管理团队全称</td>
+						<td>微家-借光读书小组</td>
 					</tr>
 					<tr>
 						<td>网站首页</td>
-						<td class="homePage"></td>
+						<td>mainPage.jsp</td>
 					</tr>
 					<tr>
 						<td>服务器环境</td>
@@ -105,11 +144,11 @@
 					</tr>
 					<tr>
 						<td>数据库版本</td>
-						<td class="dataBase"></td>
+						<td>10.0.10</td>
 					</tr>
 					<tr>
 						<td>最大上传限制</td>
-						<td class="maxUpload"></td>
+						<td>20M</td>
 					</tr>
 					<tr>
 						<td>当前用户权限</td>
@@ -117,14 +156,6 @@
 					</tr>
 				</tbody>
 			</table>
-			<blockquote class="layui-elem-quote title">最新文章<i class="iconfont icon-new1"></i></blockquote>
-			<table class="layui-table" lay-skin="line">
-				<colgroup>
-					<col>
-					<col width="110">
-				</colgroup>
-				<tbody class="hot_news"></tbody>
-			</table> 
 		</div>
 	</div>
 

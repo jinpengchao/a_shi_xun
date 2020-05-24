@@ -813,7 +813,7 @@ public class UserDao {
 			String sql = "select * from tbl_answers where postId=?";
 			psmt = conn.prepareStatement(sql);
 			int idss = Integer.parseInt(postId);
-			int id = -idss;
+			int id = idss;
 			psmt.setInt(1, id);
 			ResultSet rs = psmt.executeQuery();
 			if(rs.next()) {
