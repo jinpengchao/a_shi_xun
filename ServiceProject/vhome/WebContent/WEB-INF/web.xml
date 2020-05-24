@@ -19,7 +19,7 @@
    <!-- 自定义404页面 -->
   <error-page> 
   <error-code>404</error-code> 
-  <location>/NotFound.jsp</location> 
+  <location>/404.jsp</location> 
   </error-page> 
   <!-- servlet资源访问设置默认处理 -->
   <servlet-mapping>
@@ -31,5 +31,9 @@
     <url-pattern>*.json</url-pattern>
     <url-pattern>*.jpg</url-pattern>
     <url-pattern>*.ico</url-pattern>
+    <!-- 添加对woff和ttf的支持 -->
+	<url-pattern>*.woff</url-pattern>
+	<url-pattern>*.ttf</url-pattern>
+    
   </servlet-mapping>
 </web-app>

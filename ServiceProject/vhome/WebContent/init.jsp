@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="${ctx}/js/jquery.min.js"></script>
+
+</head>
+<body>
 <script type="text/javascript">  
 			(function(){
 				$.ajax({  
@@ -15,13 +18,11 @@
             		type:"POST",
             		success:function(e){
             			if(e){
-            			window.location="${ctx}/mainPage.jsp"
+            			window.location="page/login/login.jsp"
             			}
             		}
             	});
 			})();
 </script>
-</head>
-<body>
 </body>
 </html>

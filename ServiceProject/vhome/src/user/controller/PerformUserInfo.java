@@ -53,7 +53,7 @@ public class PerformUserInfo extends HttpServlet {
 		pf.setId(request.getParameter("userId"));
 		pf.setArea(request.getParameter("userArea"));
 		pf.setHeaderImg(request.getParameter("userImg"));
-		pf.setImei(Integer.valueOf(request.getParameter("userImei")));
+		pf.setImei(request.getParameter("userImei"));
 		pf.setNikeName(request.getParameter("userNick"));
 		pf.setPersonalWord(request.getParameter("userWord"));
 		pf.setPhone(request.getParameter("userPhone"));

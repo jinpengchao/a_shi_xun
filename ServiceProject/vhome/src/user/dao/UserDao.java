@@ -259,7 +259,6 @@ public class UserDao {
 					userInfo.setNikeName(rs.getString("nickName"));
 					userInfo.setSex(rs.getString("sex"));
 					userInfo.setArea(rs.getString("area"));
-					userInfo.setAcieve(rs.getString("achieve"));
 					userInfo.setBirthday(rs.getString("birthday"));
 					userInfo.setPersonalWord(rs.getString("personalWord"));
 					userInfo.setHeaderImg(rs.getString("headimg"));
@@ -849,10 +848,10 @@ public class UserDao {
 				parent.setNikeName(rs.getString(3));
 				parent.setSex(rs.getString(4));
 				parent.setArea(rs.getString(5));
-				parent.setImei(rs.getInt(6));
-				parent.setPersonalWord(rs.getString(8));
-				parent.setStatus(rs.getString(7));
-				parent.setHeaderImg(rs.getString(9));
+				parent.setImei(rs.getString(7));
+				parent.setStatus(rs.getString(8));
+				parent.setPersonalWord(rs.getString(9));
+				parent.setHeaderImg(rs.getString(10));
 				list.add(parent);
 			}
 			psmt.close();
@@ -926,7 +925,7 @@ public class UserDao {
 			psmt.setString(2,pf.getNikeName());
 			psmt.setString(3,pf.getSex());
 			psmt.setString(4,pf.getArea());
-			psmt.setInt(5, pf.getImei());
+			psmt.setString(5, pf.getImei());
 			psmt.setString(6, pf.getStatus());
 			psmt.setString(7, pf.getPersonalWord());
 			psmt.setString(8,pf.getHeaderImg());
@@ -962,7 +961,7 @@ public class UserDao {
 				parent.setPersonalWord(rs.getString(3));
 				parent.setHeaderImg(rs.getString(4));
 				parent.setStatus(rs.getString(5));
-				parent.setCloseDays(rs.getLong(6));
+				parent.setCloseDays(rs.getInt(6));
 				list.add(parent);
 			}
 			psmt.close();

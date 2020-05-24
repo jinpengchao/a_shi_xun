@@ -139,10 +139,10 @@ public class UserService {
 		return userDao.getSum(tbl_name);
 	}
 	
-	public void findChildrenInfo(String id) {
-		UserDao userDao = new UserDao();
-		userDao.findChildUserInfo(id);
-	}
+//	public List<ParentUserInfo> findChildrenInfo() {
+//		UserDao userDao = new UserDao();
+//		userDao.findChildUserInfo(id);
+//	}
 	
 	public void delParentUserInfo(String id) {
 		UserDao userDao = new UserDao();

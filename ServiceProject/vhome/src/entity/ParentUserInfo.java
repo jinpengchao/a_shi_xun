@@ -8,11 +8,34 @@ public class ParentUserInfo {
 	private String area;
 	private String birthday;
 	private String acieve;
+	private String imei;
+	private String status;
 	private String personalWord;
 	private String headerImg;
 	private int type;
+	private int closeDays;
 	
 	
+	
+	
+	public int getCloseDays() {
+		return closeDays;
+	}
+	public void setCloseDays(int closeDays) {
+		this.closeDays = closeDays;
+	}
+	public String getImei() {
+		return imei;
+	}
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getBirthday() {
 		return birthday;
 	}
@@ -76,7 +99,9 @@ public class ParentUserInfo {
 	@Override
 	public String toString() {
 		return "ParentUserInfo [phone=" + phone + ", id=" + id + ", nikeName=" + nikeName + ", sex=" + sex + ", area="
-				+ area + ", acieve=" + acieve + ", personalWord=" + personalWord + ", headerImg=" + headerImg
-				+ ", type=" + type + "]";
+				+ area + ", birthday=" + birthday + ", acieve=" + acieve + ", imei=" + imei + ", status=" + status
+				+ ", personalWord=" + personalWord + ", headerImg=" + headerImg + ", type=" + type + ", closeDays="
+				+ closeDays + "]";
 	}
+	
 }

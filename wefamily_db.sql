@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-05-24 20:18:36
+Date: 2020-05-24 23:24:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -445,6 +445,26 @@ CREATE TABLE `tbl_news` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `tbl_parentuser_reported`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_parentuser_reported`;
+CREATE TABLE `tbl_parentuser_reported` (
+  ` phone` varchar(11) NOT NULL,
+  `nickName` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `personalWord` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
+  `headerImg` varchar(1024) DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
+  `closeDays` int(10) DEFAULT NULL,
+  PRIMARY KEY (` phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tbl_parentuser_reported
+-- ----------------------------
+INSERT INTO `tbl_parentuser_reported` VALUES ('110', 'dnmd', 'ok', 'xxx.jpg', '阿斯顿', '0');
+INSERT INTO `tbl_parentuser_reported` VALUES ('120', 'cbnd', '安市', 'xx.jpv', '阿斯顿', '0');
+
+-- ----------------------------
 -- Table structure for `tbl_parent_userinfo`
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_parent_userinfo`;
@@ -455,7 +475,8 @@ CREATE TABLE `tbl_parent_userinfo` (
   `sex` varchar(10) DEFAULT NULL,
   `area` varchar(50) DEFAULT NULL,
   `birthday` varchar(50) DEFAULT NULL,
-  `achieve` int(11) DEFAULT NULL,
+  `imei` varchar(1024) DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `personalWord` varchar(255) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`phone`),
@@ -465,10 +486,10 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
-INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '发货1231', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', '12312312', 'header13513171332');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '阿斯顿', '1970-10-10', '0', null, 'header15227856991');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'sunsunsun', 'female', '贵州省，贵阳市，乌当区', '1998-12-14', '0', '哈哈', 'header15230867500');
-INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', '-', 'headerkefuxw');
+INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '发货1231', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', null, '12312312', 'header13513171332');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '阿斯顿', '1970-10-10', '0', null, null, 'header15227856991');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'sunsunsun', 'female', '贵州省，贵阳市，乌当区', '1998-12-14', '0', null, '哈哈', 'header15230867500');
+INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', null, '-', 'headerkefuxw');
 
 -- ----------------------------
 -- Table structure for `tbl_post`
@@ -728,18 +749,3 @@ INSERT INTO `tbl_user` VALUES ('15194980385', '123456', '2019-12-03 15:29:25', '
 INSERT INTO `tbl_user` VALUES ('15227856991', '654321', '2020-02-15 16:03:24', '852000', null, null, '0');
 INSERT INTO `tbl_user` VALUES ('15230867500', '123456', '2019-10-15 16:03:24', '491602', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('kefuxw', 'wanjpc123', '0000-00-00 00:00:00', '000000', null, null, '0');
-
--- ----------------------------
--- Table structure for `tbl_walkpath`
--- ----------------------------
-DROP TABLE IF EXISTS `tbl_walkpath`;
-CREATE TABLE `tbl_walkpath` (
-  `id` varchar(30) NOT NULL DEFAULT '',
-  `time` datetime DEFAULT NULL,
-  `img` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of tbl_walkpath
--- ----------------------------
