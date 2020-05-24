@@ -1,23 +1,23 @@
 [{
-	"title" : "后台首页",
-	"icon" : "icon-computer",
-	"href" : "page/main.jsp",
-	"spread" : false
+		"title": "后台首页",
+		"icon": "icon-computer",
+		"href": "vhome/page/main.jsp",
+		"spread": false
 },{
-	"title" : "帖子详情管理",
-	"icon" : "icon-text",
-	"href" : "page/news/newsList.jsp",
-	"spread" : false
+		"title": "帖子详情管理",
+		"icon": "icon-text",
+		"href": "page/news/newsList.jsp",
+		"spread": false
 },{
-	"title" : "用户信息管理",
-	"icon" : "&#xe64c;",
-	"href" : "page/links/linksList.jsp",
-	"spread" : false
+		"title": "用户信息管理",
+		"icon": "&#xe64c;",
+		"href": "/vhome/ShowUserList",
+		"spread": false
 },{
-	"title" : "用户审核",
-	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.jsp",
-	"spread" : false
+		"title": "用户审核",
+		"icon": "&#xe631;",
+		"href": "page/links/bugList.jsp",
+		"spread": false
 },{
 	"title" : "举报管理",
 	"icon" : "&#xe61c;",

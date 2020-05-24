@@ -16,4 +16,20 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+   <!-- 自定义404页面 -->
+  <error-page> 
+  <error-code>404</error-code> 
+  <location>/NotFound.jsp</location> 
+  </error-page> 
+  <!-- servlet资源访问设置默认处理 -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.mp4</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.png</url-pattern>
+    <url-pattern>*.json</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.ico</url-pattern>
+  </servlet-mapping>
 </web-app>
