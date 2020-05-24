@@ -121,9 +121,11 @@ public class PostExamineDao {
 				post.setHeadimg(rs.getString("headimg"));
 				post.setPostContent(rs.getString("content"));
 				post.setPersonId(rs.getString("personId"));
+				post.setPhone(rs.getString("phone"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
 				post.setExamine(rs.getString("examine"));
+				post.setrId(rs.getString("rId"));
 				list.add(post);
 			}
 			rs.close();
@@ -202,16 +204,18 @@ public class PostExamineDao {
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_post_copy(id,nickName,headimg,content,personId,time,imgs,examine) values(?,?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_post_copy(id,nickName,headimg,content,personId,phone,time,imgs,examine,rId) values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, 0);
 			ps.setString(2, post.getNickName());
 			ps.setString(3, post.getHeadimg());
 			ps.setString(4, post.getPostContent());
 			ps.setString(5, post.getPersonId());
-			ps.setString(6, post.getTime());
-			ps.setString(7, post.getImgs());
-			ps.setString(8, post.getExamine());
+			ps.setString(6, post.getPhone());
+			ps.setString(7, post.getTime());
+			ps.setString(8, post.getImgs());
+			ps.setString(9, post.getExamine());
+			ps.setString(10, post.getrId());
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -377,6 +381,7 @@ public class PostExamineDao {
 	 */
 	public PostBean deleteExamine(PostExamineBean postExamineBean) {
 		PostBean post=new PostBean();
+		post.setId(postExamineBean.getId());
 		post.setNickName(postExamineBean.getNickName());
 		post.setHeadimg(postExamineBean.getHeadimg());
 		post.setPostContent(postExamineBean.getPostContent());

@@ -6,6 +6,7 @@ public class PostExamineBean {
     private String headimg;
     private String postContent;
     private String personId;
+    private String phone;
     private String time;
     private String imgs;
     private String examine;
@@ -14,6 +15,23 @@ public class PostExamineBean {
     private int save_status = 0;//标志位判断当前用户是否收藏过本帖
     private int like_status = 0;//标志位判断当前用户是否点赞过本帖
     private int attention_status = 0;//标志位判断当前用户是否关注发帖人
+    private String rId;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getrId() {
+        return rId;
+    }
+
+    public void setrId(String rId) {
+        this.rId = rId;
+    }
 
     public String getExamine() {
         return examine;

@@ -12,7 +12,11 @@ import cn.jpush.api.push.model.notification.*;
 
 
 public class JpushClientUtil {
-
+	
+//	private final static String appKey = "0ab56fbd424553db1babe588";
+//
+//    private final static String masterSecret = "22c52028d8370bc7c527a36d";
+//		微家
     private final static String appKey = "7b857f3c90c8855ef36d57b9";
 
     private final static String masterSecret = "04ea417f8742c6fdadf0e089";
@@ -335,7 +339,7 @@ public class JpushClientUtil {
     }
 
 //    public static void main(String[] args){
-//        if(JpushClientUtil.sendToRegistrationId("1104a8979228f292c09","试试","试试","少时诵诗书所所所所所","")==1){
+//        if(JpushClientUtil.sendToAllAndroid("试试","试试","少时诵诗书所所所所所","")==1){
 //            System.out.println("success");
 //        }
 //    }

@@ -521,13 +521,16 @@ public class NewPostActivity extends Activity {
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String time = sdf.format(date);
-
+            SharedPreferences sharedPreferences = getSharedPreferences("registrationID",MODE_PRIVATE);
+            String registrationID = sharedPreferences.getString("id","");
             PostExamineBean p = new PostExamineBean();
             p.setNickName(sp.getString("nickName",""));
             p.setHeadimg(sp.getString("headImg",""));
             p.setPersonId(sp.getString("id",""));
+            p.setPhone(sp.getString("phone",""));
             p.setPostContent(postContent);
             p.setTime(time);
+            p.setrId(registrationID);
             p.setExamine(preExamine);
             Gson gson = new Gson();
             String imgs = gson.toJson(imgsName);
@@ -608,7 +611,7 @@ public class NewPostActivity extends Activity {
 
                 @Override
                 public void onFinished() {
-                    Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_SHORT).show();
+                    ToastUtil.showImageToas(getApplicationContext(),"发表成功，正在审核！");
                     progressDialog.dismiss();
                     finish();
                 }

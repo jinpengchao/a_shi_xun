@@ -88,7 +88,7 @@ public class PostDao {
 			Connection con = util.getConnection();
 			String sql = "insert into tbl_post(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, 0);
+			ps.setInt(1, post.getId());
 			ps.setString(2, post.getNickName());
 			ps.setString(3, post.getHeadimg());
 			ps.setString(4, post.getPostContent());

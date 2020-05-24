@@ -160,7 +160,8 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         holder.tvHotTime.setText(now);
         //加载说说图片
         String imgs = null;
-        imgs = "[\""+list.get(i).getImgs()+"\"]";
+//        imgs = "[\""+list.get(i).getImgs()+"\"]";
+        imgs = list.get(i).getImgs();
         Gson gson = new Gson();
         ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());

@@ -42,7 +42,6 @@
                 android:text="欢迎光临微家大家庭，点击查看使用规则~"
                 android:id="@+id/tv_hot_content"
                 android:layout_below="@id/tv_hot_name"
-                android:maxLength="19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"/>

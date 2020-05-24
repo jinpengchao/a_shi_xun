@@ -46,12 +46,14 @@ public class SaveAnswer extends HttpServlet {
 		String i = request.getParameter("id");
 		String registrationID =  request.getParameter("registrationID");
 		if (JpushClientUtil.sendToRegistrationId(registrationID, "",
-				"微家官方", "您的反馈已被回复，点击查看", "") == 1) {
+				"", "", "") == 1) {
 			System.out.println("success");
 		}
 		int id = Integer.parseInt(i);
 		us.insertAnsewer(id,phone, content,registrationID);
-		us.insertAdminMessage(id,phone,content);
+		String iddddd="-"+id;
+		int iii = Integer.parseInt(iddddd);
+		us.insertAdminMessage(iii,"您的问题反馈已被回复，点击查看",phone,"",content);
 		us.changeQuestionsType(id);
     	
   	}

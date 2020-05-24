@@ -55,9 +55,9 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.saveAnswers(id,phone,content,registrationID);
 	}
-	public void insertAdminMessage(int id,String phone,String content) {
+	public void insertAdminMessage(int id,String title,String phone,String personId,String content) {
 		UserDao userDao = new UserDao();
-		userDao.saveMessage(id,phone,content);
+		userDao.saveMessage(id,title,phone,personId,content);
 	}
 	public void changeQuestionsType(int id) {
 		UserDao userDao = new UserDao();

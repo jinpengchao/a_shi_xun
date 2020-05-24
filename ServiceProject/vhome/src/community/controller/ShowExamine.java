@@ -56,7 +56,7 @@ public class ShowExamine extends HttpServlet {
 		List<PostExamineBean> postBeans1=(new PostService()).findBeansByExamine("待审核");
 		List<PostExamineBean> postBeans2=(new PostService()).findBeansByExamine("已审核");
 		List<PostExamineBean> postBeans3=(new PostService()).findBeansByExamine("审核失败");
-		out.print(postBeans2.get(0).getImgs());
+//		out.print(postBeans2.get(0).getImgs());
 		
 		for(PostExamineBean post:postBeans1) {
 			String dateString=post.getImgs();

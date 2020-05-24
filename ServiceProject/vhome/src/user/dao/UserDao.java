@@ -508,9 +508,12 @@ public class UserDao {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
-				String phone = rs.getString("receivePhone");
-				parentPhoneList.add(phone);
-				System.out.println("UserDao--"+phone);
+				if(null!=rs.getString("receiveName") && null!=rs.getString("receivePhone")) {
+					String phone = rs.getString("receivePhone");
+					String nickName = rs.getString("receiveName");
+					parentPhoneList.add(nickName+"("+phone+")");
+					System.out.println("UserDao--"+phone);
+				}
 			}
 			rs.close();
 			psmt.close();
@@ -770,21 +773,20 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
-	public void saveMessage(int id,String phone,String content) {
+	public void saveMessage(int id,String title,String phone,String personId,String content) {
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
-			String i="-"+id;
-			int iii = Integer.parseInt(i);
+			
 			conn = util.getConnection();
 			String sql = "insert into tbl_admin_message values(?,?,?,?,?,?,?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, 0);
-			psmt.setString(2, "您的问题反馈已被回复，点击查看");
-			psmt.setInt(3, iii);
+			psmt.setString(2, title);
+			psmt.setInt(3, id);
 			psmt.setString(4, phone);
-			psmt.setString(5, "");
+			psmt.setString(5, personId);
 			psmt.setInt(6, 0);
 			psmt.setString(7, content);
 			int rs = psmt.executeUpdate();

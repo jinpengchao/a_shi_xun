@@ -226,7 +226,8 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
          * 添加说说图片数据
          */
         Log.d(TAG, "onBindViewHolder: 图片数据："+list.get(position).getImgs()+"::内容："+list.get(position).getPostContent());
-        String imgs = "[\""+list.get(position).getImgs()+"\"]";
+//        String imgs = "[\""+list.get(position).getImgs()+"\"]";
+        String imgs = list.get(position).getImgs();
         Gson gson = new Gson();
         List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
         }.getType());
@@ -239,9 +240,8 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                     medias.add(new MyMedia(pUrl));
                     Log.d(TAG,"图片的url："+pUrl);
                 }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
-                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
-                    String picPath = getVideoThumbnail.bitmapToStringPath(context,vBitmap,url);
+                    String picPath = getPicPath(url, pUrl);
+
                     Log.d(TAG, "onBindViewHolder: 视频展示图路径："+picPath);
                     medias.add(new MyMedia(picPath,pUrl));
                 }
@@ -254,7 +254,7 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                 nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
             }
             NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl()+"::内容："+list.get(position).getPostContent());
+//            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl()+"::内容："+list.get(position).getPostContent());
             holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
         // 为满足九宫格适配器数据要求，需要构造对应的List
@@ -360,6 +360,18 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                 return true;
             }
         });
+    }
+
+    public String getPicPath(String url, String pUrl) {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+            }
+        }.start();
+        Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
+        Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
+        return getVideoThumbnail.bitmapToStringPath(context,vBitmap,url);
     }
 
     @Override

@@ -32,6 +32,7 @@ public class GetVideoThumbnail {
      * @return
      */
     public Bitmap voidToFirstBitmap(String url){
+
         Bitmap bitmap = null;
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         int kind = MediaStore.Video.Thumbnails.MINI_KIND;
