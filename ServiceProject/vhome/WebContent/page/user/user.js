@@ -138,7 +138,7 @@ layui.config({
 function loadProvince() {
     var proHtml = '';
     for (var i = 0; i < areaData.length; i++) {
-        proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+        proHtml += '<option value="' + areaData[i].provinceName + '">' + areaData[i].provinceName + '</option>';
     }
     //初始化省数据
     $form.find('select[name=province]').append(proHtml);
@@ -161,7 +161,7 @@ function loadProvince() {
 function loadCity(citys) {
     var cityHtml = '<option value="">请选择市</option>';
     for (var i = 0; i < citys.length; i++) {
-        cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+    	cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
     }
     $form.find('select[name=city]').html(cityHtml).removeAttr("disabled");
     form.render();
@@ -182,7 +182,7 @@ function loadCity(citys) {
 function loadArea(areas) {
     var areaHtml = '<option value="">请选择县/区</option>';
     for (var i = 0; i < areas.length; i++) {
-        areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
+    	areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
     }
     $form.find('select[name=area]').html(areaHtml).removeAttr("disabled");
     form.render();

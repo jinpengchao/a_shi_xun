@@ -830,4 +830,383 @@ public class UserDao {
 		}
 		return content;
 	}
+	//-----------------------------后台----------------------------------
+	//获取用户列表
+	public List<ParentUserInfo> getUserList() {
+		List<ParentUserInfo> list= new ArrayList<ParentUserInfo>(); 
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_parent_userinfo";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()) {
+				ParentUserInfo parent = new ParentUserInfo();
+				parent.setPhone(rs.getString(1));
+				parent.setId(rs.getString(2));
+				parent.setNikeName(rs.getString(3));
+				parent.setSex(rs.getString(4));
+				parent.setArea(rs.getString(5));
+				parent.setImei(rs.getInt(6));
+				parent.setPersonalWord(rs.getString(8));
+				parent.setStatus(rs.getString(7));
+				parent.setHeaderImg(rs.getString(9));
+				list.add(parent);
+			}
+			psmt.close();
+			rs.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public long getSum(String tbl_name) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		long sum = 0;
+		try {
+			conn = util.getConnection();
+			String sql = "select count(*) from "+tbl_name;
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()) {
+				sum = rs.getLong(1); 
+			}
+			psmt.close();
+			rs.close();
+			util.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sum;
+	}
+	public void delUser(String id) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "delete from tbl_parent_userInfo where id='"+id+"'";
+			psmt = conn.prepareStatement(sql);
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("删除成功");
+			}else {
+				System.out.println("删除失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void updateUser(ParentUserInfo pf) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "update tbl_parent_userInfo set "
+					+ "phone=?,nickName=?,sex=?,area=?,imei=?,status=?,personalWord=?,headimg=?"
+					+ " where id=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,pf.getPhone());
+			psmt.setString(2,pf.getNikeName());
+			psmt.setString(3,pf.getSex());
+			psmt.setString(4,pf.getArea());
+			psmt.setInt(5, pf.getImei());
+			psmt.setString(6, pf.getStatus());
+			psmt.setString(7, pf.getPersonalWord());
+			psmt.setString(8,pf.getHeaderImg());
+			psmt.setString(9, pf.getId());
+			int rs = psmt.executeUpdate();
+			if(rs>0) {
+				System.out.println("更新成功");
+			}else {
+				System.out.println("更新失败");
+			}
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<ParentUserInfo> getUserPosted() {
+		List<ParentUserInfo> list= new ArrayList<ParentUserInfo>(); 
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_parentuser_reported";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()) {
+				ParentUserInfo parent = new ParentUserInfo();
+				parent.setPhone(rs.getString(1));
+				parent.setNikeName(rs.getString(2));
+				parent.setPersonalWord(rs.getString(3));
+				parent.setHeaderImg(rs.getString(4));
+				parent.setStatus(rs.getString(5));
+				parent.setCloseDays(rs.getLong(6));
+				list.add(parent);
+			}
+			psmt.close();
+			rs.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public boolean compareNickName(String name) {//验证生成的随机昵称重复
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		long sum = 0;
+		try {
+			conn = util.getConnection();
+			String sql = "select * from tbl_user where nickName ='"+name+"'";
+			psmt = conn.prepareStatement(sql);
+			ResultSet rs = psmt.executeQuery();
+			if(rs.next()) {
+				psmt.close();
+				rs.close();
+				util.closeConnection();
+				return true;
+			}else {
+				psmt.close();
+				rs.close();
+				util.closeConnection();
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	//根据违规内容不同分8种情况重置用户信息
+	public void definateColseDays(String nameMark ,String pwMark,String headerMark,int days,String phone) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		String sql=null;
+		PreparedStatement psmt = null;
+		String result = nameMark+pwMark+headerMark;//2^3种情况
+		switch(result) {
+		case "TTT":
+			System.out.println("审核通过，无问题！！");
+		case "FTT":
+			sql = "update tbl_parent_userInfo set "
+					+ "nickName=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				String radomName = "随机昵称"+Math.random();
+				while(!compareNickName(radomName)){
+					psmt.setString(1,radomName);
+				}
+				psmt.setString(2,"封禁");
+				psmt.setInt(3, days);
+				psmt.setString(4, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "TFT":
+			sql = "update tbl_parent_userInfo set "
+					+ "personalWord=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1,"点击添加");
+				psmt.setString(2,"封禁");
+				psmt.setInt(3, days);
+				psmt.setString(4, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "TTF":
+			sql = "update tbl_parent_userInfo set "
+					+ "headimg=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1,"headMoRen.jpg");
+				psmt.setString(2,"封禁");
+				psmt.setInt(3, days);
+				psmt.setString(4, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "FFT":
+			sql = "update tbl_parent_userInfo set "
+					+ "nickName=?,personalWord=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				String radomName = "随机昵称"+Math.random();
+				while(!compareNickName(radomName)){
+					psmt.setString(1,radomName);
+				}
+				psmt.setString(2, "点击添加");
+				psmt.setString(3,"封禁");
+				psmt.setInt(4, days);
+				psmt.setString(5, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "FTF":
+			sql = "update tbl_parent_userInfo set "
+					+ "nickName=?,headimg=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				String radomName = "随机昵称"+Math.random();
+				while(!compareNickName(radomName)){
+					psmt.setString(1,radomName);
+				}
+				psmt.setString(2, "headMoRen.jpg");
+				psmt.setString(3,"封禁");
+				psmt.setInt(4, days);
+				psmt.setString(5, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "TFF":
+			sql = "update tbl_parent_userInfo set "
+					+ "personalWord=?,headimg=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1,"点击添加");
+				psmt.setString(2, "headMoRen.jpg");
+				psmt.setString(3,"封禁");
+				psmt.setInt(4, days);
+				psmt.setString(5, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "FFF":
+			sql = "update tbl_parent_userInfo set "
+					+ "nickName=?,personalWord=?,headimg=?,status=?,closeDays=?"
+					+ " where phone=?";
+			try {
+				conn = util.getConnection();
+				psmt = conn.prepareStatement(sql);
+				String radomName = "随即昵称"+Math.random();
+				while(!compareNickName(radomName)){
+					psmt.setString(1,radomName);
+				}
+				psmt.setString(2, "点击添加");
+				psmt.setString(3, "headMoRen.jpg");
+				psmt.setString(4,"封禁");
+				psmt.setInt(5, days);
+				psmt.setString(6, phone);
+				int rs = psmt.executeUpdate();
+				if(rs>0) {
+					System.out.println("审核完成");
+				}else {
+					System.out.println("审核失败");
+				}
+				psmt.close();
+				util.closeConnection();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		}
+
+	}
 }
