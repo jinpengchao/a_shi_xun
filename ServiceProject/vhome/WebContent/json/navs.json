@@ -4,11 +4,6 @@
 		"href": "vhome/page/main.jsp",
 		"spread": false
 },{
-		"title": "帖子详情管理",
-		"icon": "icon-text",
-		"href": "page/news/newsList.jsp",
-		"spread": false
-},{
 		"title": "用户信息管理",
 		"icon": "&#xe64c;",
 		"href": "/vhome/ShowUserList",

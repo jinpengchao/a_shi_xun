@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -94,11 +96,14 @@ public class NewsActivity extends Activity {
         lvStus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(news.get(i).getUrl()));//用于
-                //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
-                startActivity(intent);
+                WebView webView=findViewById(R.id.web_view);//绑定ID
+                webView.setWebViewClient(new WebViewClient());//添加WebViewClient实例
+                webView.loadUrl(news.get(i).getUrl());//添加浏览器地址
+//                Intent intent=new Intent();
+//                intent.setAction(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(news.get(i).getUrl()));//用于
+//                //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+//                startActivity(intent);
             }
         });
         srl.setOnRefreshListener(new OnRefreshListener() {

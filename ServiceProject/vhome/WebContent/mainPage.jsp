@@ -124,7 +124,7 @@
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
 				<a class="img" title="我的头像" ><img src="images/${sessionScope.headerImage }"></a>
-				<p><span class="userName">管理员【${sessionScope.nickName }】你好！</span>，欢迎登陆</p>
+				<p><span class="userName">【${sessionScope.nickName }】你好！</span>欢迎登陆</p>
 			</div>
 			<div class="navBar layui-side-scroll"></div>
 		</div>

@@ -66,7 +66,7 @@
 				<div class="panel_icon" style="background-color:#9c9c9;">
 					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
 				</div>
-				<div class="panel_word userAll">
+				<div style="margin-top: 40px">
 					<span></span>
 					<cite>客服系统</cite>
 				</div>
