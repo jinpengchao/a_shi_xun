@@ -9,23 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import entity.ParentUserInfo;
 import user.service.UserService;
 
 /**
- * Servlet implementation class ShowUserList
+ * Servlet implementation class PerformUser
  */
-@WebServlet("/ShowUserList")
-public class ShowUserList extends HttpServlet {
+@WebServlet("/PerformUserInfo")
+public class PerformUserInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private HttpSession session = null;
-    private UserService userService = null;
+	private UserService userService = null;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowUserList() {
+    public PerformUserInfo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,10 +36,9 @@ public class ShowUserList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		userService = new UserService();
-		List<ParentUserInfo> list = userService.findParentInfo();
-		session = request.getSession();
-		session.setAttribute("userParents", list);
-		response.sendRedirect(request.getContextPath()+"/page/user/allUsers.jsp");
+		String id = request.getParameter("id");
+		System.out.println(id);
+		userService.delParentUserInfo(id);
 	}
 
 	/**
@@ -49,12 +47,20 @@ public class ShowUserList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		userService = new UserService();
-		session = request.getSession();
 		PrintWriter out = response.getWriter();
-		session.setAttribute("total", userService.getTotalParentUserNum("tbl_user"));
-		session.setAttribute("usersReported", userService.getTotalParentUserNum("tbl_parentuser_reported"));
-		out.write(1);//返回成功标志，进行ajax跳转
+		userService = new UserService();
+		ParentUserInfo pf = new ParentUserInfo();
+		pf.setId(request.getParameter("userId"));
+		pf.setArea(request.getParameter("userArea"));
+		pf.setHeaderImg(request.getParameter("userImg"));
+		pf.setImei(request.getParameter("userImei"));
+		pf.setNikeName(request.getParameter("userNick"));
+		pf.setPersonalWord(request.getParameter("userWord"));
+		pf.setPhone(request.getParameter("userPhone"));
+		pf.setSex(request.getParameter("userSex"));
+		pf.setStatus(request.getParameter("userStatus"));
+		userService.updateParentUserInfo(pf);
+		out.write(1);//返回成功标志
 	}
 
 }

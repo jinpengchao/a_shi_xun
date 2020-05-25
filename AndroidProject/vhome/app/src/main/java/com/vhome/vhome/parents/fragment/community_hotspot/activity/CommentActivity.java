@@ -321,7 +321,6 @@ public class CommentActivity extends Activity {
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         tvHotTime.setText(now);
         //显示图片
-        //判断诗句是否为空
         if(post.getImgs()!=null&&!"".equals(post.getImgs())){
             String imgsData = post.getImgs();
             imgs = gson.fromJson(imgsData,new TypeToken<List<String>>(){}.getType());

@@ -159,7 +159,6 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         String now = new SimpleDateFormat("MM-dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
         //加载说说图片
-
         if(list.get(i).getImgs()!=null&&!"".equals(list.get(i).getImgs())){
             String imgs = null;
             imgs = list.get(i).getImgs();

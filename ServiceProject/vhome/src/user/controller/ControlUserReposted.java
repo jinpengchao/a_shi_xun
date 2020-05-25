@@ -15,17 +15,17 @@ import entity.ParentUserInfo;
 import user.service.UserService;
 
 /**
- * Servlet implementation class ShowUserList
+ * Servlet implementation class ControlUserPosted
  */
-@WebServlet("/ShowUserList")
-public class ShowUserList extends HttpServlet {
+@WebServlet("/ControlUserReposted")
+public class ControlUserReposted extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private HttpSession session = null;
-    private UserService userService = null;
+	private HttpSession session = null;
+	private UserService userService = null;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowUserList() {
+    public ControlUserReposted() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,10 +37,10 @@ public class ShowUserList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		userService = new UserService();
-		List<ParentUserInfo> list = userService.findParentInfo();
+		List<ParentUserInfo> list = userService.getParentUserReposted();
 		session = request.getSession();
-		session.setAttribute("userParents", list);
-		response.sendRedirect(request.getContextPath()+"/page/user/allUsers.jsp");
+		session.setAttribute("userReposted", list);
+		response.sendRedirect(request.getContextPath()+"/page/links/bugList.jsp");
 	}
 
 	/**
@@ -49,12 +49,17 @@ public class ShowUserList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		userService = new UserService();
-		session = request.getSession();
 		PrintWriter out = response.getWriter();
-		session.setAttribute("total", userService.getTotalParentUserNum("tbl_user"));
-		session.setAttribute("usersReported", userService.getTotalParentUserNum("tbl_parentuser_reported"));
-		out.write(1);//返回成功标志，进行ajax跳转
+		userService = new UserService();
+		String nameCheck = request.getParameter("nameCheck");
+		String headCheck = request.getParameter("headerCheck");
+		String pwCheck = request.getParameter("pwCheck");
+		int dayOff = Integer.valueOf(request.getParameter("time"));
+		String phone = request.getParameter("phone");
+		if((nameCheck!=null&&!nameCheck.equals(" "))&&(headCheck!=null&&!headCheck.equals(" "))&&(pwCheck!=null&&!pwCheck.equals(" "))&&(phone!=null&&!phone.equals(" "))) {
+			userService.closeDays(nameCheck,headCheck,pwCheck,dayOff,phone);
+			out.write(1);//返回成功标志
+		}
 	}
 
 }

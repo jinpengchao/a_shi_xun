@@ -55,9 +55,9 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.saveAnswers(id,phone,content,registrationID);
 	}
-	public void insertAdminMessage(int id,String phone,String content) {
+	public void insertAdminMessage(int id,String title,String phone,String personId,String content) {
 		UserDao userDao = new UserDao();
-		userDao.saveMessage(id,phone,content);
+		userDao.saveMessage(id,title,phone,personId,content);
 	}
 	public void changeQuestionsType(int id) {
 		UserDao userDao = new UserDao();
@@ -127,11 +127,40 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.getContentAndroidandHTML(postId);
 	}
-	public void findParentInfo() {
-		//to do 查找父母信息
+	//------------------后台---------------------------------
+	//查找所有的父母信息（暂时，实际是用户（子女和父母））
+	public List<ParentUserInfo> findParentInfo() {
+		UserDao userDao = new UserDao();
+		return userDao.getUserList();
 	}
-
-	public void findChildrenInfo() {
-		//to do 查找子女信息
+	
+	public long getTotalParentUserNum(String tbl_name) {
+		UserDao userDao = new UserDao();
+		return userDao.getSum(tbl_name);
+	}
+	
+//	public List<ParentUserInfo> findChildrenInfo() {
+//		UserDao userDao = new UserDao();
+//		userDao.findChildUserInfo(id);
+//	}
+	
+	public void delParentUserInfo(String id) {
+		UserDao userDao = new UserDao();
+		userDao.delUser(id);
+	}
+	
+	public void updateParentUserInfo(ParentUserInfo pf) {
+		UserDao userDao = new UserDao();
+		userDao.updateUser(pf);
+	}
+	
+	public List<ParentUserInfo> getParentUserReposted() {
+		UserDao userDao = new UserDao();
+		return userDao.getUserPosted();
+	}
+	
+	public void closeDays(String nameMark,String pwMark,String headerMark,int days,String phone) {
+		UserDao userDao = new UserDao();
+		userDao.definateColseDays(nameMark, pwMark, headerMark, days, phone);
 	}
 }

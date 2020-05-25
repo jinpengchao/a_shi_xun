@@ -53,15 +53,15 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
+									<embed src="/imageUrl/${i}" width="300" height="300" autoplay="false">
 								</c:if>
 							</c:forEach>
 						</c:if>
 					</th>
 					<th><span style="color:red;">${p.examine }</span></th>
 					<th>${p.time}</th>
-					<td><span style="margin-left: 15px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}">批准</a>
-					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}">不批准</a></span></td>
+					<td><span style="margin-left: 15px;"><a href="/vhome/UpdateExamine?examineString=已审核&id=${p.id}&currentrId=${p.rId}&currentPhone=${p.phone}&currentPersonId=${p.personId}">批准</a>
+					<a href="/vhome/UpdateExamine?examineString=审核失败&id=${p.id}&currentrId=${p.rId}&currentPhone=${p.phone}&currentPersonId=${p.personId}">不批准</a></span></td>
 				</tr>
 				</c:forEach>
 				<c:forEach items="${examine1 }" var="p">
@@ -78,7 +78,7 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
+									<embed src="/imageUrl/${i}" width="300" height="300" autoplay="false">
 								</c:if>
 							</c:forEach>
 						</c:if>
@@ -102,7 +102,7 @@
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
-									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false">
+									<embed src="/imageUrl/${i}" width="300" height="300" autostart="false"/>
 								</c:if>
 							</c:forEach>
 						</c:if>

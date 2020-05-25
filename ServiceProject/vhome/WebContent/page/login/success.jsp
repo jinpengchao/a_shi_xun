@@ -10,8 +10,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
+
 <%
+
 		Context ctx = null;
 		DataSource ds = null;
 		Statement stmt =null;
@@ -52,5 +55,6 @@
 				con.close();
 		}
 	%>
+	
 </body>
 </html>

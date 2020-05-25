@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-05-23 18:38:21
+Date: 2020-05-24 23:24:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,7 +46,7 @@ CREATE TABLE `tbl_admin_message` (
   `unread` int(2) DEFAULT NULL,
   `content_answer` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_admin_message
@@ -72,19 +72,23 @@ INSERT INTO `tbl_admin_message` VALUES ('34', '您的问题反馈已被回复，
 INSERT INTO `tbl_admin_message` VALUES ('35', '您的问题反馈已被回复，点击查看', '-1', '13300000000', '', '0', '企鹅翁群无');
 INSERT INTO `tbl_admin_message` VALUES ('36', '您的问题反馈已被回复，点击查看', '-19', '13513171332', '', '1', '驱蚊器翁群翁群');
 INSERT INTO `tbl_admin_message` VALUES ('37', '您的问题反馈已被回复，点击查看', '-20', '15230867500', '', '1', '戚薇戚薇戚薇戚薇戚薇');
+INSERT INTO `tbl_admin_message` VALUES ('38', '您的问题反馈已被回复，点击查看', '-21', '15230867500', '', '1', '8520963.7410');
+INSERT INTO `tbl_admin_message` VALUES ('40', '您的问题反馈已被回复，点击查看', '215', '', '', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('41', '您的问题反馈已被回复，点击查看', '216', '15230867500', '', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('42', '您的问题反馈已被回复，点击查看', '-22', '15230867500', '', '1', '20');
+INSERT INTO `tbl_admin_message` VALUES ('43', '您的帖子已通过审核，点击查看', '214', '', '491602', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('44', '您的帖子没有通过审核，请检查是否违反社区规定', '217', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('45', '您的帖子没有通过审核，请检查是否违反社区规定', '219', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('46', '您的帖子已通过审核，点击查看', '220', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('47', '您的帖子已通过审核，点击查看', '221', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('48', '您的帖子已通过审核，点击查看', '222', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('49', '您的帖子已通过审核，点击查看', '223', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('50', '您的帖子没有通过审核，请检查是否违反社区规定', '224', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('51', '您的帖子已通过审核，点击查看', '225', '15230867500', '491602', '1', '-');
 
 -- ----------------------------
 -- Table structure for `tbl_alarm`
 -- ----------------------------
-﻿# Host: localhost  (Version 5.5.6-rc)
-# Date: 2020-05-21 17:36:23
-# Generator: MySQL-Front 6.1  (Build 1.26)
-
-
-#
-# Structure for table "tbl_alarm"
-#
-
 DROP TABLE IF EXISTS `tbl_alarm`;
 CREATE TABLE `tbl_alarm` (
   `alarmId` int(30) NOT NULL AUTO_INCREMENT,
@@ -94,7 +98,7 @@ CREATE TABLE `tbl_alarm` (
   `content` varchar(200) DEFAULT NULL,
   `clocktype` int(11) NOT NULL,
   PRIMARY KEY (`alarmId`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_alarm
@@ -111,6 +115,7 @@ INSERT INTO `tbl_alarm` VALUES ('35', '19:35', '15194980385', '15230867500', '�
 INSERT INTO `tbl_alarm` VALUES ('36', '10:37', '15194980385', '18032168790', '别展示了，下来吧', '0');
 INSERT INTO `tbl_alarm` VALUES ('37', '10:00', '15194980385', '18032168790', '………', '0');
 INSERT INTO `tbl_alarm` VALUES ('38', '15:42', '15194980385', 'jpcaa', '6有6', '0');
+INSERT INTO `tbl_alarm` VALUES ('39', '15:10', '15194980385', 'sunsunsun(15230867500)', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '1');
 
 -- ----------------------------
 -- Table structure for `tbl_answers`
@@ -123,7 +128,7 @@ CREATE TABLE `tbl_answers` (
   `postId` int(10) NOT NULL,
   `registrationID` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_answers
@@ -145,6 +150,8 @@ INSERT INTO `tbl_answers` VALUES ('48', '13513171332', '企鹅翁群翁群无', 
 INSERT INTO `tbl_answers` VALUES ('49', '13300000000', '企鹅翁群无', '1', '1104a8979228f292c09');
 INSERT INTO `tbl_answers` VALUES ('50', '13513171332', '驱蚊器翁群翁群', '19', '13065ffa4e8b884daa9');
 INSERT INTO `tbl_answers` VALUES ('51', '15230867500', '戚薇戚薇戚薇戚薇戚薇', '20', '1104a8979228f292c09');
+INSERT INTO `tbl_answers` VALUES ('52', '15230867500', '8520963.7410', '21', '1104a8979228f292c09');
+INSERT INTO `tbl_answers` VALUES ('53', '15230867500', '20', '22', '1507bfd3f74068c75d7');
 
 -- ----------------------------
 -- Table structure for `tbl_child_userinfo`
@@ -160,16 +167,14 @@ CREATE TABLE `tbl_child_userinfo` (
   PRIMARY KEY (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_child_userinfo"
-#
+-- ----------------------------
+-- Records of tbl_child_userinfo
+-- ----------------------------
+INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '308462', '子女子女子女子女测测测测', 'female', '天国', 'header15194980385');
 
-INSERT INTO `tbl_child_userinfo` VALUES ('15194980385','308462','尿','female','天国','header18032168790.jpg');
-
-#
-# Structure for table "tbl_comment"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_comment`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_comment`;
 CREATE TABLE `tbl_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -180,7 +185,7 @@ CREATE TABLE `tbl_comment` (
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_comment
@@ -223,6 +228,9 @@ INSERT INTO `tbl_comment` VALUES ('46', '161', '491602', 'sunsunsun', 'header152
 INSERT INTO `tbl_comment` VALUES ('47', '199', '491602', 'sunsunsun', 'header15230867500', '睡觉睡觉手机', '2020-05-23 17:21:06');
 INSERT INTO `tbl_comment` VALUES ('48', '199', '491602', 'sunsunsun', 'header15230867500', '待机时间多看看', '2020-05-23 17:21:09');
 INSERT INTO `tbl_comment` VALUES ('49', '199', '491602', 'sunsunsun', 'header15230867500', '择席', '2020-05-23 17:21:11');
+INSERT INTO `tbl_comment` VALUES ('50', '180', '491602', 'sunsunsun', 'header15230867500', '是男是女是你家的', '2020-05-24 18:19:46');
+INSERT INTO `tbl_comment` VALUES ('51', '180', '491602', 'sunsunsun', 'header15230867500', '在不在男士内裤收款方', '2020-05-24 18:19:49');
+INSERT INTO `tbl_comment` VALUES ('52', '180', '491602', 'sunsunsun', 'header15230867500', '占军', '2020-05-24 18:19:52');
 
 -- ----------------------------
 -- Table structure for `tbl_connect`
@@ -236,18 +244,18 @@ CREATE TABLE `tbl_connect` (
   `sendName` varchar(30) NOT NULL,
   `setName` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_connect"
-#
+-- ----------------------------
+-- Records of tbl_connect
+-- ----------------------------
+INSERT INTO `tbl_connect` VALUES ('33', '15230867500', 'sunsunsun', '15194980385', '尿', '');
+INSERT INTO `tbl_connect` VALUES ('34', '15230867500', '滚滚滚滚', '15230867500', '滚滚滚滚', '');
+INSERT INTO `tbl_connect` VALUES ('35', '15230867500', 'sunsunsun', '15194980385', '改', '');
 
-INSERT INTO `tbl_connect` VALUES (22,'15194980385','尿','15230867500','屎','');
-
-#
-# Structure for table "tbl_goodcomment"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_goodcomment`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodcomment`;
 CREATE TABLE `tbl_goodcomment` (
   `commantId` int(30) NOT NULL,
@@ -257,15 +265,13 @@ CREATE TABLE `tbl_goodcomment` (
   PRIMARY KEY (`commantId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_goodcomment"
-#
+-- ----------------------------
+-- Records of tbl_goodcomment
+-- ----------------------------
 
-
-#
-# Structure for table "tbl_goodpost"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_goodpost`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_goodpost`;
 CREATE TABLE `tbl_goodpost` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -274,7 +280,7 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_goodpost
@@ -349,11 +355,11 @@ INSERT INTO `tbl_goodpost` VALUES ('92', '161', '491602', '852000', '2020-05-20 
 INSERT INTO `tbl_goodpost` VALUES ('93', '194', '491602', '491602', '2020-05-20 19:17:31');
 INSERT INTO `tbl_goodpost` VALUES ('94', '159', '491602', '491602', '2020-05-20 23:30:43');
 INSERT INTO `tbl_goodpost` VALUES ('95', '199', '491602', '491602', '2020-05-23 17:21:13');
+INSERT INTO `tbl_goodpost` VALUES ('96', '180', '491602', '491602', '2020-05-24 18:16:46');
 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
 -- ----------------------------
-
 DROP TABLE IF EXISTS `tbl_healthhouse`;
 CREATE TABLE `tbl_healthhouse` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -365,15 +371,13 @@ CREATE TABLE `tbl_healthhouse` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_healthhouse"
-#
+-- ----------------------------
+-- Records of tbl_healthhouse
+-- ----------------------------
 
-
-#
-# Structure for table "tbl_myachievement"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_myachievement`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_myachievement`;
 CREATE TABLE `tbl_myachievement` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -382,15 +386,13 @@ CREATE TABLE `tbl_myachievement` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_myachievement"
-#
+-- ----------------------------
+-- Records of tbl_myachievement
+-- ----------------------------
 
-
-#
-# Structure for table "tbl_myattentions"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_myattentions`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_myattentions`;
 CREATE TABLE `tbl_myattentions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -404,7 +406,9 @@ CREATE TABLE `tbl_myattentions` (
 -- ----------------------------
 INSERT INTO `tbl_myattentions` VALUES ('47', '852000', '491602');
 
-
+-- ----------------------------
+-- Table structure for `tbl_mycollection`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_mycollection`;
 CREATE TABLE `tbl_mycollection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -412,7 +416,7 @@ CREATE TABLE `tbl_mycollection` (
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_mycollection
@@ -420,8 +424,11 @@ CREATE TABLE `tbl_mycollection` (
 INSERT INTO `tbl_mycollection` VALUES ('131', '491602', '165', '2020-05-10 22:25:45');
 INSERT INTO `tbl_mycollection` VALUES ('133', '491602', '167', '2020-05-11 17:52:24');
 INSERT INTO `tbl_mycollection` VALUES ('134', '491602', '199', '2020-05-23 17:21:15');
+INSERT INTO `tbl_mycollection` VALUES ('136', '491602', '180', '2020-05-24 18:16:48');
 
-
+-- ----------------------------
+-- Table structure for `tbl_news`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_news`;
 CREATE TABLE `tbl_news` (
   `id` varchar(30) NOT NULL,
@@ -433,15 +440,33 @@ CREATE TABLE `tbl_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_news"
-#
+-- ----------------------------
+-- Records of tbl_news
+-- ----------------------------
 
+-- ----------------------------
+-- Table structure for `tbl_parentuser_reported`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_parentuser_reported`;
+CREATE TABLE `tbl_parentuser_reported` (
+  ` phone` varchar(11) NOT NULL,
+  `nickName` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `personalWord` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
+  `headerImg` varchar(1024) DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
+  `closeDays` int(10) DEFAULT NULL,
+  PRIMARY KEY (` phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Structure for table "tbl_parent_userinfo"
-#
+-- ----------------------------
+-- Records of tbl_parentuser_reported
+-- ----------------------------
+INSERT INTO `tbl_parentuser_reported` VALUES ('110', 'dnmd', 'ok', 'xxx.jpg', '阿斯顿', '0');
+INSERT INTO `tbl_parentuser_reported` VALUES ('120', 'cbnd', '安市', 'xx.jpv', '阿斯顿', '0');
 
+-- ----------------------------
+-- Table structure for `tbl_parent_userinfo`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_parent_userinfo`;
 CREATE TABLE `tbl_parent_userinfo` (
   `phone` varchar(20) NOT NULL,
@@ -450,8 +475,9 @@ CREATE TABLE `tbl_parent_userinfo` (
   `sex` varchar(10) DEFAULT NULL,
   `area` varchar(50) DEFAULT NULL,
   `birthday` varchar(50) DEFAULT NULL,
-  `achieve` int(11) DEFAULT NULL,
-  `personalWord` varchar(50) DEFAULT NULL,
+  `imei` varchar(1024) DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `personalWord` varchar(255) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`phone`),
   UNIQUE KEY `id` (`id`) USING BTREE
@@ -460,39 +486,43 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
-INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '发货1231', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', '12312312', 'header13513171332');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '阿斯顿', '1970-10-10', '0', null, 'header15227856991');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'sunsunsun', 'female', '贵州省，贵阳市，乌当区', '1998-12-14', '0', '哈哈', 'header15230867500');
-INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', '-', 'headerkefuxw');
+INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '发货1231', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', null, '12312312', 'header13513171332');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '阿斯顿', '1970-10-10', '0', null, null, 'header15227856991');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'sunsunsun', 'female', '贵州省，贵阳市，乌当区', '1998-12-14', '0', null, '哈哈', 'header15230867500');
+INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', null, '-', 'headerkefuxw');
 
 -- ----------------------------
 -- Table structure for `tbl_post`
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_post`;
 CREATE TABLE `tbl_post` (
-  `id` int(30) NOT NULL AUTO_INCREMENT,
-  `nickName` varchar(30) DEFAULT NULL,
-  `headimg` varchar(50) DEFAULT NULL,
-  `content` varchar(500) DEFAULT NULL,
-  `personId` varchar(30) NOT NULL,
+  `id` int(30) NOT NULL,
+  `nickName` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `headimg` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `content` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `personId` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
   `time` datetime DEFAULT NULL,
   `imgs` varchar(2048) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
-INSERT INTO `tbl_post` VALUES ('159', 'sunsunsun', 'header15230867500', '大酒店', '491602', '2020-04-27 20:58:00', 'temp_photo1587992280173.jpg');
-INSERT INTO `tbl_post` VALUES ('160', 'mon', 'header15227856991', '拉去', '852000', '2020-05-17 16:00:31', 'temp_photo1587992280173.jpg');
-INSERT INTO `tbl_post` VALUES ('161', 'mon', 'header15227856991', '拍照', '852000', '2020-05-17 14:52:31', 'temp_photo1587992280173.jpg');
-INSERT INTO `tbl_post` VALUES ('162', 'sunsunsun', 'header15230867500', '是', '491602', '2020-05-20 16:34:05', 'SVID_20200519_233601_1.mp4\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg');
-INSERT INTO `tbl_post` VALUES ('163', 'sunsunsun', 'header15230867500', '试试', '491602', '2020-05-20 19:13:07', 'Screenshot_20200519_222642_com.kuaishou.nebula.jpg\",\"mmexport1587277665128.jpg\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg\",\"mmexport1587277665128.jpg\",\"wx_camera_1589020536367.jpg\",\"wx_camera_1588912749720.jpg\",\"1096708182.jpeg\",\"IMG_20200409_233648.jpg\",\"1098325509.jpeg\",\"IMG_20200407_001917.jpg\",\"997421641.jpeg');
-INSERT INTO `tbl_post` VALUES ('164', 'sunsunsun', 'header15230867500', '1', '491602', '2020-05-20 19:16:44', 'IMG_20190109_193153.jpg\",\"433503642_mh1547286904455.jpg\",\"IMG_20190219_165159.jpg\",\"IMG_20190107_131657.jpg\",\"IMG_20190101_222040.jpg\",\"IMG_20190105_234837.jpg\",\"IMG_20181106_171754.jpg\",\"IMG_20190101_122425.jpg\",\"IMG_20190107_134719.jpg');
-INSERT INTO `tbl_post` VALUES ('165', 'sunsunsun', 'header15230867500', '1', '491602', '2020-05-21 23:59:09', 'Screenshot_20200521_230553_com.kuaishou.nebula.jpg');
-INSERT INTO `tbl_post` VALUES ('166', 'sunsunsun', 'header15230867500', '试试', '491602', '2020-05-22 12:04:55', 'Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\",\"headerkefuxw.jpg\",\"header15227856991.jpg\",\"Screenshot_20200520_210448_com.vhome.chat.jpg\",\"Screenshot_20200520_204825_com.vhome.chat.jpg\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg');
-INSERT INTO `tbl_post` VALUES ('167', 'sunsunsun', 'header15230867500', '1', '491602', '2020-05-22 13:11:45', '1.mp4\",\"headerkefuzhanghao.jpg');
-INSERT INTO `tbl_post` VALUES ('168', 'sunsunsun', 'header15230867500', '1', '491602', '2020-05-22 13:12:02', 'headerkefuzhanghao.jpg');
+INSERT INTO `tbl_post` VALUES ('0', 'sunsunsun', 'header15230867500', 'sjsj', '491602', '2020-05-24 19:38:39', '[\"-4fd5f905fc13763a.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('180', 'sunsunsun', 'header15230867500', '还问我教教我', '491602', '2020-05-24 17:59:10', '[\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('181', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 18:17:10', '[\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"wx_camera_1590209231518.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('182', 'sunsunsun', 'header15230867500', '上', '491602', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('183', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('184', 'sunsunsun', 'header15230867500', '加速世界', '491602', '2020-05-24 18:47:04', '[\"-4fd5f905fc13763a.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('185', 'sunsunsun', 'header15230867500', '计算机三级', '491602', '2020-05-24 18:52:42', '[\"headerkefuxw.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('186', 'sunsunsun', 'header15230867500', '咳咳咳', '491602', '2020-05-24 19:00:18', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"-4fd5f905fc13763a.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('187', 'sunsunsun', 'header15230867500', '山市', '491602', '2020-05-24 19:03:53', '[\"headerkefuxw.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('188', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 18:17:10', '[\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"wx_camera_1590209231518.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('189', 'sunsunsun', 'header15230867500', '上', '491602', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('190', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('223', 'sunsunsun', 'header15230867500', '死死死', '491602', '2020-05-24 19:49:28', '[]');
+INSERT INTO `tbl_post` VALUES ('225', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 20:05:56', '[\"VID_20200523_140544.mp4\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`
@@ -508,7 +538,6 @@ CREATE TABLE `tbl_posts` (
 -- Records of tbl_posts
 -- ----------------------------
 
-
 -- ----------------------------
 -- Table structure for `tbl_post_copy`
 -- ----------------------------
@@ -519,44 +548,35 @@ CREATE TABLE `tbl_post_copy` (
   `headimg` varchar(50) DEFAULT NULL,
   `content` varchar(500) DEFAULT NULL,
   `personId` varchar(30) NOT NULL,
+  `phone` varchar(11) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   `imgs` varchar(2048) DEFAULT NULL,
   `examine` varchar(20) NOT NULL,
+  `rId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post_copy
 -- ----------------------------
-INSERT INTO `tbl_post_copy` VALUES ('183', 'mon', 'header15227856991', '加图删一个', '852000', '2020-05-17 14:51:55', '200856152244627_2.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('184', 'mon', 'header15227856991', '拍照', '852000', '2020-05-17 14:52:31', 'IMG_20200517_14521749.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('186', 'mon', 'header15227856991', '删一个视频', '852000', '2020-05-17 14:54:17', 'OIP.2xOrqtuh-c3BS4RVlKwQfQHaNK_pid\\u003dApi\\u0026dpr\\u003d2.jpg', '审核失败');
-INSERT INTO `tbl_post_copy` VALUES ('187', 'mon', 'header15227856991', '拉去', '852000', '2020-05-17 16:00:31', '200856152244627_2.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('188', 'sun', 'header15230867500', '视频', '491602', '2020-05-20 16:09:44', '200856152244627_2.jpg', '审核失败');
-INSERT INTO `tbl_post_copy` VALUES ('191', 'sun', 'header15230867500', '是', '491602', '2020-05-20 16:34:05', 'SVID_20200519_233601_1.mp4\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('192', 'sun', 'header15230867500', 'sjsj', '491602', '2020-05-20 16:46:19', 'wx_camera_1588912749720.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('193', 'sun', 'header15230867500', '试试', '491602', '2020-05-20 19:13:07', 'Screenshot_20200519_222642_com.kuaishou.nebula.jpg\",\"mmexport1587277665128.jpg\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg\",\"mmexport1587277665128.jpg\",\"wx_camera_1589020536367.jpg\",\"wx_camera_1588912749720.jpg\",\"1096708182.jpeg\",\"IMG_20200409_233648.jpg\",\"1098325509.jpeg\",\"IMG_20200407_001917.jpg\",\"997421641.jpeg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('194', 'sun', 'header15230867500', '1', '491602', '2020-05-20 19:16:44', 'IMG_20190109_193153.jpg\",\"433503642_mh1547286904455.jpg\",\"IMG_20190219_165159.jpg\",\"IMG_20190107_131657.jpg\",\"IMG_20190101_222040.jpg\",\"IMG_20190105_234837.jpg\",\"IMG_20181106_171754.jpg\",\"IMG_20190101_122425.jpg\",\"IMG_20190107_134719.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('195', 'sun', 'header15230867500', '1', '491602', '2020-05-21 23:59:09', 'Screenshot_20200521_230553_com.kuaishou.nebula.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('196', 'sun', 'header15230867500', '试试', '491602', '2020-05-22 12:04:55', 'Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\",\"headerkefuxw.jpg\",\"header15227856991.jpg\",\"Screenshot_20200520_210448_com.vhome.chat.jpg\",\"Screenshot_20200520_204825_com.vhome.chat.jpg\",\"Screenshot_20200519_222642_com.kuaishou.nebula.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('197', 'sun', 'header15230867500', '1', '491602', '2020-05-22 13:11:45', '1.mp4\",\"headerkefuzhanghao.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('198', 'sun', 'header15230867500', '1', '491602', '2020-05-22 13:12:02', 'headerkefuzhanghao.jpg', '已审核');
-INSERT INTO `tbl_post_copy` VALUES ('199', 'sun', 'header15230867500', '直接睡觉睡觉', '491602', '2020-05-23 17:13:34', '-4fd5f905fc13763a.jpg', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('200', 'sun', 'header15230867500', '找找', '491602', '2020-05-23 17:48:08', '', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('201', 'sun', 'header15230867500', '嘻嘻嘻', '491602', '2020-05-23 17:50:44', '', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('202', 'sun', 'header15230867500', '杀鸡', '491602', '2020-05-23 17:51:01', '-4fd5f905fc13763a.jpg', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('203', 'sun', 'header15230867500', '睡觉睡觉手机', '491602', '2020-05-23 17:51:43', 'Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('204', 'sun', 'header15230867500', '1', '491602', '2020-05-23 17:52:46', 'Screenshot_20200519_222642_com.kuaishou.nebula.jpg', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('205', 'sun', 'header15230867500', '就是生快生快', '491602', '2020-05-23 17:59:03', 'Screenshot_20200522_115008_com.vhome.chat.jpg', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('206', 'sun', 'header15230867500', '只剩下', '491602', '2020-05-23 17:59:19', '', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('207', 'sun', 'header15230867500', '现在在', '491602', '2020-05-23 17:59:25', '', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('208', 'sun', 'header15230867500', '嘻嘻嘻', '491602', '2020-05-23 17:59:34', '', '待审核');
-INSERT INTO `tbl_post_copy` VALUES ('209', 'sun', 'header15230867500', '少食多餐', '491602', '2020-05-23 17:59:43', '', '待审核');
+INSERT INTO `tbl_post_copy` VALUES ('213', 'sunsunsun', 'header15230867500', '上', '491602', '15230867500', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('214', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '15230867500', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('215', 'sunsunsun', 'header15230867500', '加速世界', '491602', '15230867500', '2020-05-24 18:47:04', '[\"-4fd5f905fc13763a.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('216', 'sunsunsun', 'header15230867500', '计算机三级', '491602', '15230867500', '2020-05-24 18:52:42', '[\"headerkefuxw.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('217', 'sunsunsun', 'header15230867500', '咳咳咳', '491602', '15230867500', '2020-05-24 19:00:18', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"-4fd5f905fc13763a.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('218', 'sunsunsun', 'header15230867500', '山市', '491602', '15230867500', '2020-05-24 19:03:53', '[\"headerkefuxw.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('219', 'sunsunsun', 'header15230867500', '倒计时', '491602', '15230867500', '2020-05-24 19:31:53', '[\"header15230867500.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('220', 'sunsunsun', 'header15230867500', 'sjsj', '491602', '15230867500', '2020-05-24 19:38:39', '[\"-4fd5f905fc13763a.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('221', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 19:46:17', '[\"bg15230867500.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('222', 'sunsunsun', 'header15230867500', '睡觉睡觉大家开心', '491602', '15230867500', '2020-05-24 19:49:21', '[]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('223', 'sunsunsun', 'header15230867500', '死死死', '491602', '15230867500', '2020-05-24 19:49:28', '[]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('224', 'sunsunsun', 'header15230867500', '睡觉睡觉手机', '491602', '15230867500', '2020-05-24 19:49:37', '[\"header15230867500.jpg\",\"bg15230867500.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('225', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 20:05:56', '[\"VID_20200523_140544.mp4\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('226', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 20:08:17', '[\"headerkefuxw.jpg\",\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]', '待审核', '1507bfd3f74068c75d7');
 
 -- ----------------------------
 -- Table structure for `tbl_post_report`
 -- ----------------------------
-
 DROP TABLE IF EXISTS `tbl_post_report`;
 CREATE TABLE `tbl_post_report` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -569,27 +589,9 @@ CREATE TABLE `tbl_post_report` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 
-
-#
-# Data for table "tbl_post_report"
-#
-
-INSERT INTO `tbl_post_report` VALUES (154,'屎','header15230867500','上','491602','2020-04-27 21:18:29','[\"temp_photo1587992315661.jpg\"]');
-
-#
-# Structure for table "tbl_posts"
-#
-
-DROP TABLE IF EXISTS `tbl_posts`;
-CREATE TABLE `tbl_posts` (
-  `num` int(11) NOT NULL DEFAULT '0',
-  `id` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "tbl_posts"
-#
+-- ----------------------------
+-- Records of tbl_post_report
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tbl_questions`
@@ -604,7 +606,7 @@ CREATE TABLE `tbl_questions` (
   `content` varchar(200) CHARACTER SET utf8 NOT NULL,
   `status` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_questions
@@ -626,14 +628,19 @@ INSERT INTO `tbl_questions` VALUES ('17', 'd', '15230867500', '1104a8979228f292c
 INSERT INTO `tbl_questions` VALUES ('18', 'QW ', '13513171332', '', 'QWE ', '请问请问', '1');
 INSERT INTO `tbl_questions` VALUES ('19', '11', '13513171332', '13065ffa4e8b884daa9', '11', '12', '1');
 INSERT INTO `tbl_questions` VALUES ('20', '1', '15230867500', '1104a8979228f292c09', '1', 'xxx处有bug', '1');
+INSERT INTO `tbl_questions` VALUES ('21', 'l', '15230867500', '1104a8979228f292c09', 'l', '哈哈哈哈\n', '1');
+INSERT INTO `tbl_questions` VALUES ('22', 'd', '15230867500', '1507bfd3f74068c75d7', 'd', 'sjsj', '1');
 
+-- ----------------------------
+-- Table structure for `tbl_relations_request`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_relations_request`;
 CREATE TABLE `tbl_relations_request` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_phone` varchar(11) NOT NULL,
   `send_name` varchar(20) CHARACTER SET utf8 NOT NULL,
   `receive_phone` varchar(11) NOT NULL,
-  `type` int(11) NOT NULL,
+  `type` varchar(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
@@ -668,7 +675,6 @@ INSERT INTO `tbl_relations_request` VALUES ('25', '15194980385', '子女子女�
 -- ----------------------------
 -- Table structure for `tbl_remind`
 -- ----------------------------
-
 DROP TABLE IF EXISTS `tbl_remind`;
 CREATE TABLE `tbl_remind` (
   `id` int(30) NOT NULL AUTO_INCREMENT,
@@ -677,16 +683,16 @@ CREATE TABLE `tbl_remind` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_remind"
-#
+-- ----------------------------
+-- Records of tbl_remind
+-- ----------------------------
+INSERT INTO `tbl_remind` VALUES ('1', 'hahah', '242424000');
+INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
+INSERT INTO `tbl_remind` VALUES ('12', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '15194980385');
 
-INSERT INTO `tbl_remind` VALUES (1,'hahah','242424000'),(2,'55555','242424000'),(3,'爸，我给你买了好酒，你记得去取啊','15194980385'),(12,'超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq','15194980385');
-
-#
-# Structure for table "tbl_reply_comment"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_reply_comment`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_reply_comment`;
 CREATE TABLE `tbl_reply_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -698,17 +704,7 @@ CREATE TABLE `tbl_reply_comment` (
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
-#
-# Data for table "tbl_reply_comment"
-#
-
-INSERT INTO `tbl_reply_comment` VALUES (6,14,'弗瑞','header6330654.jpg','275686',0,'天','2019-12-16 18:55:01'),(7,22,'嘻嘻哈哈','header18032168790.jpg','180321',0,'我是你妈妈','2020-04-08 09:55:03'),(8,25,'','','',0,'腹股沟管','2020-04-13 20:15:22'),(9,27,'','','',0,'宝宝vv','2020-04-14 11:34:57'),(10,38,'屎','header15230867500','491602',0,'？？','2020-04-24 21:03:23'),(11,38,'屎','header15230867500','491602',0,'哈哈','2020-04-24 21:03:30');
-
-#
-# Structure for table "tbl_step"
-#
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_reply_comment
@@ -725,15 +721,13 @@ CREATE TABLE `tbl_step` (
   PRIMARY KEY (`parentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tbl_step"
-#
+-- ----------------------------
+-- Records of tbl_step
+-- ----------------------------
 
-
-#
-# Structure for table "tbl_user"
-#
-
+-- ----------------------------
+-- Table structure for `tbl_user`
+-- ----------------------------
 DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE `tbl_user` (
   `phone` varchar(20) NOT NULL,
@@ -755,16 +749,3 @@ INSERT INTO `tbl_user` VALUES ('15194980385', '123456', '2019-12-03 15:29:25', '
 INSERT INTO `tbl_user` VALUES ('15227856991', '654321', '2020-02-15 16:03:24', '852000', null, null, '0');
 INSERT INTO `tbl_user` VALUES ('15230867500', '123456', '2019-10-15 16:03:24', '491602', '', '', '0');
 INSERT INTO `tbl_user` VALUES ('kefuxw', 'wanjpc123', '0000-00-00 00:00:00', '000000', null, null, '0');
-
--- ----------------------------
--- Table structure for `tbl_walkpath`
--- ----------------------------
-
-DROP TABLE IF EXISTS `tbl_walkpath`;
-CREATE TABLE `tbl_walkpath` (
-  `id` varchar(30) NOT NULL DEFAULT '',
-  `time` datetime DEFAULT NULL,
-  `img` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-

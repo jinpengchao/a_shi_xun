@@ -92,7 +92,7 @@ public class MyReceiver extends JPushMessageReceiver {
                 PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent2,0);
                 Notification builder = new NotificationCompat.Builder(context, "chId")
                         .setContentTitle("微家官方")//标题"微家官方", "您的反馈已被回复，点击查看", ""
-                        .setContentText("您的反馈已被客服回复，点击查看")//内容
+                        .setContentText("您收到了官方的消息！点击查看")//内容
                         .setSmallIcon(R.drawable.em_logo_uidemo)//图片
                         .setContentIntent(pendingIntent)//点击通知跳转
                         .setAutoCancel(true)//完成跳转自动取消通知
@@ -106,7 +106,7 @@ public class MyReceiver extends JPushMessageReceiver {
                 PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent2,0);
                 Notification builder = new NotificationCompat.Builder(context, "chId")
                         .setContentTitle("欢迎加入微家大家庭！")//标题
-                        .setContentText("您有一份微家使用说明书，请点击查看！")//内容
+                        .setContentText("您收到了官方的消息！点击查看")//内容
                         .setSmallIcon(R.drawable.em_logo_uidemo)//图片
                         .setContentIntent(pendingIntent)//点击通知跳转
                         .setAutoCancel(true)//完成跳转自动取消通知

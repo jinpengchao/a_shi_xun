@@ -23,14 +23,14 @@ import user.service.UserService;
 @WebServlet("/ShowAnswers")
 public class ShowAnswers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShowAnswers() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ShowAnswers() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,19 +42,18 @@ public class ShowAnswers extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 		String data = br.readLine();
-		String postId = null;
-		if(data==null || data.equals("")) {
-			postId = request.getParameter("currentid");
-			UserService u = new UserService();
-			String content =u.selectContentAndroidandHTML(postId);
-			request.setAttribute("content", content);
-			request.getRequestDispatcher("/page/links/returncontent.jsp").forward(request,response); 
-		}
+		String postId = request.getParameter("currentid");
+		UserService u = new UserService();
+		String content =u.selectContentAndroidandHTML(postId);
+		System.out.println(content+"**");
+		request.setAttribute("content", content);
+		request.getRequestDispatcher("/page/links/returncontent.jsp").forward(request,response); 
+
 		is.close();
 		out.close();
 		br.close();
-		
-		
+
+
 	}
 
 	/**
