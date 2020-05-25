@@ -57,7 +57,7 @@
 						</c:if>
 					</th>
 					<th>${p.time}</th>
-					<td><span style="margin-left: 15px;"><a href="/vhome/DeleteReport?id=${p.id}">删除</a>
+					<td><span style="margin-left: 15px;"><a href="/vhome/DeleteReport?id=${p.id}&currentrId=${p.rId}&currentphone=${p.phone}&currentcontent=${p.postContent}">删除</a>
 					<a href="/vhome/IgnoreReport?id=${p.id}">忽略</a></span></td>
 				</tr>
 				</c:forEach>

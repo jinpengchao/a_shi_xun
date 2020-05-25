@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/jmui_dialog_default_style">
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginRight="@dimen/adaptive_8dp"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/icon_jubao"
+            android:src="@drawable/jubao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_toRightOf="@id/icon_jubao"
+            android:id="@+id/dialog_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="确定举报该帖子？"
+            android:textSize="20dp"
+            android:textColor="@color/red"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="#808080"
+            android:background="@drawable/jmui_dialog_bottom_left_btn"
+            />
+
+        <Button
+            android:id="@+id/commit"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:text="确定"
+            android:textColor="#808080"
+            android:background="@drawable/jmui_dialog_bottom_right_btn"
+            />
+    </LinearLayout>
+
+</LinearLayout>

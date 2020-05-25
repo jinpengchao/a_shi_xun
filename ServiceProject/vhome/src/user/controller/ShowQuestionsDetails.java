@@ -19,24 +19,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import community.service.PostService;
 import entity.NewTicketBody;
 import entity.PostExamineBean;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import user.service.UserService;
 
 /**
  * Servlet implementation class ShowQuestions
  */
-@WebServlet("/ShowQuestions")
-public class ShowQuestions extends HttpServlet {
+@WebServlet("/ShowQuestionsDetails")
+public class ShowQuestionsDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowQuestions() {
+    public ShowQuestionsDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,16 +50,26 @@ public class ShowQuestions extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
-		List<NewTicketBody> questionsList = new ArrayList<>();
 		InputStream is = request.getInputStream();
 		PrintWriter out = response.getWriter();
-		UserService u = new UserService();
-		String s = request.getParameter("questions_status");
-		int status = Integer.parseInt(s);
-		questionsList=u.selectQuestions(status);
-		request.setAttribute("all_questions", questionsList);
-		request.setAttribute("questions_status", status);
-		request.getRequestDispatcher("/page/links/questions.jsp").forward(request,response); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
+		String data = br.readLine();
+		JSONObject json;
+		try {
+			json = new JSONObject(data);
+			String content = json.getString("content");
+			String phone = json.getString("phone");
+			UserService u = new UserService();
+			NewTicketBody question=u.selectQuestions(content,phone);
+			Gson gson = new Gson();
+			String cao = gson.toJson(question);
+			out.write(cao);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		out.flush();
+		out.close();
 	}
 
 	/**

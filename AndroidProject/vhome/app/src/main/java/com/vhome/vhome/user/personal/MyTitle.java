@@ -32,13 +32,21 @@ import static com.hyphenate.easeui.utils.EaseUserUtils.getUserInfo;
 
 
 public class MyTitle extends Activity {
+    private ImageView back;
     private MyProgressbar progressbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_title);
-
+        back = findViewById(R.id.back);
         progressbar = findViewById(R.id.my_progress);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //获取当前步数，获取当前等级，计算百分比
         progressbar.setProgress(76, 100);
     }

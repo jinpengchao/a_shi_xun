@@ -59,13 +59,17 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.saveMessage(id,title,phone,personId,content);
 	}
-	public void changeQuestionsType(int id) {
+	public void changeQuestionsType(int id,String content) {
 		UserDao userDao = new UserDao();
-		userDao.updateQuestions(id);
+		userDao.updateQuestions(id,content);
 	}
 	public List<NewTicketBody> selectQuestions(int status) {
 		UserDao userDao = new UserDao();
 		return userDao.findAllQuestuins(status);
+	}
+	public NewTicketBody selectQuestions(String content,String phone) {
+		UserDao userDao = new UserDao();
+		return userDao.findAllQuestuins(content,phone);
 	}
 	
 	

@@ -36,9 +36,11 @@ public class SaveReport extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		//接受后台发送的举报帖子的id
 		String idString=request.getParameter("postId11");
+		String rId=request.getParameter("rId");
+		String phone=request.getParameter("phone");
 		int id=Integer.parseInt(idString);
 		PostBean postBean=(new PostService()).findPost(id);
-		(new PostService()).insertPostReport(postBean);
+		(new PostService()).insertPostReport(postBean,rId,phone);
 	}
 
 	/**

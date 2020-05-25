@@ -623,7 +623,7 @@ public class UserDao {
 		PreparedStatement psmt = null;
 		try {
 			conn = util.getConnection();
-			String sql = "insert into tbl_questions values(?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_questions values(?,?,?,?,?,?,?,?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, 0);
 			psmt.setString(2, name);
@@ -632,6 +632,7 @@ public class UserDao {
 			psmt.setString(5, subject);
 			psmt.setString(6, content);
 			psmt.setInt(7, status);
+			psmt.setString(8, "-");
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
 				System.out.println("发送反馈成功");
@@ -684,13 +685,44 @@ public class UserDao {
 		}
 		return questionsList;
 	}
-	public void updateQuestions(int id) {
+	public NewTicketBody findAllQuestuins(String content ,String phone) {
+		DBUtil util = DBUtil.getInstance();
+		Connection conn = null;
+		NewTicketBody ticketBody = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = util.getConnection();
+			System.out.println(content+"*"+phone);
+			String sql = "select * from tbl_questions where answer_content=? and phone=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, content);
+			psmt.setString(2, phone);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				ticketBody = new NewTicketBody();
+				ticketBody.setCreatorName(rs.getString("name"));
+				ticketBody.setCreatorPhone(rs.getString("phone"));
+				ticketBody.setSubject(rs.getString("theme"));
+				ticketBody.setContent(rs.getString("content"));;
+			}
+			rs.close();
+			psmt.close();
+			util.closeConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ticketBody;
+	}
+	public void updateQuestions(int id,String content) {
 		DBUtil util = DBUtil.getInstance();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
 			conn = util.getConnection();
-			String sql = "update tbl_questions set status='"+1+"' where id='"+id+"'";
+			String sql = "update tbl_questions set status='"+1+"',answer_content='"+content+"' where id='"+id+"'";
 			psmt = conn.prepareStatement(sql);
 			int rs = psmt.executeUpdate();
 			if(rs>0) {
