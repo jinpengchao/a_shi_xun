@@ -327,32 +327,31 @@ public class CommentActivity extends Activity {
         String now = new SimpleDateFormat("MM.dd HH:mm").format(date);
         tvHotTime.setText(now);
         //显示图片
-//        String imgsData = "[\""+post.getImgs()+"\"]";
-        String imgsData = post.getImgs();
-        imgs = gson.fromJson(imgsData,new TypeToken<List<String>>(){}.getType());
         if(post.getImgs()!=null&&!"".equals(post.getImgs())){
-            for (String name:imgs) {
-                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
-                boolean isPic = isImgUrl(name);
-                if (true==isPic){//当是图片url时，只添加图片
-                    medias.add(new MyMedia(pUrl));
-                    Log.d(TAG,"图片的url："+pUrl);
-                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
-                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(CommentActivity.this,bitmap);
-                    String picPath = getVideoThumbnail.bitmapToStringPath(CommentActivity.this,vBitmap,name);
-                    medias.add(new MyMedia(picPath,pUrl));
+            String imgsData = post.getImgs();
+            imgs = gson.fromJson(imgsData,new TypeToken<List<String>>(){}.getType());
+            if (imgs.size()>0){//判断集合不为空
+                for (String name:imgs) {
+                    String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
+                    boolean isPic = isImgUrl(name);
+                    if (true==isPic){//当是图片url时，只添加图片
+                        medias.add(new MyMedia(pUrl));
+                        Log.d(TAG,"图片的url："+pUrl);
+                    }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                        String picPath = getVideoThumbnail.getFirstThumbPath(CommentActivity.this,name,pUrl);
+                        medias.add(new MyMedia(picPath,pUrl));
+                    }
                 }
+                ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+                for (MyMedia myMedia : medias) {
+                    String thumbnailUrl = myMedia.getImageUrl();
+                    String bigImageUrl = thumbnailUrl;
+                    String videoUrl = myMedia.getVideoUrl();
+                    nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+                }
+                NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+                nineGridViewGroup.setAdapter(nineGridViewAdapter);
             }
-            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
-            for (MyMedia myMedia : medias) {
-                String thumbnailUrl = myMedia.getImageUrl();
-                String bigImageUrl = thumbnailUrl;
-                String videoUrl = myMedia.getVideoUrl();
-                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
-            }
-            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-            nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
         tvHotComnum.setText(post.getCommentNum()+"");//显示评论数
         tvHotLikenum.setText(post.getLikeNum()+"");//显示点赞数

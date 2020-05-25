@@ -1,64 +1,80 @@
 package com.vhome.vhome.parents.fragment.community_hotspot.util;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.vhome.chat.R;
+import com.vhome.vhome.parents.fragment.community_hotspot.listener.onGetVideoThumbListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
 
-public class GetVideoThumbnail {
-    public GetVideoThumbnail() {
-        //no instance
-    }
-    /**
-     * 获取视频首帧图并转化为bitmap
-     * @param url
-     * @return
-     */
-    public Bitmap voidToFirstBitmap(String url){
+public class GetVideoThumbnail{
+    private static final String TAG = "GetVideoThumbnail";
+    public GetVideoThumbnail(){
 
-        Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
-        try {
-            if (Build.VERSION.SDK_INT >= 14) {
-                retriever.setDataSource(url, new HashMap<String, String>());
-            } else {
-                retriever.setDataSource(url);
-            }
-            bitmap = retriever.getFrameAtTime();
-        } catch (IllegalArgumentException ex) {
-            // Assume this is a corrupt video file
-        } catch (RuntimeException ex) {
-            // Assume this is a corrupt video file.
-        } finally {
-            try {
-                retriever.release();
-            } catch (RuntimeException ex) {
-                // Ignore failures while cleaning up.
-            }
+    };
+    //获取视频首帧缩略图路径
+//    public String getFirstThumbPath(Context context,String name,String url) {
+//        String savePath;
+//        File filePic;
+//        String ThumbPath = null;
+//        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//            savePath = "/sdcard/dskgxt/pic/";
+//        }else {
+//            savePath = context.getApplicationContext().getFilesDir().getAbsolutePath() + "/dskgxt/pic/";
+//        }
+//        filePic = new File(savePath + name+".jpg");
+//        if (!filePic.exists()) {
+//            Log.d(TAG, "getFirstThumbPath: 本地不存在：");
+//            ThumbPath = voidToFirstPath(context,url,name);
+//        }else {
+//            ThumbPath = filePic.getAbsolutePath();
+//        }
+//        return ThumbPath;
+//    }
+    public String getFirstThumbPath(Context context,String name,String url) {
+        String savePath;
+        File filePic;
+        String ThumbPath = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            savePath = "/sdcard/dskgxt/pic/";
+        }else {
+            savePath = context.getApplicationContext().getFilesDir().getAbsolutePath() + "/dskgxt/pic/";
         }
-        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
-            bitmap = ThumbnailUtils.extractThumbnail(bitmap,96,96, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+        filePic = new File(savePath + name+".jpg");
+        if (!filePic.exists()) {
+            Log.d(TAG, "getFirstThumbPath: 本地不存在：");
+            Bitmap fbitmap = MyBobAsynctack.getFirstBitmap(url);
+            Bitmap lbitmap = toConformBitmap(context,fbitmap);
+            ThumbPath = bitmapToStringPath(context,lbitmap,name);
+        }else {
+            ThumbPath = filePic.getAbsolutePath();
         }
-        return bitmap;
+        return ThumbPath;
     }
+
+    public String voidToFirstPath(Context context,String path,String name){
+        final String[] ThumbPath = new String[1];
+        //异步加载
+        MyBobAsynctack myBobAsynctack = new MyBobAsynctack(path);
+        myBobAsynctack.execute(path);
+        myBobAsynctack.setOnGetVideoThumbListener(new onGetVideoThumbListener() {
+            @Override
+            public void asyncTaskThumb(Bitmap bitmap) {
+                Log.d(TAG, "asyncTaskThumb: 获取第一帧视频图："+bitmap);
+                Bitmap conBitmap = toConformBitmap(context,bitmap);
+                ThumbPath[0] = bitmapToStringPath(context,conBitmap,name);
+            }
+        });
+        return ThumbPath[0];
+    }
+
 
     /**
      * 视频缩略图添加播放图标
@@ -68,17 +84,12 @@ public class GetVideoThumbnail {
      */
     public Bitmap toConformBitmap(Context context,Bitmap background) {
         Bitmap foreground = BitmapFactory.decodeResource(context.getResources(), R.drawable.ease_video_play_btn_small_nor);
-//        Resources r = context.getResources();
-//        Bitmap foreground=BitmapFactory.decodeResource(r, R.drawable.accept);
-//        Bitmap foreground = bmp.createBitmap(300, 300, Bitmap.Config.ARGB_8888 );
         if( background == null || foreground == null) {
             return null;
         }
 
         int bgWidth = background.getWidth();
         int bgHeight = background.getHeight();
-//        create the new blank bitmap 创建一个新的和SRC长度宽度一样的位图
-//        Bitmap bitmap = background.copy(Bitmap.Config.ARGB_8888, true);
         Bitmap bitmap = Bitmap.createBitmap(bgWidth,bgHeight,Bitmap.Config.ARGB_8888);
         Canvas cv = new Canvas(bitmap);
         //draw bg into
@@ -88,7 +99,7 @@ public class GetVideoThumbnail {
         //save all clip
         cv.save();//保存
         cv.restore();//存储
-        Log.d("获取", "toConformBitmap: 合并bitmap");
+        Log.d("获取", "toConformBitmap: 合并bitmap"+bitmap);
         return bitmap;
     }
     /**
@@ -111,6 +122,7 @@ public class GetVideoThumbnail {
                 filePic.getParentFile().mkdirs();
                 filePic.createNewFile();
             }
+            Log.d(TAG, "bitmapToStringPath: 获取保存之前的bitmap"+bitmap+"  ///路径::"+filePic.getAbsolutePath());
             FileOutputStream fos = new FileOutputStream(filePic);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();

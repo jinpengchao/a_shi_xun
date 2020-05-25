@@ -219,43 +219,43 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         String now = new SimpleDateFormat("MM-dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
         /**
          * 添加说说图片数据
          */
-        Log.d(TAG, "onBindViewHolder: 图片数据："+list.get(position).getImgs()+"::内容："+list.get(position).getPostContent());
-//        String imgs = "[\""+list.get(position).getImgs()+"\"]";
-        String imgs = list.get(position).getImgs();
-        Gson gson = new Gson();
-        List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
-        }.getType());
-        Log.d(TAG, "onBindViewHolder: imgsList数据个数："+imgsList.size());
         if(list.get(position).getImgs()!=null&&!"".equals(list.get(position).getImgs())){
-            for (String url:imgsList) {
-                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+url;
-                boolean isPic = isImgUrl(url);
-                if (true==isPic){//当是图片url时，只添加图片
-                    medias.add(new MyMedia(pUrl));
-                    Log.d(TAG,"图片的url："+pUrl);
-                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
-                    String picPath = getPicPath(url, pUrl);
+            Log.d(TAG, "onBindViewHolder: 图片数据："+list.get(position).getImgs()+"::内容："+list.get(position).getPostContent());
+            String imgs = list.get(position).getImgs();
+            Gson gson = new Gson();
+            List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
+            }.getType());
+            Log.d(TAG, "onBindViewHolder: imgsList数据个数："+imgsList.size());
+            if (imgsList.size()>0){
 
-                    Log.d(TAG, "onBindViewHolder: 视频展示图路径："+picPath);
-                    medias.add(new MyMedia(picPath,pUrl));
+                for (String name:imgsList) {
+                    String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
+                    boolean isPic = isImgUrl(name);
+                    if (true==isPic){//当是图片url时，只添加图片
+                        medias.add(new MyMedia(pUrl));
+                        Log.d(TAG,"图片的url："+pUrl);
+                    }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                        String picPath = getVideoThumbnail.getFirstThumbPath(context,name,pUrl);
+                        Log.d(TAG, "onBindViewHolder: 视频展示图路径："+picPath);
+                        medias.add(new MyMedia(picPath,pUrl));
+                    }
                 }
+                ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+                for (MyMedia myMedia : medias) {
+                    String thumbnailUrl = myMedia.getImageUrl();
+                    String bigImageUrl = thumbnailUrl;
+                    String videoUrl = myMedia.getVideoUrl();
+                    nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+                }
+                NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+                Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl()+"::内容："+list.get(position).getPostContent());
+                holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
             }
-            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
-            for (MyMedia myMedia : medias) {
-                String thumbnailUrl = myMedia.getImageUrl();
-                String bigImageUrl = thumbnailUrl;
-                String videoUrl = myMedia.getVideoUrl();
-                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
-            }
-            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-//            Log.d(TAG, "onBindViewHolder: medias数据："+medias.get(0).getImageUrl()+"::内容："+list.get(position).getPostContent());
-            holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
         // 为满足九宫格适配器数据要求，需要构造对应的List
 
@@ -360,18 +360,6 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                 return true;
             }
         });
-    }
-
-    public String getPicPath(String url, String pUrl) {
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-            }
-        }.start();
-        Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-        Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
-        return getVideoThumbnail.bitmapToStringPath(context,vBitmap,url);
     }
 
     @Override
