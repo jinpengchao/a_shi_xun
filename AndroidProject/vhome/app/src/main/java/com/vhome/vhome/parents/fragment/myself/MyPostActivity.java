@@ -1,8 +1,6 @@
 package com.vhome.vhome.parents.fragment.myself;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +15,7 @@ import com.vhome.vhome.parents.fragment.fragment.SpacesItemDecoration;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,9 +26,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -200,19 +196,11 @@ public class MyPostActivity extends Activity{
                     int position = msg.getData().getInt("position");
                     list.remove(position);
                     loadList.remove(position);
-                    Log.e(TAG, "handleMessage: 位置postion"+position );
+                    Log.d(TAG, "handleMessage: 位置postion"+position );
                     adapter.notifyDataSetChanged();
                     Toast.makeText(MyPostActivity.this,"删除成功！",Toast.LENGTH_SHORT).show();
                 }
                 adapter.notifyDataSetChanged();
-                //定位回到上一次的浏览位置
-//                firstPosition=sp.getInt("firstPosition", 0);
-//                top=sp.getInt("top", 0);
-//                int position = linearLayoutManager.findFirstVisibleItemPosition();
-//                View view = recyclerView.getChildAt(position);
-//                if (view != null) {
-//                    int top = view.getTop();
-//                }
                 linearLayoutManager.scrollToPositionWithOffset(firstPosition,top);
 
             }

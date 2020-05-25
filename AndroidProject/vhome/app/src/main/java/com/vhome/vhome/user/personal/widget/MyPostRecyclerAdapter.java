@@ -159,33 +159,33 @@ public class MyPostRecyclerAdapter extends RecyclerView.Adapter<MyPostRecyclerAd
         String now = new SimpleDateFormat("MM-dd HH:mm").format(date);
         holder.tvHotTime.setText(now);
         //加载说说图片
-        String imgs = null;
-        imgs = "[\""+list.get(i).getImgs()+"\"]";
-        Gson gson = new Gson();
-        ArrayList<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>() {
-        }.getType());
+
         if(list.get(i).getImgs()!=null&&!"".equals(list.get(i).getImgs())){
-            for (String name:imgsList) {
-                String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
-                boolean isPic = isImgUrl(name);
-                if (true==isPic){//当是图片url时，只添加图片
-                    medias.add(new MyMedia(pUrl));
-                }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
-                    Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-                    Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
-                    String picPath = getVideoThumbnail.bitmapToStringPath(context,vBitmap,name);
-                    medias.add(new MyMedia(picPath,pUrl));
+            String imgs = null;
+            imgs = list.get(i).getImgs();
+            Gson gson = new Gson();
+            List<String> imgsList = gson.fromJson(imgs, new TypeToken<List<String>>(){}.getType());
+            if (imgsList.size()>0){
+                for (String name:imgsList) {
+                    String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
+                    boolean isPic = isImgUrl(name);
+                    if (true==isPic){//当是图片url时，只添加图片
+                        medias.add(new MyMedia(pUrl));
+                    }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url
+                        String picPath = getVideoThumbnail.getFirstThumbPath(context,name,pUrl);
+                        medias.add(new MyMedia(picPath,pUrl));
+                    }
                 }
+                ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
+                for (MyMedia myMedia : medias) {
+                    String thumbnailUrl = myMedia.getImageUrl();
+                    String bigImageUrl = thumbnailUrl;
+                    String videoUrl = myMedia.getVideoUrl();
+                    nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
+                }
+                NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
+                holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
             }
-            ArrayList<NineGridItem> nineGridItemList = new ArrayList<>();
-            for (MyMedia myMedia : medias) {
-                String thumbnailUrl = myMedia.getImageUrl();
-                String bigImageUrl = thumbnailUrl;
-                String videoUrl = myMedia.getVideoUrl();
-                nineGridItemList.add(new NineGridItem(thumbnailUrl, bigImageUrl, videoUrl));
-            }
-            NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(nineGridItemList);
-            holder.nineGridViewGroup.setAdapter(nineGridViewAdapter);
         }
         //设置评论人数和点赞人数
         holder.tvHotLikenum.setText(list.get(i).getLikeNum() + "");

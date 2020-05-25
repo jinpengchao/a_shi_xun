@@ -125,19 +125,6 @@ public class NineGridViewGroup extends ViewGroup {
         int childrenCount = nineGridItemList.size();
         for (int i = 0; i < childrenCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
-//            LinearLayout layout = (LinearLayout) getChildAt(i);
-//            TextView tv = new TextView(getContext()); // 普通聊天对话
-//            tv.setText("我和猫猫是新添加的");
-//            tv.setBackgroundColor(Color.GRAY);
-//            LinearLayout.LayoutParams LP_WW = new LinearLayout.LayoutParams(
-//                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//            tv.setLayoutParams(LP_WW);
-//            layout.addView(tv);
-
-//            ImageView childrenView = new ImageView(getContext());
-//            childrenView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));  //设置图片宽高
-//            imageView.setImageResource(R.drawable.ic_launcher); //图片资源
-//            llWindLayout.addView(imageView); //动态添加图片
             int rowNum = i / columnCount;
             int columnNum = i % columnCount;
             int left = (gridWidth + gridSpacing) * columnNum + getPaddingLeft();
@@ -145,8 +132,6 @@ public class NineGridViewGroup extends ViewGroup {
             int right = left + gridWidth;
             int bottom = top + gridHeight;
             childrenView.layout(left, top, right, bottom);
-//            layout.layout(left,top,right,bottom);
-//            layout.addView(childrenView);
             if (mImageLoader != null) {
                 Log.d("Group", "onLayout: 加载的数据："+nineGridItemList.get(i).thumbnailUrl);
                 mImageLoader.onDisplayImage(getContext(),
