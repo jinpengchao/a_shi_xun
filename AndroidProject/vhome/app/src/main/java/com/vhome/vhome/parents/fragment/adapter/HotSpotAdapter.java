@@ -362,18 +362,6 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
         });
     }
 
-    public String getPicPath(String url, String pUrl) {
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-            }
-        }.start();
-        Bitmap bitmap = getVideoThumbnail.voidToFirstBitmap(pUrl);
-        Bitmap vBitmap = getVideoThumbnail.toConformBitmap(context,bitmap);
-        return getVideoThumbnail.bitmapToStringPath(context,vBitmap,url);
-    }
-
     @Override
     public int getItemCount() {
         return list.size();
