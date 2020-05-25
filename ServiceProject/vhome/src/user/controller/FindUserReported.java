@@ -17,16 +17,16 @@ import com.google.gson.Gson;
 import entity.ParentUserInfo;
 
 /**
- * Servlet implementation class GetUserInfo
+ * Servlet implementation class GetUserReported
  */
-@WebServlet("/GetUserInfo")
-public class GetUserInfo extends HttpServlet {
+@WebServlet("/FindUserReported")
+public class FindUserReported extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetUserInfo() {
+    public FindUserReported() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,21 +43,20 @@ public class GetUserInfo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/text;charset=utf-8");
-		PrintWriter out = response.getWriter();
 		String param = "空空空空如也";
 		param = request.getParameter("param");
 		System.out.println(param);
 		HttpSession session = request.getSession();
 			Gson json = new Gson();
 			List<ParentUserInfo> storeList = new ArrayList<ParentUserInfo>();
-			List<ParentUserInfo> list = (List<ParentUserInfo>) session.getAttribute("userParents");
+			List<ParentUserInfo> list = (List<ParentUserInfo>) session.getAttribute("userReposted");
 			for(int i=0;i<list.size();i++) {
 				String index = list.get(i).toString().trim();
 				if(index.contains(param)) {
 					storeList.add(list.get(i));
 				}
 			}
-			session.setAttribute("userParents",storeList);
-			request.getRequestDispatcher("/page/user/allUsers.jsp").forward(request,response);
+			session.setAttribute("userReposted",storeList);
+			request.getRequestDispatcher("/page/links/bugList.jsp").forward(request,response);
 	}
 }

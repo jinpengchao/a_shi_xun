@@ -138,8 +138,8 @@
 					</div>
 	</form>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="${ctx }/page/user/editUser.js"></script>
-	<script type="text/javascript" src="${ctx }/page/user/address.js"></script>
-	<script type="text/javascript" src="${ctx }/page/user/user.js"></script>
+	<script type="text/javascript" src="editUser.js"></script>
+	<script type="text/javascript" src="address.js"></script>
+	<script type="text/javascript" src="user.js"></script>
 </body>
 </html>
