@@ -536,7 +536,7 @@ public class NewPostActivity extends Activity {
             String imgs = gson.toJson(imgsName);
             p.setImgs(imgs);
             final String data = gson.toJson(p);
-
+            Log.e("dataaaaaaa",data);
             new Thread(){
                 @Override
                 public void run() {

@@ -148,7 +148,7 @@ layui.config({
 			type : 1,
 			content : '	<div class="admin-header-lock" id="lock-box">'+
 							'<div class="admin-header-lock-img"><img src="images/face.jpg"/></div>'+
-							'<div class="admin-header-lock-name" id="lockUserName">请叫我马哥</div>'+
+							'<div class="admin-header-lock-name" id="lockUserName">超级管理员</div>'+
 							'<div class="input_btn">'+
 								'<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入密码解锁.." name="lockPwd" id="lockPwd" />'+
 								'<button class="layui-btn" id="unlock">解锁</button>'+
@@ -223,7 +223,7 @@ layui.config({
 	        id: 'LAY_layuipro',
 	        btn: ['火速围观'],
 	        moveType: 1,
-	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;font-size:30px"><p>经过多方努力，后台管理已于2020年5月25日顺利完成，纵使困顿难行，亦当砥砺奋进</p></div>',
+	        content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;font-size:15px"><p>经过多方努力，后台管理已于2020年5月25日顺利完成，纵使困顿难行，亦当砥砺奋进！</p></div>',
 	        success: function(layero){
 				var btn = layero.find('.layui-layer-btn');
 				btn.css('text-align', 'center');

@@ -159,7 +159,6 @@ public class CommentActivity extends Activity {
         getCommentData();
 
     }
-
     //评论与回复的长按删除
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
@@ -610,12 +609,8 @@ public class CommentActivity extends Activity {
                     addComment();
                     break;
                 case R.id.iv_hot_person:
-
+                    break;
                 case R.id.tv_hot_name:
-                    Intent person = new Intent();
-                    person.putExtra("personId",post.getPersonId());
-                    person.setClass(CommentActivity.this, ShowMyselfActivity.class);
-                    startActivity(person);
                     break;
                 case R.id.tv_attention:
                     break;

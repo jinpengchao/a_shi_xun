@@ -14,11 +14,6 @@
 		"href": "page/links/bugList.jsp",
 		"spread": false
 },{
-	"title" : "举报管理",
-	"icon" : "&#xe61c;",
-	"href" : "page/404.jsp",
-	"spread" : false
-},{
 	"title" : "问题反馈",
 	"icon" : "&#xe630;",
 	"href" : "",

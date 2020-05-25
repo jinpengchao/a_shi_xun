@@ -165,6 +165,12 @@
             </intent-filter>
         </receiver>
         <activity
+            android:name="com.vhome.vhome.parents.fragment.news.WebBroserServices"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name="com.vhome.vhome.user.personal.ShowMessageDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

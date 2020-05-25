@@ -236,7 +236,7 @@ public class HotSpotAdapter extends RecyclerView.Adapter<HotSpotAdapter.ViewHold
                 for (String name:imgsList) {
                     String pUrl = "http://" + (new MyApp()).getIp() + ":8080/vhome/images/"+name;
                     boolean isPic = isImgUrl(name);
-                    if (true==isPic){//当是图片url时，只添加图片
+                    if (name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".bmp") || name.endsWith(".gif") || name.endsWith(".png")){
                         medias.add(new MyMedia(pUrl));
                         Log.d(TAG,"图片的url："+pUrl);
                     }else {//当是视频的时候，获取视频缩略图作为图片，并加入视频url

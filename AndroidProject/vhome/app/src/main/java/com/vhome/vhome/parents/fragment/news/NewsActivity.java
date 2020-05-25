@@ -96,14 +96,12 @@ public class NewsActivity extends Activity {
         lvStus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                WebView webView=findViewById(R.id.web_view);//绑定ID
-                webView.setWebViewClient(new WebViewClient());//添加WebViewClient实例
-                webView.loadUrl(news.get(i).getUrl());//添加浏览器地址
-//                Intent intent=new Intent();
-//                intent.setAction(Intent.ACTION_VIEW);
+                Intent intent=new Intent();
+                intent.putExtra("url",news.get(i).getUrl());
 //                intent.setData(Uri.parse(news.get(i).getUrl()));//用于
 //                //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
-//                startActivity(intent);
+                intent.setClass(NewsActivity.this,WebBroserServices.class);
+                startActivity(intent);
             }
         });
         srl.setOnRefreshListener(new OnRefreshListener() {
