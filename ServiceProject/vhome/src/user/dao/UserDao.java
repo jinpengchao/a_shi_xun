@@ -1045,6 +1045,7 @@ public class UserDao {
 		switch(result) {
 		case "TTT":
 			System.out.println("审核通过，无问题！！");
+			break;
 		case "FTT":
 			sql = "update tbl_parent_userInfo set "
 					+ "nickName=?,status=?,closeDays=?"
