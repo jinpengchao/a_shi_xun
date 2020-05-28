@@ -30,6 +30,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.vhome.chat.R;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
+import com.vhome.vhome.parents.fragment.community_hotspot.activity.SearchPostActivity;
 import com.vhome.vhome.parents.fragment.fragment.HotspotFragment;
 import com.vhome.vhome.parents.fragment.fragment.HealthFragment;
 import com.vhome.vhome.parents.fragment.fragment.AttentionFragment;
@@ -47,6 +48,7 @@ public class CommunityFragment extends Fragment{
     private CommonTabLayout mTablayout;
     private NoScrollViewPager mViewPager;
     private ImageView addPost;
+    private ImageView searchPost;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,6 +69,14 @@ public class CommunityFragment extends Fragment{
         mViewPager.setAdapter(myFragmentPagerAdapter);
     }
     public void initListener(){
+        searchPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intenet  = new Intent();
+                intenet.setClass(getActivity(), SearchPostActivity.class);
+                startActivity(intenet);
+            }
+        });
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +117,7 @@ public class CommunityFragment extends Fragment{
         mTablayout = (CommonTabLayout) view.findViewById(R.id.uc_tablayout);
         mViewPager = (NoScrollViewPager) view.findViewById(R.id.uc_viewpager);
         addPost = view.findViewById(R.id.add_spot);
+        searchPost = view.findViewById(R.id.search_spot);
     }
     public String[] getNames() {
         String[] mNames = new String[]{"热闹事", "收音机", "关注"};

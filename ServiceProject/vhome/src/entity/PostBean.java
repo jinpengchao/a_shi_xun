@@ -89,10 +89,14 @@ public class PostBean {
 	}
 	@Override
 	public String toString() {
-		return "PostBean [id=" + id + ", nickName=" + nickName + ", headimg=" + headimg + ", postContent=" + postContent
+		return "[id=" + id + ", nickName=" + nickName + ", headimg=" + headimg + ", postContent=" + postContent
 				+ ", personId=" + personId + ", time=" + time + ", imgs=" + imgs + ", commentNum=" + commentNum
 				+ ", likeNum=" + likeNum + ", save_status=" + save_status + ", like_status=" + like_status
 				+ ", attention_status=" + attention_status + "]";
+	}
+	
+	public String select() {
+		return id+":"+nickName+":"+postContent+":"+personId+":"+time;
 	}
 	
 	
