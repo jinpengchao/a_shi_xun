@@ -24,6 +24,7 @@ import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
