@@ -52,6 +52,7 @@ public class ControlUserReposted extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		userService = new UserService();
 		String nameCheck = request.getParameter("nameCheck");
+		System.out.println(nameCheck);
 		String headCheck = request.getParameter("headerCheck");
 		String pwCheck = request.getParameter("pwCheck");
 		int dayOff = Integer.valueOf(request.getParameter("time"));
@@ -59,6 +60,8 @@ public class ControlUserReposted extends HttpServlet {
 		if((nameCheck!=null&&!nameCheck.equals(" "))&&(headCheck!=null&&!headCheck.equals(" "))&&(pwCheck!=null&&!pwCheck.equals(" "))&&(phone!=null&&!phone.equals(" "))) {
 			userService.closeDays(nameCheck,headCheck,pwCheck,dayOff,phone);
 			out.write(1);//返回成功标志
+		}else {
+			System.out.println("参数错误");
 		}
 	}
 

@@ -21,20 +21,22 @@ public class PostExamineDao {
 	 * @throws上午9:12:53
 	 * returntype:long
 	 */
-	public long insertPost1(PostBean post) {
+	public long insertPost1(PostBean post,String rId,String phone) {
 		long n = 0;
 		DBUtil util = new DBUtil();
 		try {
 			Connection con = util.getConnection();
-			String sql = "insert into tbl_post_report(id,nickName,headimg,content,personId,time,imgs) values(?,?,?,?,?,?,?)";
+			String sql = "insert into tbl_post_report(id,nickName,headimg,content,personId,time,imgs,rId,phone) values(?,?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, 0);
+			ps.setInt(1, post.getId());
 			ps.setString(2, post.getNickName());
 			ps.setString(3, post.getHeadimg());
 			ps.setString(4, post.getPostContent());
 			ps.setString(5, post.getPersonId());
 			ps.setString(6, post.getTime());
 			ps.setString(7, post.getImgs());
+			ps.setString(8, rId);
+			ps.setString(9, phone);
 			n = ps.executeUpdate();
 			ps.close();
 		} catch (ClassNotFoundException e) {
@@ -78,6 +80,8 @@ public class PostExamineDao {
 				post.setPersonId(rs.getString("personId"));
 				post.setTime(rs.getString("time"));
 				post.setImgs(rs.getString("imgs"));
+				post.setrId(rs.getString("rId"));
+				post.setPhone(rs.getString("phone"));
 				list.add(post);
 			}
 			rs.close();

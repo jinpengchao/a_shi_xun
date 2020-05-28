@@ -60,14 +60,14 @@ public class UpdateExamine extends HttpServlet {
 				System.out.println("success");
 			}
 			int idd = Integer.parseInt(id);
-			us.insertAdminMessage(idd,"您的帖子已通过审核，点击查看",phone,personId,"-");
+			us.insertAdminMessage(idd,"恭喜！您的帖子已通过审核，点击查看",phone,personId,"-");
 		}else {
 			if (JpushClientUtil.sendToRegistrationId(rId, "",
 					"", "", "") == 1) {
 				System.out.println("success");
 			}
 			int idd = Integer.parseInt(id);
-			us.insertAdminMessage(idd,"您的帖子没有通过审核，请检查是否违反社区规定",phone,personId,"-");
+			us.insertAdminMessage(idd,"很遗憾！您的帖子没有通过审核，请检查是否违反社区规定！",phone,personId,"-");
 		}
 		
 		response.sendRedirect("/vhome/ShowExamine");

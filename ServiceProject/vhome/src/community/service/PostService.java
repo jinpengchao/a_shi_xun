@@ -42,8 +42,8 @@ public class PostService {
 		return (new PostExamineDao()).delPostByReport(id);
 	}
 	//根据插入举报的帖子
-	public long insertPostReport(PostBean postBean) {
-		return (new PostExamineDao()).insertPost1(postBean);
+	public long insertPostReport(PostBean postBean,String rId,String phone) {
+		return (new PostExamineDao()).insertPost1(postBean,rId,phone);
 	}
 	//通过id查找审核帖子
 	public PostExamineBean findPostExamine(int id) {

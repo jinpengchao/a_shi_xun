@@ -918,7 +918,7 @@ public class ParentMain extends BaseActivity {
 
             @Override
             public void onBindServiceCallback(int errorNo, String message) {
-                viewUtil.showToast(ParentMain.this,
+                Log.e("轨迹服务",
                         String.format("绑定服务回调, errorNo:%d, message:%s ", errorNo, message));
             }
 
@@ -954,7 +954,7 @@ public class ParentMain extends BaseActivity {
                         }
                     }
                 }
-                viewUtil.showToast(ParentMain.this,
+               Log.e("轨迹服务",
                         String.format("开启轨迹服务, errorNo:%d, message:%s ", errorNo, message));
             }
 
@@ -982,7 +982,7 @@ public class ParentMain extends BaseActivity {
                     editor.commit();
                     unregisterPowerReceiver();
                 }
-                viewUtil.showToast(ParentMain.this,
+               Log.e("轨迹服务",
                         String.format("停止轨迹服务, errorNo:%d, message:%s ", errorNo, message));
             }
 
@@ -1008,7 +1008,7 @@ public class ParentMain extends BaseActivity {
                     stopRealTimeLoc();
                     startRealTimeLoc(packInterval);
                 }
-                viewUtil.showToast(ParentMain.this,
+                Log.e("轨迹采集",
                         String.format("轨迹采集, errorNo:%d, message:%s ", errorNo, message));
             }
 
@@ -1034,19 +1034,19 @@ public class ParentMain extends BaseActivity {
                     startRealTimeLoc(Constants.LOC_INTERVAL);
 
                 }
-                viewUtil.showToast(ParentMain.this,
+                Log.e("轨迹服务",
                         String.format("停止采集, errorNo:%d, message:%s ", errorNo, message));
             }
 
             @Override
             public void onPushCallback(byte messageType, PushMessage pushMessage) {
                 if (messageType < 0x03 || messageType > 0x04) {
-                    viewUtil.showToast(ParentMain.this, pushMessage.getMessage());
+                    Log.e("轨迹服务", pushMessage.getMessage());
                     return;
                 }
                 FenceAlarmPushInfo alarmPushInfo = pushMessage.getFenceAlarmPushInfo();
                 if (null == alarmPushInfo) {
-                    viewUtil.showToast(ParentMain.this,
+                    Log.e("轨迹服务",
                             String.format("onPushCallback, messageType:%d, messageContent:%s ", messageType,
                                     pushMessage));
                     return;
@@ -1069,7 +1069,7 @@ public class ParentMain extends BaseActivity {
 
             @Override
             public void onInitBOSCallback(int errorNo, String message) {
-                viewUtil.showToast(ParentMain.this,
+                Log.e("轨迹服务",
                         String.format("onInitBOSCallback, errorNo:%d, message:%s ", errorNo, message));
 
             }

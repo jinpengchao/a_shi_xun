@@ -8,6 +8,7 @@ import cn.edu.heuet.littlecurl.ninegridview.preview.NineGridViewGroup;
 
 import com.vhome.vhome.MyApp;
 import com.vhome.chat.R;
+import com.vhome.vhome.children.fragment.dialog.MyDialog;
 import com.vhome.vhome.parents.fragment.adapter.ExpandListAdapter;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.AttentionBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.CollectionBean;
@@ -18,10 +19,12 @@ import com.vhome.vhome.parents.fragment.community_hotspot.entity.PostBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.entity.ReplyDetailBean;
 import com.vhome.vhome.parents.fragment.community_hotspot.util.GetVideoThumbnail;
 import com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity;
+import com.vhome.vhome.user.personal.util.ToastUtil;
+import com.vhome.vhome.user.personal.widget.CircleImageView;
 import com.vhome.vhome.util.ConnectionUtil;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -68,6 +71,7 @@ import java.util.List;
 import static com.vhome.vhome.parents.fragment.adapter.HotSpotAdapter.isImgUrl;
 
 public class CommentActivity extends Activity {
+    private Dialog myDialog;
     private static final String TAG = "CommentActivity";
     private ExpandableListView expandableListView;
     private EditText edtCommentContent;
@@ -76,7 +80,7 @@ public class CommentActivity extends Activity {
     private MyClickListener listener;
     private List<CommentDetailBean> commentList;
     private PostBean post;
-    private ImageView ivHotPerson;
+    private CircleImageView ivHotPerson;
     private TextView tvHotName;
     private TextView tvHotContent;
     private TextView tvHotTime;
@@ -84,6 +88,7 @@ public class CommentActivity extends Activity {
     private TextView tvHotComnum;
     private ImageView ivHotlike;
     private TextView tvHotLikenum;
+    private TextView tvJubao;
     private NineGridViewGroup nineGridViewGroup;
     private RelativeLayout rlPostSave;
     private RelativeLayout rlPostLike;
@@ -153,7 +158,6 @@ public class CommentActivity extends Activity {
         getCommentData();
 
     }
-
     //评论与回复的长按删除
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
@@ -550,6 +554,7 @@ public class CommentActivity extends Activity {
         rlPostSave = findViewById(R.id.rl_post_save);
         rlPostLike = findViewById(R.id.rl_post_like);
         tvAttention = findViewById(R.id.tv_attention);
+        tvJubao = findViewById(R.id.tv_jubao);
     }
 
     private void registerListener() {
@@ -560,6 +565,7 @@ public class CommentActivity extends Activity {
         ivHotPerson.setOnClickListener(listener);
         tvHotName.setOnClickListener(listener);
         tvAttention.setOnClickListener(listener);
+        tvJubao.setOnClickListener(listener);
     }
     class MyClickListener implements View.OnClickListener{
         @Override
@@ -602,36 +608,32 @@ public class CommentActivity extends Activity {
                     addComment();
                     break;
                 case R.id.iv_hot_person:
-
+                    break;
                 case R.id.tv_hot_name:
-                    Intent person = new Intent();
-                    person.putExtra("personId",post.getPersonId());
-                    person.setClass(CommentActivity.this, ShowMyselfActivity.class);
-                    startActivity(person);
                     break;
                 case R.id.tv_attention:
-                    //添加关注
-                    if (post.getAttention_status()==1){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
-                        builder.setTitle("温馨提示：");
-                        builder.setMessage("确定要取消关注吗？");
-                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                tvAttention.setText("+关注");
-                                GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
-                                myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionColor));
-                                post.setAttention_status(0);
-                                delAttention();
-                                Log.i(TAG, "onClick: 已经取消关注");
-                            }
-                        });
-                        builder.setNegativeButton("取消",null);
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-                    }else if (post.getAttention_status()==0){
-                        addAttention();
-                    }
+                    break;
+                case R.id.tv_jubao:
+                    View views = getLayoutInflater().inflate(R.layout.dialog_jubao, null);
+                    myDialog = new MyDialog(CommentActivity.this, 0, 0, views, R.style.DialogTheme);
+                    Button cancle = (Button)views.findViewById(R.id.cancle);
+                    Button ok = (Button)views.findViewById(R.id.commit);
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendJubao(post.getId());
+                            myDialog.dismiss();
+                            ToastUtil.showImageToas(CommentActivity.this,"举报成功，感谢您为社区净化作出的贡献");
+                        }
+                    });
+                    cancle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            myDialog.dismiss();
+                        }
+                    });
+                    myDialog.setCancelable(true);
+                    myDialog.show();
                     break;
             }
         }
@@ -725,34 +727,21 @@ public class CommentActivity extends Activity {
     }
 
     /**
-     * 添加关注
+     * 举报帖子
      */
-    private void addAttention() {
-        //准备数据
-        AttentionBean attention = new AttentionBean();
-        attention.setAttentionPersonId(post.getPersonId());
-        SharedPreferences sp = getSharedPreferences((new MyApp()).getPathInfo(),MODE_PRIVATE);
-        attention.setPersonId(sp.getString("id",""));
-//        修改UI
-        tvAttention.setText("已关注");
-        GradientDrawable myGrad = (GradientDrawable)tvAttention.getBackground();
-        myGrad.setColor(ContextCompat.getColor(CommentActivity.this,R.color.attentionedColor));
-        post.setAttention_status(1);
+    private void sendJubao(int postId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("registrationID",MODE_PRIVATE);
+        SharedPreferences sharedPreferences1 = getSharedPreferences("parentUserInfo",MODE_PRIVATE);
+        String rId = sharedPreferences.getString("id","");
+        String phone = sharedPreferences1.getString("phone","");
         new Thread(){
             @Override
             public void run() {
-                Gson gson = new Gson();
-                String attentionData = gson.toJson(attention);
                 try {
-                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveAttentionServlet");
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveReport?postId11="+postId+"&rId="+rId+"&phone="+phone);
                     ConnectionUtil util = new ConnectionUtil();
-                    HttpURLConnection connection = util.sendData(url,attentionData);
-                    String receive = util.getData(connection);
-                    if (null!=receive&&!"".equals(receive)){
-                        Log.i(TAG,"添加关注成功"+attentionData);
-                    }else {
-                        Log.e(TAG,"添加关注出错");
-                    }
+                    String data = util.getData(url);
+                    util.sendMsg(data,10086,handler);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

@@ -14,7 +14,25 @@ public class PostBean {
     private int save_status = 0;//标志位判断当前用户是否收藏过本帖
     private int like_status = 0;//标志位判断当前用户是否点赞过本帖
     private int attention_status = 0;//标志位判断当前用户是否关注发帖人
+    private String rId;
+    private String phone;
+    
+    
+    
+    
 	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getrId() {
+		return rId;
+	}
+	public void setrId(String rId) {
+		this.rId = rId;
+	}
 	public String getPostContent() {
 		return postContent;
 	}

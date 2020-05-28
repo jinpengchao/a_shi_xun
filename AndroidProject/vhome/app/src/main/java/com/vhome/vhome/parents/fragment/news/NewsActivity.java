@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -95,9 +97,10 @@ public class NewsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(news.get(i).getUrl()));//用于
-                //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+                intent.putExtra("url",news.get(i).getUrl());
+//                intent.setData(Uri.parse(news.get(i).getUrl()));//用于
+//                //intent正在操作的数据，数据的形式通常是URi.parse()解析产生的
+                intent.setClass(NewsActivity.this,WebBroserServices.class);
                 startActivity(intent);
             }
         });

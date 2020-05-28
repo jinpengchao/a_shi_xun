@@ -15,50 +15,64 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
-<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+<link rel="stylesheet"
+	href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
 <link rel="stylesheet" href="../../css/user.css" media="all" />
 <script type="text/javascript">
 	//判断字符是否为空的方法
-	function isEmpty(obj){
-    	if(typeof obj == "undefined" || obj == null || obj == ""){
-        	return true;
-    	}else{
-        	return false;
-    	}
+	function isEmpty(obj) {
+		if (typeof obj == "undefined" || obj == null || obj == "") {
+			return true;
+		} else {
+			return false;
+		}
 	};
 	function judge() {
 		var inputValue = $("input[name='param']").val();
 		if (isEmpty(inputValue)) {
 			alert("请输入搜索的内容!");
+		}else{
+			$.ajax({
+				url : "${ctx}/GetUserInfo",
+				data : {"param" : inputValue},
+				type:"POST",
+				success : function(e) {
+					if (e) {
+						location.reload();
+					}
+				}
+			});
 		}
 	};
-	function del(id){
-		$.ajax({  
-    		url:"${ctx}/PerformUserInfo",//servlet文件的名称
-    		data:{"id":id},
-    		success:function(e){
-    			if(e){
-    				window.location="${ctx}/page/user/allUsers.jsp"
-    			}
-    		}
-    	});
+	function del(id) {
+		$.ajax({
+			url : "${ctx}/PerformUserInfo",//servlet文件的名称
+			data : {
+				"id" : id
+			},
+			success : function(e) {
+				if (e) {
+					window.location = "${ctx}/page/user/allUsers.jsp"
+				}
+			}
+		});
 	};
-	function jump(id,pw,name,img,ph,sex,area,imei,sta){
-		window.location="${ctx}/page/user/editUser.jsp?id="+id+"&personalWord="+pw
-				+"&nikeName="+name+"&headerImg="+img+"&phone="+ph
-				+"&sex="+sex+"&area="+area+"&imei="+imei+"&status="+sta;
+	function jump(id, pw, name, img, ph, sex, area, imei, sta) {
+		window.location = "${ctx}/page/user/editUser.jsp?id=" + id
+				+ "&personalWord=" + pw + "&nikeName=" + name + "&headerImg="
+				+ img + "&phone=" + ph + "&sex=" + sex + "&area=" + area
+				+ "&imei=" + imei + "&status=" + sta;
 	};
 </script>
 </head>
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
 		<div class="layui-inline">
-			<form class="layui-input-inline" action="${ctx}/GetUserInfo"
-				method="POST">
+			<div class="layui-input-inline">
 				<input type="text" name="param" placeholder="请输入关键字"
 					class="layui-input search_input">
-					<input type="submit" value="查询" onclick="judge()">
-			</form>
+			</div>
+			<a class="layui-btn search_btn" onclick="judge()">查询</a>
 		</div>
 	</blockquote>
 	<div class="layui-form users_list"

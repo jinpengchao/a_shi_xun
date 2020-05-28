@@ -54,7 +54,7 @@ public class SaveAnswer extends HttpServlet {
 		String iddddd="-"+id;
 		int iii = Integer.parseInt(iddddd);
 		us.insertAdminMessage(iii,"您的问题反馈已被回复，点击查看",phone,"",content);
-		us.changeQuestionsType(id);
+		us.changeQuestionsType(id,content);
     	
   	}
 

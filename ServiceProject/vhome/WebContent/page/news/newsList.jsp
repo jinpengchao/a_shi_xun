@@ -52,6 +52,15 @@
 								<c:if test="${fn:endsWith(i,'.jpg')}">
 									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
 								</c:if>
+								<c:if test="${fn:endsWith(i,'.jpeg')}">
+									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+								</c:if>
+								<c:if test="${fn:endsWith(i,'.gif')}">
+									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+								</c:if>
+								<c:if test="${fn:endsWith(i,'.png')}">
+									<img style="width: 50px;height: 50px;" src="/imageUrl/${i}">
+								</c:if>
 								<c:if test="${fn:endsWith(i,'.mp4')}">
 									<embed src="/imageUrl/${i}" width="300" height="300" autoplay="false">
 								</c:if>
@@ -85,7 +94,7 @@
 					</th>
 					<th><span style="color:green;">${p.examine }</span></th>
 					<th>${p.time}</th>
-					<th><a href="/vhome/DeleteExamine?id1=${p.id}">删除</a></th>
+					<th><a href="/vhome/DeleteExamine?id1=${p.id}">移除</a></th>
 					</tr>
 				</c:forEach>
 				<c:forEach items="${examine2}" var="p">
