@@ -1,8 +1,10 @@
 package com.vhome.vhome.parents.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +44,8 @@ import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
 import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.dummy.TabEntity;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CommunityFragment extends Fragment{
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -80,9 +85,18 @@ public class CommunityFragment extends Fragment{
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intenet  = new Intent();
-                intenet.setClass(getActivity(), NewPostActivity.class);
-                startActivity(intenet);
+                SharedPreferences sp = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
+                String status = sp.getString("status","默认？");
+                if(!status.equals("封禁")) {
+                    Intent intenet = new Intent();
+                    intenet.setClass(getActivity(), NewPostActivity.class);
+                    startActivity(intenet);
+                }else{
+                    Toast toast = Toast.makeText(getActivity(), "用户资料违规，禁止发贴", Toast.LENGTH_SHORT);
+                    //使用setGravity() 方法设置设置 Toast 在屏幕上的位置，第一个参数设置重力位置，有 TOP. BOTTOM. START 和 END 等值，第二.三个参数用于水平和垂直方向上的偏移量
+                    toast.setGravity(Gravity.TOP, 10, 180);
+                    toast.show();
+                }
             }
         });
         mTablayout.setOnTabSelectListener(new OnTabSelectListener() {
