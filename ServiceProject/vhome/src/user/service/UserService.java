@@ -46,7 +46,7 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		userDao.addUserInfo(phone, id, nikeName, sex, area, headerImg, type);
 	}
-	
+
 	public void insertQuestions(String name, String phone,String registationID,String content,String subject,int status) {
 		UserDao userDao = new UserDao();
 		userDao.saveQuestion(name, phone,registationID,content,subject,status);
@@ -71,12 +71,17 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.findAllQuestuins(content,phone);
 	}
-	
-	
+
+
 	//查询用户信息
 	public ParentUserInfo selectUserInfo(String phone, int type) {
 		UserDao userDao = new UserDao();
 		return userDao.findUserInfo(phone, type);
+	}
+	//
+	public void insertUserReported(ParentUserInfo pu) {
+		UserDao userDao = new UserDao();
+		userDao.charujubaoren(pu);
 	}
 	//按照id查找个人信息
 	public ParentUserInfo selectUserInfo(String id) {
@@ -137,32 +142,32 @@ public class UserService {
 		UserDao userDao = new UserDao();
 		return userDao.getUserList();
 	}
-	
+
 	public long getTotalParentUserNum(String tbl_name) {
 		UserDao userDao = new UserDao();
 		return userDao.getSum(tbl_name);
 	}
-	
-//	public List<ParentUserInfo> findChildrenInfo() {
-//		UserDao userDao = new UserDao();
-//		userDao.findChildUserInfo(id);
-//	}
-	
+
+	//	public List<ParentUserInfo> findChildrenInfo() {
+	//		UserDao userDao = new UserDao();
+	//		userDao.findChildUserInfo(id);
+	//	}
+
 	public void delParentUserInfo(String id) {
 		UserDao userDao = new UserDao();
 		userDao.delUser(id);
 	}
-	
+
 	public void updateParentUserInfo(ParentUserInfo pf) {
 		UserDao userDao = new UserDao();
 		userDao.updateUser(pf);
 	}
-	
+
 	public List<ParentUserInfo> getParentUserReposted() {
 		UserDao userDao = new UserDao();
 		return userDao.getUserPosted();
 	}
-	
+
 	public void closeDays(String nameMark,String pwMark,String headerMark,int days,String phone) {
 		UserDao userDao = new UserDao();
 		userDao.definateColseDays(nameMark, pwMark, headerMark, days, phone);

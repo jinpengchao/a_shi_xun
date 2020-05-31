@@ -52,5 +52,4 @@
         android:paddingRight="8dp"
         android:src="@mipmap/setting" />
 
-
 </RelativeLayout>

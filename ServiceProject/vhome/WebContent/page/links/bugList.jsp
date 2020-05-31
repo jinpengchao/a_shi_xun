@@ -134,8 +134,8 @@
 							</div></td>
 						<td>
 							<div class="layui-inline">
-								<label class="layui-form-label"> <img
-									src="${ctx}/images/${ parents.headerImg}" />
+								<label class="layui-form-label"> <img width="70dp" height="70dp"
+									src="${ctx}/images/${ parents.headerImg}.jpg" />
 								</label>
 								<div style="width: 65px; font-size: 10px"
 									class="layui-input-block">

@@ -1,6 +1,7 @@
 package com.vhome.vhome.user.personal;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,9 +33,12 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +69,7 @@ import com.vhome.chat.ui.ChatActivity;
 import com.vhome.chat.ui.SettingActivity;
 import com.vhome.vhome.MainActivity;
 import com.vhome.vhome.MyApp;
+import com.vhome.vhome.children.fragment.dialog.MyDialog;
 import com.vhome.vhome.parents.ParentMain;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity;
 import com.vhome.vhome.parents.fragment.community_hotspot.activity.NewPostActivity;
@@ -75,6 +80,7 @@ import com.vhome.vhome.user.entity.ParentUserInfo;
 import com.vhome.vhome.user.entity.User;
 import com.vhome.vhome.user.personal.util.Dialogchooseattention;
 import com.vhome.vhome.user.personal.util.Dialogchoosephoto;
+import com.vhome.vhome.user.personal.util.ToastUtil;
 import com.vhome.vhome.user.personal.util.widget.NoScrollViewPager;
 import com.vhome.vhome.user.personal.fragment.MyPostFragment;
 import com.vhome.vhome.user.personal.fragment.MyFragmentPagerAdapter;
@@ -92,6 +98,7 @@ public class OthersSerlfActivity extends AppCompatActivity {
     public static String phone;
     public static String path;
     //========================
+    private Dialog myDialog;
     private Toolbar mToolBar;
     private ViewGroup titleContainer;
     private AppBarLayout mAppBarLayout;
@@ -238,9 +245,13 @@ public class OthersSerlfActivity extends AppCompatActivity {
      */
     private void initListener() {
         initMyselfInfo(personIds);
-        mSettingIv.setVisibility(View.GONE);
 
-
+        mSettingIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopMenu(v);
+            }
+        });
         addAttention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,6 +384,42 @@ public class OthersSerlfActivity extends AppCompatActivity {
         }
     }
 
+    public void showPopMenu(View view){
+        PopupMenu menu = new PopupMenu(this,view);
+        menu.getMenuInflater().inflate(R.menu.jubaocaidan,menu.getMenu());
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.add_item:
+                        View views = getLayoutInflater().inflate(R.layout.dialog_jubao, null);
+                        myDialog = new MyDialog(OthersSerlfActivity.this, 0, 0, views, R.style.DialogTheme);
+                        Button cancle = (Button)views.findViewById(R.id.cancle);
+                        Button ok = (Button)views.findViewById(R.id.commit);
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendJubao(phone);
+                                myDialog.dismiss();
+                                ToastUtil.showImageToas(OthersSerlfActivity.this,"举报成功");
+                            }
+                        });
+                        cancle.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                myDialog.dismiss();
+                            }
+                        });
+                        myDialog.setCancelable(true);
+                        myDialog.show();
+
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
+    }
     /**
      * @param alpha
      * @param state 0-正在变化 1展开 2 关闭
@@ -380,26 +427,45 @@ public class OthersSerlfActivity extends AppCompatActivity {
     public void groupChange(float alpha, int state) {
         lastState = state;
         mMsgIv.setAlpha(alpha);
-
+        mSettingIv.setAlpha(alpha);
         switch (state) {
             case 1://完全展开 显示白色
                 mMsgIv.setImageResource(R.mipmap.left);
+                mSettingIv.setImageResource(R.mipmap.jubaobai2);
                 mViewPager.setNoScroll(false);
                 break;
             case 2://完全关闭 显示黑色
                 mMsgIv.setImageResource(R.mipmap.left_black);
+                mSettingIv.setImageResource(R.mipmap.jubaohei2);
                 mViewPager.setNoScroll(false);
                 break;
             case 0://介于两种临界值之间 显示黑色
                 if (lastState != 0) {
                     mMsgIv.setImageResource(R.mipmap.left_black);
+                    mSettingIv.setImageResource(R.mipmap.jubaohei2);
                 }
                 //为什么禁止滑动？在介于开关状态之间，不允许滑动，开启可能会导致不好的体验
                 mViewPager.setNoScroll(true);
                 break;
         }
     }
-
+    private void sendJubao(String phone) {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+(new MyApp()).getIp()+":8080/vhome/SaveReport1?phone="+phone);
+                    ConnectionUtil util = new ConnectionUtil();
+                    String data = util.getData(url);
+                    util.sendMsg(data,10086,handler);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 
     /**
      * 获取状态栏高度

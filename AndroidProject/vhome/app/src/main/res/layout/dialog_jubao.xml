@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="确定举报该帖子？"
+            android:text="确定举报吗？    "
             android:textSize="20dp"
             android:textColor="@color/red"
             />

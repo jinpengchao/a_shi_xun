@@ -108,7 +108,7 @@
 						<td>${ parents.id}</td>
 						<td>${ parents.personalWord}</td>
 						<td>${ parents.nikeName}</td>
-						<td><img src="${ctx}/images/${ parents.headerImg}" /></td>
+						<td><img height="70dp" width="70dp" src="${ctx}/images/${ parents.headerImg}.jpg" /></td>
 						<td>${ parents.phone}</td>
 						<td>${ parents.sex}</td>
 						<td>${ parents.area}</td>
