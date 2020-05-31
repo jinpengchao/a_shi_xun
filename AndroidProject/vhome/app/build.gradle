@@ -189,6 +189,10 @@ dependencies {
     implementation project(path: ':ucrop')
     implementation files('libs\\ActiveAndroid-master.jar')
     implementation project(path: ':ninegridview')
+    implementation project(path: ':flowlayout-lib')
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }
 
 // ADD THIS AT THE BOTTOM

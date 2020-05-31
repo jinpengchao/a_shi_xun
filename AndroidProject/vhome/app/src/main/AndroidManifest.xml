@@ -5,104 +5,27 @@
     android:versionCode="64"
     android:versionName="2.0.0">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
-
-    <uses-feature android:name="android.hardware.camera" />
-
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- 悬浮窗权限 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-    <!--bugly start-->
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--bugly end-->
-
-    <!-- 魅族推送配置 start-->
-    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到消息-->
-    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
-    <permission
-        android:name="${applicationId}.push.permission.MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.push.permission.MESSAGE" />
-    <!-- 兼容 flyme3.0 配置权限-->
-    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-    <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-    <!-- 魅族推送配置 end-->
-
-    <!-- Oppo推送配置 start -->
-    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
-    <!-- Oppo推送配置 end -->
-
-    <!-- Mi推送配置 start -->
-    <permission
-        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
-    <!-- Mi推送配置 end -->
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name="com.vhome.vhome.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/em_logo_uidemo"
+        android:label="微家"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:label="微家"
         tools:replace="android:label">
-
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-        <activity android:name="com.vhome.vhome.user.personal.MySelfActivity"   android:theme="@style/NoTitleTheme"/>
-        <activity android:name="com.vhome.vhome.user.personal.OthersSerlfActivity"   android:theme="@style/NoTitleTheme"/>
-        <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity"></activity>
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ShowSearchActivity"></activity>
+        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.SearchPostActivity" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.MySelfActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name="com.vhome.vhome.user.personal.OthersSerlfActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity android:name="com.vhome.vhome.parents.fragment.news.News1Activity" />
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TracingActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.TrackQueryOptionsActivity" />
-
-        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity"/>
+        <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.DetailActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.PlayerActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.radio_ximalaya.RadioActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.CommentActivity" />
@@ -111,59 +34,32 @@
         <activity android:name="com.vhome.vhome.parents.fragment.tools.AllToolsActivity" />
         <activity android:name="com.vhome.vhome.user.FindBackPwdActivity" />
         <activity android:name="com.vhome.vhome.user.LoginByCodeActivity" />
-        <activity android:name="com.vhome.vhome.user.CheckPhoneActivity"></activity>
+        <activity android:name="com.vhome.vhome.user.CheckPhoneActivity" />
         <activity android:name="com.vhome.vhome.user.RegisterActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.ClockDetail" />
         <activity android:name="com.vhome.vhome.parents.fragment.alarm.AlarmAlert" />
         <activity android:name="com.vhome.vhome.children.ChildrenMain" />
-        <activity android:name="com.vhome.vhome.MainActivity" /><!--***************************************************-->
+        <activity android:name="com.vhome.vhome.MainActivity" />
         <activity android:name="com.vhome.vhome.children.fragment.WarnFragment" />
-        <activity android:name="com.vhome.vhome.parents.fragment.news.NewsActivity" />
+        <activity android:name="com.vhome.vhome.parents.fragment.news.NewsActivity" /> <!-- *************************************************** -->
         <activity android:name="com.vhome.vhome.parents.fragment.weather.WeatherActivity" />
-
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyCollectionsActivity" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.MyPostActivity" />
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity" android:theme="@style/NoTitleTheme"/>
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity" android:theme="@style/NoTitleTheme"/>
+        <activity
+            android:name="com.vhome.vhome.parents.fragment.myself.MyFunsActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name="com.vhome.vhome.parents.fragment.myself.MyAttentionsActivity"
+            android:theme="@style/NoTitleTheme" />
         <activity android:name="com.vhome.vhome.parents.fragment.myself.ShowMyselfActivity" />
-        <activity android:name="com.vhome.vhome.lead.ViewPageActivity"/>
-        <activity android:name=".ui.SettingActivity"></activity>
-        <activity android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"  android:theme="@style/NoTitleTheme"></activity>
-        <activity android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity"  android:theme="@style/NoTitleTheme"/>
-        <!-- Since JCore2.0.0 Required SDK核心功能 -->
-        <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
-        <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
-        <service
-            android:name="com.vhome.vhome.user.personal.MyService"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
-            </intent-filter>
-        </service>
-        <!-- Required since 3.0.7 -->
-        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
-        <!-- 3.3.0开始所有事件将通过该类回调 -->
-        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
-        <receiver
-            android:name="com.vhome.vhome.user.personal.MyReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <!-- Required 用户注册SDK的intent -->
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!-- Required 用户接收SDK消息的intent -->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!-- Required 用户接收SDK通知栏信息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!-- Required 用户打开自定义通知栏的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-                <category android:name="com.vhome.chat" />
-            </intent-filter>
-        </receiver>
+        <activity android:name="com.vhome.vhome.lead.ViewPageActivity" />
+        <activity android:name=".ui.SettingActivity" />
+        <activity
+            android:name="com.vhome.vhome.parents.fragment.community_hotspot.activity.ImagePagerActivity"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name="com.vhome.vhome.parents.fragment.myself.MyNewsActivity"
+            android:theme="@style/NoTitleTheme" />
         <activity
             android:name="com.vhome.vhome.parents.fragment.news.WebBroserServices"
             android:launchMode="singleTask"
@@ -181,13 +77,18 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
+        <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
+        <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
         <activity
             android:name="com.vhome.vhome.user.personal.ImageShowerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize" /> <!-- Required since 3.0.7 -->
+        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
+        <!-- 3.3.0开始所有事件将通过该类回调 -->
+        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
         <activity
             android:name="com.vhome.vhome.children.fragment.EditChildNick"
             android:launchMode="singleTask"
@@ -230,14 +131,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name="com.vhome.vhome.parents.ParentMain"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
-        <!-- 开屏页 -->
         <activity
             android:name=".ui.SplashActivity"
             android:screenOrientation="portrait"
@@ -248,141 +147,115 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 登陆 -->
-
-        <!-- SDK接口诊断 -->
         <activity
             android:name=".ui.ServiceCheckActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize|stateVisible" />
-
-        <!-- 注册 -->
-        <!-- 聊天页面 -->
         <activity
             android:name=".ui.ChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustResize" />
-        <!-- 添加好友 -->
         <activity
             android:name=".ui.AddContactActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateVisible" />
-        <!-- 群组详情 -->
+            android:windowSoftInputMode="stateVisible" /> <!-- 开屏页 -->
         <activity
             android:name=".ui.GroupDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 群组列表 -->
+            android:theme="@style/horizontal_slide" /> <!-- 登陆 -->
+        <!-- SDK接口诊断 -->
         <activity
             android:name=".ui.GroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- 聊天室详情 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 注册 -->
+        <!-- 聊天页面 -->
         <activity
             android:name=".ui.ChatRoomDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 新建聊天室 -->
+            android:theme="@style/horizontal_slide" /> <!-- 添加好友 -->
         <activity
             android:name=".ui.NewChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- 新建群组 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 群组详情 -->
         <activity
             android:name=".ui.NewGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-        <!-- 退出群组提示框 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 群组列表 -->
         <activity
             android:name=".ui.ExitGroupDialog"
-            android:theme="@style/MyDialogStyleBottom" />
-        <!-- 群组选人 -->
+            android:theme="@style/MyDialogStyleBottom" /> <!-- 聊天室详情 -->
         <activity
             android:name=".ui.GroupPickContactsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" /> <!-- 新建聊天室 -->
         <activity
             android:name=".ui.PickAtUserActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 地图 -->
+            android:theme="@style/horizontal_slide" /> <!-- 新建群组 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-
-        <!-- 新的朋友邀请消息页面 -->
+            android:theme="@style/horizontal_slide" /> <!-- 退出群组提示框 -->
         <activity
             android:name=".ui.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 转发消息用户列表页面 -->
+            android:theme="@style/horizontal_slide" /> <!-- 群组选人 -->
         <activity
             android:name=".ui.ForwardMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" />
-        <!-- 自定义的contextmenu, 注意该Activity不能设置orientation，否则在Android 8.0设备上会报
-        java.lang.IllegalStateException: Only fullscreen opaque activities can request orientation -->
         <activity
             android:name=".ui.ContextMenuActivity"
-            android:theme="@style/MyDialogStyle" />
-        <!-- 显示下载大图页面 -->
+            android:theme="@style/MyDialogStyle" /> <!-- 地图 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 下载文件 -->
+            android:theme="@style/horizontal_slide" /> <!-- 新的朋友邀请消息页面 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 黑名单 -->
+            android:theme="@style/horizontal_slide" /> <!-- 转发消息用户列表页面 -->
         <activity
             android:name=".ui.BlacklistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-
-        <!-- 公开的群聊列表 -->
+        <!--
+ 自定义的contextmenu, 注意该Activity不能设置orientation，否则在Android 8.0设备上会报
+        java.lang.IllegalStateException: Only fullscreen opaque activities can request orientation
+        -->
         <activity
             android:name=".ui.PublicGroupsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" /> <!-- 显示下载大图页面 -->
         <activity
             android:name=".ui.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- 语音通话 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 下载文件 -->
         <activity
             android:name=".ui.VoiceCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 视频通话 -->
+            android:theme="@style/horizontal_slide" /> <!-- 黑名单 -->
         <activity
             android:name=".ui.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!--多人会议-->
+            android:theme="@style/horizontal_slide" /> <!-- 公开的群聊列表 -->
         <activity
             android:name=".conference.ConferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -390,68 +263,60 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-        <!-- 直播模式 -->
         <activity
             android:name=".conference.LiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 会议成员邀请 -->
+            android:theme="@style/horizontal_slide" /> <!-- 语音通话 -->
         <activity
             android:name=".conference.ConferenceInviteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/nornal_style"
-            android:windowSoftInputMode="adjustPan"/>
-
-        <!-- 群聊简单信息 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 视频通话 -->
         <activity
             android:name=".ui.GroupSimpleDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
-        <!-- 群组黑名单用户列表 -->
+            android:theme="@style/horizontal_slide" /> <!-- 多人会议 -->
         <activity
             android:name=".ui.GroupBlacklistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/horizontal_slide" /> <!-- 直播模式 -->
         <activity
             android:name=".ui.GroupSearchMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible" /> <!-- 会议成员邀请 -->
         <activity
             android:name=".ui.PublicGroupsSeachActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/horizontal_slide" /> <!-- 群聊简单信息 -->
         <activity
             android:name=".ui.EditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".ui.SharedFilesActivity"
+            android:windowSoftInputMode="stateVisible" /> <!-- 群组黑名单用户列表 -->
+        <activity
+            android:name=".ui.SharedFilesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            />
+            android:theme="@style/horizontal_slide" />
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- Ding msg send activity -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseDingMsgSendActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- Ding ack user list activity -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseDingAckUserListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- choose video -->
         <activity
             android:name=".ui.ImageGridActivity"
             android:screenOrientation="portrait"
@@ -461,33 +326,31 @@
             android:name=".ui.RecorderVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- upload error log -->
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- Ding msg send activity -->
         <activity
             android:name=".ui.DiagnoseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.MultiDeviceActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- Ding ack user list activity -->
+        <activity
+            android:name=".ui.MultiDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".ui.NamePasswordActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- choose video -->
+        <activity
+            android:name=".ui.NamePasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"/>
-        <!-- iOS offline push nick -->
+            android:theme="@style/horizontal_slide" />
         <activity
             android:name=".ui.OfflinePushNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- robots list -->
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- upload error log -->
         <activity
             android:name=".ui.NewRelationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <!-- user profile -->
         <activity
             android:name=".ui.UserProfileActivity"
             android:screenOrientation="portrait"
@@ -495,17 +358,73 @@
         <activity
             android:name=".ui.SetServersActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/horizontal_slide" /> <!-- iOS offline push nick -->
         <activity
             android:name=".ui.OfflinePushSettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/horizontal_slide" /> <!-- robots list -->
         <activity
             android:name=".ui.CallOptionActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/horizontal_slide" /> <!-- user profile -->
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!-- 开机自启动服务 -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1102200408181169#vhome" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="9b74dbfc-55c4-4441-9d0a-561ff21addc7" /> <!-- 开机自启动服务 -->
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="11025" /> <!-- FCM required start -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="${applicationId}"
+            android:exported="false" /> <!-- FCM required end -->
+        <!-- 华为 HMS Config -->
+        <!--
+接入HMSSDK PUSH模块需要注册，第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播，
+                此receiver类需要开发者自己创建并继承com.huawei.hms.support.api.push.PushReceiver类，
+                参考示例代码中的类：com.huawei.hmsagent.HuaweiPushRevicer
+        -->
+        <receiver
+            android:name="com.vhome.vhome.user.personal.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+
+                <!-- Required 用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required 用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required 用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required 用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.vhome.chat" />
+            </intent-filter>
+        </receiver> <!-- huawei push end -->
+        <!-- 设置环信应用的appkey -->
         <receiver android:name=".receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -513,54 +432,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
-
-        <!-- FCM required start -->
-        <service android:name=".fcm.EMFCMMSGService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".fcm.EMFCMTokenRefreshService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <!-- FCM required end -->
-
-        <!--华为 HMS Config-->
-        <!--接入HMSSDK PUSH模块需要注册，第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播，
-                此receiver类需要开发者自己创建并继承com.huawei.hms.support.api.push.PushReceiver类，
-                参考示例代码中的类：com.huawei.hmsagent.HuaweiPushRevicer-->
+        </receiver> <!-- 声明sdk所需的service -->
         <receiver android:name=".receiver.HMSPushReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收 TOKEN -->
-                <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->
-                <action android:name="com.huawei.android.push.intent.RECEIVE"/>
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
                 <!-- 可选，用于点击通知栏或通知栏上的按钮后触发 onEvent 回调 -->
-                <action android:name="com.huawei.android.push.intent.CLICK"/>
+                <action android:name="com.huawei.android.push.intent.CLICK" />
                 <!-- 可选，查看 PUSH 通道是否连接，不查看则不需要 -->
-                <action android:name="com.huawei.intent.action.PUSH_STATE"/>
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
-        <!-- huawei push end -->
-        <!-- 设置环信应用的appkey -->
-        <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="1102200408181169#vhome" />
-        <!-- 声明sdk所需的service -->
-        <service
-            android:name="com.hyphenate.chat.EMChatService"
-            android:exported="true"
-            tools:ignore="ExportedService" />
-        <service
-            android:name="com.hyphenate.chat.EMJobService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 声明sdk所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -572,115 +457,47 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-
-        <!-- 百度地图所需的service -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WPj4N17RL69xM8VCwtVLawXdk9DRuwBO" />
-
-        <!-- VIVO推送配置 start -->
-        <service
-            android:name="com.vivo.push.sdk.service.CommandClientService"
-            android:exported="true" />
-        <activity
-            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--推送配置项-->
-        <meta-data
-            android:name="com.vivo.push.api_key"
-            android:value="9b74dbfc-55c4-4441-9d0a-561ff21addc7" />
-        <meta-data
-            android:name="com.vivo.push.app_id"
-            android:value="11025" />
-
-        <receiver android:name="com.hyphenate.push.platform.vivo.EMVivoMsgReceiver" >
+        </receiver> <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.hyphenate.push.platform.vivo.EMVivoMsgReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.vivo.pushclient.action.RECEIVE" />
             </intent-filter>
-        </receiver>
-        <!-- VIVO推送配置 end -->
-
-        <!-- MEIZU推送配置 start -->
+        </receiver> <!-- 百度地图所需的service -->
         <receiver android:name="com.hyphenate.push.platform.meizu.EMMzMsgReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
-                <action android:name="com.meizu.flyme.push.intent.MESSAGE"
-                    />
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
                 <!-- 接收 register 消息 -->
-                <action
-                    android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收 unregister 消息-->
-                <action
-                    android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK"/>
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收 unregister 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
-                <action android:name="com.meizu.c2dm.intent.REGISTRATION"
-                    />
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
                 <action android:name="com.meizu.c2dm.intent.RECEIVE" />
-                <category android:name="${applicationId}"></category>
+
+                <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
-        <!-- MEIZU推送配置 end -->
-
-        <!-- Oppo推送配置 start -->
-        <service
-            android:name="com.coloros.mcssdk.PushService"
-            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
-            <intent-filter>
-                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
-            </intent-filter>
-        </service>
-        <!-- Oppo推送配置 end -->
-
-        <!-- Mi推送配置 start -->
-        <service
-            android:name="com.xiaomi.push.service.XMPushService"
-            android:enabled="true"
-            android:process=":pushservice" />
-
-        <service
-            android:name="com.xiaomi.push.service.XMJobService"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":pushservice" /> <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
-
-        <service
-            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
-            android:enabled="true"
-            android:exported="true" />
-
-        <service
-            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true" /> <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </receiver>
-
+        </receiver> <!-- VIVO推送配置 start -->
         <receiver
             android:name="com.xiaomi.push.service.receivers.PingReceiver"
             android:exported="false"
             android:process=":pushservice">
-
             <intent-filter>
                 <action android:name="com.xiaomi.push.PING_TIMER" />
             </intent-filter>
-
         </receiver>
-
         <receiver android:name="com.hyphenate.push.platform.mi.EMMiMsgReceiver">
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
@@ -691,16 +508,72 @@
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
-        </receiver>
-        <!-- Mi推送配置 end-->
-        <provider
-            android:name="com.activeandroid.content.ContentProvider"
-            android:authorities="${applicationId}"
-            android:exported="false" />
-
+        </receiver> <!-- 推送配置项 -->
         <receiver
             android:name="com.vhome.vhome.parents.fragment.alarm.CallAlarm"
             android:process=".remote" />
+
+        <service
+            android:name="com.vhome.vhome.user.personal.MyService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.EMFCMMSGService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service> <!-- VIVO推送配置 end -->
+        <!-- MEIZU推送配置 start -->
+        <service android:name=".fcm.EMFCMTokenRefreshService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service> <!-- MEIZU推送配置 end -->
+        <!-- Oppo推送配置 start -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true"
+            tools:ignore="ExportedService" /> <!-- Oppo推送配置 end -->
+        <!-- Mi推送配置 start -->
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" /> <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+        <service
+            android:name="com.coloros.mcssdk.PushService"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service> <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true"
+            android:process=":pushservice" />
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":pushservice" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" /> <!-- Mi推送配置 end -->
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
         <service
             android:name="com.baidu.trace.LBSTraceService"
             android:enabled="true"
@@ -712,6 +585,66 @@
             android:name="com.vhome.vhome.parents.fragment.alarm.AlarmService"
             android:enabled="true"
             android:exported="true" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+    <permission
+        android:name="${applicationId}.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+    <permission
+        android:name="${applicationId}.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" /> <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 悬浮窗权限 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!-- bugly start -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- bugly end -->
+    <!-- 魅族推送配置 start -->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到消息 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 兼容 flyme3.0 配置权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" /> <!-- 魅族推送配置 end -->
+    <!-- Oppo推送配置 start -->
+    <uses-permission android:name="${applicationId}.push.permission.MESSAGE" /> <!-- Oppo推送配置 end -->
+    <!-- Mi推送配置 start -->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" /> <!-- Mi推送配置 end -->
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

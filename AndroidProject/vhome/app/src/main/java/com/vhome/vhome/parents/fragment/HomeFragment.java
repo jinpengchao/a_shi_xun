@@ -345,7 +345,8 @@ public class HomeFragment extends BaseFragment {
                                     String birthday = userInfo.getBirthday();
                                     String personalWord = userInfo.getPersonalWord();
                                     String headImg = userInfo.getHeaderImg();
-                                    saveUserInfo(phone,id,nickName,sex,area,achieve,birthday,personalWord,headImg);
+                                    String status = userInfo.getStatus();
+                                    saveUserInfo(phone,id,nickName,sex,area,achieve,birthday,personalWord,headImg,status);
                                     editor.putString("test","ok");
                                     editor.commit();
                                 }
@@ -360,7 +361,7 @@ public class HomeFragment extends BaseFragment {
             }.start();
         }
     }
-    public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String achieve,String birthday,String personalWord,String headimg){
+    public void saveUserInfo(String phone,String id,String nickName,String sex,String area,String achieve,String birthday,String personalWord,String headimg,String status){
         sp2 = getActivity().getSharedPreferences("parentUserInfo", MODE_PRIVATE);
         editor2 = sp2.edit();
         editor2.putString("phone",phone);
@@ -372,6 +373,7 @@ public class HomeFragment extends BaseFragment {
         editor2.putString("birthday",birthday);
         editor2.putString("personalWord",personalWord);
         editor2.putString("headImg",headimg);
+        editor2.putString("status",status);
         editor2.commit();
     }
     public void getAlarm(){
