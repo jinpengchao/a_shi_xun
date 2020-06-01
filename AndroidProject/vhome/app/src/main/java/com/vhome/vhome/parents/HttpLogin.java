@@ -70,7 +70,7 @@ public class HttpLogin {
         return result;
     }
     public static String JasonAccpt2(String city) {
-        String address = "http://v.juhe.cn/weather/index?format=2&cityname="+city+"&key=7e89895360d2e112c6c79349707c3f02 ";
+        String address = "http://v.juhe.cn/weather/index?format=2&cityname="+city+"&key=f6ae80bdd9b1fdf590c7bf54bb487244";
         String result = "";
         try {
             URL url=new URL(address);
