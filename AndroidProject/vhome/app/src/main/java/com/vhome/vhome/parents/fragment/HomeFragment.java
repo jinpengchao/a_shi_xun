@@ -373,7 +373,7 @@ public class HomeFragment extends BaseFragment {
         editor2.putString("birthday",birthday);
         editor2.putString("personalWord",personalWord);
         editor2.putString("headImg",headimg);
-        editor2.putString("status",status);
+        editor2.putString("status","封禁");
         editor2.commit();
     }
     public void getAlarm(){

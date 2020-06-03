@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ShowSearchActivity extends AppCompatActivity {
+public class ShowSearchActivity extends Activity {
     private static final String TAG = "ShowSearchActivity";
     private String record;
     private RecyclerView recyclerView;
