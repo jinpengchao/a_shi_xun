@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50506
 File Encoding         : 65001
 
-Date: 2020-05-24 23:24:17
+Date: 2020-06-03 19:45:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `tbl_admin` (
 -- ----------------------------
 -- Records of tbl_admin
 -- ----------------------------
-INSERT INTO `tbl_admin` VALUES ('1', '1', '1', '朝爹', 'header15230867500.jpg');
+INSERT INTO `tbl_admin` VALUES ('1', '1093750621', '123456', '管理员靳朋朝', '368653986.jpg');
 
 -- ----------------------------
 -- Table structure for `tbl_admin_message`
@@ -46,45 +46,34 @@ CREATE TABLE `tbl_admin_message` (
   `unread` int(2) DEFAULT NULL,
   `content_answer` varchar(1000) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_admin_message
 -- ----------------------------
-INSERT INTO `tbl_admin_message` VALUES ('1', '欢迎光临微家大家庭，点击查看使用规则~', '0', '15230867500', '491602', '1', '');
-INSERT INTO `tbl_admin_message` VALUES ('2', '您的个人资料违规已被修改，点击查看', '0', '15230867500', '491602', '1', '');
-INSERT INTO `tbl_admin_message` VALUES ('3', '您的帖子已被更改，点击查看', '0', '15230867500', '491602', '1', '');
-INSERT INTO `tbl_admin_message` VALUES ('4', '您的帖子已被审核，点击查看', '159', '15230867500', '491602', '1', '');
-INSERT INTO `tbl_admin_message` VALUES ('21', '您的问题反馈已被回复，点击查看', '-9', '15230867500', '', '1', '驱蚊器翁群');
-INSERT INTO `tbl_admin_message` VALUES ('22', '您的问题反馈已被回复，点击查看', '-8', '15230867500', '', '1', '123123123');
-INSERT INTO `tbl_admin_message` VALUES ('23', '您的问题反馈已被回复，点击查看', '-10', '15230867500', '', '1', '好的，谢谢你，，，，，');
-INSERT INTO `tbl_admin_message` VALUES ('24', '您的问题反馈已被回复，点击查看', '-11', '15230867500', '', '1', 'adasdasdasd');
-INSERT INTO `tbl_admin_message` VALUES ('25', '您的问题反馈已被回复，点击查看', '-12', '15230867500', '', '1', '0..0.0.');
-INSERT INTO `tbl_admin_message` VALUES ('26', '您的问题反馈已被回复，点击查看', '-13', '15230867500', '', '1', '0000');
-INSERT INTO `tbl_admin_message` VALUES ('27', '您的问题反馈已被回复，点击查看', '-14', '15230867500', '', '1', '0.0.0.0');
-INSERT INTO `tbl_admin_message` VALUES ('28', '您的问题反馈已被回复，点击查看', '-15', '15230867500', '', '1', '恭喜发财');
-INSERT INTO `tbl_admin_message` VALUES ('29', '您的问题反馈已被回复，点击查看', '-16', '15230867500', '', '1', '好的好的');
-INSERT INTO `tbl_admin_message` VALUES ('30', '您的问题反馈已被回复，点击查看', '-17', '15230867500', '', '1', '阿斯达斯');
-INSERT INTO `tbl_admin_message` VALUES ('31', '您的问题反馈已被回复，点击查看', '-4', '13600000000', '', '0', '11111');
-INSERT INTO `tbl_admin_message` VALUES ('32', '您的问题反馈已被回复，点击查看', '-3', '15500000000', '', '0', '00000');
-INSERT INTO `tbl_admin_message` VALUES ('33', '您的问题反馈已被回复，点击查看', '-2', '15200000000', '', '0', '啊实打实大师');
-INSERT INTO `tbl_admin_message` VALUES ('34', '您的问题反馈已被回复，点击查看', '-18', '13513171332', '', '1', '企鹅翁群翁群无');
-INSERT INTO `tbl_admin_message` VALUES ('35', '您的问题反馈已被回复，点击查看', '-1', '13300000000', '', '0', '企鹅翁群无');
-INSERT INTO `tbl_admin_message` VALUES ('36', '您的问题反馈已被回复，点击查看', '-19', '13513171332', '', '1', '驱蚊器翁群翁群');
-INSERT INTO `tbl_admin_message` VALUES ('37', '您的问题反馈已被回复，点击查看', '-20', '15230867500', '', '1', '戚薇戚薇戚薇戚薇戚薇');
-INSERT INTO `tbl_admin_message` VALUES ('38', '您的问题反馈已被回复，点击查看', '-21', '15230867500', '', '1', '8520963.7410');
-INSERT INTO `tbl_admin_message` VALUES ('40', '您的问题反馈已被回复，点击查看', '215', '', '', '0', '-');
-INSERT INTO `tbl_admin_message` VALUES ('41', '您的问题反馈已被回复，点击查看', '216', '15230867500', '', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('42', '您的问题反馈已被回复，点击查看', '-22', '15230867500', '', '1', '20');
-INSERT INTO `tbl_admin_message` VALUES ('43', '您的帖子已通过审核，点击查看', '214', '', '491602', '0', '-');
-INSERT INTO `tbl_admin_message` VALUES ('44', '您的帖子没有通过审核，请检查是否违反社区规定', '217', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('45', '您的帖子没有通过审核，请检查是否违反社区规定', '219', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('46', '您的帖子已通过审核，点击查看', '220', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('47', '您的帖子已通过审核，点击查看', '221', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('48', '您的帖子已通过审核，点击查看', '222', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('49', '您的帖子已通过审核，点击查看', '223', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('50', '您的帖子没有通过审核，请检查是否违反社区规定', '224', '15230867500', '491602', '1', '-');
-INSERT INTO `tbl_admin_message` VALUES ('51', '您的帖子已通过审核，点击查看', '225', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('1', '欢迎光临微家大家庭，点击查看使用规则~', '-999999', '15230867500', '491602', '1', '使用');
+INSERT INTO `tbl_admin_message` VALUES ('2', '欢迎光临微家大家庭，点击查看使用规则~', '-999999', '15227856991', '852000', '0', '使用');
+INSERT INTO `tbl_admin_message` VALUES ('64', '恭喜！您的帖子已通过审核，点击查看', '231', '15227856991', '852000', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('71', '恭喜！您的帖子已通过审核，点击查看', '225', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('72', '恭喜！您的帖子已通过审核，点击查看', '244', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('73', '恭喜！您的帖子已通过审核，点击查看', '245', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('74', '恭喜！您的帖子已通过审核，点击查看', '246', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('83', '您的问题反馈已被回复，点击查看', '-29', '15230867500', '', '1', '尊敬的靳朋朝，你好：\r\n    巴拉巴拉');
+INSERT INTO `tbl_admin_message` VALUES ('84', '恭喜！您的帖子已通过审核，点击查看', '247', '15227856991', '', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('85', '您的问题反馈已被回复，点击查看', '-30', '15230867500', '', '1', '收到测试~~~！！！');
+INSERT INTO `tbl_admin_message` VALUES ('86', '很遗憾！您的帖子没有通过审核，请检查是否违反社区规定！', '248', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('87', '恭喜！您的帖子已通过审核，点击查看', '250', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('88', '您的问题反馈已被回复，点击查看', '-31', '15230867500', '', '1', '000000000');
+INSERT INTO `tbl_admin_message` VALUES ('89', '很遗憾！您的帖子没有通过审核，请检查是否违反社区规定！', '249', '15230867500', '491602', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('90', '您的帖子 \"九图展示馆\" 被其他用户举报，现已被删除，请注意遵守社区规定！', '0', '15230867500', '', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('91', '恭喜！您的帖子已通过审核，点击查看', '251', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('92', '您的帖子 \"发表\" 被其他用户举报，现已被删除，请注意遵守社区规定！', '0', '15230867500', '', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('93', '很遗憾！您的帖子没有通过审核，请检查是否违反社区规定！', '252', '15230867500', '491602', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('94', '很遗憾！您的帖子没有通过审核，请检查是否违反社区规定！', '253', '15230867500', '491602', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('95', '恭喜！您的帖子已通过审核，点击查看', '254', '15230867500', '491602', '1', '-');
+INSERT INTO `tbl_admin_message` VALUES ('97', '您的问题反馈已被回复，点击查看', '-33', '15230867500', '', '1', '尊敬的xxx:\r\n您好 您的反馈我们收到了！');
+INSERT INTO `tbl_admin_message` VALUES ('100', '恭喜！您的帖子已通过审核，点击查看', '255', '15230867500', '491602', '0', '-');
+INSERT INTO `tbl_admin_message` VALUES ('101', '您的帖子 \"发表\" 被其他用户举报，现已被删除，请注意遵守社区规定！', '0', '15230867500', '', '0', '-');
 
 -- ----------------------------
 -- Table structure for `tbl_alarm`
@@ -98,7 +87,7 @@ CREATE TABLE `tbl_alarm` (
   `content` varchar(200) DEFAULT NULL,
   `clocktype` int(11) NOT NULL,
   PRIMARY KEY (`alarmId`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_alarm
@@ -111,11 +100,16 @@ INSERT INTO `tbl_alarm` VALUES ('8', '13:06', '792997', '195412', '1231231231231
 INSERT INTO `tbl_alarm` VALUES ('16', '07:30', '9654782', '195412', '今天有活动，超市大减价', '0');
 INSERT INTO `tbl_alarm` VALUES ('26', '5:00', '1111111', '99663438', '888', '1');
 INSERT INTO `tbl_alarm` VALUES ('32', '09:22', '15194980385', '18032168790', '嗯', '0');
-INSERT INTO `tbl_alarm` VALUES ('35', '19:35', '15194980385', '15230867500', '别展示了，下来吧', '0');
+INSERT INTO `tbl_alarm` VALUES ('35', '19:35', '15194980385', '1523086750', '别展示了，下来吧', '0');
 INSERT INTO `tbl_alarm` VALUES ('36', '10:37', '15194980385', '18032168790', '别展示了，下来吧', '0');
 INSERT INTO `tbl_alarm` VALUES ('37', '10:00', '15194980385', '18032168790', '………', '0');
 INSERT INTO `tbl_alarm` VALUES ('38', '15:42', '15194980385', 'jpcaa', '6有6', '0');
-INSERT INTO `tbl_alarm` VALUES ('39', '15:10', '15194980385', 'sunsunsun(15230867500)', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '1');
+INSERT INTO `tbl_alarm` VALUES ('39', '12:10', '老二', '15230867500', '妈，该吃降压药了', '0');
+INSERT INTO `tbl_alarm` VALUES ('43', '15:21', '老二', '15230867500', '妈，改起来去晨练了！', '0');
+INSERT INTO `tbl_alarm` VALUES ('44', '06:15', '15194980385', '妈(15230867500)', '妈，改起来去晨练了！', '0');
+INSERT INTO `tbl_alarm` VALUES ('45', '06:15', '15194980385', '妈(15230867500)', '妈，改起来去晨练了！', '0');
+INSERT INTO `tbl_alarm` VALUES ('46', '05:00', '15194980385', '爸(15194980385)', '妈，该吃降压药了', '0');
+INSERT INTO `tbl_alarm` VALUES ('47', '06:15', '15194980385', '妈(15230867500)', '妈，改起来去晨练了！', '0');
 
 -- ----------------------------
 -- Table structure for `tbl_answers`
@@ -128,30 +122,19 @@ CREATE TABLE `tbl_answers` (
   `postId` int(10) NOT NULL,
   `registrationID` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_answers
 -- ----------------------------
-INSERT INTO `tbl_answers` VALUES ('35', '15230867500', '好的，谢谢您的反馈！', '9', '');
-INSERT INTO `tbl_answers` VALUES ('36', '15230867500', '驱蚊器翁群', '8', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('37', '15230867500', '好的，谢谢你，，，，，', '10', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('38', '15230867500', 'adasdasdasd', '11', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('39', '15230867500', '0..0.0.', '12', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('40', '15230867500', '0000', '13', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('41', '15230867500', '0.0.0.0', '14', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('42', '15230867500', '恭喜发财', '15', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('43', '15230867500', '好的好的', '16', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('44', '15230867500', '阿斯达斯', '17', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('45', '13600000000', '11111', '4', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('46', '15500000000', '00000', '3', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('47', '15200000000', '啊实打实大师', '2', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('48', '13513171332', '企鹅翁群翁群无', '18', '');
-INSERT INTO `tbl_answers` VALUES ('49', '13300000000', '企鹅翁群无', '1', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('50', '13513171332', '驱蚊器翁群翁群', '19', '13065ffa4e8b884daa9');
-INSERT INTO `tbl_answers` VALUES ('51', '15230867500', '戚薇戚薇戚薇戚薇戚薇', '20', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('52', '15230867500', '8520963.7410', '21', '1104a8979228f292c09');
-INSERT INTO `tbl_answers` VALUES ('53', '15230867500', '20', '22', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_answers` VALUES ('1', '13513171332', '谢谢支持，我们会继续努力的', '1', '1104a8979228f292c09');
+INSERT INTO `tbl_answers` VALUES ('2', '15194980385', '谢谢！！', '2', '1104a8979228f292c09');
+INSERT INTO `tbl_answers` VALUES ('3', '15227856991', '加油，构建美好社区！', '3', '1104a8979228f292c09');
+INSERT INTO `tbl_answers` VALUES ('66', '15230867500', '尊敬的靳朋朝，你好：\r\n    巴拉巴拉', '29', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_answers` VALUES ('67', '15230867500', '收到测试~~~！！！', '30', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_answers` VALUES ('68', '15230867500', '000000000', '31', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_answers` VALUES ('69', '15230867500', '尊敬的xxx：\r\n您的反馈我们收到了！', '33', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_answers` VALUES ('70', '15230867500', '尊敬的xxx:\r\n您好 您的反馈我们收到了！', '33', '1507bfd3f74068c75d7');
 
 -- ----------------------------
 -- Table structure for `tbl_child_userinfo`
@@ -170,7 +153,7 @@ CREATE TABLE `tbl_child_userinfo` (
 -- ----------------------------
 -- Records of tbl_child_userinfo
 -- ----------------------------
-INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '308462', '子女子女子女子女测测测测', 'female', '天国', 'header15194980385');
+INSERT INTO `tbl_child_userinfo` VALUES ('15194980385', '308462', '测', 'female', '天国', 'header15194980385');
 
 -- ----------------------------
 -- Table structure for `tbl_comment`
@@ -185,7 +168,7 @@ CREATE TABLE `tbl_comment` (
   `content` varchar(200) NOT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_comment
@@ -211,26 +194,29 @@ INSERT INTO `tbl_comment` VALUES ('29', '122', '', '', '', '？', '2020-04-14 20
 INSERT INTO `tbl_comment` VALUES ('30', '124', '293876', '屎坦克', 'header18032168790.jpg', '？', '2020-04-14 21:06:24');
 INSERT INTO `tbl_comment` VALUES ('31', '124', '293876', '屎坦克', 'header18032168790.jpg', '哦哦哦', '2020-04-14 21:06:27');
 INSERT INTO `tbl_comment` VALUES ('32', '125', '638880', '1666', 'rc_default_portrait.png', '哈哈哈', '2020-04-15 10:42:04');
-INSERT INTO `tbl_comment` VALUES ('33', '125', '491602', 'sunsunsun', 'header15230867500', '的', '2020-04-15 16:17:18');
-INSERT INTO `tbl_comment` VALUES ('34', '126', '491602', 'sunsunsun', 'header15230867500', '计算机', '2020-04-19 16:28:43');
-INSERT INTO `tbl_comment` VALUES ('35', '129', '491602', 'sunsunsun', 'header15230867500', '在你在家呢', '2020-04-24 19:13:48');
-INSERT INTO `tbl_comment` VALUES ('36', '128', '491602', 'sunsunsun', 'header15230867500', '日', '2020-04-24 21:03:06');
-INSERT INTO `tbl_comment` VALUES ('37', '128', '491602', 'sunsunsun', 'header15230867500', 'ok', '2020-04-24 21:03:10');
-INSERT INTO `tbl_comment` VALUES ('38', '128', '491602', 'sunsunsun', 'header15230867500', '尼玛', '2020-04-24 21:03:13');
-INSERT INTO `tbl_comment` VALUES ('39', '130', '491602', 'sunsunsun', 'header15230867500', '山', '2020-04-25 15:51:30');
-INSERT INTO `tbl_comment` VALUES ('40', '130', '491602', 'sunsunsun', 'header15230867500', '安安啦', '2020-04-25 15:51:33');
-INSERT INTO `tbl_comment` VALUES ('41', '156', '491602', 'sunsunsun', 'header15230867500', '牛逼', '2020-04-27 22:26:10');
-INSERT INTO `tbl_comment` VALUES ('42', '161', '491602', 'sunsunsun', 'header15230867500', '战局', '2020-05-20 18:54:21');
-INSERT INTO `tbl_comment` VALUES ('43', '161', '491602', 'sunsunsun', 'header15230867500', '发', '2020-05-22 16:52:53');
-INSERT INTO `tbl_comment` VALUES ('44', '161', '491602', 'sunsunsun', 'header15230867500', '下', '2020-05-22 16:52:55');
-INSERT INTO `tbl_comment` VALUES ('45', '161', '491602', 'sunsunsun', 'header15230867500', '等等', '2020-05-22 16:52:58');
-INSERT INTO `tbl_comment` VALUES ('46', '161', '491602', 'sunsunsun', 'header15230867500', '的东西', '2020-05-22 16:53:00');
-INSERT INTO `tbl_comment` VALUES ('47', '199', '491602', 'sunsunsun', 'header15230867500', '睡觉睡觉手机', '2020-05-23 17:21:06');
-INSERT INTO `tbl_comment` VALUES ('48', '199', '491602', 'sunsunsun', 'header15230867500', '待机时间多看看', '2020-05-23 17:21:09');
-INSERT INTO `tbl_comment` VALUES ('49', '199', '491602', 'sunsunsun', 'header15230867500', '择席', '2020-05-23 17:21:11');
-INSERT INTO `tbl_comment` VALUES ('50', '180', '491602', 'sunsunsun', 'header15230867500', '是男是女是你家的', '2020-05-24 18:19:46');
-INSERT INTO `tbl_comment` VALUES ('51', '180', '491602', 'sunsunsun', 'header15230867500', '在不在男士内裤收款方', '2020-05-24 18:19:49');
-INSERT INTO `tbl_comment` VALUES ('52', '180', '491602', 'sunsunsun', 'header15230867500', '占军', '2020-05-24 18:19:52');
+INSERT INTO `tbl_comment` VALUES ('33', '125', '491602', 'abcd', 'header15230867500', '的', '2020-04-15 16:17:18');
+INSERT INTO `tbl_comment` VALUES ('34', '126', '491602', 'abcd', 'header15230867500', '计算机', '2020-04-19 16:28:43');
+INSERT INTO `tbl_comment` VALUES ('35', '129', '491602', 'abcd', 'header15230867500', '在你在家呢', '2020-04-24 19:13:48');
+INSERT INTO `tbl_comment` VALUES ('36', '128', '491602', 'abcd', 'header15230867500', '日', '2020-04-24 21:03:06');
+INSERT INTO `tbl_comment` VALUES ('37', '128', '491602', 'abcd', 'header15230867500', 'ok', '2020-04-24 21:03:10');
+INSERT INTO `tbl_comment` VALUES ('38', '128', '491602', 'abcd', 'header15230867500', '尼玛', '2020-04-24 21:03:13');
+INSERT INTO `tbl_comment` VALUES ('39', '130', '491602', 'abcd', 'header15230867500', '山', '2020-04-25 15:51:30');
+INSERT INTO `tbl_comment` VALUES ('40', '130', '491602', 'abcd', 'header15230867500', '安安啦', '2020-04-25 15:51:33');
+INSERT INTO `tbl_comment` VALUES ('41', '156', '491602', 'abcd', 'header15230867500', '牛逼', '2020-04-27 22:26:10');
+INSERT INTO `tbl_comment` VALUES ('42', '161', '491602', 'abcd', 'header15230867500', '战局', '2020-05-20 18:54:21');
+INSERT INTO `tbl_comment` VALUES ('43', '161', '491602', 'abcd', 'header15230867500', '发', '2020-05-22 16:52:53');
+INSERT INTO `tbl_comment` VALUES ('44', '161', '491602', 'abcd', 'header15230867500', '下', '2020-05-22 16:52:55');
+INSERT INTO `tbl_comment` VALUES ('45', '161', '491602', 'abcd', 'header15230867500', '等等', '2020-05-22 16:52:58');
+INSERT INTO `tbl_comment` VALUES ('46', '161', '491602', 'abcd', 'header15230867500', '的东西', '2020-05-22 16:53:00');
+INSERT INTO `tbl_comment` VALUES ('47', '199', '491602', 'abcd', 'header15230867500', '睡觉睡觉手机', '2020-05-23 17:21:06');
+INSERT INTO `tbl_comment` VALUES ('48', '199', '491602', 'abcd', 'header15230867500', '待机时间多看看', '2020-05-23 17:21:09');
+INSERT INTO `tbl_comment` VALUES ('49', '199', '491602', 'abcd', 'header15230867500', '择席', '2020-05-23 17:21:11');
+INSERT INTO `tbl_comment` VALUES ('50', '180', '491602', 'abcd', 'header15230867500', '是男是女是你家的', '2020-05-24 18:19:46');
+INSERT INTO `tbl_comment` VALUES ('51', '180', '491602', 'abcd', 'header15230867500', '在不在男士内裤收款方', '2020-05-24 18:19:49');
+INSERT INTO `tbl_comment` VALUES ('52', '180', '491602', 'abcd', 'header15230867500', '占军', '2020-05-24 18:19:52');
+INSERT INTO `tbl_comment` VALUES ('53', '247', '852000', 'mon', 'header15227856991', '优秀', '2020-05-26 07:47:17');
+INSERT INTO `tbl_comment` VALUES ('54', '247', '491602', 'abcd', 'header15230867500', '分享', '2020-05-31 11:35:17');
+INSERT INTO `tbl_comment` VALUES ('55', '251', '491602', 'abcd', 'header15230867500', '真好', '2020-06-01 15:32:32');
 
 -- ----------------------------
 -- Table structure for `tbl_connect`
@@ -244,14 +230,15 @@ CREATE TABLE `tbl_connect` (
   `sendName` varchar(30) NOT NULL,
   `setName` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_connect
 -- ----------------------------
-INSERT INTO `tbl_connect` VALUES ('33', '15230867500', 'sunsunsun', '15194980385', '尿', '');
+INSERT INTO `tbl_connect` VALUES ('33', '15194980385', '爸', '15194980385', '尿', '');
 INSERT INTO `tbl_connect` VALUES ('34', '15230867500', '滚滚滚滚', '15230867500', '滚滚滚滚', '');
-INSERT INTO `tbl_connect` VALUES ('35', '15230867500', 'sunsunsun', '15194980385', '改', '');
+INSERT INTO `tbl_connect` VALUES ('35', '15230867500', '妈', '15194980385', '改', '');
+INSERT INTO `tbl_connect` VALUES ('36', '15230867500', 'sunsunsun', '15194980385', '测', '');
 
 -- ----------------------------
 -- Table structure for `tbl_goodcomment`
@@ -280,7 +267,7 @@ CREATE TABLE `tbl_goodpost` (
   `publishPersonId` varchar(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_goodpost
@@ -356,6 +343,17 @@ INSERT INTO `tbl_goodpost` VALUES ('93', '194', '491602', '491602', '2020-05-20 
 INSERT INTO `tbl_goodpost` VALUES ('94', '159', '491602', '491602', '2020-05-20 23:30:43');
 INSERT INTO `tbl_goodpost` VALUES ('95', '199', '491602', '491602', '2020-05-23 17:21:13');
 INSERT INTO `tbl_goodpost` VALUES ('96', '180', '491602', '491602', '2020-05-24 18:16:46');
+INSERT INTO `tbl_goodpost` VALUES ('97', '225', '491602', '491602', '2020-05-25 11:20:57');
+INSERT INTO `tbl_goodpost` VALUES ('98', '232', '491602', '852000', '2020-05-25 21:18:20');
+INSERT INTO `tbl_goodpost` VALUES ('99', '247', '852000', '852000', '2020-05-26 07:47:12');
+INSERT INTO `tbl_goodpost` VALUES ('100', '232', '852000', '852000', '2020-05-26 07:47:38');
+INSERT INTO `tbl_goodpost` VALUES ('101', '247', '491602', '852000', '2020-05-28 17:11:55');
+INSERT INTO `tbl_goodpost` VALUES ('102', '250', '491602', '491602', '2020-05-30 21:02:35');
+INSERT INTO `tbl_goodpost` VALUES ('103', '247', '', '852000', '2020-05-31 11:05:59');
+INSERT INTO `tbl_goodpost` VALUES ('104', '251', '491602', '491602', '2020-06-01 15:32:33');
+INSERT INTO `tbl_goodpost` VALUES ('105', '253', '491602', '491602', '2020-06-01 22:00:19');
+INSERT INTO `tbl_goodpost` VALUES ('106', '253', '491602', '491602', '2020-06-01 22:00:23');
+INSERT INTO `tbl_goodpost` VALUES ('107', '253', '491602', '491602', '2020-06-01 22:00:25');
 
 -- ----------------------------
 -- Table structure for `tbl_healthhouse`
@@ -399,12 +397,13 @@ CREATE TABLE `tbl_myattentions` (
   `attentionPersonId` varchar(30) NOT NULL,
   `personId` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_myattentions
 -- ----------------------------
-INSERT INTO `tbl_myattentions` VALUES ('47', '852000', '491602');
+INSERT INTO `tbl_myattentions` VALUES ('52', '491602', '852000');
+INSERT INTO `tbl_myattentions` VALUES ('60', '852000', '491602');
 
 -- ----------------------------
 -- Table structure for `tbl_mycollection`
@@ -416,7 +415,7 @@ CREATE TABLE `tbl_mycollection` (
   `postId` int(30) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_mycollection
@@ -425,6 +424,12 @@ INSERT INTO `tbl_mycollection` VALUES ('131', '491602', '165', '2020-05-10 22:25
 INSERT INTO `tbl_mycollection` VALUES ('133', '491602', '167', '2020-05-11 17:52:24');
 INSERT INTO `tbl_mycollection` VALUES ('134', '491602', '199', '2020-05-23 17:21:15');
 INSERT INTO `tbl_mycollection` VALUES ('136', '491602', '180', '2020-05-24 18:16:48');
+INSERT INTO `tbl_mycollection` VALUES ('137', '491602', '225', '2020-05-25 11:21:00');
+INSERT INTO `tbl_mycollection` VALUES ('138', '491602', '232', '2020-05-26 08:09:50');
+INSERT INTO `tbl_mycollection` VALUES ('139', '491602', '251', '2020-06-01 15:32:35');
+INSERT INTO `tbl_mycollection` VALUES ('140', '491602', '253', '2020-06-01 22:00:20');
+INSERT INTO `tbl_mycollection` VALUES ('141', '491602', '253', '2020-06-01 22:00:24');
+INSERT INTO `tbl_mycollection` VALUES ('142', '491602', '253', '2020-06-01 22:00:25');
 
 -- ----------------------------
 -- Table structure for `tbl_news`
@@ -449,20 +454,20 @@ CREATE TABLE `tbl_news` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_parentuser_reported`;
 CREATE TABLE `tbl_parentuser_reported` (
-  ` phone` varchar(11) NOT NULL,
+  `phone` varchar(11) DEFAULT NULL,
   `nickName` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
   `personalWord` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
   `headerImg` varchar(1024) DEFAULT NULL,
   `status` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
   `closeDays` int(10) DEFAULT NULL,
-  PRIMARY KEY (` phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_parentuser_reported
 -- ----------------------------
-INSERT INTO `tbl_parentuser_reported` VALUES ('110', 'dnmd', 'ok', 'xxx.jpg', '阿斯顿', '0');
-INSERT INTO `tbl_parentuser_reported` VALUES ('120', 'cbnd', '安市', 'xx.jpv', '阿斯顿', '0');
+INSERT INTO `tbl_parentuser_reported` VALUES ('15227856991', 'mon', '嘻嘻哈哈', 'header15227856991', '-', '0', '5');
 
 -- ----------------------------
 -- Table structure for `tbl_parent_userinfo`
@@ -479,6 +484,7 @@ CREATE TABLE `tbl_parent_userinfo` (
   `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `personalWord` varchar(255) DEFAULT NULL,
   `headimg` varchar(40) DEFAULT NULL,
+  `closeDays` int(10) DEFAULT NULL,
   PRIMARY KEY (`phone`),
   UNIQUE KEY `id` (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -486,10 +492,10 @@ CREATE TABLE `tbl_parent_userinfo` (
 -- ----------------------------
 -- Records of tbl_parent_userinfo
 -- ----------------------------
-INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '发货1231', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', null, '12312312', 'header13513171332');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '阿斯顿', '1970-10-10', '0', null, null, 'header15227856991');
-INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'sunsunsun', 'female', '贵州省，贵阳市，乌当区', '1998-12-14', '0', null, '哈哈', 'header15230867500');
-INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', null, '-', 'headerkefuxw');
+INSERT INTO `tbl_parent_userinfo` VALUES ('13513171332', '254870', '春天的野菜', 'female', '江西省，南昌市，东湖区', '1968-10-10', '0', '封禁', '嘻嘻哈哈嘻嘻哈哈', '1083289628', '0');
+INSERT INTO `tbl_parent_userinfo` VALUES ('15227856991', '852000', 'mon', 'female', '河北省，保定市，定州市', '1970-10-10', '0', null, '嘻嘻哈哈', 'header15227856991', null);
+INSERT INTO `tbl_parent_userinfo` VALUES ('15230867500', '491602', 'abcd', 'female', '吉林省，长春市，朝阳区', '1968-07-14', '0', '封禁', '啦啦啦啦', 'header15230867500', '1');
+INSERT INTO `tbl_parent_userinfo` VALUES ('kefuxw', '000000', '客服小薇', 'female', '石家庄', '1970-10-10', '0', null, '-', 'headerkefuxw', null);
 
 -- ----------------------------
 -- Table structure for `tbl_post`
@@ -509,20 +515,11 @@ CREATE TABLE `tbl_post` (
 -- ----------------------------
 -- Records of tbl_post
 -- ----------------------------
-INSERT INTO `tbl_post` VALUES ('0', 'sunsunsun', 'header15230867500', 'sjsj', '491602', '2020-05-24 19:38:39', '[\"-4fd5f905fc13763a.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('180', 'sunsunsun', 'header15230867500', '还问我教教我', '491602', '2020-05-24 17:59:10', '[\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('181', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 18:17:10', '[\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"wx_camera_1590209231518.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('182', 'sunsunsun', 'header15230867500', '上', '491602', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('183', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('184', 'sunsunsun', 'header15230867500', '加速世界', '491602', '2020-05-24 18:47:04', '[\"-4fd5f905fc13763a.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('185', 'sunsunsun', 'header15230867500', '计算机三级', '491602', '2020-05-24 18:52:42', '[\"headerkefuxw.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('186', 'sunsunsun', 'header15230867500', '咳咳咳', '491602', '2020-05-24 19:00:18', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"-4fd5f905fc13763a.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('187', 'sunsunsun', 'header15230867500', '山市', '491602', '2020-05-24 19:03:53', '[\"headerkefuxw.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('188', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 18:17:10', '[\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"Screenshot_20200524_000917_com.kuaishou.nebula.jpg\",\"header15227856991.jpg\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\",\"bg15230867500.jpg\",\"header15194980385.jpg\",\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"wx_camera_1590209231518.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200521_184253_com.tencent.tmgp.sgame.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('189', 'sunsunsun', 'header15230867500', '上', '491602', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('190', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]');
-INSERT INTO `tbl_post` VALUES ('223', 'sunsunsun', 'header15230867500', '死死死', '491602', '2020-05-24 19:49:28', '[]');
-INSERT INTO `tbl_post` VALUES ('225', 'sunsunsun', 'header15230867500', '2', '491602', '2020-05-24 20:05:56', '[\"VID_20200523_140544.mp4\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('232', 'mon', 'header15227856991', '图片加视频\n测\n试\n帖\n子', '852000', '2020-05-25 17:53:23', '[\"QQ空间视频_20200413223340.mp4\",\"IMG_20200407_001917.jpg\",\"951114803.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('244', 'abcd', 'header15230867500', '四图的显示格式\n纵\n向', '491602', '2020-05-25 21:38:46', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"1076553839.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('246', 'abcd', 'header15230867500', '发表了英语单词学习视频（单视频）', '491602', '2020-05-25 21:40:28', '[\"VID_20200525_164336.mp4\"]');
+INSERT INTO `tbl_post` VALUES ('247', 'mon', 'header15227856991', '三图', '852000', '2020-05-26 07:44:41', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\"]');
+INSERT INTO `tbl_post` VALUES ('251', 'abcd', 'header15230867500', '广场舞最新视频，大家快来看看学习啊！', '491602', '2020-05-30 22:14:50', '[\"421899789.mp4\"]');
 
 -- ----------------------------
 -- Table structure for `tbl_posts`
@@ -554,25 +551,25 @@ CREATE TABLE `tbl_post_copy` (
   `examine` varchar(20) NOT NULL,
   `rId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=227 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=258 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post_copy
 -- ----------------------------
-INSERT INTO `tbl_post_copy` VALUES ('213', 'sunsunsun', 'header15230867500', '上', '491602', '15230867500', '2020-05-24 18:29:47', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('214', 'sunsunsun', 'header15230867500', '横扫僵尸', '491602', '15230867500', '2020-05-24 18:44:18', '[\"Screenshot_20200523_103438_com.alibaba.android.rimet.jpg\",\"Screenshot_20200522_162654_com.vhome.chat.jpg\",\"Screenshot_20200522_115008_com.vhome.chat.jpg\"]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('215', 'sunsunsun', 'header15230867500', '加速世界', '491602', '15230867500', '2020-05-24 18:47:04', '[\"-4fd5f905fc13763a.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('216', 'sunsunsun', 'header15230867500', '计算机三级', '491602', '15230867500', '2020-05-24 18:52:42', '[\"headerkefuxw.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('217', 'sunsunsun', 'header15230867500', '咳咳咳', '491602', '15230867500', '2020-05-24 19:00:18', '[\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\",\"-4fd5f905fc13763a.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('218', 'sunsunsun', 'header15230867500', '山市', '491602', '15230867500', '2020-05-24 19:03:53', '[\"headerkefuxw.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('219', 'sunsunsun', 'header15230867500', '倒计时', '491602', '15230867500', '2020-05-24 19:31:53', '[\"header15230867500.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('220', 'sunsunsun', 'header15230867500', 'sjsj', '491602', '15230867500', '2020-05-24 19:38:39', '[\"-4fd5f905fc13763a.jpg\"]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('221', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 19:46:17', '[\"bg15230867500.jpg\"]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('222', 'sunsunsun', 'header15230867500', '睡觉睡觉大家开心', '491602', '15230867500', '2020-05-24 19:49:21', '[]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('223', 'sunsunsun', 'header15230867500', '死死死', '491602', '15230867500', '2020-05-24 19:49:28', '[]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('224', 'sunsunsun', 'header15230867500', '睡觉睡觉手机', '491602', '15230867500', '2020-05-24 19:49:37', '[\"header15230867500.jpg\",\"bg15230867500.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('225', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 20:05:56', '[\"VID_20200523_140544.mp4\",\"Screenshot_20200524_000511_com.kuaishou.nebula.jpg\"]', '已审核', '1507bfd3f74068c75d7');
-INSERT INTO `tbl_post_copy` VALUES ('226', 'sunsunsun', 'header15230867500', '2', '491602', '15230867500', '2020-05-24 20:08:17', '[\"headerkefuxw.jpg\",\"Screenshot_20200521_230553_com.kuaishou.nebula.jpg\"]', '待审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('213', 'sunsunsun', 'header15230867500', '单图', '491602', '15230867500', '2020-05-24 18:29:47', '[\"temp_photo1588250478407.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('232', 'mon', 'header15227856991', '图片加视频\n测\n试\n帖\n子', '852000', '15227856991', '2020-05-25 17:53:23', '[\"QQ空间视频_20200413223340.mp4\",\"IMG_20200407_001917.jpg\",\"951114803.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('244', 'sunsunsun', 'header15230867500', '四图的显示格式\n纵\n向', '491602', '15230867500', '2020-05-25 21:38:46', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"1076553839.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('246', 'sunsunsun', 'header15230867500', '发表了英语单词学习视频（单视频）', '491602', '15230867500', '2020-05-25 21:40:28', '[\"VID_20200525_164336.mp4\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('247', 'mon', 'header15227856991', '三图', '852000', '15227856991', '2020-05-26 07:44:41', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('248', 'sunsunsun', 'header15230867500', '发表图片', '491602', '15230867500', '2020-05-26 08:27:56', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"433503642_mh1547286904455.jpg\",\"1069983542.jpg\",\"1076553838.jpg\",\"1076553839.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('249', 'sunsunsun', 'header15230867500', '测试测试帖子', '491602', '15230867500', '2020-05-26 08:31:12', '[\"1076553840.jpg\",\"433503642_mh1547286904455.jpg\",\"1069983542.jpg\",\"1095332074.jpg\",\"1098325509.jpg\",\"1076553838.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('251', 'sunsunsun', 'header15230867500', '广场舞最新视频，大家快来看看学习啊！', '491602', '15230867500', '2020-05-30 22:14:50', '[\"421899789.mp4\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('252', 'sunsunsun', 'header15230867500', '发表', '491602', '15230867500', '2020-06-01 15:49:30', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"VID_20200525_164336.mp4\",\"1076553838.jpg\",\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"VID_20200525_164336.mp4\",\"1076553838.jpg\"]', '审核失败', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('253', 'sunsunsun', 'header15230867500', '发表', '491602', '15230867500', '2020-06-01 15:51:49', '[\"1083289628.jpg\",\"1076553841.jpg\",\"1076553840.jpg\",\"939444113.jpg\",\"1069983542.jpg\",\"1076553838.jpg\",\"VID_20200525_164336.mp4\"]', '已审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('254', 'abcd', 'header15230867500', '喝点水', '491602', '15230867500', '2020-06-02 22:27:02', '[]', '待审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('255', 'abcd', 'header15230867500', 'xxx', '491602', '15230867500', '2020-06-02 22:27:33', '[]', '待审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('256', 'abcd', 'header15230867500', '谢谢', '491602', '15230867500', '2020-06-02 22:28:26', '[]', '待审核', '1507bfd3f74068c75d7');
+INSERT INTO `tbl_post_copy` VALUES ('257', 'abcd', 'header15230867500', 'hhh', '491602', '15230867500', '2020-06-02 22:38:06', '[]', '待审核', '1507bfd3f74068c75d7');
 
 -- ----------------------------
 -- Table structure for `tbl_post_report`
@@ -586,8 +583,10 @@ CREATE TABLE `tbl_post_report` (
   `personId` varchar(30) NOT NULL,
   `time` datetime DEFAULT NULL,
   `imgs` varchar(1000) DEFAULT NULL,
+  `rId` varchar(1000) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_post_report
@@ -605,31 +604,20 @@ CREATE TABLE `tbl_questions` (
   `theme` varchar(20) CHARACTER SET utf8 NOT NULL,
   `content` varchar(200) CHARACTER SET utf8 NOT NULL,
   `status` int(1) NOT NULL,
+  `answer_content` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_questions
 -- ----------------------------
-INSERT INTO `tbl_questions` VALUES ('1', '姬文斌', '13300000000', '1104a8979228f292c09', '关于获奖资金分配问题', '我自愿退出分配奖金，希望大家同意，跪下磕头了给你们', '1');
-INSERT INTO `tbl_questions` VALUES ('2', '姬豆豆', '15200000000', '1104a8979228f292c09', '关于自觉问题', '姬文斌十一点起，十一点睡，该治治了', '1');
-INSERT INTO `tbl_questions` VALUES ('3', '姬小生', '15500000000', '1104a8979228f292c09', '关于哈哈', '靳文斌', '1');
-INSERT INTO `tbl_questions` VALUES ('4', '姬妹妹', '13600000000', '1104a8979228f292c09', '管你呢', '嗯嗯嗯嗯呃', '1');
-INSERT INTO `tbl_questions` VALUES ('8', '京津冀', '15230867500', '1104a8979228f292c09', '刷卡', '傻男说你什么萨克斯', '1');
-INSERT INTO `tbl_questions` VALUES ('9', '123', '15230867500', '1104a8979228f292c09', '是吧', '好的呢', '1');
-INSERT INTO `tbl_questions` VALUES ('10', 'jsjs', '15230867500', '1104a8979228f292c09', 'sjsj', '京津冀京津冀\n\n', '1');
-INSERT INTO `tbl_questions` VALUES ('11', 'd', '15230867500', '1104a8979228f292c09', 'ss', 'xjsjzj', '1');
-INSERT INTO `tbl_questions` VALUES ('12', 'qq', '15230867500', '1104a8979228f292c09', 'qq', 'ajjajd\n\n', '1');
-INSERT INTO `tbl_questions` VALUES ('13', 'l', '15230867500', '1104a8979228f292c09', 'l', 'ajajs\n', '1');
-INSERT INTO `tbl_questions` VALUES ('14', 'a', '15230867500', '1104a8979228f292c09', 'a', 'jdjd', '1');
-INSERT INTO `tbl_questions` VALUES ('15', 'q', '15230867500', '1104a8979228f292c09', 'q', 'sksk\n', '1');
-INSERT INTO `tbl_questions` VALUES ('16', 'jsksk', '15230867500', '1104a8979228f292c09', 'skskkd', 'sksk\n\n', '1');
-INSERT INTO `tbl_questions` VALUES ('17', 'd', '15230867500', '1104a8979228f292c09', 'd', 'xdd', '1');
-INSERT INTO `tbl_questions` VALUES ('18', 'QW ', '13513171332', '', 'QWE ', '请问请问', '1');
-INSERT INTO `tbl_questions` VALUES ('19', '11', '13513171332', '13065ffa4e8b884daa9', '11', '12', '1');
-INSERT INTO `tbl_questions` VALUES ('20', '1', '15230867500', '1104a8979228f292c09', '1', 'xxx处有bug', '1');
-INSERT INTO `tbl_questions` VALUES ('21', 'l', '15230867500', '1104a8979228f292c09', 'l', '哈哈哈哈\n', '1');
-INSERT INTO `tbl_questions` VALUES ('22', 'd', '15230867500', '1507bfd3f74068c75d7', 'd', 'sjsj', '1');
+INSERT INTO `tbl_questions` VALUES ('1', '姬妹妹', '13513171332', '1104a8979228f292c09', '这个APP太赞了', '真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好', '1', '谢谢支持，我们会继续努力的');
+INSERT INTO `tbl_questions` VALUES ('2', '姬豆豆', '15194980385', '1104a8979228f292c09', '微家团队也太赞了吧！', '真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好真好', '1', '谢谢！！');
+INSERT INTO `tbl_questions` VALUES ('3', '姬小生', '15227856991', '1104a8979228f292c09', '微家加油加油！！', '加油加油加油加油加油加油加油加油加油', '1', '加油，构建美好社区！');
+INSERT INTO `tbl_questions` VALUES ('29', '靳朋朝', '15230867500', '1507bfd3f74068c75d7', '好评', '好，微家太棒了', '1', '尊敬的靳朋朝，你好：\r\n    巴拉巴拉');
+INSERT INTO `tbl_questions` VALUES ('30', 'xx', '15230867500', '1507bfd3f74068c75d7', 'xxx', '测试', '1', '收到测试~~~！！！');
+INSERT INTO `tbl_questions` VALUES ('31', 'xx', '15230867500', '1507bfd3f74068c75d7', 'x', '测测测', '1', '000000000');
+INSERT INTO `tbl_questions` VALUES ('33', '靳朋朝', '15230867500', '1507bfd3f74068c75d7', 'bug反馈', 'xx处有bug', '1', '尊敬的xxx:\r\n您好 您的反馈我们收到了！');
 
 -- ----------------------------
 -- Table structure for `tbl_relations_request`
@@ -642,35 +630,36 @@ CREATE TABLE `tbl_relations_request` (
   `receive_phone` varchar(11) NOT NULL,
   `type` varchar(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tbl_relations_request
 -- ----------------------------
-INSERT INTO `tbl_relations_request` VALUES ('2', '15194980385', '尿', '15230867500', '-1');
+INSERT INTO `tbl_relations_request` VALUES ('2', '15194980385', '尿', '15230867500', '1');
 INSERT INTO `tbl_relations_request` VALUES ('3', '123456789', '尿', '15230867500', '1');
 INSERT INTO `tbl_relations_request` VALUES ('4', '15230867500', '屎', '15194980385', '-1');
 INSERT INTO `tbl_relations_request` VALUES ('5', '555555', '5', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('6', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
+INSERT INTO `tbl_relations_request` VALUES ('6', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
 INSERT INTO `tbl_relations_request` VALUES ('7', '15230867500', '滚滚滚滚', '15230867500', '1');
-INSERT INTO `tbl_relations_request` VALUES ('8', '15194980385', '改', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('9', '15230867500', 'sun', '15227856991', '0');
-INSERT INTO `tbl_relations_request` VALUES ('10', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('11', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('12', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('13', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('14', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('15', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('16', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('17', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('18', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('19', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('20', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('21', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('22', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('23', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('24', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
-INSERT INTO `tbl_relations_request` VALUES ('25', '15194980385', '子女子女子女子女测测测测', '15230867500', '-1');
+INSERT INTO `tbl_relations_request` VALUES ('8', '15194980385', '改', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('9', '15230867500', 'sun', '15227856991', '-1');
+INSERT INTO `tbl_relations_request` VALUES ('10', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('11', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('12', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('13', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('14', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('15', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('16', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('17', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('18', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('19', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('20', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('21', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('22', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('23', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('24', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('25', '15194980385', '子女子女子女子女测测测测', '15230867500', '1');
+INSERT INTO `tbl_relations_request` VALUES ('27', '15194980385', '测', '15230867500', '1');
 
 -- ----------------------------
 -- Table structure for `tbl_remind`
@@ -681,14 +670,16 @@ CREATE TABLE `tbl_remind` (
   `content` varchar(200) DEFAULT NULL,
   `phone` char(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_remind
 -- ----------------------------
 INSERT INTO `tbl_remind` VALUES ('1', 'hahah', '242424000');
 INSERT INTO `tbl_remind` VALUES ('2', '55555', '242424000');
-INSERT INTO `tbl_remind` VALUES ('12', '超长测试qqqqqqqqqqqqqqqqqqqqqqqqqqqq', '15194980385');
+INSERT INTO `tbl_remind` VALUES ('12', '妈，该吃降压药了', '15194980385');
+INSERT INTO `tbl_remind` VALUES ('13', '妈，改起来去晨练了！', '15194980385');
+INSERT INTO `tbl_remind` VALUES ('18', '新建常用提示', '15194980385');
 
 -- ----------------------------
 -- Table structure for `tbl_reply_comment`
@@ -704,11 +695,14 @@ CREATE TABLE `tbl_reply_comment` (
   `content` varchar(200) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_reply_comment
 -- ----------------------------
+INSERT INTO `tbl_reply_comment` VALUES ('1', '53', '', '', '', '0', '棒棒棒！', '2020-05-31 11:33:41');
+INSERT INTO `tbl_reply_comment` VALUES ('2', '53', 'abcd', 'header15230867500', '491602', '0', '哈哈 好美', '2020-05-31 11:34:51');
+INSERT INTO `tbl_reply_comment` VALUES ('3', '55', 'abcd', 'header15230867500', '491602', '0', '谢谢', '2020-06-01 15:32:43');
 
 -- ----------------------------
 -- Table structure for `tbl_step`
