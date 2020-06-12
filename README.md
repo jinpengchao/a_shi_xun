@@ -31,5 +31,5 @@
 ### 项目展示视频
 
 <p>
-  Bilibili：[https://www.bilibili.com/video/BV1wg4y1q7xs](https://www.bilibili.com/video/BV1wg4y1q7xs)
+  Bilibili：https://www.bilibili.com/video/BV1wg4y1q7xs
 </p>
