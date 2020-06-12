@@ -29,6 +29,7 @@
 			name="id" value="${param.currentid }"> <input type="hidden"
 			id="status" name="status" value="0"><input type="hidden"
 			id="registrationID" name="registrationID" value="${param.currentregisrationID }">
+		<img width="838px" alt="" src="1.png">
 		<textarea id="content" name="content" placeholder="输入内容以回复用户"
 			rows="20" cols="100"></textarea>
 		<input type="submit" value="发送">

@@ -20,8 +20,11 @@
 	<link rel="stylesheet" href="../../css/news.css" media="all" />
 </head>
 <body class="childrenBody">
+<div style="height:500px;background-color:#efefef; ; vertical-align:middel; ">
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${content }</p>
+</div>
 <div class="layui-form news_list">
-	  	<p>${content }</p>
+	  	
 	</div>
 <div id="page"></div>
 <script type="text/javascript" src="../../layui/layui.js"></script>

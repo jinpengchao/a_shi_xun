@@ -127,6 +127,6 @@
 	</div>
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script src="${ctx}/js/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 </body>
 </html>

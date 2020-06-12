@@ -21,7 +21,7 @@
 </head>
 <body class="childrenBody">
 <div class="layui-form news_list">
-	  	<table border="2px;">
+	  	<table>
 		    <colgroup>
 				<col width="10%">
 				<col width="10%">
@@ -30,30 +30,33 @@
 				<col width="10%">
 		    </colgroup>
 		    <thead>
-				<tr>
-					<th>姓名</th>
-					<th>电话</th>
-					<th>主题</th>
-					<th>问题反馈主要内容</th>
-					<th>操作</th>
+				<tr bgcolor="#efefef">
+					<th><h3>姓名</h3></th>
+					<th><h3>电话</h3></th>
+					<th><h3>主题</h3></th>
+					<th><h3>问题反馈主要内容</h3></th>
+					<th><h3>操作</h3></th>
 				</tr>
 				<c:forEach items="${all_questions }" var="questions">
-				<tr>
-					<th>${questions.creatorName }</th>
-					<th>${questions.creatorPhone} </th>
-					<th>${questions.subject} </th>
-					<th>${questions.content}</th>
-					
+				<tr bgcolor="#efefef">
+					<th><p style=" font-weight:lighter;">${questions.creatorName }</p></th>
+					<th><p style=" font-weight:lighter;">${questions.creatorPhone}</p> </th>
+					<th><p style=" font-weight:lighter;">${questions.subject} </p></th>
+					<th><p style=" font-weight:lighter;">${questions.content}</p></th>
+					<th>
 					<c:if test="${questions_status == 0 }">
-						<td><span style="margin-left: 15px;">
-							<a href="page/links/answer.jsp?currentphone=${questions.creatorPhone}&currentname=${questions.creatorName}&currentid=${questions.id}&currentregisrationID=${questions.registrationId}">回复</a>
-							<a href="/vhome/IgnoreReport?id=${p.id}">忽略</a></span></td>
+					<div style="text-align:center; vertical-align:middel;">
+						<input name="注册" type="button" id="btn1" title="登注册" value="回复"  onclick="location.href='page/links/answer.jsp?currentphone=${questions.creatorPhone}&currentname=${questions.creatorName}&currentid=${questions.id}&currentregisrationID=${questions.registrationId}'" />
+						<input name="注册" type="button" id="btn1" title="登注册" value="忽略"  onclick="location.href='/vhome/IgnoreReport?id=${p.id}'" />
+					</div>
 					</c:if>
 					<c:if test="${questions_status == 1 }">
-						<td><span style="margin-left: 15px;">
-							<a href="/vhome/ShowAnswers?currentid=${questions.id}">查看回复内容</a></span></td>
-					</c:if>
+					<div style="text-align:center; vertical-align:middel;">
+						<input name="注册" type="button" id="btn1" title="登注册" value="查看回复"  onclick="location.href='/vhome/ShowAnswers?currentid=${questions.id}'" />
+					</div>
 					
+					</c:if>
+					</th>
 				</tr>
 				</c:forEach>
 				
